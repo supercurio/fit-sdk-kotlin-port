@@ -294,7 +294,7 @@ public class CSVTool {
     public ByteArrayOutputStream convertFitToCsv(ByteArrayInputStream byteArrayInputStream) throws Exception {
         if (checkIntegrity) {
             if (!decode.checkFileIntegrity(byteArrayInputStream)) {
-                if (!decode.getInvalidFileDataSize()) {
+                if (!decode.invalidFileDataSize) {
                     throw new FitRuntimeException("FIT file integrity failure.");
                 }
                 else {
@@ -339,7 +339,7 @@ public class CSVTool {
                     decode.read(byteArrayInputStream);
                     decode.nextFile(); // Initialize to read next file (if any).
                 } catch (FitRuntimeException e) {
-                    if (decode.getInvalidFileDataSize()) {
+                    if (decode.invalidFileDataSize) {
                         // The exception might be due to a bad file size written
                         // by a device. Retry the decoding process.
                         decode.nextFile();
@@ -496,8 +496,8 @@ public class CSVTool {
 
             for (ActivityFileValidationResult result : plugin.getResults()) {
                 System.out.println(result);
-                if (result.getDescription() != null) {
-                    System.out.println("\t" + result.getDescription());
+                if (result.description != null) {
+                    System.out.println("\t" + result.description);
                 }
             }
 

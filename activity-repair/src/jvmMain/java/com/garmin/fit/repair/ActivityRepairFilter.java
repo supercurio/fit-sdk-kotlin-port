@@ -60,7 +60,7 @@ public class ActivityRepairFilter implements BufferedMesgListener, MesgSource {
 
         fitListener.onMesg(mesg);
 
-        if (mesg.getNum() == MesgNum.RECORD) {
+        if (mesg.num == MesgNum.RECORD) {
             filterIncomingRecordMessages();
         }
 
@@ -95,7 +95,7 @@ public class ActivityRepairFilter implements BufferedMesgListener, MesgSource {
             return;
         }
 
-        FitMessages fitMessages = fitListener.getFitMessages();
+        FitMessages fitMessages = fitListener.fitMessages;
 
         RecordMesg start = (RecordMesg) filteredRecordMesgs.get(0);
         RecordMesg end = (RecordMesg) filteredRecordMesgs.get(filteredRecordMesgs.size() - 1);
@@ -127,11 +127,11 @@ public class ActivityRepairFilter implements BufferedMesgListener, MesgSource {
             return;
         }
 
-        if (mesg.getNum() == MesgNum.PAD) {
+        if (mesg.num == MesgNum.PAD) {
             return;
         }
 
-        if (mesg.getNum() == MesgNum.FILE_ID) {
+        if (mesg.num == MesgNum.FILE_ID) {
             fileIdMesgFromFile = new FileIdMesg(mesg);
         }
 
@@ -143,7 +143,7 @@ public class ActivityRepairFilter implements BufferedMesgListener, MesgSource {
             return;
         }
 
-        List<RecordMesg> recordMesgs = fitListener.getFitMessages().getRecordMesgs();
+        List<RecordMesg> recordMesgs = fitListener.fitMessages.getRecordMesgs();
         RecordMesg currentMesg = recordMesgs.get(recordMesgs.size() - 1);
 
         if (!hasValidTimestamp(currentMesg)) {

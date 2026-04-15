@@ -230,7 +230,7 @@ public class CSVReader {
 
         mesg = Factory.createMesg(cells.get(mesgCol));
 
-        if (mesg.getNum() == MesgNum.INVALID) {
+        if (mesg.num == MesgNum.INVALID) {
             System.err.printf("CSVReader.read(): Error on line %d - Unknown message \"%s\".\n", lineNum, mesg.getName());
             return false;
         }
@@ -264,7 +264,7 @@ public class CSVReader {
                 continue; // Blank cell. Continue as other cells may be valid.
             }
 
-            if (nativeField.getNum() == Fit.FIELD_NUM_INVALID) {
+            if (nativeField.num == Fit.FIELD_NUM_INVALID) {
                 // Check for Developer Field
                 for (FieldDescriptionMesg descriptionMesg : fieldDescriptionMesgs) {
                     if (descriptionMesg.getFieldName(0).equals(fieldOrSubFieldName)) {
@@ -293,7 +293,7 @@ public class CSVReader {
             for (String value : values) {
                 int numValues = field.getNumValues();
 
-                if (field.getType() == Fit.BASE_TYPE_STRING) {
+                if (field.type == Fit.BASE_TYPE_STRING) {
                     // Pass the read in string through
                     field.setValue(numValues, value, fieldOrSubFieldName);
                 }
@@ -303,7 +303,7 @@ public class CSVReader {
                         Object numericValue = null;
                         boolean setRawValue = false;
 
-                        switch (field.getType()) {
+                        switch (field.type) {
                             case Fit.BASE_TYPE_ENUM:
                                 if (Short.valueOf(value).equals(Fit.ENUM_INVALID)) {
                                     setRawValue = true;
@@ -417,7 +417,7 @@ public class CSVReader {
                         }
 
                     } catch (java.lang.NumberFormatException e) {
-                        if (field.getType() == Fit.BASE_TYPE_SINT64 || field.getType() == Fit.BASE_TYPE_UINT64 || field.getType() == Fit.BASE_TYPE_UINT64Z) {
+                        if (field.type == Fit.BASE_TYPE_SINT64 || field.type == Fit.BASE_TYPE_UINT64 || field.type == Fit.BASE_TYPE_UINT64Z) {
                             field.setValue(numValues, new BigDecimal(value), fieldOrSubFieldName);
                         } else {
                             field.setValue(numValues, Double.valueOf(value), fieldOrSubFieldName);
@@ -434,10 +434,10 @@ public class CSVReader {
             }
         }
 
-        if (mesg.getNum() == MesgNum.FIELD_DESCRIPTION) {
+        if (mesg.num == MesgNum.FIELD_DESCRIPTION) {
             fieldDescriptionMesgs.add(new FieldDescriptionMesg(mesg));
         }
-        else if (mesg.getNum() == MesgNum.DEVELOPER_DATA_ID) {
+        else if (mesg.num == MesgNum.DEVELOPER_DATA_ID) {
             DeveloperDataIdMesg devId = new DeveloperDataIdMesg(mesg);
             short developerIndex = devId.getDeveloperDataIndex();
 
@@ -471,7 +471,7 @@ public class CSVReader {
 
         mesg = Factory.createMesg(cells.get(mesgCol));
 
-        if (mesg.getNum() == MesgNum.INVALID) {
+        if (mesg.num == MesgNum.INVALID) {
             System.err.printf("CSVReader.read(): Error on line %d - Unknown message \"%s\".\n", lineNum, mesg.getName());
             return false;
         }
@@ -506,7 +506,7 @@ public class CSVReader {
                 continue; // Blank cell. Continue as other cells may be valid.
             }
 
-            if (nativeField.getNum() == Fit.FIELD_NUM_INVALID) {
+            if (nativeField.num == Fit.FIELD_NUM_INVALID) {
                 // Check for Developer Field
                 for (FieldDescriptionMesg descriptionMesg : fieldDescriptionMesgs) {
                     if (descriptionMesg.getFieldName(0).equals(fieldOrSubFieldName)) {
@@ -539,7 +539,7 @@ public class CSVReader {
                 // The 'value' for a field definition in the CSV is number of base type elements that the
                 // field contains. The size of the field in bytes is this number multiplied by the base type
                 // size.
-                fieldDef.setSize(Integer.valueOf(value) * Fit.baseTypeSizes[field.getType() & Fit.BASE_TYPE_NUM_MASK]);
+                fieldDef.size = Integer.valueOf(value) * Fit.baseTypeSizes[field.type & Fit.BASE_TYPE_NUM_MASK];
             }
 
             if (field instanceof Field) {

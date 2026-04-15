@@ -29,7 +29,7 @@ public class MesgDataCSVWriter extends MesgCSVWriterBase implements MesgListener
     }
 
     public void onMesg(Mesg mesg) {
-        if (mesg.getName().equals("unknown") && hideUnknownData) {
+        if (mesg.getName().equals("unknown") && isHideUnknownDataEnabled) {
             return;
         }
 
@@ -37,16 +37,16 @@ public class MesgDataCSVWriter extends MesgCSVWriterBase implements MesgListener
             mesg.removeExpandedFields();
         }
 
-        if (preserveGaps) {
+        if (isPreserveGapsEnabled) {
             clearMesgFields(mesg);
         }
 
         for (Field field : mesg.getFields()) {
-            if (hideUnknownData && field.getName().equals("unknown")) {
+            if (isHideUnknownDataEnabled && field.getName().equals("unknown")) {
                 continue;
             }
 
-            int subFieldIndex = mesg.getActiveSubFieldIndex(field.getNum());
+            int subFieldIndex = mesg.getActiveSubFieldIndex(field.num);
 
             String value = null;
 
@@ -66,7 +66,7 @@ public class MesgDataCSVWriter extends MesgCSVWriterBase implements MesgListener
         }
 
         for (DeveloperField field : mesg.getDeveloperFields()) {
-            if (!field.isDefined() && hideUnknownData) {
+            if (!field.isDefined() && isHideUnknownDataEnabled) {
                 continue;
             }
 
@@ -91,7 +91,7 @@ public class MesgDataCSVWriter extends MesgCSVWriterBase implements MesgListener
     public void clearMesgFields(Mesg mesg) {
         String mesgName = mesg.getName();
 
-        for (String header : csv.getHeaders()) {
+        for (String header : csv.headers) {
             String headerName = header.substring(0, header.indexOf("."));
 
             if (headerName.equals(mesgName)) {

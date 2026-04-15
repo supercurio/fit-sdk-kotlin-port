@@ -89,7 +89,7 @@ public class MesgFilter implements MesgListener, MesgDefinitionListener, MesgSou
 
     public void onMesgDefinition(MesgDefinition mesgDef) {
         boolean outputDefinition = true;
-        Mesg mesg = Factory.createMesg(mesgDef.getNum());
+        Mesg mesg = Factory.createMesg(mesgDef.num);
 
         if(!this.outputMesgDefinitions) {
             outputDefinition = false;
