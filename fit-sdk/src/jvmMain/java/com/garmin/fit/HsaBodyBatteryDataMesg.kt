@@ -161,7 +161,8 @@ class HsaBodyBatteryDataMesg : Mesg {
 
 
         // hsa_body_battery_data
-        val hsaBodyBatteryDataMesg: Mesg = Mesg("hsa_body_battery_data", MesgNum.HSA_BODY_BATTERY_DATA)
+        val hsaBodyBatteryDataMesg: Mesg =
+            Mesg("hsa_body_battery_data", MesgNum.HSA_BODY_BATTERY_DATA)
 
         init {
             hsaBodyBatteryDataMesg.addField(

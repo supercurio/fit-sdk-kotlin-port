@@ -11,7 +11,6 @@ package com.garmin.fit
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.io.InputStream
-import java.util.Arrays
 
 object FileUtil {
     fun split(input: InputStream): MutableCollection<ByteArray?> {

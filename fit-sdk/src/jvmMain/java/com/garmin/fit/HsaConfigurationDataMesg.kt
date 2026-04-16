@@ -93,7 +93,8 @@ class HsaConfigurationDataMesg : Mesg {
 
 
         // hsa_configuration_data
-        val hsaConfigurationDataMesg: Mesg = Mesg("hsa_configuration_data", MesgNum.HSA_CONFIGURATION_DATA)
+        val hsaConfigurationDataMesg: Mesg =
+            Mesg("hsa_configuration_data", MesgNum.HSA_CONFIGURATION_DATA)
 
         init {
             hsaConfigurationDataMesg.addField(

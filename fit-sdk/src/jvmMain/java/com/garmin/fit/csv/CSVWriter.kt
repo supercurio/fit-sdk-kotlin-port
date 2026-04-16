@@ -9,7 +9,6 @@
 package com.garmin.fit.csv
 
 import java.io.ByteArrayOutputStream
-import java.util.Collections
 
 class CSVWriter(outputStream: ByteArrayOutputStream) {
     internal var csvWriter: CSVWritable = if (outputStream is ByteArrayOutputStreamPrefixable)

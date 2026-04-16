@@ -23,7 +23,13 @@ class AccelerometerDataMesg : Mesg {
          *
          * @return timestamp
          */
-        get() = timestampToDateTime(getFieldLongValue(TimestampFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
+        get() = timestampToDateTime(
+            getFieldLongValue(
+                TimestampFieldNum,
+                0,
+                Fit.SUBFIELD_INDEX_MAIN_FIELD
+            )
+        )
         /**
          * Set timestamp field
          * Units: s

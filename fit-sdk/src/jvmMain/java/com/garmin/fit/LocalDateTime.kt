@@ -47,7 +47,7 @@ class LocalDateTime {
         private val stringMap = mutableMapOf<Long, String>()
 
         init {
-                stringMap[MIN] = "MIN"
+            stringMap[MIN] = "MIN"
         }
 
         const val OFFSET: Long =

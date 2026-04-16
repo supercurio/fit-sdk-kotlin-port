@@ -98,7 +98,8 @@ class ExdScreenConfigurationMesg : Mesg {
 
 
         // exd_screen_configuration
-        val exdScreenConfigurationMesg: Mesg = Mesg("exd_screen_configuration", MesgNum.EXD_SCREEN_CONFIGURATION)
+        val exdScreenConfigurationMesg: Mesg =
+            Mesg("exd_screen_configuration", MesgNum.EXD_SCREEN_CONFIGURATION)
 
         init {
             exdScreenConfigurationMesg.addField(

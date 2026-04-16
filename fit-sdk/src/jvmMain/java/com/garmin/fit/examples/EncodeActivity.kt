@@ -176,7 +176,7 @@ object EncodeActivity {
         activityMesg.timestamp = timestamp
         activityMesg.numSessions = 1
         val timeZone = TimeZone.getTimeZone("America/Denver")
-        val timezoneOffset = ((timeZone.rawOffset + timeZone.getDSTSavings()) / 1000).toLong()
+        val timezoneOffset = ((timeZone.rawOffset + timeZone.dstSavings) / 1000).toLong()
         activityMesg.localTimestamp = timestamp.timestamp + timezoneOffset
         activityMesg.totalTimerTime = (timestamp.timestamp - startTime.timestamp).toFloat()
         messages.add(activityMesg)
@@ -356,7 +356,7 @@ object EncodeActivity {
         activityMesg.timestamp = timestamp
         activityMesg.numSessions = 1
         val timeZone = TimeZone.getTimeZone("America/Denver")
-        val timezoneOffset = ((timeZone.rawOffset + timeZone.getDSTSavings()) / 1000).toLong()
+        val timezoneOffset = ((timeZone.rawOffset + timeZone.dstSavings) / 1000).toLong()
         activityMesg.localTimestamp = timestamp.timestamp + timezoneOffset
         activityMesg.totalTimerTime = sessionTotalElapsedTime.toFloat()
 

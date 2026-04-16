@@ -95,7 +95,8 @@ class HsaWristTemperatureDataMesg : Mesg {
 
 
         // hsa_wrist_temperature_data
-        val hsaWristTemperatureDataMesg: Mesg = Mesg("hsa_wrist_temperature_data", MesgNum.HSA_WRIST_TEMPERATURE_DATA)
+        val hsaWristTemperatureDataMesg: Mesg =
+            Mesg("hsa_wrist_temperature_data", MesgNum.HSA_WRIST_TEMPERATURE_DATA)
 
         init {
             hsaWristTemperatureDataMesg.addField(

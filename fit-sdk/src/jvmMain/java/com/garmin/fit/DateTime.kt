@@ -10,11 +10,6 @@ package com.garmin.fit
 
 import java.time.Instant
 import java.util.Date
-import kotlin.Boolean
-import kotlin.Comparable
-import kotlin.Int
-import kotlin.Long
-import kotlin.String
 import kotlin.math.floor
 import kotlin.math.roundToLong
 
