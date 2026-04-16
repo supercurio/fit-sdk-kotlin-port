@@ -15,18 +15,17 @@ object SledExerciseName {
     const val LOW_PUSH: Int = 3
     const val PUSH: Int = 4
     const val ROW: Int = 5
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BACKWARD_DRAG, "BACKWARD_DRAG")
-        stringMap.put(CHEST_PRESS, "CHEST_PRESS")
-        stringMap.put(FORWARD_DRAG, "FORWARD_DRAG")
-        stringMap.put(LOW_PUSH, "LOW_PUSH")
-        stringMap.put(PUSH, "PUSH")
-        stringMap.put(ROW, "ROW")
+        stringMap[BACKWARD_DRAG] = "BACKWARD_DRAG"
+        stringMap[CHEST_PRESS] = "CHEST_PRESS"
+        stringMap[FORWARD_DRAG] = "FORWARD_DRAG"
+        stringMap[LOW_PUSH] = "LOW_PUSH"
+        stringMap[PUSH] = "PUSH"
+        stringMap[ROW] = "ROW"
     }
 
 
@@ -35,9 +34,9 @@ object SledExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -48,7 +47,7 @@ object SledExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

@@ -12,43 +12,40 @@ package com.garmin.fit
 class OhrSettingsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.OHR_SETTINGS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var enabled: Switch?
         /**
          * Get enabled field
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Switch.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Switch.getByValue(value)
         }
         /**
          * Set enabled field
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -61,11 +58,10 @@ class OhrSettingsMesg : Mesg {
         const val EnabledFieldNum: Int = 0
 
 
-        val ohrSettingsMesg: Mesg
+        // ohr_settings
+        val ohrSettingsMesg: Mesg = Mesg("ohr_settings", MesgNum.OHR_SETTINGS)
 
         init {
-            // ohr_settings
-            ohrSettingsMesg = Mesg("ohr_settings", MesgNum.OHR_SETTINGS)
             ohrSettingsMesg.addField(
                 Field(
                     "timestamp",

@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface WeightScaleMesgListener {
-    fun onMesg(mesg: WeightScaleMesg?)
+    fun onMesg(mesg: WeightScaleMesg)
 }

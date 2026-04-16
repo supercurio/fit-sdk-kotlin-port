@@ -100,103 +100,102 @@ object WarmUpExerciseName {
     const val MARCHING_IN_PLACE: Int = 88
     const val TRICEPS_STRETCH_WHEELCHAIR: Int = 89
     const val UPPER_BACK_STRETCH_WHEELCHAIR: Int = 90
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(QUADRUPED_ROCKING, "QUADRUPED_ROCKING")
-        stringMap.put(NECK_TILTS, "NECK_TILTS")
-        stringMap.put(ANKLE_CIRCLES, "ANKLE_CIRCLES")
-        stringMap.put(ANKLE_DORSIFLEXION_WITH_BAND, "ANKLE_DORSIFLEXION_WITH_BAND")
-        stringMap.put(ANKLE_INTERNAL_ROTATION, "ANKLE_INTERNAL_ROTATION")
-        stringMap.put(ARM_CIRCLES, "ARM_CIRCLES")
-        stringMap.put(BENT_OVER_REACH_TO_SKY, "BENT_OVER_REACH_TO_SKY")
-        stringMap.put(CAT_CAMEL, "CAT_CAMEL")
-        stringMap.put(ELBOW_TO_FOOT_LUNGE, "ELBOW_TO_FOOT_LUNGE")
-        stringMap.put(FORWARD_AND_BACKWARD_LEG_SWINGS, "FORWARD_AND_BACKWARD_LEG_SWINGS")
-        stringMap.put(GROINERS, "GROINERS")
-        stringMap.put(INVERTED_HAMSTRING_STRETCH, "INVERTED_HAMSTRING_STRETCH")
-        stringMap.put(LATERAL_DUCK_UNDER, "LATERAL_DUCK_UNDER")
-        stringMap.put(NECK_ROTATIONS, "NECK_ROTATIONS")
-        stringMap.put(OPPOSITE_ARM_AND_LEG_BALANCE, "OPPOSITE_ARM_AND_LEG_BALANCE")
-        stringMap.put(REACH_ROLL_AND_LIFT, "REACH_ROLL_AND_LIFT")
-        stringMap.put(SCORPION, "SCORPION")
-        stringMap.put(SHOULDER_CIRCLES, "SHOULDER_CIRCLES")
-        stringMap.put(SIDE_TO_SIDE_LEG_SWINGS, "SIDE_TO_SIDE_LEG_SWINGS")
-        stringMap.put(SLEEPER_STRETCH, "SLEEPER_STRETCH")
-        stringMap.put(SLIDE_OUT, "SLIDE_OUT")
-        stringMap.put(SWISS_BALL_HIP_CROSSOVER, "SWISS_BALL_HIP_CROSSOVER")
-        stringMap.put(SWISS_BALL_REACH_ROLL_AND_LIFT, "SWISS_BALL_REACH_ROLL_AND_LIFT")
-        stringMap.put(SWISS_BALL_WINDSHIELD_WIPERS, "SWISS_BALL_WINDSHIELD_WIPERS")
-        stringMap.put(THORACIC_ROTATION, "THORACIC_ROTATION")
-        stringMap.put(WALKING_HIGH_KICKS, "WALKING_HIGH_KICKS")
-        stringMap.put(WALKING_HIGH_KNEES, "WALKING_HIGH_KNEES")
-        stringMap.put(WALKING_KNEE_HUGS, "WALKING_KNEE_HUGS")
-        stringMap.put(WALKING_LEG_CRADLES, "WALKING_LEG_CRADLES")
-        stringMap.put(WALKOUT, "WALKOUT")
-        stringMap.put(WALKOUT_FROM_PUSH_UP_POSITION, "WALKOUT_FROM_PUSH_UP_POSITION")
-        stringMap.put(BICEPS_STRETCH, "BICEPS_STRETCH")
-        stringMap.put(GLUTES_STRETCH, "GLUTES_STRETCH")
-        stringMap.put(STANDING_HAMSTRING_STRETCH, "STANDING_HAMSTRING_STRETCH")
-        stringMap.put(STRETCH_90_90, "STRETCH_90_90")
-        stringMap.put(STRETCH_ABS, "STRETCH_ABS")
-        stringMap.put(STRETCH_BUTTERFLY, "STRETCH_BUTTERFLY")
-        stringMap.put(STRETCH_CALF, "STRETCH_CALF")
-        stringMap.put(STRETCH_CAT_COW, "STRETCH_CAT_COW")
-        stringMap.put(STRETCH_CHILDS_POSE, "STRETCH_CHILDS_POSE")
-        stringMap.put(STRETCH_COBRA, "STRETCH_COBRA")
-        stringMap.put(STRETCH_FOREARMS, "STRETCH_FOREARMS")
-        stringMap.put(STRETCH_FORWARD_GLUTES, "STRETCH_FORWARD_GLUTES")
-        stringMap.put(STRETCH_FRONT_SPLIT, "STRETCH_FRONT_SPLIT")
-        stringMap.put(STRETCH_HAMSTRING, "STRETCH_HAMSTRING")
-        stringMap.put(STRETCH_HIP_FLEXOR_AND_QUAD, "STRETCH_HIP_FLEXOR_AND_QUAD")
-        stringMap.put(STRETCH_LAT, "STRETCH_LAT")
-        stringMap.put(STRETCH_LEVATOR_SCAPULAE, "STRETCH_LEVATOR_SCAPULAE")
-        stringMap.put(STRETCH_LUNGE_WITH_SPINAL_TWIST, "STRETCH_LUNGE_WITH_SPINAL_TWIST")
-        stringMap.put(STRETCH_LUNGING_HIP_FLEXOR, "STRETCH_LUNGING_HIP_FLEXOR")
-        stringMap.put(STRETCH_LYING_ABDUCTION, "STRETCH_LYING_ABDUCTION")
-        stringMap.put(STRETCH_LYING_IT_BAND, "STRETCH_LYING_IT_BAND")
-        stringMap.put(STRETCH_LYING_KNEE_TO_CHEST, "STRETCH_LYING_KNEE_TO_CHEST")
-        stringMap.put(STRETCH_LYING_PIRIFORMIS, "STRETCH_LYING_PIRIFORMIS")
-        stringMap.put(STRETCH_LYING_SPINAL_TWIST, "STRETCH_LYING_SPINAL_TWIST")
-        stringMap.put(STRETCH_NECK, "STRETCH_NECK")
-        stringMap.put(STRETCH_OBLIQUES, "STRETCH_OBLIQUES")
-        stringMap.put(STRETCH_OVER_UNDER_SHOULDER, "STRETCH_OVER_UNDER_SHOULDER")
-        stringMap.put(STRETCH_PECTORAL, "STRETCH_PECTORAL")
-        stringMap.put(STRETCH_PIGEON_POSE, "STRETCH_PIGEON_POSE")
-        stringMap.put(STRETCH_PIRIFORMIS, "STRETCH_PIRIFORMIS")
-        stringMap.put(STRETCH_QUAD, "STRETCH_QUAD")
-        stringMap.put(STRETCH_SCORPION, "STRETCH_SCORPION")
-        stringMap.put(STRETCH_SHOULDER, "STRETCH_SHOULDER")
-        stringMap.put(STRETCH_SIDE, "STRETCH_SIDE")
-        stringMap.put(STRETCH_SIDE_LUNGE, "STRETCH_SIDE_LUNGE")
-        stringMap.put(STRETCH_SIDE_SPLIT, "STRETCH_SIDE_SPLIT")
-        stringMap.put(STRETCH_STANDING_IT_BAND, "STRETCH_STANDING_IT_BAND")
-        stringMap.put(STRETCH_STRADDLE, "STRETCH_STRADDLE")
-        stringMap.put(STRETCH_TRICEPS, "STRETCH_TRICEPS")
-        stringMap.put(STRETCH_WALL_CHEST_AND_SHOULDER, "STRETCH_WALL_CHEST_AND_SHOULDER")
-        stringMap.put(NECK_ROTATIONS_WHEELCHAIR, "NECK_ROTATIONS_WHEELCHAIR")
-        stringMap.put(HALF_KNEELING_ARM_ROTATION, "HALF_KNEELING_ARM_ROTATION")
-        stringMap.put(THREE_WAY_ANKLE_MOBILIZATION, "THREE_WAY_ANKLE_MOBILIZATION")
-        stringMap.put(NINETY_NINETY_HIP_SWITCH, "NINETY_NINETY_HIP_SWITCH")
-        stringMap.put(ACTIVE_FROG, "ACTIVE_FROG")
-        stringMap.put(SHOULDER_SWEEPS, "SHOULDER_SWEEPS")
-        stringMap.put(ANKLE_LUNGES, "ANKLE_LUNGES")
-        stringMap.put(BACK_ROLL_FOAM_ROLLER, "BACK_ROLL_FOAM_ROLLER")
-        stringMap.put(BEAR_CRAWL, "BEAR_CRAWL")
-        stringMap.put(LATISSIMUS_DORSI_FOAM_ROLL, "LATISSIMUS_DORSI_FOAM_ROLL")
-        stringMap.put(REVERSE_T_HIP_OPENER, "REVERSE_T_HIP_OPENER")
-        stringMap.put(SHOULDER_ROLLS, "SHOULDER_ROLLS")
-        stringMap.put(CHEST_OPENERS, "CHEST_OPENERS")
-        stringMap.put(TRICEPS_STRETCH, "TRICEPS_STRETCH")
-        stringMap.put(UPPER_BACK_STRETCH, "UPPER_BACK_STRETCH")
-        stringMap.put(HIP_CIRCLES, "HIP_CIRCLES")
-        stringMap.put(ANKLE_STRETCH, "ANKLE_STRETCH")
-        stringMap.put(MARCHING_IN_PLACE, "MARCHING_IN_PLACE")
-        stringMap.put(TRICEPS_STRETCH_WHEELCHAIR, "TRICEPS_STRETCH_WHEELCHAIR")
-        stringMap.put(UPPER_BACK_STRETCH_WHEELCHAIR, "UPPER_BACK_STRETCH_WHEELCHAIR")
+        stringMap[QUADRUPED_ROCKING] = "QUADRUPED_ROCKING"
+        stringMap[NECK_TILTS] = "NECK_TILTS"
+        stringMap[ANKLE_CIRCLES] = "ANKLE_CIRCLES"
+        stringMap[ANKLE_DORSIFLEXION_WITH_BAND] = "ANKLE_DORSIFLEXION_WITH_BAND"
+        stringMap[ANKLE_INTERNAL_ROTATION] = "ANKLE_INTERNAL_ROTATION"
+        stringMap[ARM_CIRCLES] = "ARM_CIRCLES"
+        stringMap[BENT_OVER_REACH_TO_SKY] = "BENT_OVER_REACH_TO_SKY"
+        stringMap[CAT_CAMEL] = "CAT_CAMEL"
+        stringMap[ELBOW_TO_FOOT_LUNGE] = "ELBOW_TO_FOOT_LUNGE"
+        stringMap[FORWARD_AND_BACKWARD_LEG_SWINGS] = "FORWARD_AND_BACKWARD_LEG_SWINGS"
+        stringMap[GROINERS] = "GROINERS"
+        stringMap[INVERTED_HAMSTRING_STRETCH] = "INVERTED_HAMSTRING_STRETCH"
+        stringMap[LATERAL_DUCK_UNDER] = "LATERAL_DUCK_UNDER"
+        stringMap[NECK_ROTATIONS] = "NECK_ROTATIONS"
+        stringMap[OPPOSITE_ARM_AND_LEG_BALANCE] = "OPPOSITE_ARM_AND_LEG_BALANCE"
+        stringMap[REACH_ROLL_AND_LIFT] = "REACH_ROLL_AND_LIFT"
+        stringMap[SCORPION] = "SCORPION"
+        stringMap[SHOULDER_CIRCLES] = "SHOULDER_CIRCLES"
+        stringMap[SIDE_TO_SIDE_LEG_SWINGS] = "SIDE_TO_SIDE_LEG_SWINGS"
+        stringMap[SLEEPER_STRETCH] = "SLEEPER_STRETCH"
+        stringMap[SLIDE_OUT] = "SLIDE_OUT"
+        stringMap[SWISS_BALL_HIP_CROSSOVER] = "SWISS_BALL_HIP_CROSSOVER"
+        stringMap[SWISS_BALL_REACH_ROLL_AND_LIFT] = "SWISS_BALL_REACH_ROLL_AND_LIFT"
+        stringMap[SWISS_BALL_WINDSHIELD_WIPERS] = "SWISS_BALL_WINDSHIELD_WIPERS"
+        stringMap[THORACIC_ROTATION] = "THORACIC_ROTATION"
+        stringMap[WALKING_HIGH_KICKS] = "WALKING_HIGH_KICKS"
+        stringMap[WALKING_HIGH_KNEES] = "WALKING_HIGH_KNEES"
+        stringMap[WALKING_KNEE_HUGS] = "WALKING_KNEE_HUGS"
+        stringMap[WALKING_LEG_CRADLES] = "WALKING_LEG_CRADLES"
+        stringMap[WALKOUT] = "WALKOUT"
+        stringMap[WALKOUT_FROM_PUSH_UP_POSITION] = "WALKOUT_FROM_PUSH_UP_POSITION"
+        stringMap[BICEPS_STRETCH] = "BICEPS_STRETCH"
+        stringMap[GLUTES_STRETCH] = "GLUTES_STRETCH"
+        stringMap[STANDING_HAMSTRING_STRETCH] = "STANDING_HAMSTRING_STRETCH"
+        stringMap[STRETCH_90_90] = "STRETCH_90_90"
+        stringMap[STRETCH_ABS] = "STRETCH_ABS"
+        stringMap[STRETCH_BUTTERFLY] = "STRETCH_BUTTERFLY"
+        stringMap[STRETCH_CALF] = "STRETCH_CALF"
+        stringMap[STRETCH_CAT_COW] = "STRETCH_CAT_COW"
+        stringMap[STRETCH_CHILDS_POSE] = "STRETCH_CHILDS_POSE"
+        stringMap[STRETCH_COBRA] = "STRETCH_COBRA"
+        stringMap[STRETCH_FOREARMS] = "STRETCH_FOREARMS"
+        stringMap[STRETCH_FORWARD_GLUTES] = "STRETCH_FORWARD_GLUTES"
+        stringMap[STRETCH_FRONT_SPLIT] = "STRETCH_FRONT_SPLIT"
+        stringMap[STRETCH_HAMSTRING] = "STRETCH_HAMSTRING"
+        stringMap[STRETCH_HIP_FLEXOR_AND_QUAD] = "STRETCH_HIP_FLEXOR_AND_QUAD"
+        stringMap[STRETCH_LAT] = "STRETCH_LAT"
+        stringMap[STRETCH_LEVATOR_SCAPULAE] = "STRETCH_LEVATOR_SCAPULAE"
+        stringMap[STRETCH_LUNGE_WITH_SPINAL_TWIST] = "STRETCH_LUNGE_WITH_SPINAL_TWIST"
+        stringMap[STRETCH_LUNGING_HIP_FLEXOR] = "STRETCH_LUNGING_HIP_FLEXOR"
+        stringMap[STRETCH_LYING_ABDUCTION] = "STRETCH_LYING_ABDUCTION"
+        stringMap[STRETCH_LYING_IT_BAND] = "STRETCH_LYING_IT_BAND"
+        stringMap[STRETCH_LYING_KNEE_TO_CHEST] = "STRETCH_LYING_KNEE_TO_CHEST"
+        stringMap[STRETCH_LYING_PIRIFORMIS] = "STRETCH_LYING_PIRIFORMIS"
+        stringMap[STRETCH_LYING_SPINAL_TWIST] = "STRETCH_LYING_SPINAL_TWIST"
+        stringMap[STRETCH_NECK] = "STRETCH_NECK"
+        stringMap[STRETCH_OBLIQUES] = "STRETCH_OBLIQUES"
+        stringMap[STRETCH_OVER_UNDER_SHOULDER] = "STRETCH_OVER_UNDER_SHOULDER"
+        stringMap[STRETCH_PECTORAL] = "STRETCH_PECTORAL"
+        stringMap[STRETCH_PIGEON_POSE] = "STRETCH_PIGEON_POSE"
+        stringMap[STRETCH_PIRIFORMIS] = "STRETCH_PIRIFORMIS"
+        stringMap[STRETCH_QUAD] = "STRETCH_QUAD"
+        stringMap[STRETCH_SCORPION] = "STRETCH_SCORPION"
+        stringMap[STRETCH_SHOULDER] = "STRETCH_SHOULDER"
+        stringMap[STRETCH_SIDE] = "STRETCH_SIDE"
+        stringMap[STRETCH_SIDE_LUNGE] = "STRETCH_SIDE_LUNGE"
+        stringMap[STRETCH_SIDE_SPLIT] = "STRETCH_SIDE_SPLIT"
+        stringMap[STRETCH_STANDING_IT_BAND] = "STRETCH_STANDING_IT_BAND"
+        stringMap[STRETCH_STRADDLE] = "STRETCH_STRADDLE"
+        stringMap[STRETCH_TRICEPS] = "STRETCH_TRICEPS"
+        stringMap[STRETCH_WALL_CHEST_AND_SHOULDER] = "STRETCH_WALL_CHEST_AND_SHOULDER"
+        stringMap[NECK_ROTATIONS_WHEELCHAIR] = "NECK_ROTATIONS_WHEELCHAIR"
+        stringMap[HALF_KNEELING_ARM_ROTATION] = "HALF_KNEELING_ARM_ROTATION"
+        stringMap[THREE_WAY_ANKLE_MOBILIZATION] = "THREE_WAY_ANKLE_MOBILIZATION"
+        stringMap[NINETY_NINETY_HIP_SWITCH] = "NINETY_NINETY_HIP_SWITCH"
+        stringMap[ACTIVE_FROG] = "ACTIVE_FROG"
+        stringMap[SHOULDER_SWEEPS] = "SHOULDER_SWEEPS"
+        stringMap[ANKLE_LUNGES] = "ANKLE_LUNGES"
+        stringMap[BACK_ROLL_FOAM_ROLLER] = "BACK_ROLL_FOAM_ROLLER"
+        stringMap[BEAR_CRAWL] = "BEAR_CRAWL"
+        stringMap[LATISSIMUS_DORSI_FOAM_ROLL] = "LATISSIMUS_DORSI_FOAM_ROLL"
+        stringMap[REVERSE_T_HIP_OPENER] = "REVERSE_T_HIP_OPENER"
+        stringMap[SHOULDER_ROLLS] = "SHOULDER_ROLLS"
+        stringMap[CHEST_OPENERS] = "CHEST_OPENERS"
+        stringMap[TRICEPS_STRETCH] = "TRICEPS_STRETCH"
+        stringMap[UPPER_BACK_STRETCH] = "UPPER_BACK_STRETCH"
+        stringMap[HIP_CIRCLES] = "HIP_CIRCLES"
+        stringMap[ANKLE_STRETCH] = "ANKLE_STRETCH"
+        stringMap[MARCHING_IN_PLACE] = "MARCHING_IN_PLACE"
+        stringMap[TRICEPS_STRETCH_WHEELCHAIR] = "TRICEPS_STRETCH_WHEELCHAIR"
+        stringMap[UPPER_BACK_STRETCH_WHEELCHAIR] = "UPPER_BACK_STRETCH_WHEELCHAIR"
     }
 
 
@@ -205,9 +204,9 @@ object WarmUpExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -218,7 +217,7 @@ object WarmUpExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

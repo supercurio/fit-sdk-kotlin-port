@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface HrmProfileMesgListener {
-    fun onMesg(mesg: HrmProfileMesg?)
+    fun onMesg(mesg: HrmProfileMesg)
 }

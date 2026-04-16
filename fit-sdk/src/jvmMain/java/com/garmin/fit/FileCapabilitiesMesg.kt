@@ -12,19 +12,19 @@ package com.garmin.fit
 class FileCapabilitiesMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.FILE_CAPABILITIES))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,19 +34,16 @@ class FileCapabilitiesMesg : Mesg {
     var type: File?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return File.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return File.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
@@ -56,13 +53,13 @@ class FileCapabilitiesMesg : Mesg {
     var flags: Short?
         /**
          * Get flags field
-         * 
+         *
          * @return flags
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set flags field
-         * 
+         *
          * @param flags The new flags value to be set
          */
         set(flags) {
@@ -72,13 +69,13 @@ class FileCapabilitiesMesg : Mesg {
     var directory: String?
         /**
          * Get directory field
-         * 
+         *
          * @return directory
          */
         get() = getFieldStringValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set directory field
-         * 
+         *
          * @param directory The new directory value to be set
          */
         set(directory) {
@@ -88,13 +85,13 @@ class FileCapabilitiesMesg : Mesg {
     var maxCount: Int?
         /**
          * Get max_count field
-         * 
+         *
          * @return max_count
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_count field
-         * 
+         *
          * @param maxCount The new maxCount value to be set
          */
         set(maxCount) {
@@ -105,14 +102,14 @@ class FileCapabilitiesMesg : Mesg {
         /**
          * Get max_size field
          * Units: bytes
-         * 
+         *
          * @return max_size
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_size field
          * Units: bytes
-         * 
+         *
          * @param maxSize The new maxSize value to be set
          */
         set(maxSize) {
@@ -133,11 +130,10 @@ class FileCapabilitiesMesg : Mesg {
         const val MaxSizeFieldNum: Int = 4
 
 
-        val fileCapabilitiesMesg: Mesg
+        // file_capabilities
+        val fileCapabilitiesMesg: Mesg = Mesg("file_capabilities", MesgNum.FILE_CAPABILITIES)
 
         init {
-            // file_capabilities
-            fileCapabilitiesMesg = Mesg("file_capabilities", MesgNum.FILE_CAPABILITIES)
             fileCapabilitiesMesg.addField(
                 Field(
                     "message_index",

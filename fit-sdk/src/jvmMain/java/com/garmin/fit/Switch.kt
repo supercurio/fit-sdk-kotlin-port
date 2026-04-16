@@ -22,7 +22,7 @@ enum class Switch(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Switch.INVALID
+            return INVALID
         }
 
         /**

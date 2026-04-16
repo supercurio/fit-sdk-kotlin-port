@@ -12,19 +12,19 @@ package com.garmin.fit
 class TotalsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TOTALS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,18 +35,18 @@ class TotalsMesg : Mesg {
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timerTime: Long?
@@ -54,7 +54,7 @@ class TotalsMesg : Mesg {
          * Get timer_time field
          * Units: s
          * Comment: Excludes pauses
-         * 
+         *
          * @return timer_time
          */
         get() = getFieldLongValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -62,7 +62,7 @@ class TotalsMesg : Mesg {
          * Set timer_time field
          * Units: s
          * Comment: Excludes pauses
-         * 
+         *
          * @param timerTime The new timerTime value to be set
          */
         set(timerTime) {
@@ -73,14 +73,14 @@ class TotalsMesg : Mesg {
         /**
          * Get distance field
          * Units: m
-         * 
+         *
          * @return distance
          */
         get() = getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set distance field
          * Units: m
-         * 
+         *
          * @param distance The new distance value to be set
          */
         set(distance) {
@@ -91,14 +91,14 @@ class TotalsMesg : Mesg {
         /**
          * Get calories field
          * Units: kcal
-         * 
+         *
          * @return calories
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set calories field
          * Units: kcal
-         * 
+         *
          * @param calories The new calories value to be set
          */
         set(calories) {
@@ -108,19 +108,16 @@ class TotalsMesg : Mesg {
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
@@ -132,7 +129,7 @@ class TotalsMesg : Mesg {
          * Get elapsed_time field
          * Units: s
          * Comment: Includes pauses
-         * 
+         *
          * @return elapsed_time
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -140,7 +137,7 @@ class TotalsMesg : Mesg {
          * Set elapsed_time field
          * Units: s
          * Comment: Includes pauses
-         * 
+         *
          * @param elapsedTime The new elapsedTime value to be set
          */
         set(elapsedTime) {
@@ -150,13 +147,13 @@ class TotalsMesg : Mesg {
     var sessions: Int?
         /**
          * Get sessions field
-         * 
+         *
          * @return sessions
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sessions field
-         * 
+         *
          * @param sessions The new sessions value to be set
          */
         set(sessions) {
@@ -167,14 +164,14 @@ class TotalsMesg : Mesg {
         /**
          * Get active_time field
          * Units: s
-         * 
+         *
          * @return active_time
          */
         get() = getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set active_time field
          * Units: s
-         * 
+         *
          * @param activeTime The new activeTime value to be set
          */
         set(activeTime) {
@@ -184,13 +181,13 @@ class TotalsMesg : Mesg {
     var sportIndex: Short?
         /**
          * Get sport_index field
-         * 
+         *
          * @return sport_index
          */
         get() = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sport_index field
-         * 
+         *
          * @param sportIndex The new sportIndex value to be set
          */
         set(sportIndex) {
@@ -219,11 +216,10 @@ class TotalsMesg : Mesg {
         const val SportIndexFieldNum: Int = 9
 
 
-        val totalsMesg: Mesg
+        // totals
+        val totalsMesg: Mesg = Mesg("totals", MesgNum.TOTALS)
 
         init {
-            // totals
-            totalsMesg = Mesg("totals", MesgNum.TOTALS)
             totalsMesg.addField(
                 Field(
                     "message_index",

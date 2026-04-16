@@ -12,59 +12,56 @@ package com.garmin.fit
 class BikeProfileMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.BIKE_PROFILE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
             setFieldValue(254, 0, messageIndex, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(0, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
@@ -74,19 +71,16 @@ class BikeProfileMesg : Mesg {
     var subSport: SubSport?
         /**
          * Get sub_sport field
-         * 
+         *
          * @return sub_sport
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SubSport.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SubSport.getByValue(value)
         }
         /**
          * Set sub_sport field
-         * 
+         *
          * @param subSport The new subSport value to be set
          */
         set(subSport) {
@@ -97,14 +91,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get odometer field
          * Units: m
-         * 
+         *
          * @return odometer
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set odometer field
          * Units: m
-         * 
+         *
          * @param odometer The new odometer value to be set
          */
         set(odometer) {
@@ -114,13 +108,13 @@ class BikeProfileMesg : Mesg {
     var bikeSpdAntId: Int?
         /**
          * Get bike_spd_ant_id field
-         * 
+         *
          * @return bike_spd_ant_id
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_spd_ant_id field
-         * 
+         *
          * @param bikeSpdAntId The new bikeSpdAntId value to be set
          */
         set(bikeSpdAntId) {
@@ -130,13 +124,13 @@ class BikeProfileMesg : Mesg {
     var bikeCadAntId: Int?
         /**
          * Get bike_cad_ant_id field
-         * 
+         *
          * @return bike_cad_ant_id
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_cad_ant_id field
-         * 
+         *
          * @param bikeCadAntId The new bikeCadAntId value to be set
          */
         set(bikeCadAntId) {
@@ -146,13 +140,13 @@ class BikeProfileMesg : Mesg {
     var bikeSpdcadAntId: Int?
         /**
          * Get bike_spdcad_ant_id field
-         * 
+         *
          * @return bike_spdcad_ant_id
          */
         get() = getFieldIntegerValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_spdcad_ant_id field
-         * 
+         *
          * @param bikeSpdcadAntId The new bikeSpdcadAntId value to be set
          */
         set(bikeSpdcadAntId) {
@@ -162,13 +156,13 @@ class BikeProfileMesg : Mesg {
     var bikePowerAntId: Int?
         /**
          * Get bike_power_ant_id field
-         * 
+         *
          * @return bike_power_ant_id
          */
         get() = getFieldIntegerValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_power_ant_id field
-         * 
+         *
          * @param bikePowerAntId The new bikePowerAntId value to be set
          */
         set(bikePowerAntId) {
@@ -179,14 +173,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get custom_wheelsize field
          * Units: m
-         * 
+         *
          * @return custom_wheelsize
          */
         get() = getFieldFloatValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set custom_wheelsize field
          * Units: m
-         * 
+         *
          * @param customWheelsize The new customWheelsize value to be set
          */
         set(customWheelsize) {
@@ -197,14 +191,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get auto_wheelsize field
          * Units: m
-         * 
+         *
          * @return auto_wheelsize
          */
         get() = getFieldFloatValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set auto_wheelsize field
          * Units: m
-         * 
+         *
          * @param autoWheelsize The new autoWheelsize value to be set
          */
         set(autoWheelsize) {
@@ -215,14 +209,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get bike_weight field
          * Units: kg
-         * 
+         *
          * @return bike_weight
          */
         get() = getFieldFloatValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_weight field
          * Units: kg
-         * 
+         *
          * @param bikeWeight The new bikeWeight value to be set
          */
         set(bikeWeight) {
@@ -233,14 +227,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get power_cal_factor field
          * Units: %
-         * 
+         *
          * @return power_cal_factor
          */
         get() = getFieldFloatValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set power_cal_factor field
          * Units: %
-         * 
+         *
          * @param powerCalFactor The new powerCalFactor value to be set
          */
         set(powerCalFactor) {
@@ -250,19 +244,16 @@ class BikeProfileMesg : Mesg {
     var autoWheelCal: Bool?
         /**
          * Get auto_wheel_cal field
-         * 
+         *
          * @return auto_wheel_cal
          */
         get() {
-            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set auto_wheel_cal field
-         * 
+         *
          * @param autoWheelCal The new autoWheelCal value to be set
          */
         set(autoWheelCal) {
@@ -272,19 +263,16 @@ class BikeProfileMesg : Mesg {
     var autoPowerZero: Bool?
         /**
          * Get auto_power_zero field
-         * 
+         *
          * @return auto_power_zero
          */
         get() {
-            val value = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set auto_power_zero field
-         * 
+         *
          * @param autoPowerZero The new autoPowerZero value to be set
          */
         set(autoPowerZero) {
@@ -294,13 +282,13 @@ class BikeProfileMesg : Mesg {
     var id: Short?
         /**
          * Get id field
-         * 
+         *
          * @return id
          */
         get() = getFieldShortValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set id field
-         * 
+         *
          * @param id The new id value to be set
          */
         set(id) {
@@ -310,19 +298,16 @@ class BikeProfileMesg : Mesg {
     var spdEnabled: Bool?
         /**
          * Get spd_enabled field
-         * 
+         *
          * @return spd_enabled
          */
         get() {
-            val value = getFieldShortValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set spd_enabled field
-         * 
+         *
          * @param spdEnabled The new spdEnabled value to be set
          */
         set(spdEnabled) {
@@ -332,19 +317,16 @@ class BikeProfileMesg : Mesg {
     var cadEnabled: Bool?
         /**
          * Get cad_enabled field
-         * 
+         *
          * @return cad_enabled
          */
         get() {
-            val value = getFieldShortValue(16, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(16, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set cad_enabled field
-         * 
+         *
          * @param cadEnabled The new cadEnabled value to be set
          */
         set(cadEnabled) {
@@ -354,19 +336,16 @@ class BikeProfileMesg : Mesg {
     var spdcadEnabled: Bool?
         /**
          * Get spdcad_enabled field
-         * 
+         *
          * @return spdcad_enabled
          */
         get() {
-            val value = getFieldShortValue(17, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(17, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set spdcad_enabled field
-         * 
+         *
          * @param spdcadEnabled The new spdcadEnabled value to be set
          */
         set(spdcadEnabled) {
@@ -376,19 +355,16 @@ class BikeProfileMesg : Mesg {
     var powerEnabled: Bool?
         /**
          * Get power_enabled field
-         * 
+         *
          * @return power_enabled
          */
         get() {
-            val value = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set power_enabled field
-         * 
+         *
          * @param powerEnabled The new powerEnabled value to be set
          */
         set(powerEnabled) {
@@ -399,14 +375,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get crank_length field
          * Units: mm
-         * 
+         *
          * @return crank_length
          */
         get() = getFieldFloatValue(19, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set crank_length field
          * Units: mm
-         * 
+         *
          * @param crankLength The new crankLength value to be set
          */
         set(crankLength) {
@@ -416,19 +392,16 @@ class BikeProfileMesg : Mesg {
     var enabled: Bool?
         /**
          * Get enabled field
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(20, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(20, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -438,13 +411,13 @@ class BikeProfileMesg : Mesg {
     var bikeSpdAntIdTransType: Short?
         /**
          * Get bike_spd_ant_id_trans_type field
-         * 
+         *
          * @return bike_spd_ant_id_trans_type
          */
         get() = getFieldShortValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_spd_ant_id_trans_type field
-         * 
+         *
          * @param bikeSpdAntIdTransType The new bikeSpdAntIdTransType value to be set
          */
         set(bikeSpdAntIdTransType) {
@@ -454,13 +427,13 @@ class BikeProfileMesg : Mesg {
     var bikeCadAntIdTransType: Short?
         /**
          * Get bike_cad_ant_id_trans_type field
-         * 
+         *
          * @return bike_cad_ant_id_trans_type
          */
         get() = getFieldShortValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_cad_ant_id_trans_type field
-         * 
+         *
          * @param bikeCadAntIdTransType The new bikeCadAntIdTransType value to be set
          */
         set(bikeCadAntIdTransType) {
@@ -470,13 +443,13 @@ class BikeProfileMesg : Mesg {
     var bikeSpdcadAntIdTransType: Short?
         /**
          * Get bike_spdcad_ant_id_trans_type field
-         * 
+         *
          * @return bike_spdcad_ant_id_trans_type
          */
         get() = getFieldShortValue(23, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_spdcad_ant_id_trans_type field
-         * 
+         *
          * @param bikeSpdcadAntIdTransType The new bikeSpdcadAntIdTransType value to be set
          */
         set(bikeSpdcadAntIdTransType) {
@@ -486,13 +459,13 @@ class BikeProfileMesg : Mesg {
     var bikePowerAntIdTransType: Short?
         /**
          * Get bike_power_ant_id_trans_type field
-         * 
+         *
          * @return bike_power_ant_id_trans_type
          */
         get() = getFieldShortValue(24, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bike_power_ant_id_trans_type field
-         * 
+         *
          * @param bikePowerAntIdTransType The new bikePowerAntIdTransType value to be set
          */
         set(bikePowerAntIdTransType) {
@@ -503,14 +476,14 @@ class BikeProfileMesg : Mesg {
         /**
          * Get odometer_rollover field
          * Comment: Rollover counter that can be used to extend the odometer
-         * 
+         *
          * @return odometer_rollover
          */
         get() = getFieldShortValue(37, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set odometer_rollover field
          * Comment: Rollover counter that can be used to extend the odometer
-         * 
+         *
          * @param odometerRollover The new odometerRollover value to be set
          */
         set(odometerRollover) {
@@ -521,33 +494,33 @@ class BikeProfileMesg : Mesg {
         /**
          * Get front_gear_num field
          * Comment: Number of front gears
-         * 
+         *
          * @return front_gear_num
          */
         get() = getFieldShortValue(38, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set front_gear_num field
          * Comment: Number of front gears
-         * 
+         *
          * @param frontGearNum The new frontGearNum value to be set
          */
         set(frontGearNum) {
             setFieldValue(38, 0, frontGearNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val frontGear: Array<Short?>?
-        get() = getFieldShortValues(39, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val frontGear: Array<Short>?
+        get() = getFieldShortValues(FrontGearFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numFrontGear: Int
         /**
          * @return number of front_gear
          */
-        get() = getNumFieldValues(39, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(FrontGearFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get front_gear field
      * Comment: Number of teeth on each gear 0 is innermost
-     * 
+     *
      * @param index of front_gear
      * @return front_gear
      */
@@ -558,7 +531,7 @@ class BikeProfileMesg : Mesg {
     /**
      * Set front_gear field
      * Comment: Number of teeth on each gear 0 is innermost
-     * 
+     *
      * @param index of front_gear
      * @param frontGear The new frontGear value to be set
      */
@@ -570,44 +543,44 @@ class BikeProfileMesg : Mesg {
         /**
          * Get rear_gear_num field
          * Comment: Number of rear gears
-         * 
+         *
          * @return rear_gear_num
          */
         get() = getFieldShortValue(40, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set rear_gear_num field
          * Comment: Number of rear gears
-         * 
+         *
          * @param rearGearNum The new rearGearNum value to be set
          */
         set(rearGearNum) {
             setFieldValue(40, 0, rearGearNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val rearGear: Array<Short?>?
-        get() = getFieldShortValues(41, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val rearGear: Array<Short>?
+        get() = getFieldShortValues(RearGearFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numRearGear: Int
         /**
          * @return number of rear_gear
          */
-        get() = getNumFieldValues(41, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(RearGearFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get rear_gear field
      * Comment: Number of teeth on each gear 0 is innermost
-     * 
+     *
      * @param index of rear_gear
      * @return rear_gear
      */
     fun getRearGear(index: Int): Short? {
-        return getFieldShortValue(41, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        return getFieldShortValue(RearGearFieldNum, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
     /**
      * Set rear_gear field
      * Comment: Number of teeth on each gear 0 is innermost
-     * 
+     *
      * @param index of rear_gear
      * @param rearGear The new rearGear value to be set
      */
@@ -618,19 +591,16 @@ class BikeProfileMesg : Mesg {
     var shimanoDi2Enabled: Bool?
         /**
          * Get shimano_di2_enabled field
-         * 
+         *
          * @return shimano_di2_enabled
          */
         get() {
-            val value = getFieldShortValue(44, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(44, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set shimano_di2_enabled field
-         * 
+         *
          * @param shimanoDi2Enabled The new shimanoDi2Enabled value to be set
          */
         set(shimanoDi2Enabled) {
@@ -703,11 +673,10 @@ class BikeProfileMesg : Mesg {
         const val ShimanoDi2EnabledFieldNum: Int = 44
 
 
-        val bikeProfileMesg: Mesg
+        // bike_profile
+        val bikeProfileMesg: Mesg = Mesg("bike_profile", MesgNum.BIKE_PROFILE)
 
         init {
-            // bike_profile
-            bikeProfileMesg = Mesg("bike_profile", MesgNum.BIKE_PROFILE)
             bikeProfileMesg.addField(
                 Field(
                     "message_index",

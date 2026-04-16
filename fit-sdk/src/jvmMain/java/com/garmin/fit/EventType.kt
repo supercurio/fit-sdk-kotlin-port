@@ -29,7 +29,7 @@ enum class EventType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return EventType.INVALID
+            return INVALID
         }
 
         /**

@@ -28,7 +28,7 @@ enum class SwimStroke(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SwimStroke.INVALID
+            return INVALID
         }
 
         /**

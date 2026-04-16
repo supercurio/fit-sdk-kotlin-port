@@ -12,41 +12,39 @@ package com.garmin.fit
 class SegmentIdMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_ID))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
-    /**
-     * Get name field
-     * Comment: Friendly name assigned to segment
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * Comment: Friendly name assigned to segment
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(0, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var uuid: String?
         /**
          * Get uuid field
          * Comment: UUID of the segment
-         * 
+         *
          * @return uuid
          */
         get() = getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set uuid field
          * Comment: UUID of the segment
-         * 
+         *
          * @param uuid The new uuid value to be set
          */
         set(uuid) {
@@ -57,20 +55,17 @@ class SegmentIdMesg : Mesg {
         /**
          * Get sport field
          * Comment: Sport associated with the segment
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
          * Comment: Sport associated with the segment
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
@@ -81,20 +76,17 @@ class SegmentIdMesg : Mesg {
         /**
          * Get enabled field
          * Comment: Segment enabled for evaluation
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
          * Comment: Segment enabled for evaluation
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -105,14 +97,14 @@ class SegmentIdMesg : Mesg {
         /**
          * Get user_profile_primary_key field
          * Comment: Primary key of the user that created the segment
-         * 
+         *
          * @return user_profile_primary_key
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set user_profile_primary_key field
          * Comment: Primary key of the user that created the segment
-         * 
+         *
          * @param userProfilePrimaryKey The new userProfilePrimaryKey value to be set
          */
         set(userProfilePrimaryKey) {
@@ -123,14 +115,14 @@ class SegmentIdMesg : Mesg {
         /**
          * Get device_id field
          * Comment: ID of the device that created the segment
-         * 
+         *
          * @return device_id
          */
         get() = getFieldLongValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_id field
          * Comment: ID of the device that created the segment
-         * 
+         *
          * @param deviceId The new deviceId value to be set
          */
         set(deviceId) {
@@ -141,14 +133,14 @@ class SegmentIdMesg : Mesg {
         /**
          * Get default_race_leader field
          * Comment: Index for the Leader Board entry selected as the default race participant
-         * 
+         *
          * @return default_race_leader
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set default_race_leader field
          * Comment: Index for the Leader Board entry selected as the default race participant
-         * 
+         *
          * @param defaultRaceLeader The new defaultRaceLeader value to be set
          */
         set(defaultRaceLeader) {
@@ -159,20 +151,17 @@ class SegmentIdMesg : Mesg {
         /**
          * Get delete_status field
          * Comment: Indicates if any segments should be deleted
-         * 
+         *
          * @return delete_status
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SegmentDeleteStatus.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SegmentDeleteStatus.getByValue(value)
         }
         /**
          * Set delete_status field
          * Comment: Indicates if any segments should be deleted
-         * 
+         *
          * @param deleteStatus The new deleteStatus value to be set
          */
         set(deleteStatus) {
@@ -183,20 +172,17 @@ class SegmentIdMesg : Mesg {
         /**
          * Get selection_type field
          * Comment: Indicates how the segment was selected to be sent to the device
-         * 
+         *
          * @return selection_type
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SegmentSelectionType.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SegmentSelectionType.getByValue(value)
         }
         /**
          * Set selection_type field
          * Comment: Indicates how the segment was selected to be sent to the device
-         * 
+         *
          * @param selectionType The new selectionType value to be set
          */
         set(selectionType) {
@@ -223,11 +209,10 @@ class SegmentIdMesg : Mesg {
         const val SelectionTypeFieldNum: Int = 8
 
 
-        val segmentIdMesg: Mesg
+        // segment_id
+        val segmentIdMesg: Mesg = Mesg("segment_id", MesgNum.SEGMENT_ID)
 
         init {
-            // segment_id
-            segmentIdMesg = Mesg("segment_id", MesgNum.SEGMENT_ID)
             segmentIdMesg.addField(
                 Field(
                     "name",

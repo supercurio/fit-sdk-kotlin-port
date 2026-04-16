@@ -12,10 +12,10 @@ package com.garmin.fit
 class HrvMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HRV))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
-    val time: Array<Float?>?
+    val time: Array<Float>?
         get() = getFieldFloatValues(0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTime: Int
@@ -28,7 +28,7 @@ class HrvMesg : Mesg {
      * Get time field
      * Units: s
      * Comment: Time between beats
-     * 
+     *
      * @param index of time
      * @return time
      */
@@ -40,7 +40,7 @@ class HrvMesg : Mesg {
      * Set time field
      * Units: s
      * Comment: Time between beats
-     * 
+     *
      * @param index of time
      * @param time The new time value to be set
      */
@@ -51,12 +51,10 @@ class HrvMesg : Mesg {
     companion object {
         const val TimeFieldNum: Int = 0
 
-
-        val hrvMesg: Mesg
+        // hrv
+        val hrvMesg: Mesg = Mesg("hrv", MesgNum.HRV)
 
         init {
-            // hrv
-            hrvMesg = Mesg("hrv", MesgNum.HRV)
             hrvMesg.addField(
                 Field(
                     "time",

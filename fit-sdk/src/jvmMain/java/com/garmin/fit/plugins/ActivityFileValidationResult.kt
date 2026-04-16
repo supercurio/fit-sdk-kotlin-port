@@ -9,7 +9,6 @@
 package com.garmin.fit.plugins
 
 class ActivityFileValidationResult(val name: String?, val level: Level?) {
-    @JvmField
     var description: String? = null
     var status: Status?
 

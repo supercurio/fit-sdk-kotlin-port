@@ -16,20 +16,20 @@ import java.io.DataOutputStream
  */
 class BufferEncoder @JvmOverloads constructor(
     version: Fit.ProtocolVersion,
-    maxStreamSize: Int = Int.Companion.MAX_VALUE
+    maxStreamSize: Int = Int.MAX_VALUE
 ) : MesgListener, MesgDefinitionListener {
-    private val byteOutStream: ByteArrayOutputStream? = null
-    private val dataOutStream: DataOutputStream? = null
-    private val lastMesgDefinition: Array<MesgDefinition?>? =
-        arrayOfNulls<MesgDefinition>(Fit.MAX_LOCAL_MESGS)
-    private val validator: ProtocolValidator? = null
-    private val version: Fit.ProtocolVersion? = null
-    private val maxStreamSize = 0
+    private val byteOutStream = ByteArrayOutputStream()
+    private val dataOutStream = DataOutputStream(byteOutStream)
+    private val lastMesgDefinition: Array<MesgDefinition?> = arrayOfNulls(Fit.MAX_LOCAL_MESGS)
+    private val validator: ProtocolValidator =
+        ProtocolValidatorFactory.getProtocolValidator(version)
+    private val version: Fit.ProtocolVersion = version
+    private val maxStreamSize = maxStreamSize
 
     /**
      * Constructs a new BufferEncoder. Forces
      * ProtocolVersion.V1_0
-     * 
+     *
      */
     @Deprecated(
         """Encoder now supports encoding files of differing protocol
@@ -40,7 +40,7 @@ class BufferEncoder @JvmOverloads constructor(
 
     /**
      * Constructs a new File Encoder for specified file with a configurable max size.
-     * 
+     *
      * @param version
      * Fit Protocol Version to use when writing files
      * @param maxStreamSize
@@ -48,16 +48,11 @@ class BufferEncoder @JvmOverloads constructor(
      */
     /**
      * Constructs a new File Encoder for specified file.
-     * 
+     *
      * @param version
      * Fit Protocol Version to use when writing files
      */
     init {
-        this.version = version
-        validator = ProtocolValidatorFactory.getProtocolValidator(version)
-        byteOutStream = ByteArrayOutputStream()
-        dataOutStream = DataOutputStream(byteOutStream)
-        this.maxStreamSize = maxStreamSize
         open()
     }
 
@@ -65,7 +60,7 @@ class BufferEncoder @JvmOverloads constructor(
      * Resets the output stream and writes the file header.
      */
     fun open() {
-        byteOutStream!!.reset()
+        byteOutStream.reset()
         writeFileHeader()
     }
 
@@ -73,8 +68,8 @@ class BufferEncoder @JvmOverloads constructor(
      * Writes the file header.
      */
     private fun writeFileHeader() {
-        byteOutStream!!.write(Fit.FILE_HDR_SIZE)
-        byteOutStream.write(version!!.getVersion())
+        byteOutStream.write(Fit.FILE_HDR_SIZE)
+        byteOutStream.write(version.version)
         byteOutStream.write(Fit.PROFILE_VERSION and 0xFF)
         byteOutStream.write(Fit.PROFILE_VERSION shr 8)
         byteOutStream.write(0) // Data size.
@@ -105,12 +100,12 @@ class BufferEncoder @JvmOverloads constructor(
 
     /**
      * Writes a message definition to the buffer.
-     * 
+     *
      * @param mesgDefinition
      * message definition object to write
      */
     fun write(mesgDefinition: MesgDefinition) {
-        if (!validator!!.validateMesgDefn(mesgDefinition)) {
+        if (!validator.validateMesgDefn(mesgDefinition)) {
             throw FitRuntimeException("Incompatible Protocol Features")
         }
 
@@ -118,22 +113,23 @@ class BufferEncoder @JvmOverloads constructor(
 
         validateStreamSize()
 
-        lastMesgDefinition!![mesgDefinition.localNum] = mesgDefinition
+        lastMesgDefinition[mesgDefinition.localNum] = mesgDefinition
     }
 
     /**
      * Writes a message to the buffer.
      * Automatically writes message definition if required.
-     * 
+     *
      * @param mesg
      * message object to write
      */
     fun write(mesg: Mesg) {
-        if (!validator!!.validateMesg(mesg)) {
+        if (!validator.validateMesg(mesg)) {
             throw FitRuntimeException("Incompatible Protocol Features")
         }
 
-        if ((lastMesgDefinition!![mesg.localNum] == null) || !lastMesgDefinition[mesg.localNum]!!.supports(
+        if ((lastMesgDefinition[mesg.localNum] == null) ||
+            !lastMesgDefinition[mesg.localNum]!!.supports(
                 mesg
             )
         ) {
@@ -147,7 +143,7 @@ class BufferEncoder @JvmOverloads constructor(
 
     /**
      * Writes a list of messages to the file.
-     * 
+     *
      * @param mesgs
      * list message objects to write
      */
@@ -160,13 +156,12 @@ class BufferEncoder @JvmOverloads constructor(
     /**
      * Updates the data size in the file header, writes the CRC, and returns the buffer.
      * The output stream buffer is discarded and re-initialized to start encoding a new file.
-     * 
+     *
      * @return file buffer
      */
     fun close(): ByteArray {
         // Write two dummy bytes as place holder for the CRC.
-
-        byteOutStream!!.write(0)
+        byteOutStream.write(0)
         byteOutStream.write(0)
 
         // Get the buffer of the file.
@@ -206,7 +201,7 @@ class BufferEncoder @JvmOverloads constructor(
     }
 
     fun size(): Int {
-        return dataOutStream!!.size()
+        return dataOutStream.size()
     }
 
     private fun validateStreamSize() {

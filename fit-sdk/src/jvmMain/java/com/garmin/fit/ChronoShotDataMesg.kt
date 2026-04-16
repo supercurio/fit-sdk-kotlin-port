@@ -12,37 +12,37 @@ package com.garmin.fit
 class ChronoShotDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CHRONO_SHOT_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var shotSpeed: Float?
         /**
          * Get shot_speed field
          * Units: m/s
-         * 
+         *
          * @return shot_speed
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set shot_speed field
          * Units: m/s
-         * 
+         *
          * @param shotSpeed The new shotSpeed value to be set
          */
         set(shotSpeed) {
@@ -52,13 +52,13 @@ class ChronoShotDataMesg : Mesg {
     var shotNum: Int?
         /**
          * Get shot_num field
-         * 
+         *
          * @return shot_num
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set shot_num field
-         * 
+         *
          * @param shotNum The new shotNum value to be set
          */
         set(shotNum) {
@@ -73,11 +73,10 @@ class ChronoShotDataMesg : Mesg {
         const val ShotNumFieldNum: Int = 1
 
 
-        val chronoShotDataMesg: Mesg
+        // chrono_shot_data
+        val chronoShotDataMesg: Mesg = Mesg("chrono_shot_data", MesgNum.CHRONO_SHOT_DATA)
 
         init {
-            // chrono_shot_data
-            chronoShotDataMesg = Mesg("chrono_shot_data", MesgNum.CHRONO_SHOT_DATA)
             chronoShotDataMesg.addField(
                 Field(
                     "timestamp",

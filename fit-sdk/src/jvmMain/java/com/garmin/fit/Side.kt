@@ -21,7 +21,7 @@ enum class Side(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Side.INVALID
+            return INVALID
         }
 
         /**

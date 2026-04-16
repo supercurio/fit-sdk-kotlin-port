@@ -125,7 +125,7 @@ enum class TimeZone(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return TimeZone.INVALID
+            return INVALID
         }
 
         /**

@@ -17,7 +17,7 @@ object FitDecoderExample {
     fun main(args: Array<String>) {
         println("FIT Decode Example Application")
 
-        if (!FitDecoderExample.validateCommandLine(args)) {
+        if (!validateCommandLine(args)) {
             printUsage()
             return
         }
@@ -30,10 +30,10 @@ object FitDecoderExample {
             val fitDecoder = FitDecoder()
             val fitMessages: FitMessages
 
-            if (args.size == 1) {
-                fitMessages = fitDecoder.decode(inputStream)
+            fitMessages = if (args.size == 1) {
+                fitDecoder.decode(inputStream)
             } else {
-                fitMessages = fitDecoder.decode(inputStream, HrToRecordMesgBroadcastPlugin())
+                fitDecoder.decode(inputStream, HrToRecordMesgBroadcastPlugin())
             }
 
             println("File decoded")
@@ -55,8 +55,8 @@ object FitDecoderExample {
         return
     }
 
-    private fun validateCommandLine(args: Array<String?>): Boolean {
-        if (args.size == 0 || args.size > 2) {
+    private fun validateCommandLine(args: Array<String>): Boolean {
+        if (args.isEmpty() || args.size > 2) {
             return false
         }
 

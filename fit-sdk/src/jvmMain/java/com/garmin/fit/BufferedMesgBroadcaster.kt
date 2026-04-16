@@ -13,43 +13,37 @@ package com.garmin.fit
  * from the given decode stream, buffers them, and offers
  * an opportunity to edit the messages before broadcasting
  * the messages to all registered listeners.
- * 
- * 
+ *
+ *
  * To edit the messages, a MesgBroadcastPlugin must be
  * registered. All registered MesgBroadcastPlugins are given
  * the opportunity to see each message as they are decoded,
  * as well as to see and edit the final list of
  * messages before broadcast to listeners
- * 
+ *
  */
 class BufferedMesgBroadcaster : MesgBroadcaster {
-    private val mesgs: MutableList<Mesg?>
-    private val plugins: MutableList<MesgBroadcastPlugin>
+    private val mesgs: MutableList<Mesg> = ArrayList()
+    private val plugins: MutableList<MesgBroadcastPlugin> = ArrayList()
 
     /**
      * Constructor.
-     * 
+     *
      * Calls the super constructor and initializes lists
      */
     constructor() : super() {
         // Call MesgBroadcaster constructor
-
-        mesgs = ArrayList<Mesg?>()
-        plugins = ArrayList<MesgBroadcastPlugin>()
     }
 
     /**
      * Constructor.
-     * 
+     *
      * Calls the super constructor and initializes lists
-     * 
+     *
      * @param decode The com.garmin.fit.Decode object.
      */
-    constructor(decode: Decode?) : super(decode) {
+    constructor(decode: Decode) : super(decode) {
         // Call MesgBroadcaster constructor
-
-        mesgs = ArrayList<Mesg?>()
-        plugins = ArrayList<MesgBroadcastPlugin>()
     }
 
     /**
@@ -62,10 +56,10 @@ class BufferedMesgBroadcaster : MesgBroadcaster {
 
     /**
      * Buffers incoming messages and passes them on to any registered plugins
-     * 
+     *
      * @param mesg The com.garmin.fit.Mesg to be processed
      */
-    override fun onMesg(mesg: Mesg?) {
+    override fun onMesg(mesg: Mesg) {
         mesgs.add(mesg)
 
         // Pass the message to each plugin. This gives the
@@ -76,7 +70,7 @@ class BufferedMesgBroadcaster : MesgBroadcaster {
     /**
      * Passes the reference to the list of messages to any registered plugins.
      * Sends each message to the MesgBroadcast class to be broadcast to any listeners
-     * 
+     *
      */
     fun broadcast() {
         for (plugin in plugins) plugin.onBroadcast(mesgs)

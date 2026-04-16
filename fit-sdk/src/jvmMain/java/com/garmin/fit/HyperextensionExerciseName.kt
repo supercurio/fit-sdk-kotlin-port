@@ -49,64 +49,51 @@ object HyperextensionExerciseName {
     const val SUPERMAN_ON_SWISS_BALL: Int = 37
     const val COBRA: Int = 38
     const val SUPINE_FLOOR_BARRE: Int = 39 // Deprecated do not use
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(
-            BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH,
-            "BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH"
-        )
-        stringMap.put(
-            WEIGHTED_BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH,
-            "WEIGHTED_BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH"
-        )
-        stringMap.put(BASE_ROTATIONS, "BASE_ROTATIONS")
-        stringMap.put(WEIGHTED_BASE_ROTATIONS, "WEIGHTED_BASE_ROTATIONS")
-        stringMap.put(BENT_KNEE_REVERSE_HYPEREXTENSION, "BENT_KNEE_REVERSE_HYPEREXTENSION")
-        stringMap.put(
-            WEIGHTED_BENT_KNEE_REVERSE_HYPEREXTENSION,
-            "WEIGHTED_BENT_KNEE_REVERSE_HYPEREXTENSION"
-        )
-        stringMap.put(HOLLOW_HOLD_AND_ROLL, "HOLLOW_HOLD_AND_ROLL")
-        stringMap.put(WEIGHTED_HOLLOW_HOLD_AND_ROLL, "WEIGHTED_HOLLOW_HOLD_AND_ROLL")
-        stringMap.put(KICKS, "KICKS")
-        stringMap.put(WEIGHTED_KICKS, "WEIGHTED_KICKS")
-        stringMap.put(KNEE_RAISES, "KNEE_RAISES")
-        stringMap.put(WEIGHTED_KNEE_RAISES, "WEIGHTED_KNEE_RAISES")
-        stringMap.put(KNEELING_SUPERMAN, "KNEELING_SUPERMAN")
-        stringMap.put(WEIGHTED_KNEELING_SUPERMAN, "WEIGHTED_KNEELING_SUPERMAN")
-        stringMap.put(LAT_PULL_DOWN_WITH_ROW, "LAT_PULL_DOWN_WITH_ROW")
-        stringMap.put(MEDICINE_BALL_DEADLIFT_TO_REACH, "MEDICINE_BALL_DEADLIFT_TO_REACH")
-        stringMap.put(ONE_ARM_ONE_LEG_ROW, "ONE_ARM_ONE_LEG_ROW")
-        stringMap.put(ONE_ARM_ROW_WITH_BAND, "ONE_ARM_ROW_WITH_BAND")
-        stringMap.put(OVERHEAD_LUNGE_WITH_MEDICINE_BALL, "OVERHEAD_LUNGE_WITH_MEDICINE_BALL")
-        stringMap.put(PLANK_KNEE_TUCKS, "PLANK_KNEE_TUCKS")
-        stringMap.put(WEIGHTED_PLANK_KNEE_TUCKS, "WEIGHTED_PLANK_KNEE_TUCKS")
-        stringMap.put(SIDE_STEP, "SIDE_STEP")
-        stringMap.put(WEIGHTED_SIDE_STEP, "WEIGHTED_SIDE_STEP")
-        stringMap.put(SINGLE_LEG_BACK_EXTENSION, "SINGLE_LEG_BACK_EXTENSION")
-        stringMap.put(WEIGHTED_SINGLE_LEG_BACK_EXTENSION, "WEIGHTED_SINGLE_LEG_BACK_EXTENSION")
-        stringMap.put(SPINE_EXTENSION, "SPINE_EXTENSION")
-        stringMap.put(WEIGHTED_SPINE_EXTENSION, "WEIGHTED_SPINE_EXTENSION")
-        stringMap.put(STATIC_BACK_EXTENSION, "STATIC_BACK_EXTENSION")
-        stringMap.put(WEIGHTED_STATIC_BACK_EXTENSION, "WEIGHTED_STATIC_BACK_EXTENSION")
-        stringMap.put(SUPERMAN_FROM_FLOOR, "SUPERMAN_FROM_FLOOR")
-        stringMap.put(WEIGHTED_SUPERMAN_FROM_FLOOR, "WEIGHTED_SUPERMAN_FROM_FLOOR")
-        stringMap.put(SWISS_BALL_BACK_EXTENSION, "SWISS_BALL_BACK_EXTENSION")
-        stringMap.put(WEIGHTED_SWISS_BALL_BACK_EXTENSION, "WEIGHTED_SWISS_BALL_BACK_EXTENSION")
-        stringMap.put(SWISS_BALL_HYPEREXTENSION, "SWISS_BALL_HYPEREXTENSION")
-        stringMap.put(WEIGHTED_SWISS_BALL_HYPEREXTENSION, "WEIGHTED_SWISS_BALL_HYPEREXTENSION")
-        stringMap.put(SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT, "SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT")
-        stringMap.put(
-            WEIGHTED_SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT,
-            "WEIGHTED_SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT"
-        )
-        stringMap.put(SUPERMAN_ON_SWISS_BALL, "SUPERMAN_ON_SWISS_BALL")
-        stringMap.put(COBRA, "COBRA")
-        stringMap.put(SUPINE_FLOOR_BARRE, "SUPINE_FLOOR_BARRE")
+        stringMap[BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH] = "BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH"
+        stringMap[WEIGHTED_BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH] = "WEIGHTED_BACK_EXTENSION_WITH_OPPOSITE_ARM_AND_LEG_REACH"
+        stringMap[BASE_ROTATIONS] = "BASE_ROTATIONS"
+        stringMap[WEIGHTED_BASE_ROTATIONS] = "WEIGHTED_BASE_ROTATIONS"
+        stringMap[BENT_KNEE_REVERSE_HYPEREXTENSION] = "BENT_KNEE_REVERSE_HYPEREXTENSION"
+        stringMap[WEIGHTED_BENT_KNEE_REVERSE_HYPEREXTENSION] = "WEIGHTED_BENT_KNEE_REVERSE_HYPEREXTENSION"
+        stringMap[HOLLOW_HOLD_AND_ROLL] = "HOLLOW_HOLD_AND_ROLL"
+        stringMap[WEIGHTED_HOLLOW_HOLD_AND_ROLL] = "WEIGHTED_HOLLOW_HOLD_AND_ROLL"
+        stringMap[KICKS] = "KICKS"
+        stringMap[WEIGHTED_KICKS] = "WEIGHTED_KICKS"
+        stringMap[KNEE_RAISES] = "KNEE_RAISES"
+        stringMap[WEIGHTED_KNEE_RAISES] = "WEIGHTED_KNEE_RAISES"
+        stringMap[KNEELING_SUPERMAN] = "KNEELING_SUPERMAN"
+        stringMap[WEIGHTED_KNEELING_SUPERMAN] = "WEIGHTED_KNEELING_SUPERMAN"
+        stringMap[LAT_PULL_DOWN_WITH_ROW] = "LAT_PULL_DOWN_WITH_ROW"
+        stringMap[MEDICINE_BALL_DEADLIFT_TO_REACH] = "MEDICINE_BALL_DEADLIFT_TO_REACH"
+        stringMap[ONE_ARM_ONE_LEG_ROW] = "ONE_ARM_ONE_LEG_ROW"
+        stringMap[ONE_ARM_ROW_WITH_BAND] = "ONE_ARM_ROW_WITH_BAND"
+        stringMap[OVERHEAD_LUNGE_WITH_MEDICINE_BALL] = "OVERHEAD_LUNGE_WITH_MEDICINE_BALL"
+        stringMap[PLANK_KNEE_TUCKS] = "PLANK_KNEE_TUCKS"
+        stringMap[WEIGHTED_PLANK_KNEE_TUCKS] = "WEIGHTED_PLANK_KNEE_TUCKS"
+        stringMap[SIDE_STEP] = "SIDE_STEP"
+        stringMap[WEIGHTED_SIDE_STEP] = "WEIGHTED_SIDE_STEP"
+        stringMap[SINGLE_LEG_BACK_EXTENSION] = "SINGLE_LEG_BACK_EXTENSION"
+        stringMap[WEIGHTED_SINGLE_LEG_BACK_EXTENSION] = "WEIGHTED_SINGLE_LEG_BACK_EXTENSION"
+        stringMap[SPINE_EXTENSION] = "SPINE_EXTENSION"
+        stringMap[WEIGHTED_SPINE_EXTENSION] = "WEIGHTED_SPINE_EXTENSION"
+        stringMap[STATIC_BACK_EXTENSION] = "STATIC_BACK_EXTENSION"
+        stringMap[WEIGHTED_STATIC_BACK_EXTENSION] = "WEIGHTED_STATIC_BACK_EXTENSION"
+        stringMap[SUPERMAN_FROM_FLOOR] = "SUPERMAN_FROM_FLOOR"
+        stringMap[WEIGHTED_SUPERMAN_FROM_FLOOR] = "WEIGHTED_SUPERMAN_FROM_FLOOR"
+        stringMap[SWISS_BALL_BACK_EXTENSION] = "SWISS_BALL_BACK_EXTENSION"
+        stringMap[WEIGHTED_SWISS_BALL_BACK_EXTENSION] = "WEIGHTED_SWISS_BALL_BACK_EXTENSION"
+        stringMap[SWISS_BALL_HYPEREXTENSION] = "SWISS_BALL_HYPEREXTENSION"
+        stringMap[WEIGHTED_SWISS_BALL_HYPEREXTENSION] = "WEIGHTED_SWISS_BALL_HYPEREXTENSION"
+        stringMap[SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT] = "SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT"
+        stringMap[WEIGHTED_SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT] = "WEIGHTED_SWISS_BALL_OPPOSITE_ARM_AND_LEG_LIFT"
+        stringMap[SUPERMAN_ON_SWISS_BALL] = "SUPERMAN_ON_SWISS_BALL"
+        stringMap[COBRA] = "COBRA"
+        stringMap[SUPINE_FLOOR_BARRE] = "SUPINE_FLOOR_BARRE"
     }
 
 
@@ -115,9 +102,9 @@ object HyperextensionExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -128,7 +115,7 @@ object HyperextensionExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

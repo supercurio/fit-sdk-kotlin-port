@@ -12,59 +12,56 @@ package com.garmin.fit
 class CourseMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.COURSE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
             setFieldValue(4, 0, sport!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(5, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var capabilities: Long?
         /**
          * Get capabilities field
-         * 
+         *
          * @return capabilities
          */
         get() = getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set capabilities field
-         * 
+         *
          * @param capabilities The new capabilities value to be set
          */
         set(capabilities) {
@@ -74,19 +71,16 @@ class CourseMesg : Mesg {
     var subSport: SubSport?
         /**
          * Get sub_sport field
-         * 
+         *
          * @return sub_sport
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SubSport.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SubSport.getByValue(value)
         }
         /**
          * Set sub_sport field
-         * 
+         *
          * @param subSport The new subSport value to be set
          */
         set(subSport) {
@@ -103,11 +97,10 @@ class CourseMesg : Mesg {
         const val SubSportFieldNum: Int = 7
 
 
-        val courseMesg: Mesg
+        // course
+        val courseMesg: Mesg = Mesg("course", MesgNum.COURSE)
 
         init {
-            // course
-            courseMesg = Mesg("course", MesgNum.COURSE)
             courseMesg.addField(
                 Field(
                     "sport",

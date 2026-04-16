@@ -12,21 +12,21 @@ package com.garmin.fit
 class VideoDescriptionMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.VIDEO_DESCRIPTION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
          * Comment: Long descriptions will be split into multiple parts
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
          * Comment: Long descriptions will be split into multiple parts
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -37,14 +37,14 @@ class VideoDescriptionMesg : Mesg {
         /**
          * Get message_count field
          * Comment: Total number of description parts
-         * 
+         *
          * @return message_count
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_count field
          * Comment: Total number of description parts
-         * 
+         *
          * @param messageCount The new messageCount value to be set
          */
         set(messageCount) {
@@ -54,13 +54,13 @@ class VideoDescriptionMesg : Mesg {
     var text: String?
         /**
          * Get text field
-         * 
+         *
          * @return text
          */
         get() = getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set text field
-         * 
+         *
          * @param text The new text value to be set
          */
         set(text) {
@@ -75,11 +75,10 @@ class VideoDescriptionMesg : Mesg {
         const val TextFieldNum: Int = 1
 
 
-        val videoDescriptionMesg: Mesg
+        // video_description
+        val videoDescriptionMesg: Mesg = Mesg("video_description", MesgNum.VIDEO_DESCRIPTION)
 
         init {
-            // video_description
-            videoDescriptionMesg = Mesg("video_description", MesgNum.VIDEO_DESCRIPTION)
             videoDescriptionMesg.addField(
                 Field(
                     "message_index",

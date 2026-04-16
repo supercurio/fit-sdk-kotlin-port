@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaSpo2DataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_SPO2_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -38,7 +38,7 @@ class HsaSpo2DataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,27 +46,27 @@ class HsaSpo2DataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
             setFieldValue(0, 0, processingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val readingSpo2: Array<Short?>?
-        get() = getFieldShortValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val readingSpo2: Array<Short>?
+        get() = getFieldShortValues(ReadingSpo2FieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numReadingSpo2: Int
         /**
          * @return number of reading_spo2
          */
-        get() = getNumFieldValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(ReadingSpo2FieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get reading_spo2 field
      * Units: percent
      * Comment: SpO2 Reading: [70,100] Blank: 240
-     * 
+     *
      * @param index of reading_spo2
      * @return reading_spo2
      */
@@ -78,7 +78,7 @@ class HsaSpo2DataMesg : Mesg {
      * Set reading_spo2 field
      * Units: percent
      * Comment: SpO2 Reading: [70,100] Blank: 240
-     * 
+     *
      * @param index of reading_spo2
      * @param readingSpo2 The new readingSpo2 value to be set
      */
@@ -86,19 +86,19 @@ class HsaSpo2DataMesg : Mesg {
         setFieldValue(1, index, readingSpo2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val confidence: Array<Short?>?
-        get() = getFieldShortValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val confidence: Array<Short>?
+        get() = getFieldShortValues(ConfidenceFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numConfidence: Int
         /**
          * @return number of confidence
          */
-        get() = getNumFieldValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(ConfidenceFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get confidence field
      * Comment: SpO2 Confidence: [0,254]
-     * 
+     *
      * @param index of confidence
      * @return confidence
      */
@@ -109,7 +109,7 @@ class HsaSpo2DataMesg : Mesg {
     /**
      * Set confidence field
      * Comment: SpO2 Confidence: [0,254]
-     * 
+     *
      * @param index of confidence
      * @param confidence The new confidence value to be set
      */
@@ -127,11 +127,10 @@ class HsaSpo2DataMesg : Mesg {
         const val ConfidenceFieldNum: Int = 2
 
 
-        val hsaSpo2DataMesg: Mesg
+        // hsa_spo2_data
+        val hsaSpo2DataMesg: Mesg = Mesg("hsa_spo2_data", MesgNum.HSA_SPO2_DATA)
 
         init {
-            // hsa_spo2_data
-            hsaSpo2DataMesg = Mesg("hsa_spo2_data", MesgNum.HSA_SPO2_DATA)
             hsaSpo2DataMesg.addField(
                 Field(
                     "timestamp",

@@ -58,7 +58,7 @@ enum class DiveAlert(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DiveAlert.INVALID
+            return INVALID
         }
 
         /**

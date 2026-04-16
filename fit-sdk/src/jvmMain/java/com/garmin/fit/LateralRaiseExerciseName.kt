@@ -50,62 +50,52 @@ object LateralRaiseExerciseName {
     const val DUMBBELL_LATERAL_RAISE_WHEELCHAIR: Int = 39
     const val POLE_DOUBLE_ARM_OVERHEAD_AND_FORWARD_WHEELCHAIR: Int = 40
     const val POLE_STRAIGHT_ARM_OVERHEAD_WHEELCHAIR: Int = 41
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = HashMap<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(_45_DEGREE_CABLE_EXTERNAL_ROTATION, "_45_DEGREE_CABLE_EXTERNAL_ROTATION")
-        stringMap.put(
-            ALTERNATING_LATERAL_RAISE_WITH_STATIC_HOLD,
-            "ALTERNATING_LATERAL_RAISE_WITH_STATIC_HOLD"
-        )
-        stringMap.put(BAR_MUSCLE_UP, "BAR_MUSCLE_UP")
-        stringMap.put(BENT_OVER_LATERAL_RAISE, "BENT_OVER_LATERAL_RAISE")
-        stringMap.put(CABLE_DIAGONAL_RAISE, "CABLE_DIAGONAL_RAISE")
-        stringMap.put(CABLE_FRONT_RAISE, "CABLE_FRONT_RAISE")
-        stringMap.put(CALORIE_ROW, "CALORIE_ROW")
-        stringMap.put(COMBO_SHOULDER_RAISE, "COMBO_SHOULDER_RAISE")
-        stringMap.put(DUMBBELL_DIAGONAL_RAISE, "DUMBBELL_DIAGONAL_RAISE")
-        stringMap.put(DUMBBELL_V_RAISE, "DUMBBELL_V_RAISE")
-        stringMap.put(FRONT_RAISE, "FRONT_RAISE")
-        stringMap.put(LEANING_DUMBBELL_LATERAL_RAISE, "LEANING_DUMBBELL_LATERAL_RAISE")
-        stringMap.put(LYING_DUMBBELL_RAISE, "LYING_DUMBBELL_RAISE")
-        stringMap.put(MUSCLE_UP, "MUSCLE_UP")
-        stringMap.put(ONE_ARM_CABLE_LATERAL_RAISE, "ONE_ARM_CABLE_LATERAL_RAISE")
-        stringMap.put(OVERHAND_GRIP_REAR_LATERAL_RAISE, "OVERHAND_GRIP_REAR_LATERAL_RAISE")
-        stringMap.put(PLATE_RAISES, "PLATE_RAISES")
-        stringMap.put(RING_DIP, "RING_DIP")
-        stringMap.put(WEIGHTED_RING_DIP, "WEIGHTED_RING_DIP")
-        stringMap.put(RING_MUSCLE_UP, "RING_MUSCLE_UP")
-        stringMap.put(WEIGHTED_RING_MUSCLE_UP, "WEIGHTED_RING_MUSCLE_UP")
-        stringMap.put(ROPE_CLIMB, "ROPE_CLIMB")
-        stringMap.put(WEIGHTED_ROPE_CLIMB, "WEIGHTED_ROPE_CLIMB")
-        stringMap.put(SCAPTION, "SCAPTION")
-        stringMap.put(SEATED_LATERAL_RAISE, "SEATED_LATERAL_RAISE")
-        stringMap.put(SEATED_REAR_LATERAL_RAISE, "SEATED_REAR_LATERAL_RAISE")
-        stringMap.put(SIDE_LYING_LATERAL_RAISE, "SIDE_LYING_LATERAL_RAISE")
-        stringMap.put(STANDING_LIFT, "STANDING_LIFT")
-        stringMap.put(SUSPENDED_ROW, "SUSPENDED_ROW")
-        stringMap.put(UNDERHAND_GRIP_REAR_LATERAL_RAISE, "UNDERHAND_GRIP_REAR_LATERAL_RAISE")
-        stringMap.put(WALL_SLIDE, "WALL_SLIDE")
-        stringMap.put(WEIGHTED_WALL_SLIDE, "WEIGHTED_WALL_SLIDE")
-        stringMap.put(ARM_CIRCLES, "ARM_CIRCLES")
-        stringMap.put(SHAVING_THE_HEAD, "SHAVING_THE_HEAD")
-        stringMap.put(DUMBBELL_LATERAL_RAISE, "DUMBBELL_LATERAL_RAISE")
-        stringMap.put(RING_DIP_KIPPING, "RING_DIP_KIPPING")
-        stringMap.put(WALL_WALK, "WALL_WALK")
-        stringMap.put(DUMBBELL_FRONT_RAISE_WHEELCHAIR, "DUMBBELL_FRONT_RAISE_WHEELCHAIR")
-        stringMap.put(DUMBBELL_LATERAL_RAISE_WHEELCHAIR, "DUMBBELL_LATERAL_RAISE_WHEELCHAIR")
-        stringMap.put(
-            POLE_DOUBLE_ARM_OVERHEAD_AND_FORWARD_WHEELCHAIR,
-            "POLE_DOUBLE_ARM_OVERHEAD_AND_FORWARD_WHEELCHAIR"
-        )
-        stringMap.put(
-            POLE_STRAIGHT_ARM_OVERHEAD_WHEELCHAIR,
-            "POLE_STRAIGHT_ARM_OVERHEAD_WHEELCHAIR"
-        )
+        stringMap[_45_DEGREE_CABLE_EXTERNAL_ROTATION] = "_45_DEGREE_CABLE_EXTERNAL_ROTATION"
+        stringMap[ALTERNATING_LATERAL_RAISE_WITH_STATIC_HOLD] = "ALTERNATING_LATERAL_RAISE_WITH_STATIC_HOLD"
+        stringMap[BAR_MUSCLE_UP] = "BAR_MUSCLE_UP"
+        stringMap[BENT_OVER_LATERAL_RAISE] = "BENT_OVER_LATERAL_RAISE"
+        stringMap[CABLE_DIAGONAL_RAISE] = "CABLE_DIAGONAL_RAISE"
+        stringMap[CABLE_FRONT_RAISE] = "CABLE_FRONT_RAISE"
+        stringMap[CALORIE_ROW] = "CALORIE_ROW"
+        stringMap[COMBO_SHOULDER_RAISE] = "COMBO_SHOULDER_RAISE"
+        stringMap[DUMBBELL_DIAGONAL_RAISE] = "DUMBBELL_DIAGONAL_RAISE"
+        stringMap[DUMBBELL_V_RAISE] = "DUMBBELL_V_RAISE"
+        stringMap[FRONT_RAISE] = "FRONT_RAISE"
+        stringMap[LEANING_DUMBBELL_LATERAL_RAISE] = "LEANING_DUMBBELL_LATERAL_RAISE"
+        stringMap[LYING_DUMBBELL_RAISE] = "LYING_DUMBBELL_RAISE"
+        stringMap[MUSCLE_UP] = "MUSCLE_UP"
+        stringMap[ONE_ARM_CABLE_LATERAL_RAISE] = "ONE_ARM_CABLE_LATERAL_RAISE"
+        stringMap[OVERHAND_GRIP_REAR_LATERAL_RAISE] = "OVERHAND_GRIP_REAR_LATERAL_RAISE"
+        stringMap[PLATE_RAISES] = "PLATE_RAISES"
+        stringMap[RING_DIP] = "RING_DIP"
+        stringMap[WEIGHTED_RING_DIP] = "WEIGHTED_RING_DIP"
+        stringMap[RING_MUSCLE_UP] = "RING_MUSCLE_UP"
+        stringMap[WEIGHTED_RING_MUSCLE_UP] = "WEIGHTED_RING_MUSCLE_UP"
+        stringMap[ROPE_CLIMB] = "ROPE_CLIMB"
+        stringMap[WEIGHTED_ROPE_CLIMB] = "WEIGHTED_ROPE_CLIMB"
+        stringMap[SCAPTION] = "SCAPTION"
+        stringMap[SEATED_LATERAL_RAISE] = "SEATED_LATERAL_RAISE"
+        stringMap[SEATED_REAR_LATERAL_RAISE] = "SEATED_REAR_LATERAL_RAISE"
+        stringMap[SIDE_LYING_LATERAL_RAISE] = "SIDE_LYING_LATERAL_RAISE"
+        stringMap[STANDING_LIFT] = "STANDING_LIFT"
+        stringMap[SUSPENDED_ROW] = "SUSPENDED_ROW"
+        stringMap[UNDERHAND_GRIP_REAR_LATERAL_RAISE] = "UNDERHAND_GRIP_REAR_LATERAL_RAISE"
+        stringMap[WALL_SLIDE] = "WALL_SLIDE"
+        stringMap[WEIGHTED_WALL_SLIDE] = "WEIGHTED_WALL_SLIDE"
+        stringMap[ARM_CIRCLES] = "ARM_CIRCLES"
+        stringMap[SHAVING_THE_HEAD] = "SHAVING_THE_HEAD"
+        stringMap[DUMBBELL_LATERAL_RAISE] = "DUMBBELL_LATERAL_RAISE"
+        stringMap[RING_DIP_KIPPING] = "RING_DIP_KIPPING"
+        stringMap[WALL_WALK] = "WALL_WALK"
+        stringMap[DUMBBELL_FRONT_RAISE_WHEELCHAIR] = "DUMBBELL_FRONT_RAISE_WHEELCHAIR"
+        stringMap[DUMBBELL_LATERAL_RAISE_WHEELCHAIR] = "DUMBBELL_LATERAL_RAISE_WHEELCHAIR"
+        stringMap[POLE_DOUBLE_ARM_OVERHEAD_AND_FORWARD_WHEELCHAIR] = "POLE_DOUBLE_ARM_OVERHEAD_AND_FORWARD_WHEELCHAIR"
+        stringMap[POLE_STRAIGHT_ARM_OVERHEAD_WHEELCHAIR] = "POLE_STRAIGHT_ARM_OVERHEAD_WHEELCHAIR"
     }
 
 
@@ -114,9 +104,9 @@ object LateralRaiseExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -127,7 +117,7 @@ object LateralRaiseExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

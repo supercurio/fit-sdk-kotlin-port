@@ -36,45 +36,40 @@ object BenchPressExerciseName {
     const val TRIPLE_STOP_BARBELL_BENCH_PRESS: Int = 24
     const val WIDE_GRIP_BARBELL_BENCH_PRESS: Int = 25
     const val ALTERNATING_DUMBBELL_CHEST_PRESS: Int = 26
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(
-            ALTERNATING_DUMBBELL_CHEST_PRESS_ON_SWISS_BALL,
+        stringMap[ALTERNATING_DUMBBELL_CHEST_PRESS_ON_SWISS_BALL] =
             "ALTERNATING_DUMBBELL_CHEST_PRESS_ON_SWISS_BALL"
-        )
-        stringMap.put(BARBELL_BENCH_PRESS, "BARBELL_BENCH_PRESS")
-        stringMap.put(BARBELL_BOARD_BENCH_PRESS, "BARBELL_BOARD_BENCH_PRESS")
-        stringMap.put(BARBELL_FLOOR_PRESS, "BARBELL_FLOOR_PRESS")
-        stringMap.put(CLOSE_GRIP_BARBELL_BENCH_PRESS, "CLOSE_GRIP_BARBELL_BENCH_PRESS")
-        stringMap.put(DECLINE_DUMBBELL_BENCH_PRESS, "DECLINE_DUMBBELL_BENCH_PRESS")
-        stringMap.put(DUMBBELL_BENCH_PRESS, "DUMBBELL_BENCH_PRESS")
-        stringMap.put(DUMBBELL_FLOOR_PRESS, "DUMBBELL_FLOOR_PRESS")
-        stringMap.put(INCLINE_BARBELL_BENCH_PRESS, "INCLINE_BARBELL_BENCH_PRESS")
-        stringMap.put(INCLINE_DUMBBELL_BENCH_PRESS, "INCLINE_DUMBBELL_BENCH_PRESS")
-        stringMap.put(INCLINE_SMITH_MACHINE_BENCH_PRESS, "INCLINE_SMITH_MACHINE_BENCH_PRESS")
-        stringMap.put(ISOMETRIC_BARBELL_BENCH_PRESS, "ISOMETRIC_BARBELL_BENCH_PRESS")
-        stringMap.put(KETTLEBELL_CHEST_PRESS, "KETTLEBELL_CHEST_PRESS")
-        stringMap.put(NEUTRAL_GRIP_DUMBBELL_BENCH_PRESS, "NEUTRAL_GRIP_DUMBBELL_BENCH_PRESS")
-        stringMap.put(
-            NEUTRAL_GRIP_DUMBBELL_INCLINE_BENCH_PRESS,
+        stringMap[BARBELL_BENCH_PRESS] = "BARBELL_BENCH_PRESS"
+        stringMap[BARBELL_BOARD_BENCH_PRESS] = "BARBELL_BOARD_BENCH_PRESS"
+        stringMap[BARBELL_FLOOR_PRESS] = "BARBELL_FLOOR_PRESS"
+        stringMap[CLOSE_GRIP_BARBELL_BENCH_PRESS] = "CLOSE_GRIP_BARBELL_BENCH_PRESS"
+        stringMap[DECLINE_DUMBBELL_BENCH_PRESS] = "DECLINE_DUMBBELL_BENCH_PRESS"
+        stringMap[DUMBBELL_BENCH_PRESS] = "DUMBBELL_BENCH_PRESS"
+        stringMap[DUMBBELL_FLOOR_PRESS] = "DUMBBELL_FLOOR_PRESS"
+        stringMap[INCLINE_BARBELL_BENCH_PRESS] = "INCLINE_BARBELL_BENCH_PRESS"
+        stringMap[INCLINE_DUMBBELL_BENCH_PRESS] = "INCLINE_DUMBBELL_BENCH_PRESS"
+        stringMap[INCLINE_SMITH_MACHINE_BENCH_PRESS] = "INCLINE_SMITH_MACHINE_BENCH_PRESS"
+        stringMap[ISOMETRIC_BARBELL_BENCH_PRESS] = "ISOMETRIC_BARBELL_BENCH_PRESS"
+        stringMap[KETTLEBELL_CHEST_PRESS] = "KETTLEBELL_CHEST_PRESS"
+        stringMap[NEUTRAL_GRIP_DUMBBELL_BENCH_PRESS] = "NEUTRAL_GRIP_DUMBBELL_BENCH_PRESS"
+        stringMap[NEUTRAL_GRIP_DUMBBELL_INCLINE_BENCH_PRESS] =
             "NEUTRAL_GRIP_DUMBBELL_INCLINE_BENCH_PRESS"
-        )
-        stringMap.put(ONE_ARM_FLOOR_PRESS, "ONE_ARM_FLOOR_PRESS")
-        stringMap.put(WEIGHTED_ONE_ARM_FLOOR_PRESS, "WEIGHTED_ONE_ARM_FLOOR_PRESS")
-        stringMap.put(PARTIAL_LOCKOUT, "PARTIAL_LOCKOUT")
-        stringMap.put(REVERSE_GRIP_BARBELL_BENCH_PRESS, "REVERSE_GRIP_BARBELL_BENCH_PRESS")
-        stringMap.put(REVERSE_GRIP_INCLINE_BENCH_PRESS, "REVERSE_GRIP_INCLINE_BENCH_PRESS")
-        stringMap.put(SINGLE_ARM_CABLE_CHEST_PRESS, "SINGLE_ARM_CABLE_CHEST_PRESS")
-        stringMap.put(SINGLE_ARM_DUMBBELL_BENCH_PRESS, "SINGLE_ARM_DUMBBELL_BENCH_PRESS")
-        stringMap.put(SMITH_MACHINE_BENCH_PRESS, "SMITH_MACHINE_BENCH_PRESS")
-        stringMap.put(SWISS_BALL_DUMBBELL_CHEST_PRESS, "SWISS_BALL_DUMBBELL_CHEST_PRESS")
-        stringMap.put(TRIPLE_STOP_BARBELL_BENCH_PRESS, "TRIPLE_STOP_BARBELL_BENCH_PRESS")
-        stringMap.put(WIDE_GRIP_BARBELL_BENCH_PRESS, "WIDE_GRIP_BARBELL_BENCH_PRESS")
-        stringMap.put(ALTERNATING_DUMBBELL_CHEST_PRESS, "ALTERNATING_DUMBBELL_CHEST_PRESS")
+        stringMap[ONE_ARM_FLOOR_PRESS] = "ONE_ARM_FLOOR_PRESS"
+        stringMap[WEIGHTED_ONE_ARM_FLOOR_PRESS] = "WEIGHTED_ONE_ARM_FLOOR_PRESS"
+        stringMap[PARTIAL_LOCKOUT] = "PARTIAL_LOCKOUT"
+        stringMap[REVERSE_GRIP_BARBELL_BENCH_PRESS] = "REVERSE_GRIP_BARBELL_BENCH_PRESS"
+        stringMap[REVERSE_GRIP_INCLINE_BENCH_PRESS] = "REVERSE_GRIP_INCLINE_BENCH_PRESS"
+        stringMap[SINGLE_ARM_CABLE_CHEST_PRESS] = "SINGLE_ARM_CABLE_CHEST_PRESS"
+        stringMap[SINGLE_ARM_DUMBBELL_BENCH_PRESS] = "SINGLE_ARM_DUMBBELL_BENCH_PRESS"
+        stringMap[SMITH_MACHINE_BENCH_PRESS] = "SMITH_MACHINE_BENCH_PRESS"
+        stringMap[SWISS_BALL_DUMBBELL_CHEST_PRESS] = "SWISS_BALL_DUMBBELL_CHEST_PRESS"
+        stringMap[TRIPLE_STOP_BARBELL_BENCH_PRESS] = "TRIPLE_STOP_BARBELL_BENCH_PRESS"
+        stringMap[WIDE_GRIP_BARBELL_BENCH_PRESS] = "WIDE_GRIP_BARBELL_BENCH_PRESS"
+        stringMap[ALTERNATING_DUMBBELL_CHEST_PRESS] = "ALTERNATING_DUMBBELL_CHEST_PRESS"
     }
 
 
@@ -83,9 +78,9 @@ object BenchPressExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -96,7 +91,7 @@ object BenchPressExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

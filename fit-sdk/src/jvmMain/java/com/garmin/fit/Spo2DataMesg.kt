@@ -12,39 +12,39 @@ package com.garmin.fit
 class Spo2DataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SPO2_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var readingSpo2: Short?
         /**
          * Get reading_spo2 field
          * Units: percent
-         * 
+         *
          * @return reading_spo2
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set reading_spo2 field
          * Units: percent
-         * 
+         *
          * @param readingSpo2 The new readingSpo2 value to be set
          */
         set(readingSpo2) {
@@ -54,13 +54,13 @@ class Spo2DataMesg : Mesg {
     var readingConfidence: Short?
         /**
          * Get reading_confidence field
-         * 
+         *
          * @return reading_confidence
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set reading_confidence field
-         * 
+         *
          * @param readingConfidence The new readingConfidence value to be set
          */
         set(readingConfidence) {
@@ -71,20 +71,17 @@ class Spo2DataMesg : Mesg {
         /**
          * Get mode field
          * Comment: Mode when data was captured
-         * 
+         *
          * @return mode
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Spo2MeasurementType.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Spo2MeasurementType.getByValue(value)
         }
         /**
          * Set mode field
          * Comment: Mode when data was captured
-         * 
+         *
          * @param mode The new mode value to be set
          */
         set(mode) {
@@ -101,11 +98,10 @@ class Spo2DataMesg : Mesg {
         const val ModeFieldNum: Int = 2
 
 
-        val spo2DataMesg: Mesg
+        // spo2_data
+        val spo2DataMesg: Mesg = Mesg("spo2_data", MesgNum.SPO2_DATA)
 
         init {
-            // spo2_data
-            spo2DataMesg = Mesg("spo2_data", MesgNum.SPO2_DATA)
             spo2DataMesg.addField(
                 Field(
                     "timestamp",

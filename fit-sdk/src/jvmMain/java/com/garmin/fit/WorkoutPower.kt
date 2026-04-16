@@ -10,13 +10,12 @@ package com.garmin.fit
 
 object WorkoutPower {
     const val WATTS_OFFSET: Long = 1000
-    val INVALID: Long = Fit.UINT32_INVALID
+    const val INVALID: Long = Fit.UINT32_INVALID
 
-    private val stringMap: MutableMap<Long?, String?>
+    private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap = HashMap<Long?, String?>()
-        stringMap.put(WATTS_OFFSET, "WATTS_OFFSET")
+        stringMap[WATTS_OFFSET] = "WATTS_OFFSET"
     }
 
 
@@ -25,9 +24,9 @@ object WorkoutPower {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Long?): String? {
+    fun getStringFromValue(value: Long): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -38,7 +37,7 @@ object WorkoutPower {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Long? {
+    fun getValueFromString(value: String): Long {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

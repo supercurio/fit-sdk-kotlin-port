@@ -12,15 +12,14 @@ object MessageIndex {
     const val SELECTED: Int = 0x8000 // message is selected if set
     const val RESERVED: Int = 0x7000 // reserved (default 0)
     const val MASK: Int = 0x0FFF // index
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(SELECTED, "SELECTED")
-        stringMap.put(RESERVED, "RESERVED")
-        stringMap.put(MASK, "MASK")
+        stringMap[SELECTED] = "SELECTED"
+        stringMap[RESERVED] = "RESERVED"
+        stringMap[MASK] = "MASK"
     }
 
 
@@ -29,9 +28,9 @@ object MessageIndex {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -42,7 +41,7 @@ object MessageIndex {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

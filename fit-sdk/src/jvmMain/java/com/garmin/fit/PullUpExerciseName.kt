@@ -55,58 +55,57 @@ object PullUpExerciseName {
     const val NEUTRAL_GRIP_PULL_UP: Int = 43
     const val WEIGHTED_NEUTRAL_GRIP_CHIN_UP: Int = 44
     const val WEIGHTED_NEUTRAL_GRIP_PULL_UP: Int = 45
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BANDED_PULL_UPS, "BANDED_PULL_UPS")
-        stringMap.put(_30_DEGREE_LAT_PULLDOWN, "_30_DEGREE_LAT_PULLDOWN")
-        stringMap.put(BAND_ASSISTED_CHIN_UP, "BAND_ASSISTED_CHIN_UP")
-        stringMap.put(CLOSE_GRIP_CHIN_UP, "CLOSE_GRIP_CHIN_UP")
-        stringMap.put(WEIGHTED_CLOSE_GRIP_CHIN_UP, "WEIGHTED_CLOSE_GRIP_CHIN_UP")
-        stringMap.put(CLOSE_GRIP_LAT_PULLDOWN, "CLOSE_GRIP_LAT_PULLDOWN")
-        stringMap.put(CROSSOVER_CHIN_UP, "CROSSOVER_CHIN_UP")
-        stringMap.put(WEIGHTED_CROSSOVER_CHIN_UP, "WEIGHTED_CROSSOVER_CHIN_UP")
-        stringMap.put(EZ_BAR_PULLOVER, "EZ_BAR_PULLOVER")
-        stringMap.put(HANGING_HURDLE, "HANGING_HURDLE")
-        stringMap.put(WEIGHTED_HANGING_HURDLE, "WEIGHTED_HANGING_HURDLE")
-        stringMap.put(KNEELING_LAT_PULLDOWN, "KNEELING_LAT_PULLDOWN")
-        stringMap.put(KNEELING_UNDERHAND_GRIP_LAT_PULLDOWN, "KNEELING_UNDERHAND_GRIP_LAT_PULLDOWN")
-        stringMap.put(LAT_PULLDOWN, "LAT_PULLDOWN")
-        stringMap.put(MIXED_GRIP_CHIN_UP, "MIXED_GRIP_CHIN_UP")
-        stringMap.put(WEIGHTED_MIXED_GRIP_CHIN_UP, "WEIGHTED_MIXED_GRIP_CHIN_UP")
-        stringMap.put(MIXED_GRIP_PULL_UP, "MIXED_GRIP_PULL_UP")
-        stringMap.put(WEIGHTED_MIXED_GRIP_PULL_UP, "WEIGHTED_MIXED_GRIP_PULL_UP")
-        stringMap.put(REVERSE_GRIP_PULLDOWN, "REVERSE_GRIP_PULLDOWN")
-        stringMap.put(STANDING_CABLE_PULLOVER, "STANDING_CABLE_PULLOVER")
-        stringMap.put(STRAIGHT_ARM_PULLDOWN, "STRAIGHT_ARM_PULLDOWN")
-        stringMap.put(SWISS_BALL_EZ_BAR_PULLOVER, "SWISS_BALL_EZ_BAR_PULLOVER")
-        stringMap.put(TOWEL_PULL_UP, "TOWEL_PULL_UP")
-        stringMap.put(WEIGHTED_TOWEL_PULL_UP, "WEIGHTED_TOWEL_PULL_UP")
-        stringMap.put(WEIGHTED_PULL_UP, "WEIGHTED_PULL_UP")
-        stringMap.put(WIDE_GRIP_LAT_PULLDOWN, "WIDE_GRIP_LAT_PULLDOWN")
-        stringMap.put(WIDE_GRIP_PULL_UP, "WIDE_GRIP_PULL_UP")
-        stringMap.put(WEIGHTED_WIDE_GRIP_PULL_UP, "WEIGHTED_WIDE_GRIP_PULL_UP")
-        stringMap.put(BURPEE_PULL_UP, "BURPEE_PULL_UP")
-        stringMap.put(WEIGHTED_BURPEE_PULL_UP, "WEIGHTED_BURPEE_PULL_UP")
-        stringMap.put(JUMPING_PULL_UPS, "JUMPING_PULL_UPS")
-        stringMap.put(WEIGHTED_JUMPING_PULL_UPS, "WEIGHTED_JUMPING_PULL_UPS")
-        stringMap.put(KIPPING_PULL_UP, "KIPPING_PULL_UP")
-        stringMap.put(WEIGHTED_KIPPING_PULL_UP, "WEIGHTED_KIPPING_PULL_UP")
-        stringMap.put(L_PULL_UP, "L_PULL_UP")
-        stringMap.put(WEIGHTED_L_PULL_UP, "WEIGHTED_L_PULL_UP")
-        stringMap.put(SUSPENDED_CHIN_UP, "SUSPENDED_CHIN_UP")
-        stringMap.put(WEIGHTED_SUSPENDED_CHIN_UP, "WEIGHTED_SUSPENDED_CHIN_UP")
-        stringMap.put(PULL_UP, "PULL_UP")
-        stringMap.put(CHIN_UP, "CHIN_UP")
-        stringMap.put(NEUTRAL_GRIP_CHIN_UP, "NEUTRAL_GRIP_CHIN_UP")
-        stringMap.put(WEIGHTED_CHIN_UP, "WEIGHTED_CHIN_UP")
-        stringMap.put(BAND_ASSISTED_PULL_UP, "BAND_ASSISTED_PULL_UP")
-        stringMap.put(NEUTRAL_GRIP_PULL_UP, "NEUTRAL_GRIP_PULL_UP")
-        stringMap.put(WEIGHTED_NEUTRAL_GRIP_CHIN_UP, "WEIGHTED_NEUTRAL_GRIP_CHIN_UP")
-        stringMap.put(WEIGHTED_NEUTRAL_GRIP_PULL_UP, "WEIGHTED_NEUTRAL_GRIP_PULL_UP")
+        stringMap[BANDED_PULL_UPS] = "BANDED_PULL_UPS"
+        stringMap[_30_DEGREE_LAT_PULLDOWN] = "_30_DEGREE_LAT_PULLDOWN"
+        stringMap[BAND_ASSISTED_CHIN_UP] = "BAND_ASSISTED_CHIN_UP"
+        stringMap[CLOSE_GRIP_CHIN_UP] = "CLOSE_GRIP_CHIN_UP"
+        stringMap[WEIGHTED_CLOSE_GRIP_CHIN_UP] = "WEIGHTED_CLOSE_GRIP_CHIN_UP"
+        stringMap[CLOSE_GRIP_LAT_PULLDOWN] = "CLOSE_GRIP_LAT_PULLDOWN"
+        stringMap[CROSSOVER_CHIN_UP] = "CROSSOVER_CHIN_UP"
+        stringMap[WEIGHTED_CROSSOVER_CHIN_UP] = "WEIGHTED_CROSSOVER_CHIN_UP"
+        stringMap[EZ_BAR_PULLOVER] = "EZ_BAR_PULLOVER"
+        stringMap[HANGING_HURDLE] = "HANGING_HURDLE"
+        stringMap[WEIGHTED_HANGING_HURDLE] = "WEIGHTED_HANGING_HURDLE"
+        stringMap[KNEELING_LAT_PULLDOWN] = "KNEELING_LAT_PULLDOWN"
+        stringMap[KNEELING_UNDERHAND_GRIP_LAT_PULLDOWN] = "KNEELING_UNDERHAND_GRIP_LAT_PULLDOWN"
+        stringMap[LAT_PULLDOWN] = "LAT_PULLDOWN"
+        stringMap[MIXED_GRIP_CHIN_UP] = "MIXED_GRIP_CHIN_UP"
+        stringMap[WEIGHTED_MIXED_GRIP_CHIN_UP] = "WEIGHTED_MIXED_GRIP_CHIN_UP"
+        stringMap[MIXED_GRIP_PULL_UP] = "MIXED_GRIP_PULL_UP"
+        stringMap[WEIGHTED_MIXED_GRIP_PULL_UP] = "WEIGHTED_MIXED_GRIP_PULL_UP"
+        stringMap[REVERSE_GRIP_PULLDOWN] = "REVERSE_GRIP_PULLDOWN"
+        stringMap[STANDING_CABLE_PULLOVER] = "STANDING_CABLE_PULLOVER"
+        stringMap[STRAIGHT_ARM_PULLDOWN] = "STRAIGHT_ARM_PULLDOWN"
+        stringMap[SWISS_BALL_EZ_BAR_PULLOVER] = "SWISS_BALL_EZ_BAR_PULLOVER"
+        stringMap[TOWEL_PULL_UP] = "TOWEL_PULL_UP"
+        stringMap[WEIGHTED_TOWEL_PULL_UP] = "WEIGHTED_TOWEL_PULL_UP"
+        stringMap[WEIGHTED_PULL_UP] = "WEIGHTED_PULL_UP"
+        stringMap[WIDE_GRIP_LAT_PULLDOWN] = "WIDE_GRIP_LAT_PULLDOWN"
+        stringMap[WIDE_GRIP_PULL_UP] = "WIDE_GRIP_PULL_UP"
+        stringMap[WEIGHTED_WIDE_GRIP_PULL_UP] = "WEIGHTED_WIDE_GRIP_PULL_UP"
+        stringMap[BURPEE_PULL_UP] = "BURPEE_PULL_UP"
+        stringMap[WEIGHTED_BURPEE_PULL_UP] = "WEIGHTED_BURPEE_PULL_UP"
+        stringMap[JUMPING_PULL_UPS] = "JUMPING_PULL_UPS"
+        stringMap[WEIGHTED_JUMPING_PULL_UPS] = "WEIGHTED_JUMPING_PULL_UPS"
+        stringMap[KIPPING_PULL_UP] = "KIPPING_PULL_UP"
+        stringMap[WEIGHTED_KIPPING_PULL_UP] = "WEIGHTED_KIPPING_PULL_UP"
+        stringMap[L_PULL_UP] = "L_PULL_UP"
+        stringMap[WEIGHTED_L_PULL_UP] = "WEIGHTED_L_PULL_UP"
+        stringMap[SUSPENDED_CHIN_UP] = "SUSPENDED_CHIN_UP"
+        stringMap[WEIGHTED_SUSPENDED_CHIN_UP] = "WEIGHTED_SUSPENDED_CHIN_UP"
+        stringMap[PULL_UP] = "PULL_UP"
+        stringMap[CHIN_UP] = "CHIN_UP"
+        stringMap[NEUTRAL_GRIP_CHIN_UP] = "NEUTRAL_GRIP_CHIN_UP"
+        stringMap[WEIGHTED_CHIN_UP] = "WEIGHTED_CHIN_UP"
+        stringMap[BAND_ASSISTED_PULL_UP] = "BAND_ASSISTED_PULL_UP"
+        stringMap[NEUTRAL_GRIP_PULL_UP] = "NEUTRAL_GRIP_PULL_UP"
+        stringMap[WEIGHTED_NEUTRAL_GRIP_CHIN_UP] = "WEIGHTED_NEUTRAL_GRIP_CHIN_UP"
+        stringMap[WEIGHTED_NEUTRAL_GRIP_PULL_UP] = "WEIGHTED_NEUTRAL_GRIP_PULL_UP"
     }
 
 
@@ -115,9 +114,9 @@ object PullUpExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -128,7 +127,7 @@ object PullUpExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

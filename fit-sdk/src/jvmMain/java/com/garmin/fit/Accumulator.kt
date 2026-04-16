@@ -8,30 +8,25 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-internal class Accumulator {
+class Accumulator {
     // Index by Mesg# and DestField#
-    var accumulatedFields: ArrayList<AccumulatedField?>
-
-    init {
-        accumulatedFields = ArrayList<AccumulatedField?>()
-    }
+    private var accumulatedFields: ArrayList<AccumulatedField> = ArrayList()
 
     fun set(mesgNum: Int, destFieldNum: Int, value: Long) {
         var accumField: AccumulatedField? = null
-        var i: Int
 
-        i = 0
+        var i = 0
         while (i < accumulatedFields.size) {
-            accumField = accumulatedFields.get(i)
+            accumField = accumulatedFields[i]
 
-            if ((accumField!!.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
+            if ((accumField.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
                 break
             }
             i++
         }
 
         if (i == accumulatedFields.size) {
-            accumField = Accumulator.AccumulatedField(mesgNum, destFieldNum)
+            accumField = AccumulatedField(mesgNum, destFieldNum)
             accumulatedFields.add(accumField)
         }
 
@@ -40,20 +35,19 @@ internal class Accumulator {
 
     fun accumulate(mesgNum: Int, destFieldNum: Int, value: Long, bits: Int): Long {
         var accumField: AccumulatedField? = null
-        var i: Int
 
-        i = 0
+        var i = 0
         while (i < accumulatedFields.size) {
-            accumField = accumulatedFields.get(i)
+            accumField = accumulatedFields[i]
 
-            if ((accumField!!.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
+            if ((accumField.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
                 break
             }
             i++
         }
 
         if (i == accumulatedFields.size) {
-            accumField = Accumulator.AccumulatedField(mesgNum, destFieldNum)
+            accumField = AccumulatedField(mesgNum, destFieldNum)
             accumulatedFields.add(accumField)
         }
 

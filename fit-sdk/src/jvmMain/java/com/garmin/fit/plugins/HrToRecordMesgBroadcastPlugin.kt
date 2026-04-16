@@ -18,16 +18,17 @@ import com.garmin.fit.MesgBroadcastPlugin
 import com.garmin.fit.MesgNum
 import com.garmin.fit.RecordMesg
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 /**
  * Provides functionality to backfill record messages with hr data from HR
  * mesgs.
- * 
- * 
+ *
+ *
  * The plugin matches the timestamp of record messages with the timestamps hr
  * data contained in the HR mesg.
- * 
- * 
+ *
+ *
  * Requirements for correct operation: - HR data must be in the order of
  * increasing timestamp - Record data must be in the order of increasing
  * timestamp - The order of incoming HR and record mesgs may be independent of
@@ -36,7 +37,7 @@ import kotlin.math.abs
  * mark the bpm data, provide the time that is used to match record data. -
  * There must be an equal number of filtered_bpm fields and event_timestamp
  * fields in each HR mesg; this number may change from message to message.
- * 
+ *
  */
 class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
     private val heartrates = HeartRateList()
@@ -44,21 +45,21 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
 
     /**
      * Peeks at messages as they are being added to the buffer
-     * 
+     *
      * @param mesg the message that has just been buffered by
      * BufferedMesgBroadcaster
      */
     override fun onIncomingMesg(mesg: Mesg) {
-        when (mesg.getNum()) {
+        when (mesg.num) {
             MesgNum.FILE_ID -> {
                 // Check to see if we are processing an activity file.
                 val fileIdMesg = FileIdMesg(mesg)
-                if (fileIdMesg.getType() == File.ACTIVITY) {
+                if (fileIdMesg.type == File.ACTIVITY) {
                     isActivityFile = true
                 }
             }
 
-            MesgNum.HR -> heartrates.addHrMesssage(HrMesg(mesg))
+            MesgNum.HR -> heartrates.addHrMessage(HrMesg(mesg))
             else -> {}
         }
     }
@@ -66,33 +67,33 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
     /**
      * Matches record time ranges with all time matching HR mesgs and updates the
      * message stream for later broadcast to listeners.
-     * 
+     *
      * @param mesgs the message list that is about to be broadcast to all
      * MesgListeners. \ Note: The List is 'final' but the references
      * within the list are not, \ therefore editing Mesg objects within
      * mesgs will alter the messages \ that are broadcast to listeners.
-     * 
+     *
      * DO NOT add or remove any messages to mesgs
      */
     override fun onBroadcast(mesgs: MutableList<Mesg>) {
         // Check if we have an activity file and have received HR messages
-        if (isActivityFile && heartrates.size > 0) {
+        if (isActivityFile && heartrates.isNotEmpty()) {
             var heartrateIndex = 0
             var recordRangeStartTime: DateTime? = null
 
             for (mesgCounter in mesgs.indices) {
-                val mesg = mesgs.get(mesgCounter)
+                val mesg = mesgs[mesgCounter]
 
                 // Process record messages as they are encountered
-                if (mesg.getNum() == MesgNum.RECORD) {
+                if (mesg.num == MesgNum.RECORD) {
                     var hrSum: Long = 0
                     var hrSumCount: Long = 0
 
                     val recordMesg = RecordMesg(mesg)
-                    val recordRangeEndTime = DateTime(recordMesg.getTimestamp())
+                    val recordRangeEndTime = DateTime(recordMesg.timestamp!!)
 
                     if (recordRangeStartTime == null) {
-                        recordRangeStartTime = DateTime(recordMesg.getTimestamp().getTimestamp())
+                        recordRangeStartTime = DateTime(recordMesg.timestamp!!.timestamp)
                     }
 
                     if (recordRangeStartTime.compareTo(recordRangeEndTime) == 0) {
@@ -100,25 +101,26 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
                         heartrateIndex = if (heartrateIndex >= 1) heartrateIndex - 1 else 0
                     }
 
+                    // TODO: investigate findingInRangeHrMesgs being always true
                     var findingInRangeHrMesgs = true
                     while (findingInRangeHrMesgs && (heartrateIndex < heartrates.size)) {
-                        val heartrate = heartrates.get(heartrateIndex)
+                        val heartrate = heartrates[heartrateIndex]
 
                         // Check if the heartrate timestamp is gt record start time
                         // and if the heartrate timestamp is lte to record end time
-                        if ((heartrate.timestamp.compareTo(recordRangeStartTime) > 0)
-                            && (heartrate.timestamp.compareTo(recordRangeEndTime) <= 0)
+                        if ((heartrate.timestamp > recordRangeStartTime!!)
+                            && (heartrate.timestamp <= recordRangeEndTime)
                         ) {
                             hrSum += heartrate.value.toLong()
                             hrSumCount++
-                        } else if (heartrate.timestamp.compareTo(recordRangeEndTime) > 0) {
+                        } else if (heartrate.timestamp > recordRangeEndTime) {
                             findingInRangeHrMesgs = false
 
                             if (hrSumCount > 0) {
                                 // Update record's heart rate value
-                                val avgHR = Math.round(((hrSum.toFloat()) / hrSumCount)).toShort()
-                                recordMesg.setHeartRate(avgHR)
-                                mesgs.set(mesgCounter, recordMesg as Mesg)
+                                val avgHR = ((hrSum.toFloat()) / hrSumCount).roundToInt().toShort()
+                                recordMesg.heartRate = avgHR
+                                mesgs[mesgCounter] = recordMesg as Mesg
                             }
                             // Reset HR average accumulators
                             hrSum = 0
@@ -142,18 +144,18 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
         var timestamp: DateTime
         var value: Short
 
-        internal constructor(other: HeartRate) {
+        constructor(other: HeartRate) {
             timestamp = DateTime(other.timestamp)
             value = other.value
         }
 
-        internal constructor(dateTime: DateTime, value: Short) {
+        constructor(dateTime: DateTime, value: Short) {
             this.timestamp = DateTime(dateTime)
             this.value = value
         }
     }
 
-    private inner class HeartRateList : ArrayList<HeartRate>() {
+    private class HeartRateList : ArrayList<HeartRate>() {
         private val GAP_INCREMENT_MILLISECONDS: Long = 250
         private val GAP_INCREMENT_SECONDS = GAP_INCREMENT_MILLISECONDS / 1000.0f
         private val GAP_MAX_MILLISECONDS: Long = 5000
@@ -162,20 +164,18 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
         private var anchorEventTimestamp = 0.0f
         private var anchorTimestamp: DateTime? = null
 
-        fun addHrMesssage(hrMesg: HrMesg) {
-            if (hrMesg == null) {
-                throw FitRuntimeException("FIT HrToRecordMesgBroadcastPlugin Error: HR mesg must not be null")
-            }
+        // TODO: report this typo to Garmin
+        fun addHrMessage(hrMesg: HrMesg) {
             // Update HR timestamp anchor, if present
-            if (hrMesg.getTimestamp() != null) {
-                anchorTimestamp = DateTime(hrMesg.getTimestamp())
+            if (hrMesg.timestamp != null) {
+                anchorTimestamp = DateTime(hrMesg.timestamp!!)
 
-                if (hrMesg.getFractionalTimestamp() != null) anchorTimestamp!!.add(
-                    hrMesg.getFractionalTimestamp().toDouble()
+                if (hrMesg.fractionalTimestamp != null) anchorTimestamp!!.add(
+                    hrMesg.fractionalTimestamp!!.toDouble()
                 )
 
-                if (hrMesg.getNumEventTimestamp() == 1) {
-                    anchorEventTimestamp = hrMesg.getEventTimestamp(0)
+                if (hrMesg.numEventTimestamp == 1) {
+                    anchorEventTimestamp = hrMesg.getEventTimestamp(0)!!
                 } else {
                     throw FitRuntimeException(
                         "FIT HrToRecordMesgBroadcastPlugin Error: Anchor HR mesg must have 1 event_timestamp"
@@ -188,27 +188,25 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
                 throw FitRuntimeException(
                     "FIT HrToRecordMesgBroadcastPlugin Error: No anchor timestamp received in a HR mesg before diff HR mesgs"
                 )
-            } else if (hrMesg.getNumEventTimestamp() != hrMesg.getNumFilteredBpm()) {
+            } else if (hrMesg.numEventTimestamp != hrMesg.numFilteredBpm) {
                 throw FitRuntimeException(
                     "FIT HrToRecordMesgBroadcastPlugin Error: HR mesg with mismatching event timestamp and filtered bpm"
                 )
             }
 
-            for (i in 0..<hrMesg.getNumEventTimestamp()) {
+            for (i in 0..<hrMesg.numEventTimestamp) {
                 var eventTimestamp = hrMesg.getEventTimestamp(i)
 
                 // Check to see if the event timestamp rolled over
-                if (eventTimestamp < anchorEventTimestamp) {
+                if (eventTimestamp!! < anchorEventTimestamp) {
                     if ((anchorEventTimestamp - eventTimestamp) > (1 shl 21)) {
                         eventTimestamp += (1 shl 22).toFloat()
                     } else {
-                        throw FitRuntimeException(
-                            "FIT HrToRecordMesgBroadcastPlugin Error: Anchor event_timestamp is greater than subsequent event_timestamp. This does not allow for correct delta calculation."
-                        )
+                        throw FitRuntimeException("FIT HrToRecordMesgBroadcastPlugin Error: Anchor event_timestamp is greater than subsequent event_timestamp. This does not allow for correct delta calculation.")
                     }
                 }
 
-                val currentHr = HeartRate(anchorTimestamp!!, hrMesg.getFilteredBpm(i))
+                val currentHr = HeartRate(anchorTimestamp!!, hrMesg.getFilteredBpm(i)!!)
                 currentHr.timestamp.add((eventTimestamp - anchorEventTimestamp).toDouble())
 
                 // Carry the previous HR value forward across the gap to the current
@@ -216,8 +214,7 @@ class HrToRecordMesgBroadcastPlugin : MesgBroadcastPlugin {
                 if (!isEmpty()) {
                     val previousHR = get(size - 1)
                     var gapInMilliseconds = abs(
-                        currentHr.timestamp.getDate().getTime() - previousHR.timestamp.getDate()
-                            .getTime()
+                        currentHr.timestamp.date.time - previousHR.timestamp.date.time
                     )
                     var step: Long = 1
                     while (gapInMilliseconds > GAP_INCREMENT_MILLISECONDS && step <= GAP_MAX_STEPS) {

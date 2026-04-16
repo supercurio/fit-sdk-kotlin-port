@@ -12,39 +12,39 @@ package com.garmin.fit
 class BloodPressureMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.BLOOD_PRESSURE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var systolicPressure: Int?
         /**
          * Get systolic_pressure field
          * Units: mmHg
-         * 
+         *
          * @return systolic_pressure
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set systolic_pressure field
          * Units: mmHg
-         * 
+         *
          * @param systolicPressure The new systolicPressure value to be set
          */
         set(systolicPressure) {
@@ -55,14 +55,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get diastolic_pressure field
          * Units: mmHg
-         * 
+         *
          * @return diastolic_pressure
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set diastolic_pressure field
          * Units: mmHg
-         * 
+         *
          * @param diastolicPressure The new diastolicPressure value to be set
          */
         set(diastolicPressure) {
@@ -73,14 +73,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get mean_arterial_pressure field
          * Units: mmHg
-         * 
+         *
          * @return mean_arterial_pressure
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set mean_arterial_pressure field
          * Units: mmHg
-         * 
+         *
          * @param meanArterialPressure The new meanArterialPressure value to be set
          */
         set(meanArterialPressure) {
@@ -91,14 +91,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get map_3_sample_mean field
          * Units: mmHg
-         * 
+         *
          * @return map_3_sample_mean
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set map_3_sample_mean field
          * Units: mmHg
-         * 
+         *
          * @param map3SampleMean The new map3SampleMean value to be set
          */
         set(map3SampleMean) {
@@ -109,14 +109,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get map_morning_values field
          * Units: mmHg
-         * 
+         *
          * @return map_morning_values
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set map_morning_values field
          * Units: mmHg
-         * 
+         *
          * @param mapMorningValues The new mapMorningValues value to be set
          */
         set(mapMorningValues) {
@@ -127,14 +127,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get map_evening_values field
          * Units: mmHg
-         * 
+         *
          * @return map_evening_values
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set map_evening_values field
          * Units: mmHg
-         * 
+         *
          * @param mapEveningValues The new mapEveningValues value to be set
          */
         set(mapEveningValues) {
@@ -145,14 +145,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get heart_rate field
          * Units: bpm
-         * 
+         *
          * @return heart_rate
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set heart_rate field
          * Units: bpm
-         * 
+         *
          * @param heartRate The new heartRate value to be set
          */
         set(heartRate) {
@@ -162,19 +162,16 @@ class BloodPressureMesg : Mesg {
     var heartRateType: HrType?
         /**
          * Get heart_rate_type field
-         * 
+         *
          * @return heart_rate_type
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return HrType.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return HrType.getByValue(value)
         }
         /**
          * Set heart_rate_type field
-         * 
+         *
          * @param heartRateType The new heartRateType value to be set
          */
         set(heartRateType) {
@@ -184,19 +181,16 @@ class BloodPressureMesg : Mesg {
     var status: BpStatus?
         /**
          * Get status field
-         * 
+         *
          * @return status
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return BpStatus.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return BpStatus.getByValue(value)
         }
         /**
          * Set status field
-         * 
+         *
          * @param status The new status value to be set
          */
         set(status) {
@@ -207,14 +201,14 @@ class BloodPressureMesg : Mesg {
         /**
          * Get user_profile_index field
          * Comment: Associates this blood pressure message to a user. This corresponds to the index of the user profile message in the blood pressure file.
-         * 
+         *
          * @return user_profile_index
          */
         get() = getFieldIntegerValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set user_profile_index field
          * Comment: Associates this blood pressure message to a user. This corresponds to the index of the user profile message in the blood pressure file.
-         * 
+         *
          * @param userProfileIndex The new userProfileIndex value to be set
          */
         set(userProfileIndex) {
@@ -245,11 +239,10 @@ class BloodPressureMesg : Mesg {
         const val UserProfileIndexFieldNum: Int = 9
 
 
-        val bloodPressureMesg: Mesg
+        // blood_pressure
+        val bloodPressureMesg: Mesg = Mesg("blood_pressure", MesgNum.BLOOD_PRESSURE)
 
         init {
-            // blood_pressure
-            bloodPressureMesg = Mesg("blood_pressure", MesgNum.BLOOD_PRESSURE)
             bloodPressureMesg.addField(
                 Field(
                     "timestamp",

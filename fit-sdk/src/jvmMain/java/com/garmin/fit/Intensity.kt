@@ -26,7 +26,7 @@ enum class Intensity(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Intensity.INVALID
+            return INVALID
         }
 
         /**

@@ -4,7 +4,7 @@ plugins {
 
 kotlin {
     jvm()
-    jvmToolchain(8)
+    jvmToolchain(21)
 
     sourceSets {
         jvmMain.dependencies {
@@ -16,15 +16,13 @@ kotlin {
 tasks.named<Jar>("jvmJar") {
     archiveFileName.set("ActivityRepairTool.jar")
     manifest {
-        attributes["Main-Class"] = "com.garmin.fit.repair.ActivityRepairTool"
+        attributes["Main-Class"] = "com.garmin.fit.repair.ActivityRepairToolKt"
     }
 
     from(configurations.named("jvmRuntimeClasspath").map { configuration ->
-        configuration
-            .filter { it.path.contains("fit") }
-            .map { file ->
-                if (file.isDirectory) file else zipTree(file)
-            }
+        configuration.map { file ->
+            if (file.isDirectory) file else zipTree(file)
+        }
     })
 
     exclude("**/examples/**")

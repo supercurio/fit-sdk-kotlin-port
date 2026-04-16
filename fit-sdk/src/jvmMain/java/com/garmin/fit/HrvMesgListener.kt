@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface HrvMesgListener {
-    fun onMesg(mesg: HrvMesg?)
+    fun onMesg(mesg: HrvMesg)
 }

@@ -251,254 +251,253 @@ object Manufacturer {
     const val HUAWEI: Int = 348
     const val GOTOES: Int = 349
     const val ACTIGRAPHCORP: Int = 5759
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(GARMIN, "GARMIN")
-        stringMap.put(GARMIN_FR405_ANTFS, "GARMIN_FR405_ANTFS")
-        stringMap.put(ZEPHYR, "ZEPHYR")
-        stringMap.put(DAYTON, "DAYTON")
-        stringMap.put(IDT, "IDT")
-        stringMap.put(SRM, "SRM")
-        stringMap.put(QUARQ, "QUARQ")
-        stringMap.put(IBIKE, "IBIKE")
-        stringMap.put(SARIS, "SARIS")
-        stringMap.put(SPARK_HK, "SPARK_HK")
-        stringMap.put(TANITA, "TANITA")
-        stringMap.put(ECHOWELL, "ECHOWELL")
-        stringMap.put(DYNASTREAM_OEM, "DYNASTREAM_OEM")
-        stringMap.put(NAUTILUS, "NAUTILUS")
-        stringMap.put(DYNASTREAM, "DYNASTREAM")
-        stringMap.put(TIMEX, "TIMEX")
-        stringMap.put(METRIGEAR, "METRIGEAR")
-        stringMap.put(XELIC, "XELIC")
-        stringMap.put(BEURER, "BEURER")
-        stringMap.put(CARDIOSPORT, "CARDIOSPORT")
-        stringMap.put(A_AND_D, "A_AND_D")
-        stringMap.put(HMM, "HMM")
-        stringMap.put(SUUNTO, "SUUNTO")
-        stringMap.put(THITA_ELEKTRONIK, "THITA_ELEKTRONIK")
-        stringMap.put(GPULSE, "GPULSE")
-        stringMap.put(CLEAN_MOBILE, "CLEAN_MOBILE")
-        stringMap.put(PEDAL_BRAIN, "PEDAL_BRAIN")
-        stringMap.put(PEAKSWARE, "PEAKSWARE")
-        stringMap.put(SAXONAR, "SAXONAR")
-        stringMap.put(LEMOND_FITNESS, "LEMOND_FITNESS")
-        stringMap.put(DEXCOM, "DEXCOM")
-        stringMap.put(WAHOO_FITNESS, "WAHOO_FITNESS")
-        stringMap.put(OCTANE_FITNESS, "OCTANE_FITNESS")
-        stringMap.put(ARCHINOETICS, "ARCHINOETICS")
-        stringMap.put(THE_HURT_BOX, "THE_HURT_BOX")
-        stringMap.put(CITIZEN_SYSTEMS, "CITIZEN_SYSTEMS")
-        stringMap.put(MAGELLAN, "MAGELLAN")
-        stringMap.put(OSYNCE, "OSYNCE")
-        stringMap.put(HOLUX, "HOLUX")
-        stringMap.put(CONCEPT2, "CONCEPT2")
-        stringMap.put(SHIMANO, "SHIMANO")
-        stringMap.put(ONE_GIANT_LEAP, "ONE_GIANT_LEAP")
-        stringMap.put(ACE_SENSOR, "ACE_SENSOR")
-        stringMap.put(BRIM_BROTHERS, "BRIM_BROTHERS")
-        stringMap.put(XPLOVA, "XPLOVA")
-        stringMap.put(PERCEPTION_DIGITAL, "PERCEPTION_DIGITAL")
-        stringMap.put(BF1SYSTEMS, "BF1SYSTEMS")
-        stringMap.put(PIONEER, "PIONEER")
-        stringMap.put(SPANTEC, "SPANTEC")
-        stringMap.put(METALOGICS, "METALOGICS")
-        stringMap.put(_4IIIIS, "_4IIIIS")
-        stringMap.put(SEIKO_EPSON, "SEIKO_EPSON")
-        stringMap.put(SEIKO_EPSON_OEM, "SEIKO_EPSON_OEM")
-        stringMap.put(IFOR_POWELL, "IFOR_POWELL")
-        stringMap.put(MAXWELL_GUIDER, "MAXWELL_GUIDER")
-        stringMap.put(STAR_TRAC, "STAR_TRAC")
-        stringMap.put(BREAKAWAY, "BREAKAWAY")
-        stringMap.put(ALATECH_TECHNOLOGY_LTD, "ALATECH_TECHNOLOGY_LTD")
-        stringMap.put(MIO_TECHNOLOGY_EUROPE, "MIO_TECHNOLOGY_EUROPE")
-        stringMap.put(ROTOR, "ROTOR")
-        stringMap.put(GEONAUTE, "GEONAUTE")
-        stringMap.put(ID_BIKE, "ID_BIKE")
-        stringMap.put(SPECIALIZED, "SPECIALIZED")
-        stringMap.put(WTEK, "WTEK")
-        stringMap.put(PHYSICAL_ENTERPRISES, "PHYSICAL_ENTERPRISES")
-        stringMap.put(NORTH_POLE_ENGINEERING, "NORTH_POLE_ENGINEERING")
-        stringMap.put(BKOOL, "BKOOL")
-        stringMap.put(CATEYE, "CATEYE")
-        stringMap.put(STAGES_CYCLING, "STAGES_CYCLING")
-        stringMap.put(SIGMASPORT, "SIGMASPORT")
-        stringMap.put(TOMTOM, "TOMTOM")
-        stringMap.put(PERIPEDAL, "PERIPEDAL")
-        stringMap.put(WATTBIKE, "WATTBIKE")
-        stringMap.put(MOXY, "MOXY")
-        stringMap.put(CICLOSPORT, "CICLOSPORT")
-        stringMap.put(POWERBAHN, "POWERBAHN")
-        stringMap.put(ACORN_PROJECTS_APS, "ACORN_PROJECTS_APS")
-        stringMap.put(LIFEBEAM, "LIFEBEAM")
-        stringMap.put(BONTRAGER, "BONTRAGER")
-        stringMap.put(WELLGO, "WELLGO")
-        stringMap.put(SCOSCHE, "SCOSCHE")
-        stringMap.put(MAGURA, "MAGURA")
-        stringMap.put(WOODWAY, "WOODWAY")
-        stringMap.put(ELITE, "ELITE")
-        stringMap.put(NIELSEN_KELLERMAN, "NIELSEN_KELLERMAN")
-        stringMap.put(DK_CITY, "DK_CITY")
-        stringMap.put(TACX, "TACX")
-        stringMap.put(DIRECTION_TECHNOLOGY, "DIRECTION_TECHNOLOGY")
-        stringMap.put(MAGTONIC, "MAGTONIC")
-        stringMap.put(_1PARTCARBON, "_1PARTCARBON")
-        stringMap.put(INSIDE_RIDE_TECHNOLOGIES, "INSIDE_RIDE_TECHNOLOGIES")
-        stringMap.put(SOUND_OF_MOTION, "SOUND_OF_MOTION")
-        stringMap.put(STRYD, "STRYD")
-        stringMap.put(ICG, "ICG")
-        stringMap.put(MIPULSE, "MIPULSE")
-        stringMap.put(BSX_ATHLETICS, "BSX_ATHLETICS")
-        stringMap.put(LOOK, "LOOK")
-        stringMap.put(CAMPAGNOLO_SRL, "CAMPAGNOLO_SRL")
-        stringMap.put(BODY_BIKE_SMART, "BODY_BIKE_SMART")
-        stringMap.put(PRAXISWORKS, "PRAXISWORKS")
-        stringMap.put(LIMITS_TECHNOLOGY, "LIMITS_TECHNOLOGY")
-        stringMap.put(TOPACTION_TECHNOLOGY, "TOPACTION_TECHNOLOGY")
-        stringMap.put(COSINUSS, "COSINUSS")
-        stringMap.put(FITCARE, "FITCARE")
-        stringMap.put(MAGENE, "MAGENE")
-        stringMap.put(GIANT_MANUFACTURING_CO, "GIANT_MANUFACTURING_CO")
-        stringMap.put(TIGRASPORT, "TIGRASPORT")
-        stringMap.put(SALUTRON, "SALUTRON")
-        stringMap.put(TECHNOGYM, "TECHNOGYM")
-        stringMap.put(BRYTON_SENSORS, "BRYTON_SENSORS")
-        stringMap.put(LATITUDE_LIMITED, "LATITUDE_LIMITED")
-        stringMap.put(SOARING_TECHNOLOGY, "SOARING_TECHNOLOGY")
-        stringMap.put(IGPSPORT, "IGPSPORT")
-        stringMap.put(THINKRIDER, "THINKRIDER")
-        stringMap.put(GOPHER_SPORT, "GOPHER_SPORT")
-        stringMap.put(WATERROWER, "WATERROWER")
-        stringMap.put(ORANGETHEORY, "ORANGETHEORY")
-        stringMap.put(INPEAK, "INPEAK")
-        stringMap.put(KINETIC, "KINETIC")
-        stringMap.put(JOHNSON_HEALTH_TECH, "JOHNSON_HEALTH_TECH")
-        stringMap.put(POLAR_ELECTRO, "POLAR_ELECTRO")
-        stringMap.put(SEESENSE, "SEESENSE")
-        stringMap.put(NCI_TECHNOLOGY, "NCI_TECHNOLOGY")
-        stringMap.put(IQSQUARE, "IQSQUARE")
-        stringMap.put(LEOMO, "LEOMO")
-        stringMap.put(IFIT_COM, "IFIT_COM")
-        stringMap.put(COROS_BYTE, "COROS_BYTE")
-        stringMap.put(VERSA_DESIGN, "VERSA_DESIGN")
-        stringMap.put(CHILEAF, "CHILEAF")
-        stringMap.put(CYCPLUS, "CYCPLUS")
-        stringMap.put(GRAVAA_BYTE, "GRAVAA_BYTE")
-        stringMap.put(SIGEYI, "SIGEYI")
-        stringMap.put(COOSPO, "COOSPO")
-        stringMap.put(GEOID, "GEOID")
-        stringMap.put(BOSCH, "BOSCH")
-        stringMap.put(KYTO, "KYTO")
-        stringMap.put(KINETIC_SPORTS, "KINETIC_SPORTS")
-        stringMap.put(DECATHLON_BYTE, "DECATHLON_BYTE")
-        stringMap.put(TQ_SYSTEMS, "TQ_SYSTEMS")
-        stringMap.put(TAG_HEUER, "TAG_HEUER")
-        stringMap.put(KEISER_FITNESS, "KEISER_FITNESS")
-        stringMap.put(ZWIFT_BYTE, "ZWIFT_BYTE")
-        stringMap.put(PORSCHE_EP, "PORSCHE_EP")
-        stringMap.put(BLACKBIRD, "BLACKBIRD")
-        stringMap.put(MEILAN_BYTE, "MEILAN_BYTE")
-        stringMap.put(EZON, "EZON")
-        stringMap.put(LAISI, "LAISI")
-        stringMap.put(MYZONE, "MYZONE")
-        stringMap.put(ABAWO, "ABAWO")
-        stringMap.put(BAFANG, "BAFANG")
-        stringMap.put(LUHONG_TECHNOLOGY, "LUHONG_TECHNOLOGY")
-        stringMap.put(DEVELOPMENT, "DEVELOPMENT")
-        stringMap.put(HEALTHANDLIFE, "HEALTHANDLIFE")
-        stringMap.put(LEZYNE, "LEZYNE")
-        stringMap.put(SCRIBE_LABS, "SCRIBE_LABS")
-        stringMap.put(ZWIFT, "ZWIFT")
-        stringMap.put(WATTEAM, "WATTEAM")
-        stringMap.put(RECON, "RECON")
-        stringMap.put(FAVERO_ELECTRONICS, "FAVERO_ELECTRONICS")
-        stringMap.put(DYNOVELO, "DYNOVELO")
-        stringMap.put(STRAVA, "STRAVA")
-        stringMap.put(PRECOR, "PRECOR")
-        stringMap.put(BRYTON, "BRYTON")
-        stringMap.put(SRAM, "SRAM")
-        stringMap.put(NAVMAN, "NAVMAN")
-        stringMap.put(COBI, "COBI")
-        stringMap.put(SPIVI, "SPIVI")
-        stringMap.put(MIO_MAGELLAN, "MIO_MAGELLAN")
-        stringMap.put(EVESPORTS, "EVESPORTS")
-        stringMap.put(SENSITIVUS_GAUGE, "SENSITIVUS_GAUGE")
-        stringMap.put(PODOON, "PODOON")
-        stringMap.put(LIFE_TIME_FITNESS, "LIFE_TIME_FITNESS")
-        stringMap.put(FALCO_E_MOTORS, "FALCO_E_MOTORS")
-        stringMap.put(MINOURA, "MINOURA")
-        stringMap.put(CYCLIQ, "CYCLIQ")
-        stringMap.put(LUXOTTICA, "LUXOTTICA")
-        stringMap.put(TRAINER_ROAD, "TRAINER_ROAD")
-        stringMap.put(THE_SUFFERFEST, "THE_SUFFERFEST")
-        stringMap.put(FULLSPEEDAHEAD, "FULLSPEEDAHEAD")
-        stringMap.put(VIRTUALTRAINING, "VIRTUALTRAINING")
-        stringMap.put(FEEDBACKSPORTS, "FEEDBACKSPORTS")
-        stringMap.put(OMATA, "OMATA")
-        stringMap.put(VDO, "VDO")
-        stringMap.put(MAGNETICDAYS, "MAGNETICDAYS")
-        stringMap.put(HAMMERHEAD, "HAMMERHEAD")
-        stringMap.put(KINETIC_BY_KURT, "KINETIC_BY_KURT")
-        stringMap.put(SHAPELOG, "SHAPELOG")
-        stringMap.put(DABUZIDUO, "DABUZIDUO")
-        stringMap.put(JETBLACK, "JETBLACK")
-        stringMap.put(COROS, "COROS")
-        stringMap.put(VIRTUGO, "VIRTUGO")
-        stringMap.put(VELOSENSE, "VELOSENSE")
-        stringMap.put(CYCLIGENTINC, "CYCLIGENTINC")
-        stringMap.put(TRAILFORKS, "TRAILFORKS")
-        stringMap.put(MAHLE_EBIKEMOTION, "MAHLE_EBIKEMOTION")
-        stringMap.put(NURVV, "NURVV")
-        stringMap.put(MICROPROGRAM, "MICROPROGRAM")
-        stringMap.put(ZONE5CLOUD, "ZONE5CLOUD")
-        stringMap.put(GREENTEG, "GREENTEG")
-        stringMap.put(YAMAHA_MOTORS, "YAMAHA_MOTORS")
-        stringMap.put(WHOOP, "WHOOP")
-        stringMap.put(GRAVAA, "GRAVAA")
-        stringMap.put(ONELAP, "ONELAP")
-        stringMap.put(MONARK_EXERCISE, "MONARK_EXERCISE")
-        stringMap.put(FORM, "FORM")
-        stringMap.put(DECATHLON, "DECATHLON")
-        stringMap.put(SYNCROS, "SYNCROS")
-        stringMap.put(HEATUP, "HEATUP")
-        stringMap.put(CANNONDALE, "CANNONDALE")
-        stringMap.put(TRUE_FITNESS, "TRUE_FITNESS")
-        stringMap.put(RGT_CYCLING, "RGT_CYCLING")
-        stringMap.put(VASA, "VASA")
-        stringMap.put(RACE_REPUBLIC, "RACE_REPUBLIC")
-        stringMap.put(FAZUA, "FAZUA")
-        stringMap.put(OREKA_TRAINING, "OREKA_TRAINING")
-        stringMap.put(LSEC, "LSEC")
-        stringMap.put(LULULEMON_STUDIO, "LULULEMON_STUDIO")
-        stringMap.put(SHANYUE, "SHANYUE")
-        stringMap.put(SPINNING_MDA, "SPINNING_MDA")
-        stringMap.put(HILLDATING, "HILLDATING")
-        stringMap.put(AERO_SENSOR, "AERO_SENSOR")
-        stringMap.put(NIKE, "NIKE")
-        stringMap.put(MAGICSHINE, "MAGICSHINE")
-        stringMap.put(ICTRAINER, "ICTRAINER")
-        stringMap.put(ABSOLUTE_CYCLING, "ABSOLUTE_CYCLING")
-        stringMap.put(EO_SWIMBETTER, "EO_SWIMBETTER")
-        stringMap.put(MYWHOOSH, "MYWHOOSH")
-        stringMap.put(RAVEMEN, "RAVEMEN")
-        stringMap.put(TEKTRO_RACING_PRODUCTS, "TEKTRO_RACING_PRODUCTS")
-        stringMap.put(DARAD_INNOVATION_CORPORATION, "DARAD_INNOVATION_CORPORATION")
-        stringMap.put(CYCLOPTIM, "CYCLOPTIM")
-        stringMap.put(RUNNA, "RUNNA")
-        stringMap.put(ZEPP, "ZEPP")
-        stringMap.put(PELOTON, "PELOTON")
-        stringMap.put(CARV, "CARV")
-        stringMap.put(TISSOT, "TISSOT")
-        stringMap.put(REAL_VELO, "REAL_VELO")
-        stringMap.put(WETECH, "WETECH")
-        stringMap.put(JESPR, "JESPR")
-        stringMap.put(HUAWEI, "HUAWEI")
-        stringMap.put(GOTOES, "GOTOES")
-        stringMap.put(ACTIGRAPHCORP, "ACTIGRAPHCORP")
+        stringMap[GARMIN] = "GARMIN"
+        stringMap[GARMIN_FR405_ANTFS] = "GARMIN_FR405_ANTFS"
+        stringMap[ZEPHYR] = "ZEPHYR"
+        stringMap[DAYTON] = "DAYTON"
+        stringMap[IDT] = "IDT"
+        stringMap[SRM] = "SRM"
+        stringMap[QUARQ] = "QUARQ"
+        stringMap[IBIKE] = "IBIKE"
+        stringMap[SARIS] = "SARIS"
+        stringMap[SPARK_HK] = "SPARK_HK"
+        stringMap[TANITA] = "TANITA"
+        stringMap[ECHOWELL] = "ECHOWELL"
+        stringMap[DYNASTREAM_OEM] = "DYNASTREAM_OEM"
+        stringMap[NAUTILUS] = "NAUTILUS"
+        stringMap[DYNASTREAM] = "DYNASTREAM"
+        stringMap[TIMEX] = "TIMEX"
+        stringMap[METRIGEAR] = "METRIGEAR"
+        stringMap[XELIC] = "XELIC"
+        stringMap[BEURER] = "BEURER"
+        stringMap[CARDIOSPORT] = "CARDIOSPORT"
+        stringMap[A_AND_D] = "A_AND_D"
+        stringMap[HMM] = "HMM"
+        stringMap[SUUNTO] = "SUUNTO"
+        stringMap[THITA_ELEKTRONIK] = "THITA_ELEKTRONIK"
+        stringMap[GPULSE] = "GPULSE"
+        stringMap[CLEAN_MOBILE] = "CLEAN_MOBILE"
+        stringMap[PEDAL_BRAIN] = "PEDAL_BRAIN"
+        stringMap[PEAKSWARE] = "PEAKSWARE"
+        stringMap[SAXONAR] = "SAXONAR"
+        stringMap[LEMOND_FITNESS] = "LEMOND_FITNESS"
+        stringMap[DEXCOM] = "DEXCOM"
+        stringMap[WAHOO_FITNESS] = "WAHOO_FITNESS"
+        stringMap[OCTANE_FITNESS] = "OCTANE_FITNESS"
+        stringMap[ARCHINOETICS] = "ARCHINOETICS"
+        stringMap[THE_HURT_BOX] = "THE_HURT_BOX"
+        stringMap[CITIZEN_SYSTEMS] = "CITIZEN_SYSTEMS"
+        stringMap[MAGELLAN] = "MAGELLAN"
+        stringMap[OSYNCE] = "OSYNCE"
+        stringMap[HOLUX] = "HOLUX"
+        stringMap[CONCEPT2] = "CONCEPT2"
+        stringMap[SHIMANO] = "SHIMANO"
+        stringMap[ONE_GIANT_LEAP] = "ONE_GIANT_LEAP"
+        stringMap[ACE_SENSOR] = "ACE_SENSOR"
+        stringMap[BRIM_BROTHERS] = "BRIM_BROTHERS"
+        stringMap[XPLOVA] = "XPLOVA"
+        stringMap[PERCEPTION_DIGITAL] = "PERCEPTION_DIGITAL"
+        stringMap[BF1SYSTEMS] = "BF1SYSTEMS"
+        stringMap[PIONEER] = "PIONEER"
+        stringMap[SPANTEC] = "SPANTEC"
+        stringMap[METALOGICS] = "METALOGICS"
+        stringMap[_4IIIIS] = "_4IIIIS"
+        stringMap[SEIKO_EPSON] = "SEIKO_EPSON"
+        stringMap[SEIKO_EPSON_OEM] = "SEIKO_EPSON_OEM"
+        stringMap[IFOR_POWELL] = "IFOR_POWELL"
+        stringMap[MAXWELL_GUIDER] = "MAXWELL_GUIDER"
+        stringMap[STAR_TRAC] = "STAR_TRAC"
+        stringMap[BREAKAWAY] = "BREAKAWAY"
+        stringMap[ALATECH_TECHNOLOGY_LTD] = "ALATECH_TECHNOLOGY_LTD"
+        stringMap[MIO_TECHNOLOGY_EUROPE] = "MIO_TECHNOLOGY_EUROPE"
+        stringMap[ROTOR] = "ROTOR"
+        stringMap[GEONAUTE] = "GEONAUTE"
+        stringMap[ID_BIKE] = "ID_BIKE"
+        stringMap[SPECIALIZED] = "SPECIALIZED"
+        stringMap[WTEK] = "WTEK"
+        stringMap[PHYSICAL_ENTERPRISES] = "PHYSICAL_ENTERPRISES"
+        stringMap[NORTH_POLE_ENGINEERING] = "NORTH_POLE_ENGINEERING"
+        stringMap[BKOOL] = "BKOOL"
+        stringMap[CATEYE] = "CATEYE"
+        stringMap[STAGES_CYCLING] = "STAGES_CYCLING"
+        stringMap[SIGMASPORT] = "SIGMASPORT"
+        stringMap[TOMTOM] = "TOMTOM"
+        stringMap[PERIPEDAL] = "PERIPEDAL"
+        stringMap[WATTBIKE] = "WATTBIKE"
+        stringMap[MOXY] = "MOXY"
+        stringMap[CICLOSPORT] = "CICLOSPORT"
+        stringMap[POWERBAHN] = "POWERBAHN"
+        stringMap[ACORN_PROJECTS_APS] = "ACORN_PROJECTS_APS"
+        stringMap[LIFEBEAM] = "LIFEBEAM"
+        stringMap[BONTRAGER] = "BONTRAGER"
+        stringMap[WELLGO] = "WELLGO"
+        stringMap[SCOSCHE] = "SCOSCHE"
+        stringMap[MAGURA] = "MAGURA"
+        stringMap[WOODWAY] = "WOODWAY"
+        stringMap[ELITE] = "ELITE"
+        stringMap[NIELSEN_KELLERMAN] = "NIELSEN_KELLERMAN"
+        stringMap[DK_CITY] = "DK_CITY"
+        stringMap[TACX] = "TACX"
+        stringMap[DIRECTION_TECHNOLOGY] = "DIRECTION_TECHNOLOGY"
+        stringMap[MAGTONIC] = "MAGTONIC"
+        stringMap[_1PARTCARBON] = "_1PARTCARBON"
+        stringMap[INSIDE_RIDE_TECHNOLOGIES] = "INSIDE_RIDE_TECHNOLOGIES"
+        stringMap[SOUND_OF_MOTION] = "SOUND_OF_MOTION"
+        stringMap[STRYD] = "STRYD"
+        stringMap[ICG] = "ICG"
+        stringMap[MIPULSE] = "MIPULSE"
+        stringMap[BSX_ATHLETICS] = "BSX_ATHLETICS"
+        stringMap[LOOK] = "LOOK"
+        stringMap[CAMPAGNOLO_SRL] = "CAMPAGNOLO_SRL"
+        stringMap[BODY_BIKE_SMART] = "BODY_BIKE_SMART"
+        stringMap[PRAXISWORKS] = "PRAXISWORKS"
+        stringMap[LIMITS_TECHNOLOGY] = "LIMITS_TECHNOLOGY"
+        stringMap[TOPACTION_TECHNOLOGY] = "TOPACTION_TECHNOLOGY"
+        stringMap[COSINUSS] = "COSINUSS"
+        stringMap[FITCARE] = "FITCARE"
+        stringMap[MAGENE] = "MAGENE"
+        stringMap[GIANT_MANUFACTURING_CO] = "GIANT_MANUFACTURING_CO"
+        stringMap[TIGRASPORT] = "TIGRASPORT"
+        stringMap[SALUTRON] = "SALUTRON"
+        stringMap[TECHNOGYM] = "TECHNOGYM"
+        stringMap[BRYTON_SENSORS] = "BRYTON_SENSORS"
+        stringMap[LATITUDE_LIMITED] = "LATITUDE_LIMITED"
+        stringMap[SOARING_TECHNOLOGY] = "SOARING_TECHNOLOGY"
+        stringMap[IGPSPORT] = "IGPSPORT"
+        stringMap[THINKRIDER] = "THINKRIDER"
+        stringMap[GOPHER_SPORT] = "GOPHER_SPORT"
+        stringMap[WATERROWER] = "WATERROWER"
+        stringMap[ORANGETHEORY] = "ORANGETHEORY"
+        stringMap[INPEAK] = "INPEAK"
+        stringMap[KINETIC] = "KINETIC"
+        stringMap[JOHNSON_HEALTH_TECH] = "JOHNSON_HEALTH_TECH"
+        stringMap[POLAR_ELECTRO] = "POLAR_ELECTRO"
+        stringMap[SEESENSE] = "SEESENSE"
+        stringMap[NCI_TECHNOLOGY] = "NCI_TECHNOLOGY"
+        stringMap[IQSQUARE] = "IQSQUARE"
+        stringMap[LEOMO] = "LEOMO"
+        stringMap[IFIT_COM] = "IFIT_COM"
+        stringMap[COROS_BYTE] = "COROS_BYTE"
+        stringMap[VERSA_DESIGN] = "VERSA_DESIGN"
+        stringMap[CHILEAF] = "CHILEAF"
+        stringMap[CYCPLUS] = "CYCPLUS"
+        stringMap[GRAVAA_BYTE] = "GRAVAA_BYTE"
+        stringMap[SIGEYI] = "SIGEYI"
+        stringMap[COOSPO] = "COOSPO"
+        stringMap[GEOID] = "GEOID"
+        stringMap[BOSCH] = "BOSCH"
+        stringMap[KYTO] = "KYTO"
+        stringMap[KINETIC_SPORTS] = "KINETIC_SPORTS"
+        stringMap[DECATHLON_BYTE] = "DECATHLON_BYTE"
+        stringMap[TQ_SYSTEMS] = "TQ_SYSTEMS"
+        stringMap[TAG_HEUER] = "TAG_HEUER"
+        stringMap[KEISER_FITNESS] = "KEISER_FITNESS"
+        stringMap[ZWIFT_BYTE] = "ZWIFT_BYTE"
+        stringMap[PORSCHE_EP] = "PORSCHE_EP"
+        stringMap[BLACKBIRD] = "BLACKBIRD"
+        stringMap[MEILAN_BYTE] = "MEILAN_BYTE"
+        stringMap[EZON] = "EZON"
+        stringMap[LAISI] = "LAISI"
+        stringMap[MYZONE] = "MYZONE"
+        stringMap[ABAWO] = "ABAWO"
+        stringMap[BAFANG] = "BAFANG"
+        stringMap[LUHONG_TECHNOLOGY] = "LUHONG_TECHNOLOGY"
+        stringMap[DEVELOPMENT] = "DEVELOPMENT"
+        stringMap[HEALTHANDLIFE] = "HEALTHANDLIFE"
+        stringMap[LEZYNE] = "LEZYNE"
+        stringMap[SCRIBE_LABS] = "SCRIBE_LABS"
+        stringMap[ZWIFT] = "ZWIFT"
+        stringMap[WATTEAM] = "WATTEAM"
+        stringMap[RECON] = "RECON"
+        stringMap[FAVERO_ELECTRONICS] = "FAVERO_ELECTRONICS"
+        stringMap[DYNOVELO] = "DYNOVELO"
+        stringMap[STRAVA] = "STRAVA"
+        stringMap[PRECOR] = "PRECOR"
+        stringMap[BRYTON] = "BRYTON"
+        stringMap[SRAM] = "SRAM"
+        stringMap[NAVMAN] = "NAVMAN"
+        stringMap[COBI] = "COBI"
+        stringMap[SPIVI] = "SPIVI"
+        stringMap[MIO_MAGELLAN] = "MIO_MAGELLAN"
+        stringMap[EVESPORTS] = "EVESPORTS"
+        stringMap[SENSITIVUS_GAUGE] = "SENSITIVUS_GAUGE"
+        stringMap[PODOON] = "PODOON"
+        stringMap[LIFE_TIME_FITNESS] = "LIFE_TIME_FITNESS"
+        stringMap[FALCO_E_MOTORS] = "FALCO_E_MOTORS"
+        stringMap[MINOURA] = "MINOURA"
+        stringMap[CYCLIQ] = "CYCLIQ"
+        stringMap[LUXOTTICA] = "LUXOTTICA"
+        stringMap[TRAINER_ROAD] = "TRAINER_ROAD"
+        stringMap[THE_SUFFERFEST] = "THE_SUFFERFEST"
+        stringMap[FULLSPEEDAHEAD] = "FULLSPEEDAHEAD"
+        stringMap[VIRTUALTRAINING] = "VIRTUALTRAINING"
+        stringMap[FEEDBACKSPORTS] = "FEEDBACKSPORTS"
+        stringMap[OMATA] = "OMATA"
+        stringMap[VDO] = "VDO"
+        stringMap[MAGNETICDAYS] = "MAGNETICDAYS"
+        stringMap[HAMMERHEAD] = "HAMMERHEAD"
+        stringMap[KINETIC_BY_KURT] = "KINETIC_BY_KURT"
+        stringMap[SHAPELOG] = "SHAPELOG"
+        stringMap[DABUZIDUO] = "DABUZIDUO"
+        stringMap[JETBLACK] = "JETBLACK"
+        stringMap[COROS] = "COROS"
+        stringMap[VIRTUGO] = "VIRTUGO"
+        stringMap[VELOSENSE] = "VELOSENSE"
+        stringMap[CYCLIGENTINC] = "CYCLIGENTINC"
+        stringMap[TRAILFORKS] = "TRAILFORKS"
+        stringMap[MAHLE_EBIKEMOTION] = "MAHLE_EBIKEMOTION"
+        stringMap[NURVV] = "NURVV"
+        stringMap[MICROPROGRAM] = "MICROPROGRAM"
+        stringMap[ZONE5CLOUD] = "ZONE5CLOUD"
+        stringMap[GREENTEG] = "GREENTEG"
+        stringMap[YAMAHA_MOTORS] = "YAMAHA_MOTORS"
+        stringMap[WHOOP] = "WHOOP"
+        stringMap[GRAVAA] = "GRAVAA"
+        stringMap[ONELAP] = "ONELAP"
+        stringMap[MONARK_EXERCISE] = "MONARK_EXERCISE"
+        stringMap[FORM] = "FORM"
+        stringMap[DECATHLON] = "DECATHLON"
+        stringMap[SYNCROS] = "SYNCROS"
+        stringMap[HEATUP] = "HEATUP"
+        stringMap[CANNONDALE] = "CANNONDALE"
+        stringMap[TRUE_FITNESS] = "TRUE_FITNESS"
+        stringMap[RGT_CYCLING] = "RGT_CYCLING"
+        stringMap[VASA] = "VASA"
+        stringMap[RACE_REPUBLIC] = "RACE_REPUBLIC"
+        stringMap[FAZUA] = "FAZUA"
+        stringMap[OREKA_TRAINING] = "OREKA_TRAINING"
+        stringMap[LSEC] = "LSEC"
+        stringMap[LULULEMON_STUDIO] = "LULULEMON_STUDIO"
+        stringMap[SHANYUE] = "SHANYUE"
+        stringMap[SPINNING_MDA] = "SPINNING_MDA"
+        stringMap[HILLDATING] = "HILLDATING"
+        stringMap[AERO_SENSOR] = "AERO_SENSOR"
+        stringMap[NIKE] = "NIKE"
+        stringMap[MAGICSHINE] = "MAGICSHINE"
+        stringMap[ICTRAINER] = "ICTRAINER"
+        stringMap[ABSOLUTE_CYCLING] = "ABSOLUTE_CYCLING"
+        stringMap[EO_SWIMBETTER] = "EO_SWIMBETTER"
+        stringMap[MYWHOOSH] = "MYWHOOSH"
+        stringMap[RAVEMEN] = "RAVEMEN"
+        stringMap[TEKTRO_RACING_PRODUCTS] = "TEKTRO_RACING_PRODUCTS"
+        stringMap[DARAD_INNOVATION_CORPORATION] = "DARAD_INNOVATION_CORPORATION"
+        stringMap[CYCLOPTIM] = "CYCLOPTIM"
+        stringMap[RUNNA] = "RUNNA"
+        stringMap[ZEPP] = "ZEPP"
+        stringMap[PELOTON] = "PELOTON"
+        stringMap[CARV] = "CARV"
+        stringMap[TISSOT] = "TISSOT"
+        stringMap[REAL_VELO] = "REAL_VELO"
+        stringMap[WETECH] = "WETECH"
+        stringMap[JESPR] = "JESPR"
+        stringMap[HUAWEI] = "HUAWEI"
+        stringMap[GOTOES] = "GOTOES"
+        stringMap[ACTIGRAPHCORP] = "ACTIGRAPHCORP"
     }
 
 
@@ -507,9 +506,9 @@ object Manufacturer {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -520,7 +519,7 @@ object Manufacturer {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

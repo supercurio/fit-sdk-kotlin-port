@@ -12,19 +12,19 @@ package com.garmin.fit
 class HrmProfileMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HRM_PROFILE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,19 +34,16 @@ class HrmProfileMesg : Mesg {
     var enabled: Bool?
         /**
          * Get enabled field
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -56,13 +53,13 @@ class HrmProfileMesg : Mesg {
     var hrmAntId: Int?
         /**
          * Get hrm_ant_id field
-         * 
+         *
          * @return hrm_ant_id
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set hrm_ant_id field
-         * 
+         *
          * @param hrmAntId The new hrmAntId value to be set
          */
         set(hrmAntId) {
@@ -72,19 +69,16 @@ class HrmProfileMesg : Mesg {
     var logHrv: Bool?
         /**
          * Get log_hrv field
-         * 
+         *
          * @return log_hrv
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set log_hrv field
-         * 
+         *
          * @param logHrv The new logHrv value to be set
          */
         set(logHrv) {
@@ -94,13 +88,13 @@ class HrmProfileMesg : Mesg {
     var hrmAntIdTransType: Short?
         /**
          * Get hrm_ant_id_trans_type field
-         * 
+         *
          * @return hrm_ant_id_trans_type
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set hrm_ant_id_trans_type field
-         * 
+         *
          * @param hrmAntIdTransType The new hrmAntIdTransType value to be set
          */
         set(hrmAntIdTransType) {
@@ -119,11 +113,10 @@ class HrmProfileMesg : Mesg {
         const val HrmAntIdTransTypeFieldNum: Int = 3
 
 
-        val hrmProfileMesg: Mesg
+        // hrm_profile
+        val hrmProfileMesg: Mesg = Mesg("hrm_profile", MesgNum.HRM_PROFILE)
 
         init {
-            // hrm_profile
-            hrmProfileMesg = Mesg("hrm_profile", MesgNum.HRM_PROFILE)
             hrmProfileMesg.addField(
                 Field(
                     "message_index",

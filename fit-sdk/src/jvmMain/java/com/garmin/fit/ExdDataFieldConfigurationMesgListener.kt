@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface ExdDataFieldConfigurationMesgListener {
-    fun onMesg(mesg: ExdDataFieldConfigurationMesg?)
+    fun onMesg(mesg: ExdDataFieldConfigurationMesg)
 }

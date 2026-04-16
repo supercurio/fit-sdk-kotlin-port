@@ -23,7 +23,7 @@ enum class SessionTrigger(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SessionTrigger.INVALID
+            return INVALID
         }
 
         /**

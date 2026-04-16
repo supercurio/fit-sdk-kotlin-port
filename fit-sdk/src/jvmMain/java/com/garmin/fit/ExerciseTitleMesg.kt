@@ -12,19 +12,19 @@ package com.garmin.fit
 class ExerciseTitleMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.EXERCISE_TITLE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,13 +34,13 @@ class ExerciseTitleMesg : Mesg {
     var exerciseCategory: Int?
         /**
          * Get exercise_category field
-         * 
+         *
          * @return exercise_category
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set exercise_category field
-         * 
+         *
          * @param exerciseCategory The new exerciseCategory value to be set
          */
         set(exerciseCategory) {
@@ -50,13 +50,13 @@ class ExerciseTitleMesg : Mesg {
     var exerciseName: Int?
         /**
          * Get exercise_name field
-         * 
+         *
          * @return exercise_name
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set exercise_name field
-         * 
+         *
          * @param exerciseName The new exerciseName value to be set
          */
         set(exerciseName) {
@@ -74,7 +74,7 @@ class ExerciseTitleMesg : Mesg {
 
     /**
      * Get wkt_step_name field
-     * 
+     *
      * @param index of wkt_step_name
      * @return wkt_step_name
      */
@@ -84,7 +84,7 @@ class ExerciseTitleMesg : Mesg {
 
     /**
      * Set wkt_step_name field
-     * 
+     *
      * @param index of wkt_step_name
      * @param wktStepName The new wktStepName value to be set
      */
@@ -102,11 +102,10 @@ class ExerciseTitleMesg : Mesg {
         const val WktStepNameFieldNum: Int = 2
 
 
-        val exerciseTitleMesg: Mesg
+        // exercise_title
+        val exerciseTitleMesg: Mesg = Mesg("exercise_title", MesgNum.EXERCISE_TITLE)
 
         init {
-            // exercise_title
-            exerciseTitleMesg = Mesg("exercise_title", MesgNum.EXERCISE_TITLE)
             exerciseTitleMesg.addField(
                 Field(
                     "message_index",

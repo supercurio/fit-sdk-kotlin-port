@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface ChronoShotDataMesgListener {
-    fun onMesg(mesg: ChronoShotDataMesg?)
+    fun onMesg(mesg: ChronoShotDataMesg)
 }

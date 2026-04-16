@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface NmeaSentenceMesgListener {
-    fun onMesg(mesg: NmeaSentenceMesg?)
+    fun onMesg(mesg: NmeaSentenceMesg)
 }

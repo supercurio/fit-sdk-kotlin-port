@@ -24,7 +24,7 @@ enum class AutoSyncFrequency(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return AutoSyncFrequency.INVALID
+            return INVALID
         }
 
         /**

@@ -12,21 +12,21 @@ package com.garmin.fit
 class DiveAlarmMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DIVE_ALARM))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
          * Comment: Index of the alarm
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
          * Comment: Index of the alarm
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -38,7 +38,7 @@ class DiveAlarmMesg : Mesg {
          * Get depth field
          * Units: m
          * Comment: Depth setting (m) for depth type alarms
-         * 
+         *
          * @return depth
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,7 +46,7 @@ class DiveAlarmMesg : Mesg {
          * Set depth field
          * Units: m
          * Comment: Depth setting (m) for depth type alarms
-         * 
+         *
          * @param depth The new depth value to be set
          */
         set(depth) {
@@ -58,7 +58,7 @@ class DiveAlarmMesg : Mesg {
          * Get time field
          * Units: s
          * Comment: Time setting (s) for time type alarms
-         * 
+         *
          * @return time
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -66,7 +66,7 @@ class DiveAlarmMesg : Mesg {
          * Set time field
          * Units: s
          * Comment: Time setting (s) for time type alarms
-         * 
+         *
          * @param time The new time value to be set
          */
         set(time) {
@@ -77,20 +77,17 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get enabled field
          * Comment: Enablement flag
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
          * Comment: Enablement flag
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -101,20 +98,17 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get alarm_type field
          * Comment: Alarm type setting
-         * 
+         *
          * @return alarm_type
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DiveAlarmType.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DiveAlarmType.getByValue(value)
         }
         /**
          * Set alarm_type field
          * Comment: Alarm type setting
-         * 
+         *
          * @param alarmType The new alarmType value to be set
          */
         set(alarmType) {
@@ -125,62 +119,50 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get sound field
          * Comment: Tone and Vibe setting for the alarm
-         * 
+         *
          * @return sound
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Tone.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Tone.getByValue(value)
         }
         /**
          * Set sound field
          * Comment: Tone and Vibe setting for the alarm
-         * 
+         *
          * @param sound The new sound value to be set
          */
         set(sound) {
             setFieldValue(4, 0, sound!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val diveTypes: Array<SubSport?>
-        get() {
-            val values =
-                getFieldShortValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            val rv = arrayOfNulls<SubSport>(values.size)
-            for (i in values.indices) {
-                rv[i] = SubSport.Companion.getByValue(values[i])
-            }
-            return rv
-        }
+    val diveTypes: Array<SubSport>
+        get() = getFieldShortValues(DiveTypesFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)?.map {
+            SubSport.getByValue(it)
+        }?.toTypedArray() ?: emptyArray()
 
     val numDiveTypes: Int
         /**
          * @return number of dive_types
          */
-        get() = getNumFieldValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(DiveTypesFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get dive_types field
      * Comment: Dive types the alarm will trigger on
-     * 
+     *
      * @param index of dive_types
      * @return dive_types
      */
     fun getDiveTypes(index: Int): SubSport? {
-        val value = getFieldShortValue(5, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
-        }
-        return SubSport.Companion.getByValue(value)
+        val value = getFieldShortValue(5, index, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+        return SubSport.getByValue(value)
     }
 
     /**
      * Set dive_types field
      * Comment: Dive types the alarm will trigger on
-     * 
+     *
      * @param index of dive_types
      * @param diveTypes The new diveTypes value to be set
      */
@@ -192,14 +174,14 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get id field
          * Comment: Alarm ID
-         * 
+         *
          * @return id
          */
         get() = getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set id field
          * Comment: Alarm ID
-         * 
+         *
          * @param id The new id value to be set
          */
         set(id) {
@@ -210,20 +192,17 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get popup_enabled field
          * Comment: Show a visible pop-up for this alarm
-         * 
+         *
          * @return popup_enabled
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set popup_enabled field
          * Comment: Show a visible pop-up for this alarm
-         * 
+         *
          * @param popupEnabled The new popupEnabled value to be set
          */
         set(popupEnabled) {
@@ -234,20 +213,17 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get trigger_on_descent field
          * Comment: Trigger the alarm on descent
-         * 
+         *
          * @return trigger_on_descent
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set trigger_on_descent field
          * Comment: Trigger the alarm on descent
-         * 
+         *
          * @param triggerOnDescent The new triggerOnDescent value to be set
          */
         set(triggerOnDescent) {
@@ -258,20 +234,17 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get trigger_on_ascent field
          * Comment: Trigger the alarm on ascent
-         * 
+         *
          * @return trigger_on_ascent
          */
         get() {
-            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set trigger_on_ascent field
          * Comment: Trigger the alarm on ascent
-         * 
+         *
          * @param triggerOnAscent The new triggerOnAscent value to be set
          */
         set(triggerOnAscent) {
@@ -282,20 +255,17 @@ class DiveAlarmMesg : Mesg {
         /**
          * Get repeating field
          * Comment: Repeat alarm each time threshold is crossed?
-         * 
+         *
          * @return repeating
          */
         get() {
-            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set repeating field
          * Comment: Repeat alarm each time threshold is crossed?
-         * 
+         *
          * @param repeating The new repeating value to be set
          */
         set(repeating) {
@@ -307,7 +277,7 @@ class DiveAlarmMesg : Mesg {
          * Get speed field
          * Units: mps
          * Comment: Ascent/descent rate (mps) setting for speed type alarms
-         * 
+         *
          * @return speed
          */
         get() = getFieldFloatValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -315,7 +285,7 @@ class DiveAlarmMesg : Mesg {
          * Set speed field
          * Units: mps
          * Comment: Ascent/descent rate (mps) setting for speed type alarms
-         * 
+         *
          * @param speed The new speed value to be set
          */
         set(speed) {
@@ -350,11 +320,10 @@ class DiveAlarmMesg : Mesg {
         const val SpeedFieldNum: Int = 11
 
 
-        val diveAlarmMesg: Mesg
+        // dive_alarm
+        val diveAlarmMesg: Mesg = Mesg("dive_alarm", MesgNum.DIVE_ALARM)
 
         init {
-            // dive_alarm
-            diveAlarmMesg = Mesg("dive_alarm", MesgNum.DIVE_ALARM)
             diveAlarmMesg.addField(
                 Field(
                     "message_index",

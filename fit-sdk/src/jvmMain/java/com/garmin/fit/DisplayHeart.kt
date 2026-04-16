@@ -22,7 +22,7 @@ enum class DisplayHeart(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DisplayHeart.INVALID
+            return INVALID
         }
 
         /**

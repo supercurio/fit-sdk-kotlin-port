@@ -22,7 +22,7 @@ enum class DiveAlarmType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DiveAlarmType.INVALID
+            return INVALID
         }
 
         /**

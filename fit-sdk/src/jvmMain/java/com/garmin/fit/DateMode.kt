@@ -21,7 +21,7 @@ enum class DateMode(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DateMode.INVALID
+            return INVALID
         }
 
         /**

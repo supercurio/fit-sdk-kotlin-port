@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface TotalsMesgListener {
-    fun onMesg(mesg: TotalsMesg?)
+    fun onMesg(mesg: TotalsMesg)
 }

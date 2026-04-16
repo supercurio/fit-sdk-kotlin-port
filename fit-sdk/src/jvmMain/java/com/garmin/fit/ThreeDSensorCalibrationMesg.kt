@@ -14,7 +14,7 @@ import com.garmin.fit.Profile.SubFields
 class ThreeDSensorCalibrationMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.THREE_D_SENSOR_CALIBRATION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -22,7 +22,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -30,31 +30,28 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var sensorType: SensorType?
         /**
          * Get sensor_type field
          * Comment: Indicates which sensor the calibration is for
-         * 
+         *
          * @return sensor_type
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SensorType.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SensorType.getByValue(value)
         }
         /**
          * Set sensor_type field
          * Comment: Indicates which sensor the calibration is for
-         * 
+         *
          * @param sensorType The new sensorType value to be set
          */
         set(sensorType) {
@@ -65,14 +62,14 @@ class ThreeDSensorCalibrationMesg : Mesg {
         /**
          * Get calibration_factor field
          * Comment: Calibration factor used to convert from raw ADC value to degrees, g, etc.
-         * 
+         *
          * @return calibration_factor
          */
         get() = getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set calibration_factor field
          * Comment: Calibration factor used to convert from raw ADC value to degrees, g, etc.
-         * 
+         *
          * @param calibrationFactor The new calibrationFactor value to be set
          */
         set(calibrationFactor) {
@@ -84,7 +81,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Get accel_cal_factor field
          * Units: g
          * Comment: Accelerometer calibration factor
-         * 
+         *
          * @return accel_cal_factor
          */
         get() = getFieldLongValue(
@@ -96,7 +93,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Set accel_cal_factor field
          * Units: g
          * Comment: Accelerometer calibration factor
-         * 
+         *
          * @param accelCalFactor The new accelCalFactor value to be set
          */
         set(accelCalFactor) {
@@ -113,7 +110,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Get gyro_cal_factor field
          * Units: deg/s
          * Comment: Gyro calibration factor
-         * 
+         *
          * @return gyro_cal_factor
          */
         get() = getFieldLongValue(
@@ -125,7 +122,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Set gyro_cal_factor field
          * Units: deg/s
          * Comment: Gyro calibration factor
-         * 
+         *
          * @param gyroCalFactor The new gyroCalFactor value to be set
          */
         set(gyroCalFactor) {
@@ -142,7 +139,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Get calibration_divisor field
          * Units: counts
          * Comment: Calibration factor divisor
-         * 
+         *
          * @return calibration_divisor
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -150,7 +147,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
          * Set calibration_divisor field
          * Units: counts
          * Comment: Calibration factor divisor
-         * 
+         *
          * @param calibrationDivisor The new calibrationDivisor value to be set
          */
         set(calibrationDivisor) {
@@ -161,21 +158,21 @@ class ThreeDSensorCalibrationMesg : Mesg {
         /**
          * Get level_shift field
          * Comment: Level shift value used to shift the ADC value back into range
-         * 
+         *
          * @return level_shift
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set level_shift field
          * Comment: Level shift value used to shift the ADC value back into range
-         * 
+         *
          * @param levelShift The new levelShift value to be set
          */
         set(levelShift) {
             setFieldValue(3, 0, levelShift, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val offsetCal: Array<Int?>?
+    val offsetCal: Array<Int>?
         get() = getFieldIntegerValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numOffsetCal: Int
@@ -187,7 +184,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
     /**
      * Get offset_cal field
      * Comment: Internal calibration factors, one for each: xy, yx, zx
-     * 
+     *
      * @param index of offset_cal
      * @return offset_cal
      */
@@ -198,7 +195,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
     /**
      * Set offset_cal field
      * Comment: Internal calibration factors, one for each: xy, yx, zx
-     * 
+     *
      * @param index of offset_cal
      * @param offsetCal The new offsetCal value to be set
      */
@@ -206,7 +203,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
         setFieldValue(4, index, offsetCal, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val orientationMatrix: Array<Float?>?
+    val orientationMatrix: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numOrientationMatrix: Int
@@ -218,7 +215,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
     /**
      * Get orientation_matrix field
      * Comment: 3 x 3 rotation matrix (row major)
-     * 
+     *
      * @param index of orientation_matrix
      * @return orientation_matrix
      */
@@ -229,7 +226,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
     /**
      * Set orientation_matrix field
      * Comment: 3 x 3 rotation matrix (row major)
-     * 
+     *
      * @param index of orientation_matrix
      * @param orientationMatrix The new orientationMatrix value to be set
      */
@@ -300,7 +297,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
                 )
             )
             subfield_index = 0
-            threeDSensorCalibrationMesg.fields.get(field_index).subFields.add(
+            threeDSensorCalibrationMesg.fields[field_index].subFields.add(
                 SubField(
                     "accel_cal_factor",
                     134,
@@ -309,10 +306,10 @@ class ThreeDSensorCalibrationMesg : Mesg {
                     "g"
                 )
             )
-            threeDSensorCalibrationMesg.fields.get(field_index).subFields.get(subfield_index)
+            threeDSensorCalibrationMesg.fields[field_index].subFields[subfield_index]
                 .addMap(0, 0)
             subfield_index++
-            threeDSensorCalibrationMesg.fields.get(field_index).subFields.add(
+            threeDSensorCalibrationMesg.fields[field_index].subFields.add(
                 SubField(
                     "gyro_cal_factor",
                     134,
@@ -321,7 +318,7 @@ class ThreeDSensorCalibrationMesg : Mesg {
                     "deg/s"
                 )
             )
-            threeDSensorCalibrationMesg.fields.get(field_index).subFields.get(subfield_index)
+            threeDSensorCalibrationMesg.fields[field_index].subFields[subfield_index]
                 .addMap(0, 1)
             subfield_index++
             field_index++

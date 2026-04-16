@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaGyroscopeDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_GYROSCOPE_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -38,7 +38,7 @@ class HsaGyroscopeDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond resolution of the timestamp
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,7 +46,7 @@ class HsaGyroscopeDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond resolution of the timestamp
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -58,7 +58,7 @@ class HsaGyroscopeDataMesg : Mesg {
          * Get sampling_interval field
          * Units: 1/32768 s
          * Comment: Sampling Interval in 32 kHz timescale
-         * 
+         *
          * @return sampling_interval
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -66,14 +66,14 @@ class HsaGyroscopeDataMesg : Mesg {
          * Set sampling_interval field
          * Units: 1/32768 s
          * Comment: Sampling Interval in 32 kHz timescale
-         * 
+         *
          * @param samplingInterval The new samplingInterval value to be set
          */
         set(samplingInterval) {
             setFieldValue(1, 0, samplingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val gyroX: Array<Float?>?
+    val gyroX: Array<Float>?
         get() = getFieldFloatValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGyroX: Int
@@ -86,7 +86,7 @@ class HsaGyroscopeDataMesg : Mesg {
      * Get gyro_x field
      * Units: deg/s
      * Comment: X-Axis Measurement
-     * 
+     *
      * @param index of gyro_x
      * @return gyro_x
      */
@@ -98,7 +98,7 @@ class HsaGyroscopeDataMesg : Mesg {
      * Set gyro_x field
      * Units: deg/s
      * Comment: X-Axis Measurement
-     * 
+     *
      * @param index of gyro_x
      * @param gyroX The new gyroX value to be set
      */
@@ -106,7 +106,7 @@ class HsaGyroscopeDataMesg : Mesg {
         setFieldValue(2, index, gyroX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val gyroY: Array<Float?>?
+    val gyroY: Array<Float>?
         get() = getFieldFloatValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGyroY: Int
@@ -119,7 +119,7 @@ class HsaGyroscopeDataMesg : Mesg {
      * Get gyro_y field
      * Units: deg/s
      * Comment: Y-Axis Measurement
-     * 
+     *
      * @param index of gyro_y
      * @return gyro_y
      */
@@ -131,7 +131,7 @@ class HsaGyroscopeDataMesg : Mesg {
      * Set gyro_y field
      * Units: deg/s
      * Comment: Y-Axis Measurement
-     * 
+     *
      * @param index of gyro_y
      * @param gyroY The new gyroY value to be set
      */
@@ -139,7 +139,7 @@ class HsaGyroscopeDataMesg : Mesg {
         setFieldValue(3, index, gyroY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val gyroZ: Array<Float?>?
+    val gyroZ: Array<Float>?
         get() = getFieldFloatValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGyroZ: Int
@@ -152,7 +152,7 @@ class HsaGyroscopeDataMesg : Mesg {
      * Get gyro_z field
      * Units: deg/s
      * Comment: Z-Axis Measurement
-     * 
+     *
      * @param index of gyro_z
      * @return gyro_z
      */
@@ -164,7 +164,7 @@ class HsaGyroscopeDataMesg : Mesg {
      * Set gyro_z field
      * Units: deg/s
      * Comment: Z-Axis Measurement
-     * 
+     *
      * @param index of gyro_z
      * @param gyroZ The new gyroZ value to be set
      */
@@ -177,7 +177,7 @@ class HsaGyroscopeDataMesg : Mesg {
          * Get timestamp_32k field
          * Units: 1/32768 s
          * Comment: 32 kHz timestamp
-         * 
+         *
          * @return timestamp_32k
          */
         get() = getFieldLongValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -185,7 +185,7 @@ class HsaGyroscopeDataMesg : Mesg {
          * Set timestamp_32k field
          * Units: 1/32768 s
          * Comment: 32 kHz timestamp
-         * 
+         *
          * @param timestamp32k The new timestamp32k value to be set
          */
         set(timestamp32k) {
@@ -208,11 +208,10 @@ class HsaGyroscopeDataMesg : Mesg {
         const val Timestamp32kFieldNum: Int = 5
 
 
-        val hsaGyroscopeDataMesg: Mesg
+        // hsa_gyroscope_data
+        val hsaGyroscopeDataMesg: Mesg = Mesg("hsa_gyroscope_data", MesgNum.HSA_GYROSCOPE_DATA)
 
         init {
-            // hsa_gyroscope_data
-            hsaGyroscopeDataMesg = Mesg("hsa_gyroscope_data", MesgNum.HSA_GYROSCOPE_DATA)
             hsaGyroscopeDataMesg.addField(
                 Field(
                     "timestamp",

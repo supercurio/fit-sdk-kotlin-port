@@ -12,10 +12,10 @@ package com.garmin.fit
 class DeveloperDataIdMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVELOPER_DATA_ID))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
-    val developerId: Array<Byte?>?
+    val developerId: Array<Byte>?
         get() = getFieldByteValues(0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numDeveloperId: Int
@@ -26,25 +26,25 @@ class DeveloperDataIdMesg : Mesg {
 
     /**
      * Get developer_id field
-     * 
+     *
      * @param index of developer_id
      * @return developer_id
      */
     fun getDeveloperId(index: Int): Byte? {
-        return getFieldByteValue(0, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        return getFieldByteValue(DeveloperIdFieldNum, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
     /**
      * Set developer_id field
-     * 
+     *
      * @param index of developer_id
      * @param developerId The new developerId value to be set
      */
     fun setDeveloperId(index: Int, developerId: Byte?) {
-        setFieldValue(0, index, developerId, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        setFieldValue(DeveloperIdFieldNum, index, developerId, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val applicationId: Array<Byte?>?
+    val applicationId: Array<Byte>?
         get() = getFieldByteValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numApplicationId: Int
@@ -55,7 +55,7 @@ class DeveloperDataIdMesg : Mesg {
 
     /**
      * Get application_id field
-     * 
+     *
      * @param index of application_id
      * @return application_id
      */
@@ -65,7 +65,7 @@ class DeveloperDataIdMesg : Mesg {
 
     /**
      * Set application_id field
-     * 
+     *
      * @param index of application_id
      * @param applicationId The new applicationId value to be set
      */
@@ -76,13 +76,13 @@ class DeveloperDataIdMesg : Mesg {
     var manufacturerId: Int?
         /**
          * Get manufacturer_id field
-         * 
+         *
          * @return manufacturer_id
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer_id field
-         * 
+         *
          * @param manufacturerId The new manufacturerId value to be set
          */
         set(manufacturerId) {
@@ -92,13 +92,13 @@ class DeveloperDataIdMesg : Mesg {
     var developerDataIndex: Short?
         /**
          * Get developer_data_index field
-         * 
+         *
          * @return developer_data_index
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set developer_data_index field
-         * 
+         *
          * @param developerDataIndex The new developerDataIndex value to be set
          */
         set(developerDataIndex) {
@@ -108,13 +108,13 @@ class DeveloperDataIdMesg : Mesg {
     var applicationVersion: Long?
         /**
          * Get application_version field
-         * 
+         *
          * @return application_version
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set application_version field
-         * 
+         *
          * @param applicationVersion The new applicationVersion value to be set
          */
         set(applicationVersion) {
@@ -133,11 +133,10 @@ class DeveloperDataIdMesg : Mesg {
         const val ApplicationVersionFieldNum: Int = 4
 
 
-        val developerDataIdMesg: Mesg
+        // developer_data_id
+        val developerDataIdMesg: Mesg = Mesg("developer_data_id", MesgNum.DEVELOPER_DATA_ID)
 
         init {
-            // developer_data_id
-            developerDataIdMesg = Mesg("developer_data_id", MesgNum.DEVELOPER_DATA_ID)
             developerDataIdMesg.addField(
                 Field(
                     "developer_id",

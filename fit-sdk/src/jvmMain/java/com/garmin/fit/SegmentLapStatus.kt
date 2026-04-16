@@ -21,7 +21,7 @@ enum class SegmentLapStatus(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SegmentLapStatus.INVALID
+            return INVALID
         }
 
         /**

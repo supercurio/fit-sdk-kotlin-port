@@ -13,7 +13,9 @@ import java.io.OutputStream
 
 class FieldDefinition : FieldDefinitionBase {
     var num: Int
-    var size: Int
+    override var size: Int
+
+    @JvmField
     var type: Int = 0
 
     constructor() {
@@ -22,9 +24,9 @@ class FieldDefinition : FieldDefinitionBase {
     }
 
     constructor(field: Field) {
-        num = field.getNum()
-        size = field.getSize()
-        type = field.getType()
+        num = field.num
+        size = field.size
+        type = field.type
     }
 
     fun write(out: OutputStream) {
@@ -34,14 +36,6 @@ class FieldDefinition : FieldDefinitionBase {
             out.write(type)
         } catch (e: IOException) {
         }
-    }
-
-    override fun setSize(size: Int) {
-        this.size = size
-    }
-
-    override fun getSize(): Int {
-        return size
     }
 
     override fun equals(o: Any?): Boolean {

@@ -12,35 +12,35 @@ package com.garmin.fit
 class SkinTempOvernightMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SKIN_TEMP_OVERNIGHT))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var localTimestamp: Long?
         /**
          * Get local_timestamp field
-         * 
+         *
          * @return local_timestamp
          */
         get() = getFieldLongValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set local_timestamp field
-         * 
+         *
          * @param localTimestamp The new localTimestamp value to be set
          */
         set(localTimestamp) {
@@ -51,14 +51,14 @@ class SkinTempOvernightMesg : Mesg {
         /**
          * Get average_deviation field
          * Comment: The average overnight deviation from baseline temperature in degrees C
-         * 
+         *
          * @return average_deviation
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set average_deviation field
          * Comment: The average overnight deviation from baseline temperature in degrees C
-         * 
+         *
          * @param averageDeviation The new averageDeviation value to be set
          */
         set(averageDeviation) {
@@ -69,14 +69,14 @@ class SkinTempOvernightMesg : Mesg {
         /**
          * Get average_7_day_deviation field
          * Comment: The average 7 day overnight deviation from baseline temperature in degrees C
-         * 
+         *
          * @return average_7_day_deviation
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set average_7_day_deviation field
          * Comment: The average 7 day overnight deviation from baseline temperature in degrees C
-         * 
+         *
          * @param average7DayDeviation The new average7DayDeviation value to be set
          */
         set(average7DayDeviation) {
@@ -87,14 +87,14 @@ class SkinTempOvernightMesg : Mesg {
         /**
          * Get nightly_value field
          * Comment: Final overnight temperature value
-         * 
+         *
          * @return nightly_value
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set nightly_value field
          * Comment: Final overnight temperature value
-         * 
+         *
          * @param nightlyValue The new nightlyValue value to be set
          */
         set(nightlyValue) {
@@ -113,11 +113,10 @@ class SkinTempOvernightMesg : Mesg {
         const val NightlyValueFieldNum: Int = 4
 
 
-        val skinTempOvernightMesg: Mesg
+        // skin_temp_overnight
+        val skinTempOvernightMesg: Mesg = Mesg("skin_temp_overnight", MesgNum.SKIN_TEMP_OVERNIGHT)
 
         init {
-            // skin_temp_overnight
-            skinTempOvernightMesg = Mesg("skin_temp_overnight", MesgNum.SKIN_TEMP_OVERNIGHT)
             skinTempOvernightMesg.addField(
                 Field(
                     "timestamp",

@@ -63,7 +63,7 @@ enum class ExdQualifiers(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ExdQualifiers.INVALID
+            return INVALID
         }
 
         /**

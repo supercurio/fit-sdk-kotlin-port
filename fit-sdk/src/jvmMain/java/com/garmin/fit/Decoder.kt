@@ -12,13 +12,13 @@ import java.io.ByteArrayInputStream
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
-    private val developerDataIds = HashMap<Short?, DeveloperDataIdMesg?>()
-    private val developerFields = HashMap<Short?, HashMap<Short?, FieldDescriptionMesg?>?>()
+class Decoder(bytes: ByteArray) : DecoderBase(bytes) {
+    private val developerDataIds = HashMap<Short, DeveloperDataIdMesg>()
+    private val developerFields = HashMap<Short, HashMap<Short, FieldDescriptionMesg>>()
 
     /**
      * Reads a .FIT file and passes messages to the listeners
-     * 
+     *
      * @throws Exception if an error occurs while reading
      */
     @Throws(Exception::class)
@@ -31,11 +31,11 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
 
     @Throws(Exception::class)
     private fun decodeNextFile(stream: ByteArrayDataInputStream) {
-        if (!DecoderBase.Companion.isFIT(stream)) {
+        if (!isFIT(stream)) {
             throw FitRuntimeException("The file is not a valid FIT file.")
         }
 
-        val position = stream.getPosition()
+        val position = stream.position
 
         // Read the file header
         val fileHeader = readHeader()
@@ -44,14 +44,14 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
         val dataSize = ByteBuffer.wrap(fileHeader, 4, 4).order(ByteOrder.LITTLE_ENDIAN).getInt()
 
         // Read data messages and definitions
-        while (stream.getPosition() < (position + headerSize + dataSize)) {
+        while (stream.position < (position + headerSize + dataSize)) {
             decodeRecord()
         }
 
         // Read and check the CRC
         val fileCrc = stream.readUShort()
 
-        if (fileCrc.toLong() != getCrcValue()) {
+        if (fileCrc.toLong() != crcValue) {
             throw FitRuntimeException("FIT decode error: File CRC failed.")
         }
     }
@@ -82,74 +82,71 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
         val recordHeader = readByte()
         val localMesgIndex = recordHeader and LocalMesgNumMask
 
-        localMesgDefs[localMesgIndex] = MesgDefinition()
-        localMesgDefs[localMesgIndex].localNum = localMesgIndex
+        val mesgDefinition = MesgDefinition().apply {
+            localNum = localMesgIndex
 
-        val reservedByte = readByte()
-        localMesgDefs[localMesgIndex].arch = readByte()
-        localMesgDefs[localMesgIndex].num = readUShort()
+            readByte()
+            arch = readByte()
+            num = readUShort()
 
-        if (localMesgDefs[localMesgIndex].arch == Fit.ARCH_ENDIAN_BIG) {
-            localMesgDefs[localMesgIndex].num =
-                (localMesgDefs[localMesgIndex].num shr 8) or ((localMesgDefs[localMesgIndex].num and 0xFF) shl 8)
-        } else if (localMesgDefs[localMesgIndex].arch != Fit.ARCH_ENDIAN_LITTLE) {
-            throw FitRuntimeException("FIT decode error: Endian " + localMesgDefs[localMesgIndex].arch + " not supported. Error at byte: " + stream.getPosition())
-        }
+            if (arch == Fit.ARCH_ENDIAN_BIG) {
+                num = (num shr 8) or ((num and 0xFF) shl 8)
+            } else if (arch != Fit.ARCH_ENDIAN_LITTLE) {
+                throw FitRuntimeException("FIT decode error: Endian " + arch + " not supported. Error at byte: " + stream.position)
+            }
 
-        val numFields = readByte()
+            val numFields = readByte()
 
-        for (fieldIndex in 0..<numFields) {
-            localMesgDefs[localMesgIndex].fields.add(FieldDefinition())
-            localMesgDefs[localMesgIndex].fields.get(fieldIndex).num = (readByte() and 0xFF)
-            localMesgDefs[localMesgIndex].fields.get(fieldIndex).size = (readByte() and 0xFF)
-            localMesgDefs[localMesgIndex].fields.get(fieldIndex).type = (readByte() and 0xFF)
+            for (fieldIndex in 0..<numFields) {
+                fields.add(FieldDefinition())
+                fields[fieldIndex].num = (readByte() and 0xFF)
+                fields[fieldIndex].size = (readByte() and 0xFF)
+                fields[fieldIndex].type = (readByte() and 0xFF)
+            }
         }
 
         if ((recordHeader and DevDataMask) == DevDataMask) {
             val numDevFields = readByte()
 
             for (fieldIndex in 0..<numDevFields) {
-                val developerFieldDefinition = DeveloperFieldDefinition()
+                val developerFieldDefinition = DeveloperFieldDefinition().also { fieldDef ->
 
-                developerFieldDefinition.setNum((readByte() and 0xFF).toShort())
-                developerFieldDefinition.setSize(readByte() and 0xFF)
+                    fieldDef.num = (readByte() and 0xFF).toShort()
+                    fieldDef.size = readByte() and 0xFF
 
-                val developerDataId = (readByte() and 0xFF).toShort()
-                developerFieldDefinition.setDeveloperDataIdMesg(developerDataIds.get(developerDataId))
+                    val developerDataId = (readByte() and 0xFF).toShort()
+                    fieldDef.setDeveloperDataIdMesg(developerDataIds[developerDataId])
 
-                if (developerFields.get(developerDataId)!!
-                        .containsKey(developerFieldDefinition.getNum())
-                ) {
-                    val fieldDescription = developerFields.get(developerDataId)!!
-                        .get(developerFieldDefinition.getNum())
-                    developerFieldDefinition.setFieldDescription(fieldDescription)
+                    if (developerFields[developerDataId]!!.containsKey(fieldDef.num)) {
+                        developerFields[developerDataId]!![fieldDef.num]?.let { desc ->
+                            fieldDef.setFieldDescription(desc)
+                        }
+                    }
                 }
-
-                localMesgDefs[localMesgIndex].developerFields.add(developerFieldDefinition)
+                mesgDefinition.developerFields.add(developerFieldDefinition)
             }
         }
 
         for (mesgDefListener in mesgDefListeners) {
-            mesgDefListener.onMesgDefinition(localMesgDefs[localMesgIndex])
+            mesgDefListener.onMesgDefinition(mesgDefinition)
         }
+
+        localMesgDefs[localMesgIndex] = mesgDefinition
     }
 
     private fun decodeMessage() {
         val recordHeader = readByte()
         val localMesgIndex = recordHeader and LocalMesgNumMask
         val mesgDef = localMesgDefs[localMesgIndex]
+            ?: throw FitRuntimeException("Message Definition Not Found")
 
-        if (mesgDef == null) {
-            throw FitRuntimeException("Message Definition Not Found")
-        }
-
-        val mesg = Factory.createMesg(localMesgDefs[localMesgIndex].num)
+        val mesg = Factory.createMesg(localMesgDefs[localMesgIndex]!!.num)
         mesg.localNum = localMesgIndex
 
         mesg.setDecoderMessageIndex(decoderMesgIndex++)
 
         for (fieldIndex in mesgDef.fields.indices) {
-            val fieldDef = localMesgDefs[localMesgIndex].fields.get(fieldIndex)
+            val fieldDef = localMesgDefs[localMesgIndex]!!.fields[fieldIndex]
             var field = Factory.createField(mesg.num, fieldDef.num)
 
             val typeSize = Fit.baseTypeSizes[(fieldDef.type and Fit.BASE_TYPE_NUM_MASK)]
@@ -161,13 +158,13 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
                 throw FitRuntimeException("End of file found while reading field data.")
             }
 
-            if (((fieldDef.type and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) && ((localMesgDefs[localMesgIndex].arch and Fit.ARCH_ENDIAN_MASK) != Fit.ARCH_ENDIAN_BIG)) {
+            if (((fieldDef.type and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) && ((localMesgDefs[localMesgIndex]!!.arch and Fit.ARCH_ENDIAN_MASK) != Fit.ARCH_ENDIAN_BIG)) {
                 flipFieldDataByteOrder(typeSize, elements)
             }
 
             // For unknown fields the factory will create a field with the type set to 0, i.e. enum
             // In this situation we should use the type found in the fieldDef instead
-            if (field.getName() == "unknown") {
+            if (field.name == "unknown") {
                 field = Field(
                     "unknown",
                     fieldDef.num,
@@ -176,7 +173,7 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
                     0.0,
                     "",
                     false,
-                    Profile.Type.Companion.fromBaseType(fieldDef.type)
+                    Profile.Type.fromBaseType(fieldDef.type)
                 )
             }
 
@@ -189,10 +186,9 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
             field.read(ByteArrayInputStream(fieldData), bytesRead)
 
             // Allow messages containing the accumulated field to set the accumulated value
-            if (field.getIsAccumulated()) {
-                var i: Int
-                i = 0
-                while (i < field.getNumValues()) {
+            if (field.isAccumulated) {
+                var i = 0
+                while (i < field.numValues) {
                     var value = (field.getRawValue(i) as Number).toLong()
                     for (containingField in mesg.fields) {
                         for (component in containingField.components) {
@@ -202,34 +198,34 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
                             }
                         }
                     }
-                    accumulator.set(mesg.num, field.getNum(), value)
+                    accumulator.set(mesg.num, field.num, value)
                     i++
                 }
             }
 
-            if (field.getNumValues() > 0) {
+            if (field.numValues > 0) {
                 mesg.addField(field)
             }
         }
 
         // Now that the entire message is decoded we may evaluate subfields and expand components
-        if (!skipExpandComponents) {
+        if (!isSkipExpandComponentsEnabled) {
             for (i in mesg.fields.indices) {
                 // Determine the active subfield and expand if it has any components
-                val activeSubfield = mesg.getActiveSubFieldIndex(mesg.fields.get(i).getNum())
+                val activeSubfield = mesg.getActiveSubFieldIndex(mesg.fields[i].num)
 
                 if (activeSubfield == Fit.SUBFIELD_INDEX_MAIN_FIELD) {
-                    if (mesg.fields.get(i).components.size > 0) {
+                    if (mesg.fields[i].components.isNotEmpty()) {
                         // Expand the main field components
-                        expandComponents(mesg, mesg.fields.get(i), mesg.fields.get(i).components)
+                        expandComponents(mesg, mesg.fields[i], mesg.fields[i].components)
                     }
                 } else {
-                    if (mesg.fields.get(i).subFields.get(activeSubfield).components.size > 0) {
+                    if (mesg.fields[i].subFields[activeSubfield].components.isNotEmpty()) {
                         // Expand the subfield components
                         expandComponents(
                             mesg,
-                            mesg.fields.get(i),
-                            mesg.fields.get(i).subFields.get(activeSubfield).components
+                            mesg.fields[i],
+                            mesg.fields[i].subFields[activeSubfield].components
                         )
                     }
                 }
@@ -237,11 +233,11 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
         }
 
         for (fieldIndex in mesgDef.developerFields.indices) {
-            val fieldDef: DeveloperFieldDefinition = mesgDef.developerFields.get(fieldIndex)
+            val fieldDef: DeveloperFieldDefinition = mesgDef.developerFields[fieldIndex]
 
-            val bytesRead = readBytes(fieldData, 0, fieldDef.getSize())
+            val bytesRead = readBytes(fieldData, 0, fieldDef.size)
 
-            if (bytesRead != fieldDef.getSize()) {
+            if (bytesRead != fieldDef.size) {
                 throw FitRuntimeException("End of file found while reading field data.")
             }
 
@@ -250,19 +246,19 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
             val elements: Int
 
             // Ignore field if type is not supported.
-            if (((fieldDef.getType() and Fit.BASE_TYPE_NUM_MASK) < Fit.BASE_TYPES)) {
-                typeSize = Fit.baseTypeSizes[(fieldDef.getType() and Fit.BASE_TYPE_NUM_MASK)]
-                elements = fieldDef.getSize() / typeSize
+            if (((fieldDef.type and Fit.BASE_TYPE_NUM_MASK) < Fit.BASE_TYPES)) {
+                typeSize = Fit.baseTypeSizes[(fieldDef.type and Fit.BASE_TYPE_NUM_MASK)]
+                elements = fieldDef.size / typeSize
 
-                if (((fieldDef.getType() and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) &&
+                if (((fieldDef.type and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) &&
                     ((mesgDef.arch and Fit.ARCH_ENDIAN_MASK) != Fit.ARCH_ENDIAN_BIG)
                 ) {
                     flipFieldDataByteOrder(typeSize, elements)
                 }
 
-                field.read(ByteArrayInputStream(fieldData), fieldDef.getSize())
+                field.read(ByteArrayInputStream(fieldData), fieldDef.size)
 
-                if (field.getNumValues() > 0) {
+                if (field.numValues > 0) {
                     mesg.addDeveloperField(field)
                 }
             }
@@ -272,20 +268,25 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
         when (mesg.num) {
             MesgNum.DEVELOPER_DATA_ID -> {
                 val devIdMesg = DeveloperDataIdMesg(mesg)
-                val index = devIdMesg.getDeveloperDataIndex()
-                developerDataIds.put(index, devIdMesg)
-                developerFields.put(index, HashMap<Short?, FieldDescriptionMesg?>())
+                devIdMesg.developerDataIndex?.let { index ->
+                    developerDataIds[index] = devIdMesg
+                    developerFields[index] = HashMap()
+                }
             }
 
             MesgNum.FIELD_DESCRIPTION -> {
                 val fieldDescriptionMesg = FieldDescriptionMesg(mesg)
-                val index = fieldDescriptionMesg.getDeveloperDataIndex()
+                val index = fieldDescriptionMesg.developerDataIndex
                 if (developerFields.containsKey(index)) {
-                    developerFields.get(index)!!
-                        .put(fieldDescriptionMesg.getFieldDefinitionNumber(), fieldDescriptionMesg)
+                    developerFields[index]?.put(
+                        fieldDescriptionMesg.fieldDefinitionNumber!!,
+                        fieldDescriptionMesg
+                    )
 
-                    val description =
-                        DeveloperFieldDescription(developerDataIds.get(index), fieldDescriptionMesg)
+                    val description = DeveloperFieldDescription(
+                        developerDataIds[index]!!,
+                        fieldDescriptionMesg
+                    )
                     for (listener in devFieldDescListeners) {
                         listener.onDescription(description)
                     }
@@ -298,5 +299,3 @@ class Decoder(bytes: ByteArray?) : DecoderBase(bytes) {
         }
     }
 }
-
-

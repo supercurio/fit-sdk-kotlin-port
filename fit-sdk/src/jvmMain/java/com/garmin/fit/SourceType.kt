@@ -25,7 +25,7 @@ enum class SourceType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SourceType.INVALID
+            return INVALID
         }
 
         /**

@@ -11,14 +11,13 @@ package com.garmin.fit
 object LeftRightBalance100 {
     const val MASK: Int = 0x3FFF // % contribution scaled by 100
     const val RIGHT: Int = 0x8000 // data corresponds to right if set, otherwise unknown
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(MASK, "MASK")
-        stringMap.put(RIGHT, "RIGHT")
+        stringMap[MASK] = "MASK"
+        stringMap[RIGHT] = "RIGHT"
     }
 
 
@@ -27,9 +26,9 @@ object LeftRightBalance100 {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -40,7 +39,7 @@ object LeftRightBalance100 {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

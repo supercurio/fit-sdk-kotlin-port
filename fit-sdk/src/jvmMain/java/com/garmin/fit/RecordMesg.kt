@@ -12,39 +12,39 @@ package com.garmin.fit
 open class RecordMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.RECORD))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var positionLat: Int?
         /**
          * Get position_lat field
          * Units: semicircles
-         * 
+         *
          * @return position_lat
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_lat field
          * Units: semicircles
-         * 
+         *
          * @param positionLat The new positionLat value to be set
          */
         set(positionLat) {
@@ -55,14 +55,14 @@ open class RecordMesg : Mesg {
         /**
          * Get position_long field
          * Units: semicircles
-         * 
+         *
          * @return position_long
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_long field
          * Units: semicircles
-         * 
+         *
          * @param positionLong The new positionLong value to be set
          */
         set(positionLong) {
@@ -73,14 +73,14 @@ open class RecordMesg : Mesg {
         /**
          * Get altitude field
          * Units: m
-         * 
+         *
          * @return altitude
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set altitude field
          * Units: m
-         * 
+         *
          * @param altitude The new altitude value to be set
          */
         set(altitude) {
@@ -91,14 +91,14 @@ open class RecordMesg : Mesg {
         /**
          * Get heart_rate field
          * Units: bpm
-         * 
+         *
          * @return heart_rate
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set heart_rate field
          * Units: bpm
-         * 
+         *
          * @param heartRate The new heartRate value to be set
          */
         set(heartRate) {
@@ -109,14 +109,14 @@ open class RecordMesg : Mesg {
         /**
          * Get cadence field
          * Units: rpm
-         * 
+         *
          * @return cadence
          */
         get() = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set cadence field
          * Units: rpm
-         * 
+         *
          * @param cadence The new cadence value to be set
          */
         set(cadence) {
@@ -127,14 +127,14 @@ open class RecordMesg : Mesg {
         /**
          * Get distance field
          * Units: m
-         * 
+         *
          * @return distance
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set distance field
          * Units: m
-         * 
+         *
          * @param distance The new distance value to be set
          */
         set(distance) {
@@ -145,14 +145,14 @@ open class RecordMesg : Mesg {
         /**
          * Get speed field
          * Units: m/s
-         * 
+         *
          * @return speed
          */
         get() = getFieldFloatValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set speed field
          * Units: m/s
-         * 
+         *
          * @param speed The new speed value to be set
          */
         set(speed) {
@@ -163,21 +163,21 @@ open class RecordMesg : Mesg {
         /**
          * Get power field
          * Units: watts
-         * 
+         *
          * @return power
          */
         get() = getFieldIntegerValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set power field
          * Units: watts
-         * 
+         *
          * @param power The new power value to be set
          */
         set(power) {
             setFieldValue(7, 0, power, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val compressedSpeedDistance: Array<Byte?>?
+    val compressedSpeedDistance: Array<Byte>?
         get() = getFieldByteValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCompressedSpeedDistance: Int
@@ -188,7 +188,7 @@ open class RecordMesg : Mesg {
 
     /**
      * Get compressed_speed_distance field
-     * 
+     *
      * @param index of compressed_speed_distance
      * @return compressed_speed_distance
      */
@@ -198,7 +198,7 @@ open class RecordMesg : Mesg {
 
     /**
      * Set compressed_speed_distance field
-     * 
+     *
      * @param index of compressed_speed_distance
      * @param compressedSpeedDistance The new compressedSpeedDistance value to be set
      */
@@ -210,14 +210,14 @@ open class RecordMesg : Mesg {
         /**
          * Get grade field
          * Units: %
-         * 
+         *
          * @return grade
          */
         get() = getFieldFloatValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set grade field
          * Units: %
-         * 
+         *
          * @param grade The new grade value to be set
          */
         set(grade) {
@@ -228,14 +228,14 @@ open class RecordMesg : Mesg {
         /**
          * Get resistance field
          * Comment: Relative. 0 is none 254 is Max.
-         * 
+         *
          * @return resistance
          */
         get() = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set resistance field
          * Comment: Relative. 0 is none 254 is Max.
-         * 
+         *
          * @param resistance The new resistance value to be set
          */
         set(resistance) {
@@ -246,14 +246,14 @@ open class RecordMesg : Mesg {
         /**
          * Get time_from_course field
          * Units: s
-         * 
+         *
          * @return time_from_course
          */
         get() = getFieldFloatValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set time_from_course field
          * Units: s
-         * 
+         *
          * @param timeFromCourse The new timeFromCourse value to be set
          */
         set(timeFromCourse) {
@@ -264,14 +264,14 @@ open class RecordMesg : Mesg {
         /**
          * Get cycle_length field
          * Units: m
-         * 
+         *
          * @return cycle_length
          */
         get() = getFieldFloatValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set cycle_length field
          * Units: m
-         * 
+         *
          * @param cycleLength The new cycleLength value to be set
          */
         set(cycleLength) {
@@ -282,21 +282,21 @@ open class RecordMesg : Mesg {
         /**
          * Get temperature field
          * Units: C
-         * 
+         *
          * @return temperature
          */
         get() = getFieldByteValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set temperature field
          * Units: C
-         * 
+         *
          * @param temperature The new temperature value to be set
          */
         set(temperature) {
             setFieldValue(13, 0, temperature, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val speed1s: Array<Float?>?
+    val speed1s: Array<Float>?
         get() = getFieldFloatValues(17, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSpeed1s: Int
@@ -309,7 +309,7 @@ open class RecordMesg : Mesg {
      * Get speed_1s field
      * Units: m/s
      * Comment: Speed at 1s intervals. Timestamp field indicates time of last array element.
-     * 
+     *
      * @param index of speed_1s
      * @return speed_1s
      */
@@ -321,7 +321,7 @@ open class RecordMesg : Mesg {
      * Set speed_1s field
      * Units: m/s
      * Comment: Speed at 1s intervals. Timestamp field indicates time of last array element.
-     * 
+     *
      * @param index of speed_1s
      * @param speed1s The new speed1s value to be set
      */
@@ -333,14 +333,14 @@ open class RecordMesg : Mesg {
         /**
          * Get cycles field
          * Units: cycles
-         * 
+         *
          * @return cycles
          */
         get() = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set cycles field
          * Units: cycles
-         * 
+         *
          * @param cycles The new cycles value to be set
          */
         set(cycles) {
@@ -351,14 +351,14 @@ open class RecordMesg : Mesg {
         /**
          * Get total_cycles field
          * Units: cycles
-         * 
+         *
          * @return total_cycles
          */
         get() = getFieldLongValue(19, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_cycles field
          * Units: cycles
-         * 
+         *
          * @param totalCycles The new totalCycles value to be set
          */
         set(totalCycles) {
@@ -369,14 +369,14 @@ open class RecordMesg : Mesg {
         /**
          * Get compressed_accumulated_power field
          * Units: watts
-         * 
+         *
          * @return compressed_accumulated_power
          */
         get() = getFieldIntegerValue(28, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set compressed_accumulated_power field
          * Units: watts
-         * 
+         *
          * @param compressedAccumulatedPower The new compressedAccumulatedPower value to be set
          */
         set(compressedAccumulatedPower) {
@@ -387,14 +387,14 @@ open class RecordMesg : Mesg {
         /**
          * Get accumulated_power field
          * Units: watts
-         * 
+         *
          * @return accumulated_power
          */
         get() = getFieldLongValue(29, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set accumulated_power field
          * Units: watts
-         * 
+         *
          * @param accumulatedPower The new accumulatedPower value to be set
          */
         set(accumulatedPower) {
@@ -404,13 +404,13 @@ open class RecordMesg : Mesg {
     var leftRightBalance: Short?
         /**
          * Get left_right_balance field
-         * 
+         *
          * @return left_right_balance
          */
         get() = getFieldShortValue(30, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set left_right_balance field
-         * 
+         *
          * @param leftRightBalance The new leftRightBalance value to be set
          */
         set(leftRightBalance) {
@@ -421,14 +421,14 @@ open class RecordMesg : Mesg {
         /**
          * Get gps_accuracy field
          * Units: m
-         * 
+         *
          * @return gps_accuracy
          */
         get() = getFieldShortValue(31, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set gps_accuracy field
          * Units: m
-         * 
+         *
          * @param gpsAccuracy The new gpsAccuracy value to be set
          */
         set(gpsAccuracy) {
@@ -439,14 +439,14 @@ open class RecordMesg : Mesg {
         /**
          * Get vertical_speed field
          * Units: m/s
-         * 
+         *
          * @return vertical_speed
          */
         get() = getFieldFloatValue(32, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set vertical_speed field
          * Units: m/s
-         * 
+         *
          * @param verticalSpeed The new verticalSpeed value to be set
          */
         set(verticalSpeed) {
@@ -457,14 +457,14 @@ open class RecordMesg : Mesg {
         /**
          * Get calories field
          * Units: kcal
-         * 
+         *
          * @return calories
          */
         get() = getFieldIntegerValue(33, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set calories field
          * Units: kcal
-         * 
+         *
          * @param calories The new calories value to be set
          */
         set(calories) {
@@ -475,14 +475,14 @@ open class RecordMesg : Mesg {
         /**
          * Get vertical_oscillation field
          * Units: mm
-         * 
+         *
          * @return vertical_oscillation
          */
         get() = getFieldFloatValue(39, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set vertical_oscillation field
          * Units: mm
-         * 
+         *
          * @param verticalOscillation The new verticalOscillation value to be set
          */
         set(verticalOscillation) {
@@ -493,14 +493,14 @@ open class RecordMesg : Mesg {
         /**
          * Get stance_time_percent field
          * Units: percent
-         * 
+         *
          * @return stance_time_percent
          */
         get() = getFieldFloatValue(40, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set stance_time_percent field
          * Units: percent
-         * 
+         *
          * @param stanceTimePercent The new stanceTimePercent value to be set
          */
         set(stanceTimePercent) {
@@ -511,14 +511,14 @@ open class RecordMesg : Mesg {
         /**
          * Get stance_time field
          * Units: ms
-         * 
+         *
          * @return stance_time
          */
         get() = getFieldFloatValue(41, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set stance_time field
          * Units: ms
-         * 
+         *
          * @param stanceTime The new stanceTime value to be set
          */
         set(stanceTime) {
@@ -528,19 +528,16 @@ open class RecordMesg : Mesg {
     var activityType: ActivityType?
         /**
          * Get activity_type field
-         * 
+         *
          * @return activity_type
          */
         get() {
-            val value = getFieldShortValue(42, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ActivityType.Companion.getByValue(value)
+            val value = getFieldShortValue(42, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ActivityType.getByValue(value)
         }
         /**
          * Set activity_type field
-         * 
+         *
          * @param activityType The new activityType value to be set
          */
         set(activityType) {
@@ -551,14 +548,14 @@ open class RecordMesg : Mesg {
         /**
          * Get left_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @return left_torque_effectiveness
          */
         get() = getFieldFloatValue(43, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set left_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @param leftTorqueEffectiveness The new leftTorqueEffectiveness value to be set
          */
         set(leftTorqueEffectiveness) {
@@ -569,14 +566,14 @@ open class RecordMesg : Mesg {
         /**
          * Get right_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @return right_torque_effectiveness
          */
         get() = getFieldFloatValue(44, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set right_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @param rightTorqueEffectiveness The new rightTorqueEffectiveness value to be set
          */
         set(rightTorqueEffectiveness) {
@@ -587,14 +584,14 @@ open class RecordMesg : Mesg {
         /**
          * Get left_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @return left_pedal_smoothness
          */
         get() = getFieldFloatValue(45, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set left_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @param leftPedalSmoothness The new leftPedalSmoothness value to be set
          */
         set(leftPedalSmoothness) {
@@ -605,14 +602,14 @@ open class RecordMesg : Mesg {
         /**
          * Get right_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @return right_pedal_smoothness
          */
         get() = getFieldFloatValue(46, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set right_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @param rightPedalSmoothness The new rightPedalSmoothness value to be set
          */
         set(rightPedalSmoothness) {
@@ -623,14 +620,14 @@ open class RecordMesg : Mesg {
         /**
          * Get combined_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @return combined_pedal_smoothness
          */
         get() = getFieldFloatValue(47, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set combined_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @param combinedPedalSmoothness The new combinedPedalSmoothness value to be set
          */
         set(combinedPedalSmoothness) {
@@ -641,14 +638,14 @@ open class RecordMesg : Mesg {
         /**
          * Get time128 field
          * Units: s
-         * 
+         *
          * @return time128
          */
         get() = getFieldFloatValue(48, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set time128 field
          * Units: s
-         * 
+         *
          * @param time128 The new time128 value to be set
          */
         set(time128) {
@@ -658,19 +655,16 @@ open class RecordMesg : Mesg {
     var strokeType: StrokeType?
         /**
          * Get stroke_type field
-         * 
+         *
          * @return stroke_type
          */
         get() {
-            val value = getFieldShortValue(49, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return StrokeType.Companion.getByValue(value)
+            val value = getFieldShortValue(49, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return StrokeType.getByValue(value)
         }
         /**
          * Set stroke_type field
-         * 
+         *
          * @param strokeType The new strokeType value to be set
          */
         set(strokeType) {
@@ -680,13 +674,13 @@ open class RecordMesg : Mesg {
     var zone: Short?
         /**
          * Get zone field
-         * 
+         *
          * @return zone
          */
         get() = getFieldShortValue(50, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set zone field
-         * 
+         *
          * @param zone The new zone value to be set
          */
         set(zone) {
@@ -697,14 +691,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ball_speed field
          * Units: m/s
-         * 
+         *
          * @return ball_speed
          */
         get() = getFieldFloatValue(51, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ball_speed field
          * Units: m/s
-         * 
+         *
          * @param ballSpeed The new ballSpeed value to be set
          */
         set(ballSpeed) {
@@ -716,7 +710,7 @@ open class RecordMesg : Mesg {
          * Get cadence256 field
          * Units: rpm
          * Comment: Log cadence and fractional cadence for backwards compatability
-         * 
+         *
          * @return cadence256
          */
         get() = getFieldFloatValue(52, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -724,7 +718,7 @@ open class RecordMesg : Mesg {
          * Set cadence256 field
          * Units: rpm
          * Comment: Log cadence and fractional cadence for backwards compatability
-         * 
+         *
          * @param cadence256 The new cadence256 value to be set
          */
         set(cadence256) {
@@ -735,14 +729,14 @@ open class RecordMesg : Mesg {
         /**
          * Get fractional_cadence field
          * Units: rpm
-         * 
+         *
          * @return fractional_cadence
          */
         get() = getFieldFloatValue(53, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set fractional_cadence field
          * Units: rpm
-         * 
+         *
          * @param fractionalCadence The new fractionalCadence value to be set
          */
         set(fractionalCadence) {
@@ -754,7 +748,7 @@ open class RecordMesg : Mesg {
          * Get total_hemoglobin_conc field
          * Units: g/dL
          * Comment: Total saturated and unsaturated hemoglobin
-         * 
+         *
          * @return total_hemoglobin_conc
          */
         get() = getFieldFloatValue(54, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -762,7 +756,7 @@ open class RecordMesg : Mesg {
          * Set total_hemoglobin_conc field
          * Units: g/dL
          * Comment: Total saturated and unsaturated hemoglobin
-         * 
+         *
          * @param totalHemoglobinConc The new totalHemoglobinConc value to be set
          */
         set(totalHemoglobinConc) {
@@ -774,7 +768,7 @@ open class RecordMesg : Mesg {
          * Get total_hemoglobin_conc_min field
          * Units: g/dL
          * Comment: Min saturated and unsaturated hemoglobin
-         * 
+         *
          * @return total_hemoglobin_conc_min
          */
         get() = getFieldFloatValue(55, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -782,7 +776,7 @@ open class RecordMesg : Mesg {
          * Set total_hemoglobin_conc_min field
          * Units: g/dL
          * Comment: Min saturated and unsaturated hemoglobin
-         * 
+         *
          * @param totalHemoglobinConcMin The new totalHemoglobinConcMin value to be set
          */
         set(totalHemoglobinConcMin) {
@@ -794,7 +788,7 @@ open class RecordMesg : Mesg {
          * Get total_hemoglobin_conc_max field
          * Units: g/dL
          * Comment: Max saturated and unsaturated hemoglobin
-         * 
+         *
          * @return total_hemoglobin_conc_max
          */
         get() = getFieldFloatValue(56, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -802,7 +796,7 @@ open class RecordMesg : Mesg {
          * Set total_hemoglobin_conc_max field
          * Units: g/dL
          * Comment: Max saturated and unsaturated hemoglobin
-         * 
+         *
          * @param totalHemoglobinConcMax The new totalHemoglobinConcMax value to be set
          */
         set(totalHemoglobinConcMax) {
@@ -814,7 +808,7 @@ open class RecordMesg : Mesg {
          * Get saturated_hemoglobin_percent field
          * Units: %
          * Comment: Percentage of hemoglobin saturated with oxygen
-         * 
+         *
          * @return saturated_hemoglobin_percent
          */
         get() = getFieldFloatValue(57, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -822,7 +816,7 @@ open class RecordMesg : Mesg {
          * Set saturated_hemoglobin_percent field
          * Units: %
          * Comment: Percentage of hemoglobin saturated with oxygen
-         * 
+         *
          * @param saturatedHemoglobinPercent The new saturatedHemoglobinPercent value to be set
          */
         set(saturatedHemoglobinPercent) {
@@ -834,7 +828,7 @@ open class RecordMesg : Mesg {
          * Get saturated_hemoglobin_percent_min field
          * Units: %
          * Comment: Min percentage of hemoglobin saturated with oxygen
-         * 
+         *
          * @return saturated_hemoglobin_percent_min
          */
         get() = getFieldFloatValue(58, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -842,7 +836,7 @@ open class RecordMesg : Mesg {
          * Set saturated_hemoglobin_percent_min field
          * Units: %
          * Comment: Min percentage of hemoglobin saturated with oxygen
-         * 
+         *
          * @param saturatedHemoglobinPercentMin The new saturatedHemoglobinPercentMin value to be set
          */
         set(saturatedHemoglobinPercentMin) {
@@ -854,7 +848,7 @@ open class RecordMesg : Mesg {
          * Get saturated_hemoglobin_percent_max field
          * Units: %
          * Comment: Max percentage of hemoglobin saturated with oxygen
-         * 
+         *
          * @return saturated_hemoglobin_percent_max
          */
         get() = getFieldFloatValue(59, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -862,7 +856,7 @@ open class RecordMesg : Mesg {
          * Set saturated_hemoglobin_percent_max field
          * Units: %
          * Comment: Max percentage of hemoglobin saturated with oxygen
-         * 
+         *
          * @param saturatedHemoglobinPercentMax The new saturatedHemoglobinPercentMax value to be set
          */
         set(saturatedHemoglobinPercentMax) {
@@ -872,13 +866,13 @@ open class RecordMesg : Mesg {
     var deviceIndex: Short?
         /**
          * Get device_index field
-         * 
+         *
          * @return device_index
          */
         get() = getFieldShortValue(62, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_index field
-         * 
+         *
          * @param deviceIndex The new deviceIndex value to be set
          */
         set(deviceIndex) {
@@ -890,7 +884,7 @@ open class RecordMesg : Mesg {
          * Get left_pco field
          * Units: mm
          * Comment: Left platform center offset
-         * 
+         *
          * @return left_pco
          */
         get() = getFieldByteValue(67, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -898,7 +892,7 @@ open class RecordMesg : Mesg {
          * Set left_pco field
          * Units: mm
          * Comment: Left platform center offset
-         * 
+         *
          * @param leftPco The new leftPco value to be set
          */
         set(leftPco) {
@@ -910,7 +904,7 @@ open class RecordMesg : Mesg {
          * Get right_pco field
          * Units: mm
          * Comment: Right platform center offset
-         * 
+         *
          * @return right_pco
          */
         get() = getFieldByteValue(68, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -918,14 +912,14 @@ open class RecordMesg : Mesg {
          * Set right_pco field
          * Units: mm
          * Comment: Right platform center offset
-         * 
+         *
          * @param rightPco The new rightPco value to be set
          */
         set(rightPco) {
             setFieldValue(68, 0, rightPco, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val leftPowerPhase: Array<Float?>?
+    val leftPowerPhase: Array<Float>?
         get() = getFieldFloatValues(69, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLeftPowerPhase: Int
@@ -938,7 +932,7 @@ open class RecordMesg : Mesg {
      * Get left_power_phase field
      * Units: degrees
      * Comment: Left power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of left_power_phase
      * @return left_power_phase
      */
@@ -950,7 +944,7 @@ open class RecordMesg : Mesg {
      * Set left_power_phase field
      * Units: degrees
      * Comment: Left power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of left_power_phase
      * @param leftPowerPhase The new leftPowerPhase value to be set
      */
@@ -958,7 +952,7 @@ open class RecordMesg : Mesg {
         setFieldValue(69, index, leftPowerPhase, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val leftPowerPhasePeak: Array<Float?>?
+    val leftPowerPhasePeak: Array<Float>?
         get() = getFieldFloatValues(70, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLeftPowerPhasePeak: Int
@@ -971,7 +965,7 @@ open class RecordMesg : Mesg {
      * Get left_power_phase_peak field
      * Units: degrees
      * Comment: Left power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of left_power_phase_peak
      * @return left_power_phase_peak
      */
@@ -983,7 +977,7 @@ open class RecordMesg : Mesg {
      * Set left_power_phase_peak field
      * Units: degrees
      * Comment: Left power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of left_power_phase_peak
      * @param leftPowerPhasePeak The new leftPowerPhasePeak value to be set
      */
@@ -991,7 +985,7 @@ open class RecordMesg : Mesg {
         setFieldValue(70, index, leftPowerPhasePeak, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val rightPowerPhase: Array<Float?>?
+    val rightPowerPhase: Array<Float>?
         get() = getFieldFloatValues(71, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numRightPowerPhase: Int
@@ -1004,7 +998,7 @@ open class RecordMesg : Mesg {
      * Get right_power_phase field
      * Units: degrees
      * Comment: Right power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of right_power_phase
      * @return right_power_phase
      */
@@ -1016,7 +1010,7 @@ open class RecordMesg : Mesg {
      * Set right_power_phase field
      * Units: degrees
      * Comment: Right power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of right_power_phase
      * @param rightPowerPhase The new rightPowerPhase value to be set
      */
@@ -1024,7 +1018,7 @@ open class RecordMesg : Mesg {
         setFieldValue(71, index, rightPowerPhase, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val rightPowerPhasePeak: Array<Float?>?
+    val rightPowerPhasePeak: Array<Float>?
         get() = getFieldFloatValues(72, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numRightPowerPhasePeak: Int
@@ -1037,7 +1031,7 @@ open class RecordMesg : Mesg {
      * Get right_power_phase_peak field
      * Units: degrees
      * Comment: Right power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of right_power_phase_peak
      * @return right_power_phase_peak
      */
@@ -1049,7 +1043,7 @@ open class RecordMesg : Mesg {
      * Set right_power_phase_peak field
      * Units: degrees
      * Comment: Right power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of right_power_phase_peak
      * @param rightPowerPhasePeak The new rightPowerPhasePeak value to be set
      */
@@ -1061,14 +1055,14 @@ open class RecordMesg : Mesg {
         /**
          * Get enhanced_speed field
          * Units: m/s
-         * 
+         *
          * @return enhanced_speed
          */
         get() = getFieldFloatValue(73, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_speed field
          * Units: m/s
-         * 
+         *
          * @param enhancedSpeed The new enhancedSpeed value to be set
          */
         set(enhancedSpeed) {
@@ -1079,14 +1073,14 @@ open class RecordMesg : Mesg {
         /**
          * Get enhanced_altitude field
          * Units: m
-         * 
+         *
          * @return enhanced_altitude
          */
         get() = getFieldFloatValue(78, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_altitude field
          * Units: m
-         * 
+         *
          * @param enhancedAltitude The new enhancedAltitude value to be set
          */
         set(enhancedAltitude) {
@@ -1098,7 +1092,7 @@ open class RecordMesg : Mesg {
          * Get battery_soc field
          * Units: percent
          * Comment: lev battery state of charge
-         * 
+         *
          * @return battery_soc
          */
         get() = getFieldFloatValue(81, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1106,7 +1100,7 @@ open class RecordMesg : Mesg {
          * Set battery_soc field
          * Units: percent
          * Comment: lev battery state of charge
-         * 
+         *
          * @param batterySoc The new batterySoc value to be set
          */
         set(batterySoc) {
@@ -1118,7 +1112,7 @@ open class RecordMesg : Mesg {
          * Get motor_power field
          * Units: watts
          * Comment: lev motor power
-         * 
+         *
          * @return motor_power
          */
         get() = getFieldIntegerValue(82, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1126,7 +1120,7 @@ open class RecordMesg : Mesg {
          * Set motor_power field
          * Units: watts
          * Comment: lev motor power
-         * 
+         *
          * @param motorPower The new motorPower value to be set
          */
         set(motorPower) {
@@ -1137,14 +1131,14 @@ open class RecordMesg : Mesg {
         /**
          * Get vertical_ratio field
          * Units: percent
-         * 
+         *
          * @return vertical_ratio
          */
         get() = getFieldFloatValue(83, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set vertical_ratio field
          * Units: percent
-         * 
+         *
          * @param verticalRatio The new verticalRatio value to be set
          */
         set(verticalRatio) {
@@ -1155,14 +1149,14 @@ open class RecordMesg : Mesg {
         /**
          * Get stance_time_balance field
          * Units: percent
-         * 
+         *
          * @return stance_time_balance
          */
         get() = getFieldFloatValue(84, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set stance_time_balance field
          * Units: percent
-         * 
+         *
          * @param stanceTimeBalance The new stanceTimeBalance value to be set
          */
         set(stanceTimeBalance) {
@@ -1173,14 +1167,14 @@ open class RecordMesg : Mesg {
         /**
          * Get step_length field
          * Units: mm
-         * 
+         *
          * @return step_length
          */
         get() = getFieldFloatValue(85, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set step_length field
          * Units: mm
-         * 
+         *
          * @param stepLength The new stepLength value to be set
          */
         set(stepLength) {
@@ -1192,7 +1186,7 @@ open class RecordMesg : Mesg {
          * Get cycle_length16 field
          * Units: m
          * Comment: Supports larger cycle sizes needed for paddlesports. Max cycle size: 655.35
-         * 
+         *
          * @return cycle_length16
          */
         get() = getFieldFloatValue(87, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1200,7 +1194,7 @@ open class RecordMesg : Mesg {
          * Set cycle_length16 field
          * Units: m
          * Comment: Supports larger cycle sizes needed for paddlesports. Max cycle size: 655.35
-         * 
+         *
          * @param cycleLength16 The new cycleLength16 value to be set
          */
         set(cycleLength16) {
@@ -1212,7 +1206,7 @@ open class RecordMesg : Mesg {
          * Get absolute_pressure field
          * Units: Pa
          * Comment: Includes atmospheric pressure
-         * 
+         *
          * @return absolute_pressure
          */
         get() = getFieldLongValue(91, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1220,7 +1214,7 @@ open class RecordMesg : Mesg {
          * Set absolute_pressure field
          * Units: Pa
          * Comment: Includes atmospheric pressure
-         * 
+         *
          * @param absolutePressure The new absolutePressure value to be set
          */
         set(absolutePressure) {
@@ -1232,7 +1226,7 @@ open class RecordMesg : Mesg {
          * Get depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @return depth
          */
         get() = getFieldFloatValue(92, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1240,7 +1234,7 @@ open class RecordMesg : Mesg {
          * Set depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @param depth The new depth value to be set
          */
         set(depth) {
@@ -1252,7 +1246,7 @@ open class RecordMesg : Mesg {
          * Get next_stop_depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @return next_stop_depth
          */
         get() = getFieldFloatValue(93, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1260,7 +1254,7 @@ open class RecordMesg : Mesg {
          * Set next_stop_depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @param nextStopDepth The new nextStopDepth value to be set
          */
         set(nextStopDepth) {
@@ -1271,14 +1265,14 @@ open class RecordMesg : Mesg {
         /**
          * Get next_stop_time field
          * Units: s
-         * 
+         *
          * @return next_stop_time
          */
         get() = getFieldLongValue(94, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set next_stop_time field
          * Units: s
-         * 
+         *
          * @param nextStopTime The new nextStopTime value to be set
          */
         set(nextStopTime) {
@@ -1289,14 +1283,14 @@ open class RecordMesg : Mesg {
         /**
          * Get time_to_surface field
          * Units: s
-         * 
+         *
          * @return time_to_surface
          */
         get() = getFieldLongValue(95, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set time_to_surface field
          * Units: s
-         * 
+         *
          * @param timeToSurface The new timeToSurface value to be set
          */
         set(timeToSurface) {
@@ -1307,14 +1301,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ndl_time field
          * Units: s
-         * 
+         *
          * @return ndl_time
          */
         get() = getFieldLongValue(96, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ndl_time field
          * Units: s
-         * 
+         *
          * @param ndlTime The new ndlTime value to be set
          */
         set(ndlTime) {
@@ -1325,14 +1319,14 @@ open class RecordMesg : Mesg {
         /**
          * Get cns_load field
          * Units: percent
-         * 
+         *
          * @return cns_load
          */
         get() = getFieldShortValue(97, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set cns_load field
          * Units: percent
-         * 
+         *
          * @param cnsLoad The new cnsLoad value to be set
          */
         set(cnsLoad) {
@@ -1343,14 +1337,14 @@ open class RecordMesg : Mesg {
         /**
          * Get n2_load field
          * Units: percent
-         * 
+         *
          * @return n2_load
          */
         get() = getFieldIntegerValue(98, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set n2_load field
          * Units: percent
-         * 
+         *
          * @param n2Load The new n2Load value to be set
          */
         set(n2Load) {
@@ -1361,14 +1355,14 @@ open class RecordMesg : Mesg {
         /**
          * Get respiration_rate field
          * Units: s
-         * 
+         *
          * @return respiration_rate
          */
         get() = getFieldShortValue(99, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set respiration_rate field
          * Units: s
-         * 
+         *
          * @param respirationRate The new respirationRate value to be set
          */
         set(respirationRate) {
@@ -1379,14 +1373,14 @@ open class RecordMesg : Mesg {
         /**
          * Get enhanced_respiration_rate field
          * Units: Breaths/min
-         * 
+         *
          * @return enhanced_respiration_rate
          */
         get() = getFieldFloatValue(108, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_respiration_rate field
          * Units: Breaths/min
-         * 
+         *
          * @param enhancedRespirationRate The new enhancedRespirationRate value to be set
          */
         set(enhancedRespirationRate) {
@@ -1397,14 +1391,14 @@ open class RecordMesg : Mesg {
         /**
          * Get grit field
          * Comment: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
-         * 
+         *
          * @return grit
          */
         get() = getFieldFloatValue(114, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set grit field
          * Comment: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
-         * 
+         *
          * @param grit The new grit value to be set
          */
         set(grit) {
@@ -1415,14 +1409,14 @@ open class RecordMesg : Mesg {
         /**
          * Get flow field
          * Comment: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
-         * 
+         *
          * @return flow
          */
         get() = getFieldFloatValue(115, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set flow field
          * Comment: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
-         * 
+         *
          * @param flow The new flow value to be set
          */
         set(flow) {
@@ -1433,14 +1427,14 @@ open class RecordMesg : Mesg {
         /**
          * Get current_stress field
          * Comment: Current Stress value
-         * 
+         *
          * @return current_stress
          */
         get() = getFieldFloatValue(116, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set current_stress field
          * Comment: Current Stress value
-         * 
+         *
          * @param currentStress The new currentStress value to be set
          */
         set(currentStress) {
@@ -1451,14 +1445,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ebike_travel_range field
          * Units: km
-         * 
+         *
          * @return ebike_travel_range
          */
         get() = getFieldIntegerValue(117, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ebike_travel_range field
          * Units: km
-         * 
+         *
          * @param ebikeTravelRange The new ebikeTravelRange value to be set
          */
         set(ebikeTravelRange) {
@@ -1469,14 +1463,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ebike_battery_level field
          * Units: percent
-         * 
+         *
          * @return ebike_battery_level
          */
         get() = getFieldShortValue(118, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ebike_battery_level field
          * Units: percent
-         * 
+         *
          * @param ebikeBatteryLevel The new ebikeBatteryLevel value to be set
          */
         set(ebikeBatteryLevel) {
@@ -1487,14 +1481,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ebike_assist_mode field
          * Units: depends on sensor
-         * 
+         *
          * @return ebike_assist_mode
          */
         get() = getFieldShortValue(119, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ebike_assist_mode field
          * Units: depends on sensor
-         * 
+         *
          * @param ebikeAssistMode The new ebikeAssistMode value to be set
          */
         set(ebikeAssistMode) {
@@ -1505,14 +1499,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ebike_assist_level_percent field
          * Units: percent
-         * 
+         *
          * @return ebike_assist_level_percent
          */
         get() = getFieldShortValue(120, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ebike_assist_level_percent field
          * Units: percent
-         * 
+         *
          * @param ebikeAssistLevelPercent The new ebikeAssistLevelPercent value to be set
          */
         set(ebikeAssistLevelPercent) {
@@ -1523,14 +1517,14 @@ open class RecordMesg : Mesg {
         /**
          * Get air_time_remaining field
          * Units: s
-         * 
+         *
          * @return air_time_remaining
          */
         get() = getFieldLongValue(123, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set air_time_remaining field
          * Units: s
-         * 
+         *
          * @param airTimeRemaining The new airTimeRemaining value to be set
          */
         set(airTimeRemaining) {
@@ -1542,7 +1536,7 @@ open class RecordMesg : Mesg {
          * Get pressure_sac field
          * Units: bar/min
          * Comment: Pressure-based surface air consumption
-         * 
+         *
          * @return pressure_sac
          */
         get() = getFieldFloatValue(124, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1550,7 +1544,7 @@ open class RecordMesg : Mesg {
          * Set pressure_sac field
          * Units: bar/min
          * Comment: Pressure-based surface air consumption
-         * 
+         *
          * @param pressureSac The new pressureSac value to be set
          */
         set(pressureSac) {
@@ -1562,7 +1556,7 @@ open class RecordMesg : Mesg {
          * Get volume_sac field
          * Units: L/min
          * Comment: Volumetric surface air consumption
-         * 
+         *
          * @return volume_sac
          */
         get() = getFieldFloatValue(125, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1570,7 +1564,7 @@ open class RecordMesg : Mesg {
          * Set volume_sac field
          * Units: L/min
          * Comment: Volumetric surface air consumption
-         * 
+         *
          * @param volumeSac The new volumeSac value to be set
          */
         set(volumeSac) {
@@ -1582,7 +1576,7 @@ open class RecordMesg : Mesg {
          * Get rmv field
          * Units: L/min
          * Comment: Respiratory minute volume
-         * 
+         *
          * @return rmv
          */
         get() = getFieldFloatValue(126, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1590,7 +1584,7 @@ open class RecordMesg : Mesg {
          * Set rmv field
          * Units: L/min
          * Comment: Respiratory minute volume
-         * 
+         *
          * @param rmv The new rmv value to be set
          */
         set(rmv) {
@@ -1601,14 +1595,14 @@ open class RecordMesg : Mesg {
         /**
          * Get ascent_rate field
          * Units: m/s
-         * 
+         *
          * @return ascent_rate
          */
         get() = getFieldFloatValue(127, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ascent_rate field
          * Units: m/s
-         * 
+         *
          * @param ascentRate The new ascentRate value to be set
          */
         set(ascentRate) {
@@ -1620,7 +1614,7 @@ open class RecordMesg : Mesg {
          * Get po2 field
          * Units: percent
          * Comment: Current partial pressure of oxygen
-         * 
+         *
          * @return po2
          */
         get() = getFieldFloatValue(129, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1628,7 +1622,7 @@ open class RecordMesg : Mesg {
          * Set po2 field
          * Units: percent
          * Comment: Current partial pressure of oxygen
-         * 
+         *
          * @param po2 The new po2 value to be set
          */
         set(po2) {
@@ -1639,14 +1633,14 @@ open class RecordMesg : Mesg {
         /**
          * Get core_temperature field
          * Units: C
-         * 
+         *
          * @return core_temperature
          */
         get() = getFieldFloatValue(139, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set core_temperature field
          * Units: C
-         * 
+         *
          * @param coreTemperature The new coreTemperature value to be set
          */
         set(coreTemperature) {
@@ -1880,7 +1874,7 @@ open class RecordMesg : Mesg {
                     Profile.Type.UINT16
                 )
             )
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     78,
                     false,
@@ -1941,7 +1935,7 @@ open class RecordMesg : Mesg {
                     Profile.Type.UINT16
                 )
             )
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     73,
                     false,
@@ -1976,7 +1970,7 @@ open class RecordMesg : Mesg {
                     Profile.Type.BYTE
                 )
             )
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     6,
                     false,
@@ -1985,7 +1979,7 @@ open class RecordMesg : Mesg {
                     0.0
                 )
             ) // speed
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     5,
                     true,
@@ -2085,7 +2079,7 @@ open class RecordMesg : Mesg {
                     Profile.Type.UINT8
                 )
             )
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     19,
                     true,
@@ -2120,7 +2114,7 @@ open class RecordMesg : Mesg {
                     Profile.Type.UINT16
                 )
             )
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     29,
                     true,
@@ -2779,7 +2773,7 @@ open class RecordMesg : Mesg {
                     Profile.Type.UINT8
                 )
             )
-            recordMesg.fields.get(field_index).components.add(
+            recordMesg.fields[field_index].components.add(
                 FieldComponent(
                     108,
                     false,

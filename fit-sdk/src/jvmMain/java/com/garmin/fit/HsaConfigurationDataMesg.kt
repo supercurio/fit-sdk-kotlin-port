@@ -12,7 +12,7 @@ package com.garmin.fit
 class HsaConfigurationDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_CONFIGURATION_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class HsaConfigurationDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Encoded configuration data
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,14 +28,14 @@ class HsaConfigurationDataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Encoded configuration data
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val data: Array<Byte?>?
+    val data: Array<Byte>?
         get() = getFieldByteValues(0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numData: Int
@@ -47,7 +47,7 @@ class HsaConfigurationDataMesg : Mesg {
     /**
      * Get data field
      * Comment: Encoded configuration data. Health SDK use only
-     * 
+     *
      * @param index of data
      * @return data
      */
@@ -58,7 +58,7 @@ class HsaConfigurationDataMesg : Mesg {
     /**
      * Set data field
      * Comment: Encoded configuration data. Health SDK use only
-     * 
+     *
      * @param index of data
      * @param data The new data value to be set
      */
@@ -70,14 +70,14 @@ class HsaConfigurationDataMesg : Mesg {
         /**
          * Get data_size field
          * Comment: Size in bytes of data field
-         * 
+         *
          * @return data_size
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set data_size field
          * Comment: Size in bytes of data field
-         * 
+         *
          * @param dataSize The new dataSize value to be set
          */
         set(dataSize) {
@@ -92,12 +92,10 @@ class HsaConfigurationDataMesg : Mesg {
         const val DataSizeFieldNum: Int = 1
 
 
-        val hsaConfigurationDataMesg: Mesg
+        // hsa_configuration_data
+        val hsaConfigurationDataMesg: Mesg = Mesg("hsa_configuration_data", MesgNum.HSA_CONFIGURATION_DATA)
 
         init {
-            // hsa_configuration_data
-            hsaConfigurationDataMesg =
-                Mesg("hsa_configuration_data", MesgNum.HSA_CONFIGURATION_DATA)
             hsaConfigurationDataMesg.addField(
                 Field(
                     "timestamp",

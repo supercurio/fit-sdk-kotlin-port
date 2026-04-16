@@ -21,7 +21,7 @@ enum class Gender(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Gender.INVALID
+            return INVALID
         }
 
         /**

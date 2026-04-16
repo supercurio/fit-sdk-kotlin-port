@@ -12,19 +12,19 @@ package com.garmin.fit
 class VideoMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.VIDEO))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var url: String?
         /**
          * Get url field
-         * 
+         *
          * @return url
          */
         get() = getFieldStringValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set url field
-         * 
+         *
          * @param url The new url value to be set
          */
         set(url) {
@@ -34,13 +34,13 @@ class VideoMesg : Mesg {
     var hostingProvider: String?
         /**
          * Get hosting_provider field
-         * 
+         *
          * @return hosting_provider
          */
         get() = getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set hosting_provider field
-         * 
+         *
          * @param hostingProvider The new hostingProvider value to be set
          */
         set(hostingProvider) {
@@ -52,7 +52,7 @@ class VideoMesg : Mesg {
          * Get duration field
          * Units: ms
          * Comment: Playback time of video
-         * 
+         *
          * @return duration
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -60,7 +60,7 @@ class VideoMesg : Mesg {
          * Set duration field
          * Units: ms
          * Comment: Playback time of video
-         * 
+         *
          * @param duration The new duration value to be set
          */
         set(duration) {
@@ -75,11 +75,10 @@ class VideoMesg : Mesg {
         const val DurationFieldNum: Int = 2
 
 
-        val videoMesg: Mesg
+        // video
+        val videoMesg: Mesg = Mesg("video", MesgNum.VIDEO)
 
         init {
-            // video
-            videoMesg = Mesg("video", MesgNum.VIDEO)
             videoMesg.addField(
                 Field(
                     "url",

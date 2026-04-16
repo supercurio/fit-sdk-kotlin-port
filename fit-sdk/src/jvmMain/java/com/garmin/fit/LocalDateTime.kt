@@ -19,11 +19,11 @@ class LocalDateTime {
     }
 
     constructor(date: Date) {
-        this.timestamp = (date.getTime() - OFFSET) / 1000
+        this.timestamp = (date.time - OFFSET) / 1000
     }
 
     fun equals(dateTime: DateTime): Boolean {
-        return (this.timestamp == dateTime.getTimestamp())
+        return (this.timestamp == dateTime.timestamp)
     }
 
     fun convertSystemTimeToLocal(offset: Long) {
@@ -42,13 +42,12 @@ class LocalDateTime {
     companion object {
         const val MIN: Long =
             0x10000000 // if date_time is < 0x10000000 then it is system time (seconds from device power on)
-        val INVALID: Long = Fit.UINT32_INVALID
+        const val INVALID: Long = Fit.UINT32_INVALID
 
-        private val stringMap: MutableMap<Long?, String?>
+        private val stringMap = mutableMapOf<Long, String>()
 
         init {
-            stringMap = HashMap<Long?, String?>()
-            stringMap.put(MIN, "MIN")
+                stringMap[MIN] = "MIN"
         }
 
         const val OFFSET: Long =
@@ -59,9 +58,9 @@ class LocalDateTime {
          * @param value The enum constant
          * @return The name of this enum contsant
          */
-        fun getStringFromValue(value: Long?): String? {
+        fun getStringFromValue(value: Long): String {
             if (stringMap.containsKey(value)) {
-                return stringMap.get(value)
+                return stringMap[value] ?: ""
             }
 
             return ""
@@ -72,7 +71,7 @@ class LocalDateTime {
          * @param value The enum string value
          * @return The enum constant or INVALID if unknown
          */
-        fun getValueFromString(value: String?): Long? {
+        fun getValueFromString(value: String): Long {
             for (entry in stringMap.entries) {
                 if (entry.value == value) {
                     return entry.key

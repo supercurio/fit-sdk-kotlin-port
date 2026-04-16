@@ -21,7 +21,7 @@ enum class Schedule(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Schedule.INVALID
+            return INVALID
         }
 
         /**

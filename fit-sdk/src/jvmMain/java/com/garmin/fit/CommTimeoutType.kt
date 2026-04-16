@@ -13,16 +13,15 @@ object CommTimeoutType {
     const val PAIRING_TIMEOUT: Int = 1 // Timeout pairing to previously paired device
     const val CONNECTION_LOST: Int = 2 // Temporary loss of communications
     const val CONNECTION_TIMEOUT: Int = 3 // Connection closed due to extended bad communications
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(WILDCARD_PAIRING_TIMEOUT, "WILDCARD_PAIRING_TIMEOUT")
-        stringMap.put(PAIRING_TIMEOUT, "PAIRING_TIMEOUT")
-        stringMap.put(CONNECTION_LOST, "CONNECTION_LOST")
-        stringMap.put(CONNECTION_TIMEOUT, "CONNECTION_TIMEOUT")
+        stringMap[WILDCARD_PAIRING_TIMEOUT] = "WILDCARD_PAIRING_TIMEOUT"
+        stringMap[PAIRING_TIMEOUT] = "PAIRING_TIMEOUT"
+        stringMap[CONNECTION_LOST] = "CONNECTION_LOST"
+        stringMap[CONNECTION_TIMEOUT] = "CONNECTION_TIMEOUT"
     }
 
 
@@ -31,9 +30,9 @@ object CommTimeoutType {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -44,7 +43,7 @@ object CommTimeoutType {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

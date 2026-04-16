@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface GpsMetadataMesgListener {
-    fun onMesg(mesg: GpsMetadataMesg?)
+    fun onMesg(mesg: GpsMetadataMesg)
 }

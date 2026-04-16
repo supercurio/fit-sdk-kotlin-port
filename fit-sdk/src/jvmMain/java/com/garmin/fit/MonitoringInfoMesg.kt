@@ -12,25 +12,25 @@ package com.garmin.fit
 class MonitoringInfoMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MONITORING_INFO))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var localTimestamp: Long?
@@ -38,7 +38,7 @@ class MonitoringInfoMesg : Mesg {
          * Get local_timestamp field
          * Units: s
          * Comment: Use to convert activity timestamps to local time if device does not support time zone and daylight savings time correction.
-         * 
+         *
          * @return local_timestamp
          */
         get() = getFieldLongValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,23 +46,17 @@ class MonitoringInfoMesg : Mesg {
          * Set local_timestamp field
          * Units: s
          * Comment: Use to convert activity timestamps to local time if device does not support time zone and daylight savings time correction.
-         * 
+         *
          * @param localTimestamp The new localTimestamp value to be set
          */
         set(localTimestamp) {
             setFieldValue(0, 0, localTimestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val activityType: Array<ActivityType?>
-        get() {
-            val values =
-                getFieldShortValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            val rv = arrayOfNulls<ActivityType>(values.size)
-            for (i in values.indices) {
-                rv[i] = ActivityType.Companion.getByValue(values[i])
-            }
-            return rv
-        }
+    val activityType: Array<ActivityType>
+        get() = getFieldShortValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)?.map {
+            ActivityType.getByValue(it)
+        }?.toTypedArray() ?: emptyArray()
 
     val numActivityType: Int
         /**
@@ -72,21 +66,18 @@ class MonitoringInfoMesg : Mesg {
 
     /**
      * Get activity_type field
-     * 
+     *
      * @param index of activity_type
      * @return activity_type
      */
     fun getActivityType(index: Int): ActivityType? {
-        val value = getFieldShortValue(1, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
-        }
-        return ActivityType.Companion.getByValue(value)
+        val value = getFieldShortValue(1, index, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+        return ActivityType.getByValue(value)
     }
 
     /**
      * Set activity_type field
-     * 
+     *
      * @param index of activity_type
      * @param activityType The new activityType value to be set
      */
@@ -94,7 +85,7 @@ class MonitoringInfoMesg : Mesg {
         setFieldValue(1, index, activityType.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val cyclesToDistance: Array<Float?>?
+    val cyclesToDistance: Array<Float>?
         get() = getFieldFloatValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCyclesToDistance: Int
@@ -107,7 +98,7 @@ class MonitoringInfoMesg : Mesg {
      * Get cycles_to_distance field
      * Units: m/cycle
      * Comment: Indexed by activity_type
-     * 
+     *
      * @param index of cycles_to_distance
      * @return cycles_to_distance
      */
@@ -119,7 +110,7 @@ class MonitoringInfoMesg : Mesg {
      * Set cycles_to_distance field
      * Units: m/cycle
      * Comment: Indexed by activity_type
-     * 
+     *
      * @param index of cycles_to_distance
      * @param cyclesToDistance The new cyclesToDistance value to be set
      */
@@ -127,7 +118,7 @@ class MonitoringInfoMesg : Mesg {
         setFieldValue(3, index, cyclesToDistance, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val cyclesToCalories: Array<Float?>?
+    val cyclesToCalories: Array<Float>?
         get() = getFieldFloatValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCyclesToCalories: Int
@@ -140,7 +131,7 @@ class MonitoringInfoMesg : Mesg {
      * Get cycles_to_calories field
      * Units: kcal/cycle
      * Comment: Indexed by activity_type
-     * 
+     *
      * @param index of cycles_to_calories
      * @return cycles_to_calories
      */
@@ -152,7 +143,7 @@ class MonitoringInfoMesg : Mesg {
      * Set cycles_to_calories field
      * Units: kcal/cycle
      * Comment: Indexed by activity_type
-     * 
+     *
      * @param index of cycles_to_calories
      * @param cyclesToCalories The new cyclesToCalories value to be set
      */
@@ -164,14 +155,14 @@ class MonitoringInfoMesg : Mesg {
         /**
          * Get resting_metabolic_rate field
          * Units: kcal / day
-         * 
+         *
          * @return resting_metabolic_rate
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set resting_metabolic_rate field
          * Units: kcal / day
-         * 
+         *
          * @param restingMetabolicRate The new restingMetabolicRate value to be set
          */
         set(restingMetabolicRate) {
@@ -192,11 +183,10 @@ class MonitoringInfoMesg : Mesg {
         const val RestingMetabolicRateFieldNum: Int = 5
 
 
-        val monitoringInfoMesg: Mesg
+        // monitoring_info
+        val monitoringInfoMesg: Mesg = Mesg("monitoring_info", MesgNum.MONITORING_INFO)
 
         init {
-            // monitoring_info
-            monitoringInfoMesg = Mesg("monitoring_info", MesgNum.MONITORING_INFO)
             monitoringInfoMesg.addField(
                 Field(
                     "timestamp",

@@ -22,7 +22,7 @@ enum class DiveGasStatus(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DiveGasStatus.INVALID
+            return INVALID
         }
 
         /**

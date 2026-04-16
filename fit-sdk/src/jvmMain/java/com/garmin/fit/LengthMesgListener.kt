@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface LengthMesgListener {
-    fun onMesg(mesg: LengthMesg?)
+    fun onMesg(mesg: LengthMesg)
 }

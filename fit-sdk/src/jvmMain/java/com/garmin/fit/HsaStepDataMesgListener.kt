@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface HsaStepDataMesgListener {
-    fun onMesg(mesg: HsaStepDataMesg?)
+    fun onMesg(mesg: HsaStepDataMesg)
 }

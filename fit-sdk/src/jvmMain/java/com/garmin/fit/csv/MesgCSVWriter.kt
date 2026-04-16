@@ -17,7 +17,7 @@ import com.garmin.fit.MesgDefinitionListener
 import com.garmin.fit.MesgListener
 import java.io.ByteArrayOutputStream
 
-class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream?) :
+class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream) :
     MesgCSVWriterBase(byteArrayOutputStream), MesgListener, MesgDefinitionListener {
     var numUnknownMesgs: Int = 0
         private set
@@ -31,58 +31,57 @@ class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream?) :
     }
 
     override fun onMesgDefinition(mesgDef: MesgDefinition) {
-        val fields: MutableCollection<FieldDefinition> = mesgDef.getFields()
-        var headerNum: Int
-        val mesg = Factory.createMesg(mesgDef.getNum())
-        if (hideUnknownData && mesg.getName() == "unknown") {
+        val fields: MutableCollection<FieldDefinition> = mesgDef.fields
+        val mesg = Factory.createMesg(mesgDef.num)
+        if (hideUnknownData && mesg.name == "unknown") {
             return
         }
 
         csv.clear()
         csv.set("Type", "Definition")
-        csv.set("Local Number", mesgDef.getLocalNum())
+        csv.set("Local Number", mesgDef.localNum)
 
-        csv.set("Message", mesg.getName())
+        csv.set("Message", mesg.name)
 
-        headerNum = 0
+        var headerNum = 0
 
         for (fieldDef in fields) {
-            val field = Factory.createField(mesgDef.getNum(), fieldDef.getNum())
-            if (hideUnknownData && field.getName() == "unknown") {
+            val field = Factory.createField(mesgDef.num, fieldDef.num)
+            if (hideUnknownData && field.name == "unknown") {
                 numUnknownFields++
                 continue
             }
 
             headerNum++
 
-            csv.set("Field " + headerNum, field.getName())
+            csv.set("Field $headerNum", field.name)
 
             csv.set(
-                "Value " + headerNum,
-                fieldDef.getSize() / Fit.baseTypeSizes[fieldDef.getType() and Fit.BASE_TYPE_NUM_MASK]
+                "Value $headerNum",
+                fieldDef.size / Fit.baseTypeSizes[fieldDef.type and Fit.BASE_TYPE_NUM_MASK]
             )
-            csv.set("Units " + headerNum, "")
+            csv.set("Units $headerNum", "")
         }
 
         for (fieldDef in mesgDef.getDeveloperFields()) {
-            if (hideUnknownData && !fieldDef.isDefined()) {
+            if (hideUnknownData && !fieldDef.isDefined) {
                 numUnknownFields++
                 continue
             }
 
             headerNum++
 
-            if (!fieldDef.isDefined()) {
-                csv.set("Field " + headerNum, "undefined-dev-data")
+            if (!fieldDef.isDefined) {
+                csv.set("Field $headerNum", "undefined-dev-data")
             } else {
-                csv.set("Field " + headerNum, fieldDef.getFieldName())
+                csv.set("Field $headerNum", fieldDef.fieldName)
             }
 
             csv.set(
-                "Value " + headerNum,
-                fieldDef.getSize() / Fit.baseTypeSizes[fieldDef.getType() and Fit.BASE_TYPE_NUM_MASK]
+                "Value $headerNum",
+                fieldDef.size / Fit.baseTypeSizes[fieldDef.type and Fit.BASE_TYPE_NUM_MASK]
             )
-            csv.set("Units " + headerNum, "")
+            csv.set("Units $headerNum", "")
         }
 
         csv.writeln()
@@ -90,61 +89,56 @@ class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream?) :
     }
 
     override fun onMesg(mesg: Mesg) {
-        val fields = mesg.getFields()
-        var headerNum: Int
+        val fields = mesg.fields
 
-        if ((mesg.getName() == "unknown") && (hideUnknownData)) {
+        if ((mesg.name == "unknown") && (hideUnknownData)) {
             numUnknownMesgs++
             return
         }
 
         csv.clear()
         csv.set("Type", "Data")
-        csv.set("Local Number", mesg.getLocalNum())
-        csv.set("Message", mesg.getName())
+        csv.set("Local Number", mesg.localNum)
+        csv.set("Message", mesg.name)
 
         if (removeExpandedFields) {
             mesg.removeExpandedFields()
         }
 
-        headerNum = 0
+        var headerNum = 0
 
         for (field in fields) {
-            val subFieldIndex = mesg.getActiveSubFieldIndex(field.getNum())
+            val subFieldIndex = mesg.getActiveSubFieldIndex(field.num)
 
-            if (((field.getName() == "unknown") && (hideUnknownData))) {
+            if (((field.name == "unknown") && (hideUnknownData))) {
                 continue
             }
 
             headerNum++
 
-            csv.set("Field " + headerNum, field.getName(subFieldIndex))
+            csv.set("Field $headerNum", field.getName(subFieldIndex))
 
-            var value: String? = null
+            val value = getValueString(field, subFieldIndex)
 
-            if (null == value) {
-                value = getValueString(field, subFieldIndex)
-            }
-
-            csv.set("Value " + headerNum, value)
+            csv.set("Value $headerNum", value)
             csv.set(
-                "Units " + headerNum,
-                formatUnits(field.getUnits(), field.getProfileType().name)
+                "Units $headerNum",
+                formatUnits(field.units, field.profileType?.name)
             )
         }
 
-        for (field in mesg.getDeveloperFields()) {
-            if (!field.isDefined() && hideUnknownData) {
+        for (field in mesg.developerFields) {
+            if (!field.isDefined && hideUnknownData) {
                 continue
             }
 
             headerNum++
 
-            csv.set("Field " + headerNum, field.getName())
+            csv.set("Field $headerNum", field.name)
             val value = getValueString(field, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
-            csv.set("Value " + headerNum, value)
-            csv.set("Units " + headerNum, formatUnits(field.getUnits()))
+            csv.set("Value $headerNum", value)
+            csv.set("Units $headerNum", formatUnits(field.units))
         }
 
         csv.writeln()

@@ -14,19 +14,19 @@ import com.garmin.fit.Profile.SubFields
 class SlaveDeviceMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SLAVE_DEVICE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var manufacturer: Int?
         /**
          * Get manufacturer field
-         * 
+         *
          * @return manufacturer
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer field
-         * 
+         *
          * @param manufacturer The new manufacturer value to be set
          */
         set(manufacturer) {
@@ -36,13 +36,13 @@ class SlaveDeviceMesg : Mesg {
     var product: Int?
         /**
          * Get product field
-         * 
+         *
          * @return product
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product field
-         * 
+         *
          * @param product The new product value to be set
          */
         set(product) {
@@ -52,13 +52,13 @@ class SlaveDeviceMesg : Mesg {
     var faveroProduct: Int?
         /**
          * Get favero_product field
-         * 
+         *
          * @return favero_product
          */
         get() = getFieldIntegerValue(1, 0, SubFields.SLAVE_DEVICE_MESG_PRODUCT_FIELD_FAVERO_PRODUCT)
         /**
          * Set favero_product field
-         * 
+         *
          * @param faveroProduct The new faveroProduct value to be set
          */
         set(faveroProduct) {
@@ -73,13 +73,13 @@ class SlaveDeviceMesg : Mesg {
     var garminProduct: Int?
         /**
          * Get garmin_product field
-         * 
+         *
          * @return garmin_product
          */
         get() = getFieldIntegerValue(1, 0, SubFields.SLAVE_DEVICE_MESG_PRODUCT_FIELD_GARMIN_PRODUCT)
         /**
          * Set garmin_product field
-         * 
+         *
          * @param garminProduct The new garminProduct value to be set
          */
         set(garminProduct) {
@@ -130,7 +130,7 @@ class SlaveDeviceMesg : Mesg {
                 )
             )
             subfield_index = 0
-            slaveDeviceMesg.fields.get(field_index).subFields.add(
+            slaveDeviceMesg.fields[field_index].subFields.add(
                 SubField(
                     "favero_product",
                     132,
@@ -139,9 +139,9 @@ class SlaveDeviceMesg : Mesg {
                     ""
                 )
             )
-            slaveDeviceMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 263)
+            slaveDeviceMesg.fields[field_index].subFields[subfield_index].addMap(0, 263)
             subfield_index++
-            slaveDeviceMesg.fields.get(field_index).subFields.add(
+            slaveDeviceMesg.fields[field_index].subFields.add(
                 SubField(
                     "garmin_product",
                     132,
@@ -150,10 +150,10 @@ class SlaveDeviceMesg : Mesg {
                     ""
                 )
             )
-            slaveDeviceMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 1)
-            slaveDeviceMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 15)
-            slaveDeviceMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 13)
-            slaveDeviceMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 89)
+            slaveDeviceMesg.fields[field_index].subFields[subfield_index].addMap(0, 1)
+            slaveDeviceMesg.fields[field_index].subFields[subfield_index].addMap(0, 15)
+            slaveDeviceMesg.fields[field_index].subFields[subfield_index].addMap(0, 13)
+            slaveDeviceMesg.fields[field_index].subFields[subfield_index].addMap(0, 89)
             subfield_index++
             field_index++
         }

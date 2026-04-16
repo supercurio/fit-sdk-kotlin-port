@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface GoalMesgListener {
-    fun onMesg(mesg: GoalMesg?)
+    fun onMesg(mesg: GoalMesg)
 }

@@ -32,7 +32,7 @@ enum class CameraEventType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return CameraEventType.INVALID
+            return INVALID
         }
 
         /**

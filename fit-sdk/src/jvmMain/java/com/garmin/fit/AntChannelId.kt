@@ -15,17 +15,13 @@ object AntChannelId {
     const val ANT_DEVICE_NUMBER: Long = 0x0000FFFF
     val INVALID: Long = Fit.UINT32Z_INVALID
 
-    private val stringMap: MutableMap<Long?, String?>
+    private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap = HashMap<Long?, String?>()
-        stringMap.put(
-            ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE,
-            "ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE"
-        )
-        stringMap.put(ANT_TRANSMISSION_TYPE_LOWER_NIBBLE, "ANT_TRANSMISSION_TYPE_LOWER_NIBBLE")
-        stringMap.put(ANT_DEVICE_TYPE, "ANT_DEVICE_TYPE")
-        stringMap.put(ANT_DEVICE_NUMBER, "ANT_DEVICE_NUMBER")
+        stringMap[ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE] = "ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE"
+        stringMap[ANT_TRANSMISSION_TYPE_LOWER_NIBBLE] = "ANT_TRANSMISSION_TYPE_LOWER_NIBBLE"
+        stringMap[ANT_DEVICE_TYPE] = "ANT_DEVICE_TYPE"
+        stringMap[ANT_DEVICE_NUMBER] = "ANT_DEVICE_NUMBER"
     }
 
 
@@ -34,9 +30,9 @@ object AntChannelId {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Long?): String? {
+    fun getStringFromValue(value: Long): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -47,7 +43,7 @@ object AntChannelId {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Long? {
+    fun getValueFromString(value: String): Long {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

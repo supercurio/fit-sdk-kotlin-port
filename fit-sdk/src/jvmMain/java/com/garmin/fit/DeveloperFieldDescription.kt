@@ -29,10 +29,7 @@ class DeveloperFieldDescription
          * @return `null` if there is no version encoded in the file
          */
         get() {
-            val applicationVer = developerId.getApplicationVersion()
-            if (applicationVer == null) {
-                return 0xFFFFL
-            }
+            val applicationVer = developerId.applicationVersion ?: return 0xFFFFL
 
             return applicationVer
         }
@@ -43,7 +40,7 @@ class DeveloperFieldDescription
          * @return Application Id or `null` if there is no valid Application Id for the description
          */
         get() {
-            val appId = developerId.getApplicationId()
+            val appId = developerId.applicationId
             if (appId == null || appId.size != 16) {
                 return null
             }
@@ -51,11 +48,7 @@ class DeveloperFieldDescription
             val primitiveId = ByteArray(appId.size)
 
             for (i in appId.indices) {
-                if (appId[i.toInt()] != null) {
-                    primitiveId[i.toInt()] = appId[i.toInt()]!!
-                } else {
-                    primitiveId[i.toInt()] = 0xFF.toByte()
-                }
+                primitiveId[i] = appId[i]
             }
 
             val bb = ByteBuffer.wrap(primitiveId)
@@ -71,11 +64,7 @@ class DeveloperFieldDescription
          * @return Field Definition Number
          */
         get() {
-            val num = fieldDescription.getFieldDefinitionNumber()
-            if (num == null) {
-                return 0xFF.toShort()
-            }
-
+            val num = fieldDescription.fieldDefinitionNumber ?: return 0xFF.toShort()
             return num
         }
 }

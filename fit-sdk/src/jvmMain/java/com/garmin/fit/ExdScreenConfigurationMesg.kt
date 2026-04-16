@@ -12,19 +12,19 @@ package com.garmin.fit
 class ExdScreenConfigurationMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.EXD_SCREEN_CONFIGURATION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var screenIndex: Short?
         /**
          * Get screen_index field
-         * 
+         *
          * @return screen_index
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set screen_index field
-         * 
+         *
          * @param screenIndex The new screenIndex value to be set
          */
         set(screenIndex) {
@@ -35,14 +35,14 @@ class ExdScreenConfigurationMesg : Mesg {
         /**
          * Get field_count field
          * Comment: number of fields in screen
-         * 
+         *
          * @return field_count
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set field_count field
          * Comment: number of fields in screen
-         * 
+         *
          * @param fieldCount The new fieldCount value to be set
          */
         set(fieldCount) {
@@ -52,19 +52,16 @@ class ExdScreenConfigurationMesg : Mesg {
     var layout: ExdLayout?
         /**
          * Get layout field
-         * 
+         *
          * @return layout
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ExdLayout.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ExdLayout.getByValue(value)
         }
         /**
          * Set layout field
-         * 
+         *
          * @param layout The new layout value to be set
          */
         set(layout) {
@@ -74,19 +71,16 @@ class ExdScreenConfigurationMesg : Mesg {
     var screenEnabled: Bool?
         /**
          * Get screen_enabled field
-         * 
+         *
          * @return screen_enabled
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set screen_enabled field
-         * 
+         *
          * @param screenEnabled The new screenEnabled value to be set
          */
         set(screenEnabled) {
@@ -103,12 +97,10 @@ class ExdScreenConfigurationMesg : Mesg {
         const val ScreenEnabledFieldNum: Int = 3
 
 
-        val exdScreenConfigurationMesg: Mesg
+        // exd_screen_configuration
+        val exdScreenConfigurationMesg: Mesg = Mesg("exd_screen_configuration", MesgNum.EXD_SCREEN_CONFIGURATION)
 
         init {
-            // exd_screen_configuration
-            exdScreenConfigurationMesg =
-                Mesg("exd_screen_configuration", MesgNum.EXD_SCREEN_CONFIGURATION)
             exdScreenConfigurationMesg.addField(
                 Field(
                     "screen_index",

@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SegmentPointMesgListener {
-    fun onMesg(mesg: SegmentPointMesg?)
+    fun onMesg(mesg: SegmentPointMesg)
 }

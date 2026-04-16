@@ -12,23 +12,23 @@ package com.garmin.fit
 class HsaStressDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_STRESS_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -36,7 +36,7 @@ class HsaStressDataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,14 +44,14 @@ class HsaStressDataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
             setFieldValue(0, 0, processingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val stressLevel: Array<Byte?>?
+    val stressLevel: Array<Byte>?
         get() = getFieldByteValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numStressLevel: Int
@@ -64,7 +64,7 @@ class HsaStressDataMesg : Mesg {
      * Get stress_level field
      * Units: s
      * Comment: Stress Level: [0,100] Off wrist: -1 Excess motion: -2 Not enough data: -3 Recovering from exercise: -4 Unidentified: -5 Blank: -16
-     * 
+     *
      * @param index of stress_level
      * @return stress_level
      */
@@ -76,7 +76,7 @@ class HsaStressDataMesg : Mesg {
      * Set stress_level field
      * Units: s
      * Comment: Stress Level: [0,100] Off wrist: -1 Excess motion: -2 Not enough data: -3 Recovering from exercise: -4 Unidentified: -5 Blank: -16
-     * 
+     *
      * @param index of stress_level
      * @param stressLevel The new stressLevel value to be set
      */
@@ -92,11 +92,10 @@ class HsaStressDataMesg : Mesg {
         const val StressLevelFieldNum: Int = 1
 
 
-        val hsaStressDataMesg: Mesg
+        // hsa_stress_data
+        val hsaStressDataMesg: Mesg = Mesg("hsa_stress_data", MesgNum.HSA_STRESS_DATA)
 
         init {
-            // hsa_stress_data
-            hsaStressDataMesg = Mesg("hsa_stress_data", MesgNum.HSA_STRESS_DATA)
             hsaStressDataMesg.addField(
                 Field(
                     "timestamp",

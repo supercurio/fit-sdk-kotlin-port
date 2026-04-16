@@ -12,21 +12,21 @@ package com.garmin.fit
 class SleepAssessmentMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SLEEP_ASSESSMENT))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var combinedAwakeScore: Short?
         /**
          * Get combined_awake_score field
          * Comment: Average of awake_time_score and awakenings_count_score. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return combined_awake_score
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set combined_awake_score field
          * Comment: Average of awake_time_score and awakenings_count_score. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param combinedAwakeScore The new combinedAwakeScore value to be set
          */
         set(combinedAwakeScore) {
@@ -37,14 +37,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get awake_time_score field
          * Comment: Score that evaluates the total time spent awake between sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return awake_time_score
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set awake_time_score field
          * Comment: Score that evaluates the total time spent awake between sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param awakeTimeScore The new awakeTimeScore value to be set
          */
         set(awakeTimeScore) {
@@ -55,14 +55,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get awakenings_count_score field
          * Comment: Score that evaluates the number of awakenings that interrupt sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return awakenings_count_score
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set awakenings_count_score field
          * Comment: Score that evaluates the number of awakenings that interrupt sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param awakeningsCountScore The new awakeningsCountScore value to be set
          */
         set(awakeningsCountScore) {
@@ -73,14 +73,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get deep_sleep_score field
          * Comment: Score that evaluates the amount of deep sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return deep_sleep_score
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set deep_sleep_score field
          * Comment: Score that evaluates the amount of deep sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param deepSleepScore The new deepSleepScore value to be set
          */
         set(deepSleepScore) {
@@ -91,14 +91,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get sleep_duration_score field
          * Comment: Score that evaluates the quality of sleep based on sleep stages, heart-rate variability and possible awakenings during the night. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return sleep_duration_score
          */
         get() = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sleep_duration_score field
          * Comment: Score that evaluates the quality of sleep based on sleep stages, heart-rate variability and possible awakenings during the night. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param sleepDurationScore The new sleepDurationScore value to be set
          */
         set(sleepDurationScore) {
@@ -109,14 +109,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get light_sleep_score field
          * Comment: Score that evaluates the amount of light sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return light_sleep_score
          */
         get() = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set light_sleep_score field
          * Comment: Score that evaluates the amount of light sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param lightSleepScore The new lightSleepScore value to be set
          */
         set(lightSleepScore) {
@@ -127,14 +127,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get overall_sleep_score field
          * Comment: Total score that summarizes the overall quality of sleep, combining sleep duration and quality. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return overall_sleep_score
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set overall_sleep_score field
          * Comment: Total score that summarizes the overall quality of sleep, combining sleep duration and quality. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param overallSleepScore The new overallSleepScore value to be set
          */
         set(overallSleepScore) {
@@ -145,14 +145,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get sleep_quality_score field
          * Comment: Score that evaluates the quality of sleep based on sleep stages, heart-rate variability and possible awakenings during the night. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return sleep_quality_score
          */
         get() = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sleep_quality_score field
          * Comment: Score that evaluates the quality of sleep based on sleep stages, heart-rate variability and possible awakenings during the night. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param sleepQualityScore The new sleepQualityScore value to be set
          */
         set(sleepQualityScore) {
@@ -163,14 +163,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get sleep_recovery_score field
          * Comment: Score that evaluates stress and recovery during sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return sleep_recovery_score
          */
         get() = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sleep_recovery_score field
          * Comment: Score that evaluates stress and recovery during sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param sleepRecoveryScore The new sleepRecoveryScore value to be set
          */
         set(sleepRecoveryScore) {
@@ -181,14 +181,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get rem_sleep_score field
          * Comment: Score that evaluates the amount of REM sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return rem_sleep_score
          */
         get() = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set rem_sleep_score field
          * Comment: Score that evaluates the amount of REM sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param remSleepScore The new remSleepScore value to be set
          */
         set(remSleepScore) {
@@ -199,14 +199,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get sleep_restlessness_score field
          * Comment: Score that evaluates the amount of restlessness during sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return sleep_restlessness_score
          */
         get() = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sleep_restlessness_score field
          * Comment: Score that evaluates the amount of restlessness during sleep. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param sleepRestlessnessScore The new sleepRestlessnessScore value to be set
          */
         set(sleepRestlessnessScore) {
@@ -217,14 +217,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get awakenings_count field
          * Comment: The number of awakenings during sleep.
-         * 
+         *
          * @return awakenings_count
          */
         get() = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set awakenings_count field
          * Comment: The number of awakenings during sleep.
-         * 
+         *
          * @param awakeningsCount The new awakeningsCount value to be set
          */
         set(awakeningsCount) {
@@ -235,14 +235,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get interruptions_score field
          * Comment: Score that evaluates the sleep interruptions. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @return interruptions_score
          */
         get() = getFieldShortValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set interruptions_score field
          * Comment: Score that evaluates the sleep interruptions. If valid: 0 (worst) to 100 (best). If unknown: FIT_UINT8_INVALID.
-         * 
+         *
          * @param interruptionsScore The new interruptionsScore value to be set
          */
         set(interruptionsScore) {
@@ -253,14 +253,14 @@ class SleepAssessmentMesg : Mesg {
         /**
          * Get average_stress_during_sleep field
          * Comment: Excludes stress during awake periods in the sleep window
-         * 
+         *
          * @return average_stress_during_sleep
          */
         get() = getFieldFloatValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set average_stress_during_sleep field
          * Comment: Excludes stress during awake periods in the sleep window
-         * 
+         *
          * @param averageStressDuringSleep The new averageStressDuringSleep value to be set
          */
         set(averageStressDuringSleep) {
@@ -297,11 +297,10 @@ class SleepAssessmentMesg : Mesg {
         const val AverageStressDuringSleepFieldNum: Int = 15
 
 
-        val sleepAssessmentMesg: Mesg
+        // sleep_assessment
+        val sleepAssessmentMesg: Mesg = Mesg("sleep_assessment", MesgNum.SLEEP_ASSESSMENT)
 
         init {
-            // sleep_assessment
-            sleepAssessmentMesg = Mesg("sleep_assessment", MesgNum.SLEEP_ASSESSMENT)
             sleepAssessmentMesg.addField(
                 Field(
                     "combined_awake_score",

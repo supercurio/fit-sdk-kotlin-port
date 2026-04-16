@@ -25,7 +25,7 @@ enum class GoalRecurrence(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return GoalRecurrence.INVALID
+            return INVALID
         }
 
         /**

@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface DeveloperDataIdMesgListener {
-    fun onMesg(mesg: DeveloperDataIdMesg?)
+    fun onMesg(mesg: DeveloperDataIdMesg)
 }

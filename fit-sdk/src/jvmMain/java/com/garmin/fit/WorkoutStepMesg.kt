@@ -14,19 +14,19 @@ import com.garmin.fit.Profile.SubFields
 class WorkoutStepMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.WORKOUT_STEP))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -36,13 +36,13 @@ class WorkoutStepMesg : Mesg {
     var wktStepName: String?
         /**
          * Get wkt_step_name field
-         * 
+         *
          * @return wkt_step_name
          */
         get() = getFieldStringValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set wkt_step_name field
-         * 
+         *
          * @param wktStepName The new wktStepName value to be set
          */
         set(wktStepName) {
@@ -52,19 +52,16 @@ class WorkoutStepMesg : Mesg {
     var durationType: WktStepDuration?
         /**
          * Get duration_type field
-         * 
+         *
          * @return duration_type
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WktStepDuration.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WktStepDuration.getByValue(value)
         }
         /**
          * Set duration_type field
-         * 
+         *
          * @param durationType The new durationType value to be set
          */
         set(durationType) {
@@ -74,13 +71,13 @@ class WorkoutStepMesg : Mesg {
     var durationValue: Long?
         /**
          * Get duration_value field
-         * 
+         *
          * @return duration_value
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set duration_value field
-         * 
+         *
          * @param durationValue The new durationValue value to be set
          */
         set(durationValue) {
@@ -91,7 +88,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get duration_time field
          * Units: s
-         * 
+         *
          * @return duration_time
          */
         get() = getFieldFloatValue(
@@ -102,7 +99,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set duration_time field
          * Units: s
-         * 
+         *
          * @param durationTime The new durationTime value to be set
          */
         set(durationTime) {
@@ -118,7 +115,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get duration_distance field
          * Units: m
-         * 
+         *
          * @return duration_distance
          */
         get() = getFieldFloatValue(
@@ -129,7 +126,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set duration_distance field
          * Units: m
-         * 
+         *
          * @param durationDistance The new durationDistance value to be set
          */
         set(durationDistance) {
@@ -145,7 +142,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get duration_hr field
          * Units: % or bpm
-         * 
+         *
          * @return duration_hr
          */
         get() = getFieldLongValue(
@@ -156,7 +153,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set duration_hr field
          * Units: % or bpm
-         * 
+         *
          * @param durationHr The new durationHr value to be set
          */
         set(durationHr) {
@@ -172,7 +169,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get duration_calories field
          * Units: calories
-         * 
+         *
          * @return duration_calories
          */
         get() = getFieldLongValue(
@@ -183,7 +180,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set duration_calories field
          * Units: calories
-         * 
+         *
          * @param durationCalories The new durationCalories value to be set
          */
         set(durationCalories) {
@@ -199,7 +196,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get duration_step field
          * Comment: message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
-         * 
+         *
          * @return duration_step
          */
         get() = getFieldLongValue(
@@ -210,7 +207,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set duration_step field
          * Comment: message_index of step to loop back to. Steps are assumed to be in the order by message_index. custom_name and intensity members are undefined for this duration type.
-         * 
+         *
          * @param durationStep The new durationStep value to be set
          */
         set(durationStep) {
@@ -226,7 +223,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get duration_power field
          * Units: % or watts
-         * 
+         *
          * @return duration_power
          */
         get() = getFieldLongValue(
@@ -237,7 +234,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set duration_power field
          * Units: % or watts
-         * 
+         *
          * @param durationPower The new durationPower value to be set
          */
         set(durationPower) {
@@ -252,7 +249,7 @@ class WorkoutStepMesg : Mesg {
     var durationReps: Long?
         /**
          * Get duration_reps field
-         * 
+         *
          * @return duration_reps
          */
         get() = getFieldLongValue(
@@ -262,7 +259,7 @@ class WorkoutStepMesg : Mesg {
         )
         /**
          * Set duration_reps field
-         * 
+         *
          * @param durationReps The new durationReps value to be set
          */
         set(durationReps) {
@@ -277,19 +274,16 @@ class WorkoutStepMesg : Mesg {
     var targetType: WktStepTarget?
         /**
          * Get target_type field
-         * 
+         *
          * @return target_type
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WktStepTarget.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WktStepTarget.getByValue(value)
         }
         /**
          * Set target_type field
-         * 
+         *
          * @param targetType The new targetType value to be set
          */
         set(targetType) {
@@ -299,13 +293,13 @@ class WorkoutStepMesg : Mesg {
     var targetValue: Long?
         /**
          * Get target_value field
-         * 
+         *
          * @return target_value
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set target_value field
-         * 
+         *
          * @param targetValue The new targetValue value to be set
          */
         set(targetValue) {
@@ -316,7 +310,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get target_speed_zone field
          * Comment: speed zone (1-10);Custom =0;
-         * 
+         *
          * @return target_speed_zone
          */
         get() = getFieldLongValue(
@@ -327,7 +321,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set target_speed_zone field
          * Comment: speed zone (1-10);Custom =0;
-         * 
+         *
          * @param targetSpeedZone The new targetSpeedZone value to be set
          */
         set(targetSpeedZone) {
@@ -343,7 +337,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get target_hr_zone field
          * Comment: hr zone (1-5);Custom =0;
-         * 
+         *
          * @return target_hr_zone
          */
         get() = getFieldLongValue(
@@ -354,7 +348,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set target_hr_zone field
          * Comment: hr zone (1-5);Custom =0;
-         * 
+         *
          * @param targetHrZone The new targetHrZone value to be set
          */
         set(targetHrZone) {
@@ -370,7 +364,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get target_cadence_zone field
          * Comment: Zone (1-?); Custom = 0;
-         * 
+         *
          * @return target_cadence_zone
          */
         get() = getFieldLongValue(
@@ -381,7 +375,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set target_cadence_zone field
          * Comment: Zone (1-?); Custom = 0;
-         * 
+         *
          * @param targetCadenceZone The new targetCadenceZone value to be set
          */
         set(targetCadenceZone) {
@@ -397,7 +391,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get target_power_zone field
          * Comment: Power Zone ( 1-7); Custom = 0;
-         * 
+         *
          * @return target_power_zone
          */
         get() = getFieldLongValue(
@@ -408,7 +402,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set target_power_zone field
          * Comment: Power Zone ( 1-7); Custom = 0;
-         * 
+         *
          * @param targetPowerZone The new targetPowerZone value to be set
          */
         set(targetPowerZone) {
@@ -424,14 +418,14 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get repeat_steps field
          * Comment: # of repetitions
-         * 
+         *
          * @return repeat_steps
          */
         get() = getFieldLongValue(4, 0, SubFields.WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_REPEAT_STEPS)
         /**
          * Set repeat_steps field
          * Comment: # of repetitions
-         * 
+         *
          * @param repeatSteps The new repeatSteps value to be set
          */
         set(repeatSteps) {
@@ -447,14 +441,14 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get repeat_time field
          * Units: s
-         * 
+         *
          * @return repeat_time
          */
         get() = getFieldFloatValue(4, 0, SubFields.WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_REPEAT_TIME)
         /**
          * Set repeat_time field
          * Units: s
-         * 
+         *
          * @param repeatTime The new repeatTime value to be set
          */
         set(repeatTime) {
@@ -470,7 +464,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get repeat_distance field
          * Units: m
-         * 
+         *
          * @return repeat_distance
          */
         get() = getFieldFloatValue(
@@ -481,7 +475,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set repeat_distance field
          * Units: m
-         * 
+         *
          * @param repeatDistance The new repeatDistance value to be set
          */
         set(repeatDistance) {
@@ -497,7 +491,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get repeat_calories field
          * Units: calories
-         * 
+         *
          * @return repeat_calories
          */
         get() = getFieldLongValue(
@@ -508,7 +502,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set repeat_calories field
          * Units: calories
-         * 
+         *
          * @param repeatCalories The new repeatCalories value to be set
          */
         set(repeatCalories) {
@@ -524,14 +518,14 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get repeat_hr field
          * Units: % or bpm
-         * 
+         *
          * @return repeat_hr
          */
         get() = getFieldLongValue(4, 0, SubFields.WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_REPEAT_HR)
         /**
          * Set repeat_hr field
          * Units: % or bpm
-         * 
+         *
          * @param repeatHr The new repeatHr value to be set
          */
         set(repeatHr) {
@@ -542,14 +536,14 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get repeat_power field
          * Units: % or watts
-         * 
+         *
          * @return repeat_power
          */
         get() = getFieldLongValue(4, 0, SubFields.WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_REPEAT_POWER)
         /**
          * Set repeat_power field
          * Units: % or watts
-         * 
+         *
          * @param repeatPower The new repeatPower value to be set
          */
         set(repeatPower) {
@@ -564,7 +558,7 @@ class WorkoutStepMesg : Mesg {
     var targetStrokeType: SwimStroke?
         /**
          * Get target_stroke_type field
-         * 
+         *
          * @return target_stroke_type
          */
         get() {
@@ -576,11 +570,11 @@ class WorkoutStepMesg : Mesg {
             if (value == null) {
                 return null
             }
-            return SwimStroke.Companion.getByValue(value)
+            return SwimStroke.getByValue(value)
         }
         /**
          * Set target_stroke_type field
-         * 
+         *
          * @param targetStrokeType The new targetStrokeType value to be set
          */
         set(targetStrokeType) {
@@ -595,13 +589,13 @@ class WorkoutStepMesg : Mesg {
     var customTargetValueLow: Long?
         /**
          * Get custom_target_value_low field
-         * 
+         *
          * @return custom_target_value_low
          */
         get() = getFieldLongValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set custom_target_value_low field
-         * 
+         *
          * @param customTargetValueLow The new customTargetValueLow value to be set
          */
         set(customTargetValueLow) {
@@ -612,7 +606,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_speed_low field
          * Units: m/s
-         * 
+         *
          * @return custom_target_speed_low
          */
         get() = getFieldFloatValue(
@@ -623,7 +617,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_speed_low field
          * Units: m/s
-         * 
+         *
          * @param customTargetSpeedLow The new customTargetSpeedLow value to be set
          */
         set(customTargetSpeedLow) {
@@ -639,7 +633,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_heart_rate_low field
          * Units: % or bpm
-         * 
+         *
          * @return custom_target_heart_rate_low
          */
         get() = getFieldLongValue(
@@ -650,7 +644,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_heart_rate_low field
          * Units: % or bpm
-         * 
+         *
          * @param customTargetHeartRateLow The new customTargetHeartRateLow value to be set
          */
         set(customTargetHeartRateLow) {
@@ -666,7 +660,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_cadence_low field
          * Units: rpm
-         * 
+         *
          * @return custom_target_cadence_low
          */
         get() = getFieldLongValue(
@@ -677,7 +671,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_cadence_low field
          * Units: rpm
-         * 
+         *
          * @param customTargetCadenceLow The new customTargetCadenceLow value to be set
          */
         set(customTargetCadenceLow) {
@@ -693,7 +687,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_power_low field
          * Units: % or watts
-         * 
+         *
          * @return custom_target_power_low
          */
         get() = getFieldLongValue(
@@ -704,7 +698,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_power_low field
          * Units: % or watts
-         * 
+         *
          * @param customTargetPowerLow The new customTargetPowerLow value to be set
          */
         set(customTargetPowerLow) {
@@ -719,13 +713,13 @@ class WorkoutStepMesg : Mesg {
     var customTargetValueHigh: Long?
         /**
          * Get custom_target_value_high field
-         * 
+         *
          * @return custom_target_value_high
          */
         get() = getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set custom_target_value_high field
-         * 
+         *
          * @param customTargetValueHigh The new customTargetValueHigh value to be set
          */
         set(customTargetValueHigh) {
@@ -736,7 +730,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_speed_high field
          * Units: m/s
-         * 
+         *
          * @return custom_target_speed_high
          */
         get() = getFieldFloatValue(
@@ -747,7 +741,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_speed_high field
          * Units: m/s
-         * 
+         *
          * @param customTargetSpeedHigh The new customTargetSpeedHigh value to be set
          */
         set(customTargetSpeedHigh) {
@@ -763,7 +757,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_heart_rate_high field
          * Units: % or bpm
-         * 
+         *
          * @return custom_target_heart_rate_high
          */
         get() = getFieldLongValue(
@@ -774,7 +768,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_heart_rate_high field
          * Units: % or bpm
-         * 
+         *
          * @param customTargetHeartRateHigh The new customTargetHeartRateHigh value to be set
          */
         set(customTargetHeartRateHigh) {
@@ -790,7 +784,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_cadence_high field
          * Units: rpm
-         * 
+         *
          * @return custom_target_cadence_high
          */
         get() = getFieldLongValue(
@@ -801,7 +795,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_cadence_high field
          * Units: rpm
-         * 
+         *
          * @param customTargetCadenceHigh The new customTargetCadenceHigh value to be set
          */
         set(customTargetCadenceHigh) {
@@ -817,7 +811,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get custom_target_power_high field
          * Units: % or watts
-         * 
+         *
          * @return custom_target_power_high
          */
         get() = getFieldLongValue(
@@ -828,7 +822,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set custom_target_power_high field
          * Units: % or watts
-         * 
+         *
          * @param customTargetPowerHigh The new customTargetPowerHigh value to be set
          */
         set(customTargetPowerHigh) {
@@ -843,19 +837,16 @@ class WorkoutStepMesg : Mesg {
     var intensity: Intensity?
         /**
          * Get intensity field
-         * 
+         *
          * @return intensity
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Intensity.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Intensity.getByValue(value)
         }
         /**
          * Set intensity field
-         * 
+         *
          * @param intensity The new intensity value to be set
          */
         set(intensity) {
@@ -865,13 +856,13 @@ class WorkoutStepMesg : Mesg {
     var notes: String?
         /**
          * Get notes field
-         * 
+         *
          * @return notes
          */
         get() = getFieldStringValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set notes field
-         * 
+         *
          * @param notes The new notes value to be set
          */
         set(notes) {
@@ -881,19 +872,16 @@ class WorkoutStepMesg : Mesg {
     var equipment: WorkoutEquipment?
         /**
          * Get equipment field
-         * 
+         *
          * @return equipment
          */
         get() {
-            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WorkoutEquipment.Companion.getByValue(value)
+            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WorkoutEquipment.getByValue(value)
         }
         /**
          * Set equipment field
-         * 
+         *
          * @param equipment The new equipment value to be set
          */
         set(equipment) {
@@ -903,13 +891,13 @@ class WorkoutStepMesg : Mesg {
     var exerciseCategory: Int?
         /**
          * Get exercise_category field
-         * 
+         *
          * @return exercise_category
          */
         get() = getFieldIntegerValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set exercise_category field
-         * 
+         *
          * @param exerciseCategory The new exerciseCategory value to be set
          */
         set(exerciseCategory) {
@@ -919,13 +907,13 @@ class WorkoutStepMesg : Mesg {
     var exerciseName: Int?
         /**
          * Get exercise_name field
-         * 
+         *
          * @return exercise_name
          */
         get() = getFieldIntegerValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set exercise_name field
-         * 
+         *
          * @param exerciseName The new exerciseName value to be set
          */
         set(exerciseName) {
@@ -936,14 +924,14 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get exercise_weight field
          * Units: kg
-         * 
+         *
          * @return exercise_weight
          */
         get() = getFieldFloatValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set exercise_weight field
          * Units: kg
-         * 
+         *
          * @param exerciseWeight The new exerciseWeight value to be set
          */
         set(exerciseWeight) {
@@ -953,13 +941,13 @@ class WorkoutStepMesg : Mesg {
     var weightDisplayUnit: Int?
         /**
          * Get weight_display_unit field
-         * 
+         *
          * @return weight_display_unit
          */
         get() = getFieldIntegerValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set weight_display_unit field
-         * 
+         *
          * @param weightDisplayUnit The new weightDisplayUnit value to be set
          */
         set(weightDisplayUnit) {
@@ -969,19 +957,16 @@ class WorkoutStepMesg : Mesg {
     var secondaryTargetType: WktStepTarget?
         /**
          * Get secondary_target_type field
-         * 
+         *
          * @return secondary_target_type
          */
         get() {
-            val value = getFieldShortValue(19, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WktStepTarget.Companion.getByValue(value)
+            val value = getFieldShortValue(19, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WktStepTarget.getByValue(value)
         }
         /**
          * Set secondary_target_type field
-         * 
+         *
          * @param secondaryTargetType The new secondaryTargetType value to be set
          */
         set(secondaryTargetType) {
@@ -991,13 +976,13 @@ class WorkoutStepMesg : Mesg {
     var secondaryTargetValue: Long?
         /**
          * Get secondary_target_value field
-         * 
+         *
          * @return secondary_target_value
          */
         get() = getFieldLongValue(20, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set secondary_target_value field
-         * 
+         *
          * @param secondaryTargetValue The new secondaryTargetValue value to be set
          */
         set(secondaryTargetValue) {
@@ -1008,7 +993,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_target_speed_zone field
          * Comment: speed zone (1-10);Custom =0;
-         * 
+         *
          * @return secondary_target_speed_zone
          */
         get() = getFieldLongValue(
@@ -1019,7 +1004,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_target_speed_zone field
          * Comment: speed zone (1-10);Custom =0;
-         * 
+         *
          * @param secondaryTargetSpeedZone The new secondaryTargetSpeedZone value to be set
          */
         set(secondaryTargetSpeedZone) {
@@ -1035,7 +1020,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_target_hr_zone field
          * Comment: hr zone (1-5);Custom =0;
-         * 
+         *
          * @return secondary_target_hr_zone
          */
         get() = getFieldLongValue(
@@ -1046,7 +1031,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_target_hr_zone field
          * Comment: hr zone (1-5);Custom =0;
-         * 
+         *
          * @param secondaryTargetHrZone The new secondaryTargetHrZone value to be set
          */
         set(secondaryTargetHrZone) {
@@ -1062,7 +1047,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_target_cadence_zone field
          * Comment: Zone (1-?); Custom = 0;
-         * 
+         *
          * @return secondary_target_cadence_zone
          */
         get() = getFieldLongValue(
@@ -1073,7 +1058,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_target_cadence_zone field
          * Comment: Zone (1-?); Custom = 0;
-         * 
+         *
          * @param secondaryTargetCadenceZone The new secondaryTargetCadenceZone value to be set
          */
         set(secondaryTargetCadenceZone) {
@@ -1089,7 +1074,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_target_power_zone field
          * Comment: Power Zone ( 1-7); Custom = 0;
-         * 
+         *
          * @return secondary_target_power_zone
          */
         get() = getFieldLongValue(
@@ -1100,7 +1085,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_target_power_zone field
          * Comment: Power Zone ( 1-7); Custom = 0;
-         * 
+         *
          * @param secondaryTargetPowerZone The new secondaryTargetPowerZone value to be set
          */
         set(secondaryTargetPowerZone) {
@@ -1115,7 +1100,7 @@ class WorkoutStepMesg : Mesg {
     var secondaryTargetStrokeType: SwimStroke?
         /**
          * Get secondary_target_stroke_type field
-         * 
+         *
          * @return secondary_target_stroke_type
          */
         get() {
@@ -1127,11 +1112,11 @@ class WorkoutStepMesg : Mesg {
             if (value == null) {
                 return null
             }
-            return SwimStroke.Companion.getByValue(value)
+            return SwimStroke.getByValue(value)
         }
         /**
          * Set secondary_target_stroke_type field
-         * 
+         *
          * @param secondaryTargetStrokeType The new secondaryTargetStrokeType value to be set
          */
         set(secondaryTargetStrokeType) {
@@ -1146,13 +1131,13 @@ class WorkoutStepMesg : Mesg {
     var secondaryCustomTargetValueLow: Long?
         /**
          * Get secondary_custom_target_value_low field
-         * 
+         *
          * @return secondary_custom_target_value_low
          */
         get() = getFieldLongValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set secondary_custom_target_value_low field
-         * 
+         *
          * @param secondaryCustomTargetValueLow The new secondaryCustomTargetValueLow value to be set
          */
         set(secondaryCustomTargetValueLow) {
@@ -1163,7 +1148,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_speed_low field
          * Units: m/s
-         * 
+         *
          * @return secondary_custom_target_speed_low
          */
         get() = getFieldFloatValue(
@@ -1174,7 +1159,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_speed_low field
          * Units: m/s
-         * 
+         *
          * @param secondaryCustomTargetSpeedLow The new secondaryCustomTargetSpeedLow value to be set
          */
         set(secondaryCustomTargetSpeedLow) {
@@ -1190,7 +1175,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_heart_rate_low field
          * Units: % or bpm
-         * 
+         *
          * @return secondary_custom_target_heart_rate_low
          */
         get() = getFieldLongValue(
@@ -1201,7 +1186,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_heart_rate_low field
          * Units: % or bpm
-         * 
+         *
          * @param secondaryCustomTargetHeartRateLow The new secondaryCustomTargetHeartRateLow value to be set
          */
         set(secondaryCustomTargetHeartRateLow) {
@@ -1217,7 +1202,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_cadence_low field
          * Units: rpm
-         * 
+         *
          * @return secondary_custom_target_cadence_low
          */
         get() = getFieldLongValue(
@@ -1228,7 +1213,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_cadence_low field
          * Units: rpm
-         * 
+         *
          * @param secondaryCustomTargetCadenceLow The new secondaryCustomTargetCadenceLow value to be set
          */
         set(secondaryCustomTargetCadenceLow) {
@@ -1244,7 +1229,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_power_low field
          * Units: % or watts
-         * 
+         *
          * @return secondary_custom_target_power_low
          */
         get() = getFieldLongValue(
@@ -1255,7 +1240,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_power_low field
          * Units: % or watts
-         * 
+         *
          * @param secondaryCustomTargetPowerLow The new secondaryCustomTargetPowerLow value to be set
          */
         set(secondaryCustomTargetPowerLow) {
@@ -1270,13 +1255,13 @@ class WorkoutStepMesg : Mesg {
     var secondaryCustomTargetValueHigh: Long?
         /**
          * Get secondary_custom_target_value_high field
-         * 
+         *
          * @return secondary_custom_target_value_high
          */
         get() = getFieldLongValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set secondary_custom_target_value_high field
-         * 
+         *
          * @param secondaryCustomTargetValueHigh The new secondaryCustomTargetValueHigh value to be set
          */
         set(secondaryCustomTargetValueHigh) {
@@ -1287,7 +1272,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_speed_high field
          * Units: m/s
-         * 
+         *
          * @return secondary_custom_target_speed_high
          */
         get() = getFieldFloatValue(
@@ -1298,7 +1283,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_speed_high field
          * Units: m/s
-         * 
+         *
          * @param secondaryCustomTargetSpeedHigh The new secondaryCustomTargetSpeedHigh value to be set
          */
         set(secondaryCustomTargetSpeedHigh) {
@@ -1314,7 +1299,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_heart_rate_high field
          * Units: % or bpm
-         * 
+         *
          * @return secondary_custom_target_heart_rate_high
          */
         get() = getFieldLongValue(
@@ -1325,7 +1310,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_heart_rate_high field
          * Units: % or bpm
-         * 
+         *
          * @param secondaryCustomTargetHeartRateHigh The new secondaryCustomTargetHeartRateHigh value to be set
          */
         set(secondaryCustomTargetHeartRateHigh) {
@@ -1341,7 +1326,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_cadence_high field
          * Units: rpm
-         * 
+         *
          * @return secondary_custom_target_cadence_high
          */
         get() = getFieldLongValue(
@@ -1352,7 +1337,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_cadence_high field
          * Units: rpm
-         * 
+         *
          * @param secondaryCustomTargetCadenceHigh The new secondaryCustomTargetCadenceHigh value to be set
          */
         set(secondaryCustomTargetCadenceHigh) {
@@ -1368,7 +1353,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Get secondary_custom_target_power_high field
          * Units: % or watts
-         * 
+         *
          * @return secondary_custom_target_power_high
          */
         get() = getFieldLongValue(
@@ -1379,7 +1364,7 @@ class WorkoutStepMesg : Mesg {
         /**
          * Set secondary_custom_target_power_high field
          * Units: % or watts
-         * 
+         *
          * @param secondaryCustomTargetPowerHigh The new secondaryCustomTargetPowerHigh value to be set
          */
         set(secondaryCustomTargetPowerHigh) {
@@ -1490,7 +1475,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_time",
                     134,
@@ -1499,10 +1484,10 @@ class WorkoutStepMesg : Mesg {
                     "s"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 0)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 28)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 28)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_distance",
                     134,
@@ -1511,9 +1496,9 @@ class WorkoutStepMesg : Mesg {
                     "m"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_hr",
                     134,
@@ -1522,10 +1507,10 @@ class WorkoutStepMesg : Mesg {
                     "% or bpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 2)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 2)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_calories",
                     134,
@@ -1534,9 +1519,9 @@ class WorkoutStepMesg : Mesg {
                     "calories"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 4)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_step",
                     134,
@@ -1545,16 +1530,16 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 6)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 7)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 8)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 9)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 10)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 11)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 12)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 13)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 6)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 7)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 8)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 9)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 10)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 11)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 12)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 13)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_power",
                     134,
@@ -1563,10 +1548,10 @@ class WorkoutStepMesg : Mesg {
                     "% or watts"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 14)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 15)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 14)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 15)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "duration_reps",
                     134,
@@ -1575,7 +1560,7 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 29)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 29)
             subfield_index++
             field_index++
             workoutStepMesg.addField(
@@ -1604,7 +1589,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "target_speed_zone",
                     134,
@@ -1613,9 +1598,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 0)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "target_hr_zone",
                     134,
@@ -1624,9 +1609,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "target_cadence_zone",
                     134,
@@ -1635,9 +1620,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "target_power_zone",
                     134,
@@ -1646,9 +1631,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 4)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "repeat_steps",
                     134,
@@ -1657,9 +1642,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 6)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 6)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "repeat_time",
                     134,
@@ -1668,9 +1653,9 @@ class WorkoutStepMesg : Mesg {
                     "s"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 7)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 7)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "repeat_distance",
                     134,
@@ -1679,9 +1664,9 @@ class WorkoutStepMesg : Mesg {
                     "m"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 8)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 8)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "repeat_calories",
                     134,
@@ -1690,9 +1675,9 @@ class WorkoutStepMesg : Mesg {
                     "calories"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 9)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 9)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "repeat_hr",
                     134,
@@ -1701,10 +1686,10 @@ class WorkoutStepMesg : Mesg {
                     "% or bpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 10)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 11)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 10)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 11)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "repeat_power",
                     134,
@@ -1713,10 +1698,10 @@ class WorkoutStepMesg : Mesg {
                     "% or watts"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 12)
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 13)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 12)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(1, 13)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "target_stroke_type",
                     0,
@@ -1725,7 +1710,7 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 11)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 11)
             subfield_index++
             field_index++
             workoutStepMesg.addField(
@@ -1741,7 +1726,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_speed_low",
                     134,
@@ -1750,9 +1735,9 @@ class WorkoutStepMesg : Mesg {
                     "m/s"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 0)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_heart_rate_low",
                     134,
@@ -1761,9 +1746,9 @@ class WorkoutStepMesg : Mesg {
                     "% or bpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_cadence_low",
                     134,
@@ -1772,9 +1757,9 @@ class WorkoutStepMesg : Mesg {
                     "rpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_power_low",
                     134,
@@ -1783,7 +1768,7 @@ class WorkoutStepMesg : Mesg {
                     "% or watts"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 4)
             subfield_index++
             field_index++
             workoutStepMesg.addField(
@@ -1799,7 +1784,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_speed_high",
                     134,
@@ -1808,9 +1793,9 @@ class WorkoutStepMesg : Mesg {
                     "m/s"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 0)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_heart_rate_high",
                     134,
@@ -1819,9 +1804,9 @@ class WorkoutStepMesg : Mesg {
                     "% or bpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_cadence_high",
                     134,
@@ -1830,9 +1815,9 @@ class WorkoutStepMesg : Mesg {
                     "rpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "custom_target_power_high",
                     134,
@@ -1841,7 +1826,7 @@ class WorkoutStepMesg : Mesg {
                     "% or watts"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(3, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(3, 4)
             subfield_index++
             field_index++
             workoutStepMesg.addField(
@@ -1961,7 +1946,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_target_speed_zone",
                     134,
@@ -1970,9 +1955,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 0)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_target_hr_zone",
                     134,
@@ -1981,9 +1966,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_target_cadence_zone",
                     134,
@@ -1992,9 +1977,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_target_power_zone",
                     134,
@@ -2003,9 +1988,9 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 4)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_target_stroke_type",
                     0,
@@ -2014,7 +1999,7 @@ class WorkoutStepMesg : Mesg {
                     ""
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 11)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 11)
             subfield_index++
             field_index++
             workoutStepMesg.addField(
@@ -2030,7 +2015,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_speed_low",
                     134,
@@ -2039,9 +2024,9 @@ class WorkoutStepMesg : Mesg {
                     "m/s"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 0)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_heart_rate_low",
                     134,
@@ -2050,9 +2035,9 @@ class WorkoutStepMesg : Mesg {
                     "% or bpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_cadence_low",
                     134,
@@ -2061,9 +2046,9 @@ class WorkoutStepMesg : Mesg {
                     "rpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_power_low",
                     134,
@@ -2072,7 +2057,7 @@ class WorkoutStepMesg : Mesg {
                     "% or watts"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 4)
             subfield_index++
             field_index++
             workoutStepMesg.addField(
@@ -2088,7 +2073,7 @@ class WorkoutStepMesg : Mesg {
                 )
             )
             subfield_index = 0
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_speed_high",
                     134,
@@ -2097,9 +2082,9 @@ class WorkoutStepMesg : Mesg {
                     "m/s"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 0)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 0)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_heart_rate_high",
                     134,
@@ -2108,9 +2093,9 @@ class WorkoutStepMesg : Mesg {
                     "% or bpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 1)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 1)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_cadence_high",
                     134,
@@ -2119,9 +2104,9 @@ class WorkoutStepMesg : Mesg {
                     "rpm"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 3)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 3)
             subfield_index++
-            workoutStepMesg.fields.get(field_index).subFields.add(
+            workoutStepMesg.fields[field_index].subFields.add(
                 SubField(
                     "secondary_custom_target_power_high",
                     134,
@@ -2130,7 +2115,7 @@ class WorkoutStepMesg : Mesg {
                     "% or watts"
                 )
             )
-            workoutStepMesg.fields.get(field_index).subFields.get(subfield_index).addMap(19, 4)
+            workoutStepMesg.fields[field_index].subFields[subfield_index].addMap(19, 4)
             subfield_index++
             field_index++
         }

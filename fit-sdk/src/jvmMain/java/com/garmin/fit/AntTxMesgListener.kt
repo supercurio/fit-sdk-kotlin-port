@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface AntTxMesgListener {
-    fun onMesg(mesg: AntTxMesg?)
+    fun onMesg(mesg: AntTxMesg)
 }

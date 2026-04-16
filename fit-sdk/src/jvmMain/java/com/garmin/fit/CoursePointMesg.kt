@@ -12,19 +12,19 @@ package com.garmin.fit
 class CoursePointMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.COURSE_POINT))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,31 +34,31 @@ class CoursePointMesg : Mesg {
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(1, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(1, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var positionLat: Int?
         /**
          * Get position_lat field
          * Units: semicircles
-         * 
+         *
          * @return position_lat
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_lat field
          * Units: semicircles
-         * 
+         *
          * @param positionLat The new positionLat value to be set
          */
         set(positionLat) {
@@ -69,14 +69,14 @@ class CoursePointMesg : Mesg {
         /**
          * Get position_long field
          * Units: semicircles
-         * 
+         *
          * @return position_long
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_long field
          * Units: semicircles
-         * 
+         *
          * @param positionLong The new positionLong value to be set
          */
         set(positionLong) {
@@ -87,14 +87,14 @@ class CoursePointMesg : Mesg {
         /**
          * Get distance field
          * Units: m
-         * 
+         *
          * @return distance
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set distance field
          * Units: m
-         * 
+         *
          * @param distance The new distance value to be set
          */
         set(distance) {
@@ -104,59 +104,53 @@ class CoursePointMesg : Mesg {
     var type: CoursePoint?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return CoursePoint.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return CoursePoint.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
             setFieldValue(5, 0, type!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(6, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var favorite: Bool?
         /**
          * Get favorite field
-         * 
+         *
          * @return favorite
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set favorite field
-         * 
+         *
          * @param favorite The new favorite value to be set
          */
         set(favorite) {
@@ -181,11 +175,10 @@ class CoursePointMesg : Mesg {
         const val FavoriteFieldNum: Int = 8
 
 
-        val coursePointMesg: Mesg
+        // course_point
+        val coursePointMesg: Mesg = Mesg("course_point", MesgNum.COURSE_POINT)
 
         init {
-            // course_point
-            coursePointMesg = Mesg("course_point", MesgNum.COURSE_POINT)
             coursePointMesg.addField(
                 Field(
                     "message_index",

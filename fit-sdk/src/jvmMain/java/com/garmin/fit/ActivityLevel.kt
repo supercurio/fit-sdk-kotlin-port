@@ -22,7 +22,7 @@ enum class ActivityLevel(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ActivityLevel.INVALID
+            return INVALID
         }
 
         /**

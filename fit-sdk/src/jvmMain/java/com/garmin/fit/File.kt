@@ -39,7 +39,7 @@ enum class File(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return File.INVALID
+            return INVALID
         }
 
         /**

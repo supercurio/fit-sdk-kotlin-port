@@ -50,56 +50,52 @@ object SitUpExerciseName {
     const val GHD_SIT_UPS: Int = 38
     const val SIT_UP_TURKISH_GET_UP: Int = 39
     const val RUSSIAN_TWIST_ON_SWISS_BALL: Int = 40
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = HashMap<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(ALTERNATING_SIT_UP, "ALTERNATING_SIT_UP")
-        stringMap.put(WEIGHTED_ALTERNATING_SIT_UP, "WEIGHTED_ALTERNATING_SIT_UP")
-        stringMap.put(BENT_KNEE_V_UP, "BENT_KNEE_V_UP")
-        stringMap.put(WEIGHTED_BENT_KNEE_V_UP, "WEIGHTED_BENT_KNEE_V_UP")
-        stringMap.put(BUTTERFLY_SIT_UP, "BUTTERFLY_SIT_UP")
-        stringMap.put(WEIGHTED_BUTTERFLY_SITUP, "WEIGHTED_BUTTERFLY_SITUP")
-        stringMap.put(CROSS_PUNCH_ROLL_UP, "CROSS_PUNCH_ROLL_UP")
-        stringMap.put(WEIGHTED_CROSS_PUNCH_ROLL_UP, "WEIGHTED_CROSS_PUNCH_ROLL_UP")
-        stringMap.put(CROSSED_ARMS_SIT_UP, "CROSSED_ARMS_SIT_UP")
-        stringMap.put(WEIGHTED_CROSSED_ARMS_SIT_UP, "WEIGHTED_CROSSED_ARMS_SIT_UP")
-        stringMap.put(GET_UP_SIT_UP, "GET_UP_SIT_UP")
-        stringMap.put(WEIGHTED_GET_UP_SIT_UP, "WEIGHTED_GET_UP_SIT_UP")
-        stringMap.put(HOVERING_SIT_UP, "HOVERING_SIT_UP")
-        stringMap.put(WEIGHTED_HOVERING_SIT_UP, "WEIGHTED_HOVERING_SIT_UP")
-        stringMap.put(KETTLEBELL_SIT_UP, "KETTLEBELL_SIT_UP")
-        stringMap.put(MEDICINE_BALL_ALTERNATING_V_UP, "MEDICINE_BALL_ALTERNATING_V_UP")
-        stringMap.put(MEDICINE_BALL_SIT_UP, "MEDICINE_BALL_SIT_UP")
-        stringMap.put(MEDICINE_BALL_V_UP, "MEDICINE_BALL_V_UP")
-        stringMap.put(MODIFIED_SIT_UP, "MODIFIED_SIT_UP")
-        stringMap.put(NEGATIVE_SIT_UP, "NEGATIVE_SIT_UP")
-        stringMap.put(ONE_ARM_FULL_SIT_UP, "ONE_ARM_FULL_SIT_UP")
-        stringMap.put(RECLINING_CIRCLE, "RECLINING_CIRCLE")
-        stringMap.put(WEIGHTED_RECLINING_CIRCLE, "WEIGHTED_RECLINING_CIRCLE")
-        stringMap.put(REVERSE_CURL_UP, "REVERSE_CURL_UP")
-        stringMap.put(WEIGHTED_REVERSE_CURL_UP, "WEIGHTED_REVERSE_CURL_UP")
-        stringMap.put(SINGLE_LEG_SWISS_BALL_JACKKNIFE, "SINGLE_LEG_SWISS_BALL_JACKKNIFE")
-        stringMap.put(
-            WEIGHTED_SINGLE_LEG_SWISS_BALL_JACKKNIFE,
-            "WEIGHTED_SINGLE_LEG_SWISS_BALL_JACKKNIFE"
-        )
-        stringMap.put(THE_TEASER, "THE_TEASER")
-        stringMap.put(THE_TEASER_WEIGHTED, "THE_TEASER_WEIGHTED")
-        stringMap.put(THREE_PART_ROLL_DOWN, "THREE_PART_ROLL_DOWN")
-        stringMap.put(WEIGHTED_THREE_PART_ROLL_DOWN, "WEIGHTED_THREE_PART_ROLL_DOWN")
-        stringMap.put(V_UP, "V_UP")
-        stringMap.put(WEIGHTED_V_UP, "WEIGHTED_V_UP")
-        stringMap.put(WEIGHTED_RUSSIAN_TWIST_ON_SWISS_BALL, "WEIGHTED_RUSSIAN_TWIST_ON_SWISS_BALL")
-        stringMap.put(WEIGHTED_SIT_UP, "WEIGHTED_SIT_UP")
-        stringMap.put(X_ABS, "X_ABS")
-        stringMap.put(WEIGHTED_X_ABS, "WEIGHTED_X_ABS")
-        stringMap.put(SIT_UP, "SIT_UP")
-        stringMap.put(GHD_SIT_UPS, "GHD_SIT_UPS")
-        stringMap.put(SIT_UP_TURKISH_GET_UP, "SIT_UP_TURKISH_GET_UP")
-        stringMap.put(RUSSIAN_TWIST_ON_SWISS_BALL, "RUSSIAN_TWIST_ON_SWISS_BALL")
+        stringMap[ALTERNATING_SIT_UP] = "ALTERNATING_SIT_UP"
+        stringMap[WEIGHTED_ALTERNATING_SIT_UP] = "WEIGHTED_ALTERNATING_SIT_UP"
+        stringMap[BENT_KNEE_V_UP] = "BENT_KNEE_V_UP"
+        stringMap[WEIGHTED_BENT_KNEE_V_UP] = "WEIGHTED_BENT_KNEE_V_UP"
+        stringMap[BUTTERFLY_SIT_UP] = "BUTTERFLY_SIT_UP"
+        stringMap[WEIGHTED_BUTTERFLY_SITUP] = "WEIGHTED_BUTTERFLY_SITUP"
+        stringMap[CROSS_PUNCH_ROLL_UP] = "CROSS_PUNCH_ROLL_UP"
+        stringMap[WEIGHTED_CROSS_PUNCH_ROLL_UP] = "WEIGHTED_CROSS_PUNCH_ROLL_UP"
+        stringMap[CROSSED_ARMS_SIT_UP] = "CROSSED_ARMS_SIT_UP"
+        stringMap[WEIGHTED_CROSSED_ARMS_SIT_UP] = "WEIGHTED_CROSSED_ARMS_SIT_UP"
+        stringMap[GET_UP_SIT_UP] = "GET_UP_SIT_UP"
+        stringMap[WEIGHTED_GET_UP_SIT_UP] = "WEIGHTED_GET_UP_SIT_UP"
+        stringMap[HOVERING_SIT_UP] = "HOVERING_SIT_UP"
+        stringMap[WEIGHTED_HOVERING_SIT_UP] = "WEIGHTED_HOVERING_SIT_UP"
+        stringMap[KETTLEBELL_SIT_UP] = "KETTLEBELL_SIT_UP"
+        stringMap[MEDICINE_BALL_ALTERNATING_V_UP] = "MEDICINE_BALL_ALTERNATING_V_UP"
+        stringMap[MEDICINE_BALL_SIT_UP] = "MEDICINE_BALL_SIT_UP"
+        stringMap[MEDICINE_BALL_V_UP] = "MEDICINE_BALL_V_UP"
+        stringMap[MODIFIED_SIT_UP] = "MODIFIED_SIT_UP"
+        stringMap[NEGATIVE_SIT_UP] = "NEGATIVE_SIT_UP"
+        stringMap[ONE_ARM_FULL_SIT_UP] = "ONE_ARM_FULL_SIT_UP"
+        stringMap[RECLINING_CIRCLE] = "RECLINING_CIRCLE"
+        stringMap[WEIGHTED_RECLINING_CIRCLE] = "WEIGHTED_RECLINING_CIRCLE"
+        stringMap[REVERSE_CURL_UP] = "REVERSE_CURL_UP"
+        stringMap[WEIGHTED_REVERSE_CURL_UP] = "WEIGHTED_REVERSE_CURL_UP"
+        stringMap[SINGLE_LEG_SWISS_BALL_JACKKNIFE] = "SINGLE_LEG_SWISS_BALL_JACKKNIFE"
+        stringMap[WEIGHTED_SINGLE_LEG_SWISS_BALL_JACKKNIFE] = "WEIGHTED_SINGLE_LEG_SWISS_BALL_JACKKNIFE"
+        stringMap[THE_TEASER] = "THE_TEASER"
+        stringMap[THE_TEASER_WEIGHTED] = "THE_TEASER_WEIGHTED"
+        stringMap[THREE_PART_ROLL_DOWN] = "THREE_PART_ROLL_DOWN"
+        stringMap[WEIGHTED_THREE_PART_ROLL_DOWN] = "WEIGHTED_THREE_PART_ROLL_DOWN"
+        stringMap[V_UP] = "V_UP"
+        stringMap[WEIGHTED_V_UP] = "WEIGHTED_V_UP"
+        stringMap[WEIGHTED_RUSSIAN_TWIST_ON_SWISS_BALL] = "WEIGHTED_RUSSIAN_TWIST_ON_SWISS_BALL"
+        stringMap[WEIGHTED_SIT_UP] = "WEIGHTED_SIT_UP"
+        stringMap[X_ABS] = "X_ABS"
+        stringMap[WEIGHTED_X_ABS] = "WEIGHTED_X_ABS"
+        stringMap[SIT_UP] = "SIT_UP"
+        stringMap[GHD_SIT_UPS] = "GHD_SIT_UPS"
+        stringMap[SIT_UP_TURKISH_GET_UP] = "SIT_UP_TURKISH_GET_UP"
+        stringMap[RUSSIAN_TWIST_ON_SWISS_BALL] = "RUSSIAN_TWIST_ON_SWISS_BALL"
     }
 
 
@@ -108,9 +104,9 @@ object SitUpExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -121,7 +117,7 @@ object SitUpExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

@@ -59,7 +59,7 @@ enum class BodyLocation(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return BodyLocation.INVALID
+            return INVALID
         }
 
         /**

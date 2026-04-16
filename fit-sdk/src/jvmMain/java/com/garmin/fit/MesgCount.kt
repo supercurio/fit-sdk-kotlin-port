@@ -22,7 +22,7 @@ enum class MesgCount(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return MesgCount.INVALID
+            return INVALID
         }
 
         /**

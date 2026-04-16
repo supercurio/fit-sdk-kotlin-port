@@ -10,13 +10,12 @@ package com.garmin.fit
 
 object FloorClimbExerciseName {
     const val FLOOR_CLIMB: Int = 0
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(FLOOR_CLIMB, "FLOOR_CLIMB")
+        stringMap[FLOOR_CLIMB] = "FLOOR_CLIMB"
     }
 
 
@@ -25,9 +24,9 @@ object FloorClimbExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -38,7 +37,7 @@ object FloorClimbExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

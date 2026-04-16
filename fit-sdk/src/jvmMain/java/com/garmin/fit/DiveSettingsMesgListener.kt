@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface DiveSettingsMesgListener {
-    fun onMesg(mesg: DiveSettingsMesg?)
+    fun onMesg(mesg: DiveSettingsMesg)
 }

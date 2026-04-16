@@ -14,7 +14,7 @@ import com.garmin.fit.Profile.SubFields
 class OneDSensorCalibrationMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.ONE_D_SENSOR_CALIBRATION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -22,7 +22,7 @@ class OneDSensorCalibrationMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -30,31 +30,28 @@ class OneDSensorCalibrationMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var sensorType: SensorType?
         /**
          * Get sensor_type field
          * Comment: Indicates which sensor the calibration is for
-         * 
+         *
          * @return sensor_type
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SensorType.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SensorType.getByValue(value)
         }
         /**
          * Set sensor_type field
          * Comment: Indicates which sensor the calibration is for
-         * 
+         *
          * @param sensorType The new sensorType value to be set
          */
         set(sensorType) {
@@ -65,14 +62,14 @@ class OneDSensorCalibrationMesg : Mesg {
         /**
          * Get calibration_factor field
          * Comment: Calibration factor used to convert from raw ADC value to degrees, g, etc.
-         * 
+         *
          * @return calibration_factor
          */
         get() = getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set calibration_factor field
          * Comment: Calibration factor used to convert from raw ADC value to degrees, g, etc.
-         * 
+         *
          * @param calibrationFactor The new calibrationFactor value to be set
          */
         set(calibrationFactor) {
@@ -84,7 +81,7 @@ class OneDSensorCalibrationMesg : Mesg {
          * Get baro_cal_factor field
          * Units: Pa
          * Comment: Barometer calibration factor
-         * 
+         *
          * @return baro_cal_factor
          */
         get() = getFieldLongValue(
@@ -96,7 +93,7 @@ class OneDSensorCalibrationMesg : Mesg {
          * Set baro_cal_factor field
          * Units: Pa
          * Comment: Barometer calibration factor
-         * 
+         *
          * @param baroCalFactor The new baroCalFactor value to be set
          */
         set(baroCalFactor) {
@@ -113,7 +110,7 @@ class OneDSensorCalibrationMesg : Mesg {
          * Get calibration_divisor field
          * Units: counts
          * Comment: Calibration factor divisor
-         * 
+         *
          * @return calibration_divisor
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -121,7 +118,7 @@ class OneDSensorCalibrationMesg : Mesg {
          * Set calibration_divisor field
          * Units: counts
          * Comment: Calibration factor divisor
-         * 
+         *
          * @param calibrationDivisor The new calibrationDivisor value to be set
          */
         set(calibrationDivisor) {
@@ -132,14 +129,14 @@ class OneDSensorCalibrationMesg : Mesg {
         /**
          * Get level_shift field
          * Comment: Level shift value used to shift the ADC value back into range
-         * 
+         *
          * @return level_shift
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set level_shift field
          * Comment: Level shift value used to shift the ADC value back into range
-         * 
+         *
          * @param levelShift The new levelShift value to be set
          */
         set(levelShift) {
@@ -150,14 +147,14 @@ class OneDSensorCalibrationMesg : Mesg {
         /**
          * Get offset_cal field
          * Comment: Internal Calibration factor
-         * 
+         *
          * @return offset_cal
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set offset_cal field
          * Comment: Internal Calibration factor
-         * 
+         *
          * @param offsetCal The new offsetCal value to be set
          */
         set(offsetCal) {
@@ -225,7 +222,7 @@ class OneDSensorCalibrationMesg : Mesg {
                 )
             )
             subfield_index = 0
-            oneDSensorCalibrationMesg.fields.get(field_index).subFields.add(
+            oneDSensorCalibrationMesg.fields[field_index].subFields.add(
                 SubField(
                     "baro_cal_factor",
                     134,
@@ -234,7 +231,7 @@ class OneDSensorCalibrationMesg : Mesg {
                     "Pa"
                 )
             )
-            oneDSensorCalibrationMesg.fields.get(field_index).subFields.get(subfield_index)
+            oneDSensorCalibrationMesg.fields[field_index].subFields[subfield_index]
                 .addMap(0, 3)
             subfield_index++
             field_index++

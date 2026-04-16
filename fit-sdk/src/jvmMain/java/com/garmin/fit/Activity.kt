@@ -21,7 +21,7 @@ enum class Activity(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Activity.INVALID
+            return INVALID
         }
 
         /**

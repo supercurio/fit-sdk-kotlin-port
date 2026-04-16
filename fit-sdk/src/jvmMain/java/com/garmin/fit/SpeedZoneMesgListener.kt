@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SpeedZoneMesgListener {
-    fun onMesg(mesg: SpeedZoneMesg?)
+    fun onMesg(mesg: SpeedZoneMesg)
 }

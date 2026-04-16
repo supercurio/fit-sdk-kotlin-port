@@ -23,7 +23,7 @@ enum class Tone(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Tone.INVALID
+            return INVALID
         }
 
         /**

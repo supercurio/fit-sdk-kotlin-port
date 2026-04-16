@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface Spo2DataMesgListener {
-    fun onMesg(mesg: Spo2DataMesg?)
+    fun onMesg(mesg: Spo2DataMesg)
 }

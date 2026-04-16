@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface BloodPressureMesgListener {
-    fun onMesg(mesg: BloodPressureMesg?)
+    fun onMesg(mesg: BloodPressureMesg)
 }

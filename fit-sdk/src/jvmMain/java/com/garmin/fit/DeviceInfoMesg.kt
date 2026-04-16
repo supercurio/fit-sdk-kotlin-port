@@ -14,37 +14,37 @@ import com.garmin.fit.Profile.SubFields
 class DeviceInfoMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVICE_INFO))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var deviceIndex: Short?
         /**
          * Get device_index field
-         * 
+         *
          * @return device_index
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_index field
-         * 
+         *
          * @param deviceIndex The new deviceIndex value to be set
          */
         set(deviceIndex) {
@@ -54,13 +54,13 @@ class DeviceInfoMesg : Mesg {
     var deviceType: Short?
         /**
          * Get device_type field
-         * 
+         *
          * @return device_type
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_type field
-         * 
+         *
          * @param deviceType The new deviceType value to be set
          */
         set(deviceType) {
@@ -70,7 +70,7 @@ class DeviceInfoMesg : Mesg {
     var bleDeviceType: Short?
         /**
          * Get ble_device_type field
-         * 
+         *
          * @return ble_device_type
          */
         get() = getFieldShortValue(
@@ -80,7 +80,7 @@ class DeviceInfoMesg : Mesg {
         )
         /**
          * Set ble_device_type field
-         * 
+         *
          * @param bleDeviceType The new bleDeviceType value to be set
          */
         set(bleDeviceType) {
@@ -95,7 +95,7 @@ class DeviceInfoMesg : Mesg {
     var antplusDeviceType: Short?
         /**
          * Get antplus_device_type field
-         * 
+         *
          * @return antplus_device_type
          */
         get() = getFieldShortValue(
@@ -105,7 +105,7 @@ class DeviceInfoMesg : Mesg {
         )
         /**
          * Set antplus_device_type field
-         * 
+         *
          * @param antplusDeviceType The new antplusDeviceType value to be set
          */
         set(antplusDeviceType) {
@@ -120,7 +120,7 @@ class DeviceInfoMesg : Mesg {
     var antDeviceType: Short?
         /**
          * Get ant_device_type field
-         * 
+         *
          * @return ant_device_type
          */
         get() = getFieldShortValue(
@@ -130,7 +130,7 @@ class DeviceInfoMesg : Mesg {
         )
         /**
          * Set ant_device_type field
-         * 
+         *
          * @param antDeviceType The new antDeviceType value to be set
          */
         set(antDeviceType) {
@@ -145,7 +145,7 @@ class DeviceInfoMesg : Mesg {
     var localDeviceType: Short?
         /**
          * Get local_device_type field
-         * 
+         *
          * @return local_device_type
          */
         get() = getFieldShortValue(
@@ -155,7 +155,7 @@ class DeviceInfoMesg : Mesg {
         )
         /**
          * Set local_device_type field
-         * 
+         *
          * @param localDeviceType The new localDeviceType value to be set
          */
         set(localDeviceType) {
@@ -170,13 +170,13 @@ class DeviceInfoMesg : Mesg {
     var manufacturer: Int?
         /**
          * Get manufacturer field
-         * 
+         *
          * @return manufacturer
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer field
-         * 
+         *
          * @param manufacturer The new manufacturer value to be set
          */
         set(manufacturer) {
@@ -186,13 +186,13 @@ class DeviceInfoMesg : Mesg {
     var serialNumber: Long?
         /**
          * Get serial_number field
-         * 
+         *
          * @return serial_number
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set serial_number field
-         * 
+         *
          * @param serialNumber The new serialNumber value to be set
          */
         set(serialNumber) {
@@ -202,13 +202,13 @@ class DeviceInfoMesg : Mesg {
     var product: Int?
         /**
          * Get product field
-         * 
+         *
          * @return product
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product field
-         * 
+         *
          * @param product The new product value to be set
          */
         set(product) {
@@ -218,13 +218,13 @@ class DeviceInfoMesg : Mesg {
     var faveroProduct: Int?
         /**
          * Get favero_product field
-         * 
+         *
          * @return favero_product
          */
         get() = getFieldIntegerValue(4, 0, SubFields.DEVICE_INFO_MESG_PRODUCT_FIELD_FAVERO_PRODUCT)
         /**
          * Set favero_product field
-         * 
+         *
          * @param faveroProduct The new faveroProduct value to be set
          */
         set(faveroProduct) {
@@ -239,13 +239,13 @@ class DeviceInfoMesg : Mesg {
     var garminProduct: Int?
         /**
          * Get garmin_product field
-         * 
+         *
          * @return garmin_product
          */
         get() = getFieldIntegerValue(4, 0, SubFields.DEVICE_INFO_MESG_PRODUCT_FIELD_GARMIN_PRODUCT)
         /**
          * Set garmin_product field
-         * 
+         *
          * @param garminProduct The new garminProduct value to be set
          */
         set(garminProduct) {
@@ -260,13 +260,13 @@ class DeviceInfoMesg : Mesg {
     var softwareVersion: Float?
         /**
          * Get software_version field
-         * 
+         *
          * @return software_version
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set software_version field
-         * 
+         *
          * @param softwareVersion The new softwareVersion value to be set
          */
         set(softwareVersion) {
@@ -276,13 +276,13 @@ class DeviceInfoMesg : Mesg {
     var hardwareVersion: Short?
         /**
          * Get hardware_version field
-         * 
+         *
          * @return hardware_version
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set hardware_version field
-         * 
+         *
          * @param hardwareVersion The new hardwareVersion value to be set
          */
         set(hardwareVersion) {
@@ -294,7 +294,7 @@ class DeviceInfoMesg : Mesg {
          * Get cum_operating_time field
          * Units: s
          * Comment: Reset by new battery or charge.
-         * 
+         *
          * @return cum_operating_time
          */
         get() = getFieldLongValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -302,7 +302,7 @@ class DeviceInfoMesg : Mesg {
          * Set cum_operating_time field
          * Units: s
          * Comment: Reset by new battery or charge.
-         * 
+         *
          * @param cumOperatingTime The new cumOperatingTime value to be set
          */
         set(cumOperatingTime) {
@@ -313,14 +313,14 @@ class DeviceInfoMesg : Mesg {
         /**
          * Get battery_voltage field
          * Units: V
-         * 
+         *
          * @return battery_voltage
          */
         get() = getFieldFloatValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set battery_voltage field
          * Units: V
-         * 
+         *
          * @param batteryVoltage The new batteryVoltage value to be set
          */
         set(batteryVoltage) {
@@ -330,13 +330,13 @@ class DeviceInfoMesg : Mesg {
     var batteryStatus: Short?
         /**
          * Get battery_status field
-         * 
+         *
          * @return battery_status
          */
         get() = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set battery_status field
-         * 
+         *
          * @param batteryStatus The new batteryStatus value to be set
          */
         set(batteryStatus) {
@@ -347,20 +347,17 @@ class DeviceInfoMesg : Mesg {
         /**
          * Get sensor_position field
          * Comment: Indicates the location of the sensor
-         * 
+         *
          * @return sensor_position
          */
         get() {
-            val value = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return BodyLocation.Companion.getByValue(value)
+            val value = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return BodyLocation.getByValue(value)
         }
         /**
          * Set sensor_position field
          * Comment: Indicates the location of the sensor
-         * 
+         *
          * @param sensorPosition The new sensorPosition value to be set
          */
         set(sensorPosition) {
@@ -371,14 +368,14 @@ class DeviceInfoMesg : Mesg {
         /**
          * Get descriptor field
          * Comment: Used to describe the sensor or location
-         * 
+         *
          * @return descriptor
          */
         get() = getFieldStringValue(19, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set descriptor field
          * Comment: Used to describe the sensor or location
-         * 
+         *
          * @param descriptor The new descriptor value to be set
          */
         set(descriptor) {
@@ -388,13 +385,13 @@ class DeviceInfoMesg : Mesg {
     var antTransmissionType: Short?
         /**
          * Get ant_transmission_type field
-         * 
+         *
          * @return ant_transmission_type
          */
         get() = getFieldShortValue(20, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ant_transmission_type field
-         * 
+         *
          * @param antTransmissionType The new antTransmissionType value to be set
          */
         set(antTransmissionType) {
@@ -404,13 +401,13 @@ class DeviceInfoMesg : Mesg {
     var antDeviceNumber: Int?
         /**
          * Get ant_device_number field
-         * 
+         *
          * @return ant_device_number
          */
         get() = getFieldIntegerValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set ant_device_number field
-         * 
+         *
          * @param antDeviceNumber The new antDeviceNumber value to be set
          */
         set(antDeviceNumber) {
@@ -420,19 +417,16 @@ class DeviceInfoMesg : Mesg {
     var antNetwork: AntNetwork?
         /**
          * Get ant_network field
-         * 
+         *
          * @return ant_network
          */
         get() {
-            val value = getFieldShortValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return AntNetwork.Companion.getByValue(value)
+            val value = getFieldShortValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return AntNetwork.getByValue(value)
         }
         /**
          * Set ant_network field
-         * 
+         *
          * @param antNetwork The new antNetwork value to be set
          */
         set(antNetwork) {
@@ -442,19 +436,16 @@ class DeviceInfoMesg : Mesg {
     var sourceType: SourceType?
         /**
          * Get source_type field
-         * 
+         *
          * @return source_type
          */
         get() {
-            val value = getFieldShortValue(25, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SourceType.Companion.getByValue(value)
+            val value = getFieldShortValue(25, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SourceType.getByValue(value)
         }
         /**
          * Set source_type field
-         * 
+         *
          * @param sourceType The new sourceType value to be set
          */
         set(sourceType) {
@@ -465,14 +456,14 @@ class DeviceInfoMesg : Mesg {
         /**
          * Get product_name field
          * Comment: Optional free form string to indicate the devices name or model
-         * 
+         *
          * @return product_name
          */
         get() = getFieldStringValue(27, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product_name field
          * Comment: Optional free form string to indicate the devices name or model
-         * 
+         *
          * @param productName The new productName value to be set
          */
         set(productName) {
@@ -483,14 +474,14 @@ class DeviceInfoMesg : Mesg {
         /**
          * Get battery_level field
          * Units: %
-         * 
+         *
          * @return battery_level
          */
         get() = getFieldShortValue(32, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set battery_level field
          * Units: %
-         * 
+         *
          * @param batteryLevel The new batteryLevel value to be set
          */
         set(batteryLevel) {
@@ -583,7 +574,7 @@ class DeviceInfoMesg : Mesg {
                 )
             )
             subfield_index = 0
-            deviceInfoMesg.fields.get(field_index).subFields.add(
+            deviceInfoMesg.fields[field_index].subFields.add(
                 SubField(
                     "ble_device_type",
                     2,
@@ -592,9 +583,9 @@ class DeviceInfoMesg : Mesg {
                     ""
                 )
             )
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(25, 3)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(25, 3)
             subfield_index++
-            deviceInfoMesg.fields.get(field_index).subFields.add(
+            deviceInfoMesg.fields[field_index].subFields.add(
                 SubField(
                     "antplus_device_type",
                     2,
@@ -603,9 +594,9 @@ class DeviceInfoMesg : Mesg {
                     ""
                 )
             )
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(25, 1)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(25, 1)
             subfield_index++
-            deviceInfoMesg.fields.get(field_index).subFields.add(
+            deviceInfoMesg.fields[field_index].subFields.add(
                 SubField(
                     "ant_device_type",
                     2,
@@ -614,9 +605,9 @@ class DeviceInfoMesg : Mesg {
                     ""
                 )
             )
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(25, 0)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(25, 0)
             subfield_index++
-            deviceInfoMesg.fields.get(field_index).subFields.add(
+            deviceInfoMesg.fields[field_index].subFields.add(
                 SubField(
                     "local_device_type",
                     2,
@@ -625,7 +616,7 @@ class DeviceInfoMesg : Mesg {
                     ""
                 )
             )
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(25, 5)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(25, 5)
             subfield_index++
             field_index++
             deviceInfoMesg.addField(
@@ -667,7 +658,7 @@ class DeviceInfoMesg : Mesg {
                 )
             )
             subfield_index = 0
-            deviceInfoMesg.fields.get(field_index).subFields.add(
+            deviceInfoMesg.fields[field_index].subFields.add(
                 SubField(
                     "favero_product",
                     132,
@@ -676,9 +667,9 @@ class DeviceInfoMesg : Mesg {
                     ""
                 )
             )
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 263)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(2, 263)
             subfield_index++
-            deviceInfoMesg.fields.get(field_index).subFields.add(
+            deviceInfoMesg.fields[field_index].subFields.add(
                 SubField(
                     "garmin_product",
                     132,
@@ -687,10 +678,10 @@ class DeviceInfoMesg : Mesg {
                     ""
                 )
             )
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 1)
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 15)
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 13)
-            deviceInfoMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 89)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(2, 1)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(2, 15)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(2, 13)
+            deviceInfoMesg.fields[field_index].subFields[subfield_index].addMap(2, 89)
             subfield_index++
             field_index++
             deviceInfoMesg.addField(

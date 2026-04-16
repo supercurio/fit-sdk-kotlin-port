@@ -19,7 +19,7 @@ enum class Bool(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Bool.INVALID
+            return INVALID
         }
     }
 }

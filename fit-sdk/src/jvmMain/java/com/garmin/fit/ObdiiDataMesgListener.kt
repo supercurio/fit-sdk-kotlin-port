@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface ObdiiDataMesgListener {
-    fun onMesg(mesg: ObdiiDataMesg?)
+    fun onMesg(mesg: ObdiiDataMesg)
 }

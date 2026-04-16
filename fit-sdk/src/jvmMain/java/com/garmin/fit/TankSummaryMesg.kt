@@ -12,37 +12,37 @@ package com.garmin.fit
 class TankSummaryMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TANK_SUMMARY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var sensor: Long?
         /**
          * Get sensor field
-         * 
+         *
          * @return sensor
          */
         get() = getFieldLongValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sensor field
-         * 
+         *
          * @param sensor The new sensor value to be set
          */
         set(sensor) {
@@ -53,14 +53,14 @@ class TankSummaryMesg : Mesg {
         /**
          * Get start_pressure field
          * Units: bar
-         * 
+         *
          * @return start_pressure
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set start_pressure field
          * Units: bar
-         * 
+         *
          * @param startPressure The new startPressure value to be set
          */
         set(startPressure) {
@@ -71,14 +71,14 @@ class TankSummaryMesg : Mesg {
         /**
          * Get end_pressure field
          * Units: bar
-         * 
+         *
          * @return end_pressure
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set end_pressure field
          * Units: bar
-         * 
+         *
          * @param endPressure The new endPressure value to be set
          */
         set(endPressure) {
@@ -89,14 +89,14 @@ class TankSummaryMesg : Mesg {
         /**
          * Get volume_used field
          * Units: L
-         * 
+         *
          * @return volume_used
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set volume_used field
          * Units: L
-         * 
+         *
          * @param volumeUsed The new volumeUsed value to be set
          */
         set(volumeUsed) {
@@ -115,11 +115,10 @@ class TankSummaryMesg : Mesg {
         const val VolumeUsedFieldNum: Int = 3
 
 
-        val tankSummaryMesg: Mesg
+        // tank_summary
+        val tankSummaryMesg: Mesg = Mesg("tank_summary", MesgNum.TANK_SUMMARY)
 
         init {
-            // tank_summary
-            tankSummaryMesg = Mesg("tank_summary", MesgNum.TANK_SUMMARY)
             tankSummaryMesg.addField(
                 Field(
                     "timestamp",

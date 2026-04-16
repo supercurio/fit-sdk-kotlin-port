@@ -12,19 +12,19 @@ package com.garmin.fit
 class AntChannelIdMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.ANT_CHANNEL_ID))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var channelNumber: Short?
         /**
          * Get channel_number field
-         * 
+         *
          * @return channel_number
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set channel_number field
-         * 
+         *
          * @param channelNumber The new channelNumber value to be set
          */
         set(channelNumber) {
@@ -34,13 +34,13 @@ class AntChannelIdMesg : Mesg {
     var deviceType: Short?
         /**
          * Get device_type field
-         * 
+         *
          * @return device_type
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_type field
-         * 
+         *
          * @param deviceType The new deviceType value to be set
          */
         set(deviceType) {
@@ -50,13 +50,13 @@ class AntChannelIdMesg : Mesg {
     var deviceNumber: Int?
         /**
          * Get device_number field
-         * 
+         *
          * @return device_number
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_number field
-         * 
+         *
          * @param deviceNumber The new deviceNumber value to be set
          */
         set(deviceNumber) {
@@ -66,13 +66,13 @@ class AntChannelIdMesg : Mesg {
     var transmissionType: Short?
         /**
          * Get transmission_type field
-         * 
+         *
          * @return transmission_type
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set transmission_type field
-         * 
+         *
          * @param transmissionType The new transmissionType value to be set
          */
         set(transmissionType) {
@@ -82,13 +82,13 @@ class AntChannelIdMesg : Mesg {
     var deviceIndex: Short?
         /**
          * Get device_index field
-         * 
+         *
          * @return device_index
          */
         get() = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_index field
-         * 
+         *
          * @param deviceIndex The new deviceIndex value to be set
          */
         set(deviceIndex) {
@@ -107,11 +107,10 @@ class AntChannelIdMesg : Mesg {
         const val DeviceIndexFieldNum: Int = 4
 
 
-        val antChannelIdMesg: Mesg
+        // ant_channel_id
+        val antChannelIdMesg: Mesg = Mesg("ant_channel_id", MesgNum.ANT_CHANNEL_ID)
 
         init {
-            // ant_channel_id
-            antChannelIdMesg = Mesg("ant_channel_id", MesgNum.ANT_CHANNEL_ID)
             antChannelIdMesg.addField(
                 Field(
                     "channel_number",

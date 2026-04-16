@@ -12,39 +12,39 @@ package com.garmin.fit
 class MaxMetDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MAX_MET_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var updateTime: DateTime?
         /**
          * Get update_time field
          * Comment: Time maxMET and vo2 were calculated
-         * 
+         *
          * @return update_time
          */
         get() = timestampToDateTime(getFieldLongValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set update_time field
          * Comment: Time maxMET and vo2 were calculated
-         * 
+         *
          * @param updateTime The new updateTime value to be set
          */
         set(updateTime) {
-            setFieldValue(0, 0, updateTime!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(0, 0, updateTime?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var vo2Max: Float?
         /**
          * Get vo2_max field
          * Units: mL/kg/min
-         * 
+         *
          * @return vo2_max
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set vo2_max field
          * Units: mL/kg/min
-         * 
+         *
          * @param vo2Max The new vo2Max value to be set
          */
         set(vo2Max) {
@@ -54,19 +54,16 @@ class MaxMetDataMesg : Mesg {
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
@@ -76,19 +73,16 @@ class MaxMetDataMesg : Mesg {
     var subSport: SubSport?
         /**
          * Get sub_sport field
-         * 
+         *
          * @return sub_sport
          */
         get() {
-            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SubSport.Companion.getByValue(value)
+            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SubSport.getByValue(value)
         }
         /**
          * Set sub_sport field
-         * 
+         *
          * @param subSport The new subSport value to be set
          */
         set(subSport) {
@@ -98,19 +92,16 @@ class MaxMetDataMesg : Mesg {
     var maxMetCategory: MaxMetCategory?
         /**
          * Get max_met_category field
-         * 
+         *
          * @return max_met_category
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return MaxMetCategory.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return MaxMetCategory.getByValue(value)
         }
         /**
          * Set max_met_category field
-         * 
+         *
          * @param maxMetCategory The new maxMetCategory value to be set
          */
         set(maxMetCategory) {
@@ -121,20 +112,17 @@ class MaxMetDataMesg : Mesg {
         /**
          * Get calibrated_data field
          * Comment: Indicates if calibrated data was used in the calculation
-         * 
+         *
          * @return calibrated_data
          */
         get() {
-            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set calibrated_data field
          * Comment: Indicates if calibrated data was used in the calculation
-         * 
+         *
          * @param calibratedData The new calibratedData value to be set
          */
         set(calibratedData) {
@@ -145,20 +133,17 @@ class MaxMetDataMesg : Mesg {
         /**
          * Get hr_source field
          * Comment: Indicates if the estimate was obtained using a chest strap or wrist heart rate
-         * 
+         *
          * @return hr_source
          */
         get() {
-            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return MaxMetHeartRateSource.Companion.getByValue(value)
+            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return MaxMetHeartRateSource.getByValue(value)
         }
         /**
          * Set hr_source field
          * Comment: Indicates if the estimate was obtained using a chest strap or wrist heart rate
-         * 
+         *
          * @param hrSource The new hrSource value to be set
          */
         set(hrSource) {
@@ -169,20 +154,17 @@ class MaxMetDataMesg : Mesg {
         /**
          * Get speed_source field
          * Comment: Indidcates if the estimate was obtained using onboard GPS or connected GPS
-         * 
+         *
          * @return speed_source
          */
         get() {
-            val value = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return MaxMetSpeedSource.Companion.getByValue(value)
+            val value = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return MaxMetSpeedSource.getByValue(value)
         }
         /**
          * Set speed_source field
          * Comment: Indidcates if the estimate was obtained using onboard GPS or connected GPS
-         * 
+         *
          * @param speedSource The new speedSource value to be set
          */
         set(speedSource) {
@@ -207,11 +189,10 @@ class MaxMetDataMesg : Mesg {
         const val SpeedSourceFieldNum: Int = 13
 
 
-        val maxMetDataMesg: Mesg
+        // max_met_data
+        val maxMetDataMesg: Mesg = Mesg("max_met_data", MesgNum.MAX_MET_DATA)
 
         init {
-            // max_met_data
-            maxMetDataMesg = Mesg("max_met_data", MesgNum.MAX_MET_DATA)
             maxMetDataMesg.addField(
                 Field(
                     "update_time",

@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface DiveApneaAlarmMesgListener {
-    fun onMesg(mesg: DiveApneaAlarmMesg?)
+    fun onMesg(mesg: DiveApneaAlarmMesg)
 }

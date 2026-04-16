@@ -23,7 +23,7 @@ enum class CameraOrientationType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return CameraOrientationType.INVALID
+            return INVALID
         }
 
         /**

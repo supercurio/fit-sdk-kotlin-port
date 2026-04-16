@@ -12,22 +12,22 @@ package com.garmin.fit
 class CapabilitiesMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CAPABILITIES))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
-    val languages: Array<Short?>?
-        get() = getFieldShortValues(0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val languages: Array<Short>?
+        get() = getFieldShortValues(LanguagesFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLanguages: Int
         /**
          * @return number of languages
          */
-        get() = getNumFieldValues(0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(LanguagesFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get languages field
      * Comment: Use language_bits_x types where x is index of array.
-     * 
+     *
      * @param index of languages
      * @return languages
      */
@@ -38,7 +38,7 @@ class CapabilitiesMesg : Mesg {
     /**
      * Set languages field
      * Comment: Use language_bits_x types where x is index of array.
-     * 
+     *
      * @param index of languages
      * @param languages The new languages value to be set
      */
@@ -46,19 +46,19 @@ class CapabilitiesMesg : Mesg {
         setFieldValue(0, index, languages, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val sports: Array<Short?>?
-        get() = getFieldShortValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val sports: Array<Short>?
+        get() = getFieldShortValues(SportsFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSports: Int
         /**
          * @return number of sports
          */
-        get() = getNumFieldValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(SportsFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get sports field
      * Comment: Use sport_bits_x types where x is index of array.
-     * 
+     *
      * @param index of sports
      * @return sports
      */
@@ -69,7 +69,7 @@ class CapabilitiesMesg : Mesg {
     /**
      * Set sports field
      * Comment: Use sport_bits_x types where x is index of array.
-     * 
+     *
      * @param index of sports
      * @param sports The new sports value to be set
      */
@@ -80,13 +80,13 @@ class CapabilitiesMesg : Mesg {
     var workoutsSupported: Long?
         /**
          * Get workouts_supported field
-         * 
+         *
          * @return workouts_supported
          */
         get() = getFieldLongValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set workouts_supported field
-         * 
+         *
          * @param workoutsSupported The new workoutsSupported value to be set
          */
         set(workoutsSupported) {
@@ -96,13 +96,13 @@ class CapabilitiesMesg : Mesg {
     var connectivitySupported: Long?
         /**
          * Get connectivity_supported field
-         * 
+         *
          * @return connectivity_supported
          */
         get() = getFieldLongValue(23, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set connectivity_supported field
-         * 
+         *
          * @param connectivitySupported The new connectivitySupported value to be set
          */
         set(connectivitySupported) {
@@ -119,11 +119,10 @@ class CapabilitiesMesg : Mesg {
         const val ConnectivitySupportedFieldNum: Int = 23
 
 
-        val capabilitiesMesg: Mesg
+        // capabilities
+        val capabilitiesMesg: Mesg = Mesg("capabilities", MesgNum.CAPABILITIES)
 
         init {
-            // capabilities
-            capabilitiesMesg = Mesg("capabilities", MesgNum.CAPABILITIES)
             capabilitiesMesg.addField(
                 Field(
                     "languages",

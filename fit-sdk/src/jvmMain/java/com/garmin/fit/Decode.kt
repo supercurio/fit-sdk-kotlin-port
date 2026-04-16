@@ -17,7 +17,7 @@ import java.math.RoundingMode
 
 /**
  * Decodes binary to java objects.
- * 
+ *
  */
 class Decode : MesgSource {
     // Public Variables
@@ -71,28 +71,23 @@ class Decode : MesgSource {
 
     private inner class Accumulator {
         // Index by Mesg# and DestField#
-        var accumulatedFields: ArrayList<AccumulatedField?>
-
-        init {
-            accumulatedFields = ArrayList<AccumulatedField?>()
-        }
+        var accumulatedFields: ArrayList<AccumulatedField> = ArrayList()
 
         fun set(mesgNum: Int, destFieldNum: Int, value: Long) {
             var accumField: AccumulatedField? = null
-            var i: Int
 
-            i = 0
+            var i = 0
             while (i < accumulatedFields.size) {
-                accumField = accumulatedFields.get(i)
+                accumField = accumulatedFields[i]
 
-                if ((accumField!!.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
+                if ((accumField.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
                     break
                 }
                 i++
             }
 
             if (i == accumulatedFields.size) {
-                accumField = Decode.AccumulatedField(mesgNum, destFieldNum)
+                accumField = AccumulatedField(mesgNum, destFieldNum)
                 accumulatedFields.add(accumField)
             }
 
@@ -101,20 +96,19 @@ class Decode : MesgSource {
 
         fun accumulate(mesgNum: Int, destFieldNum: Int, value: Long, bits: Int): Long {
             var accumField: AccumulatedField? = null
-            var i: Int
 
-            i = 0
+            var i = 0
             while (i < accumulatedFields.size) {
-                accumField = accumulatedFields.get(i)
+                accumField = accumulatedFields[i]
 
-                if ((accumField!!.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
+                if ((accumField.mesgNum == mesgNum) && (accumField.destFieldNum == destFieldNum)) {
                     break
                 }
                 i++
             }
 
             if (i == accumulatedFields.size) {
-                accumField = Decode.AccumulatedField(mesgNum, destFieldNum)
+                accumField = AccumulatedField(mesgNum, destFieldNum)
                 accumulatedFields.add(accumField)
             }
 
@@ -124,17 +118,16 @@ class Decode : MesgSource {
 
     private var hasDevData = false
     private var state: STATE? = null
-    private var fileHdrOffset: Byte = 0
-    private var fileHdrSize: Byte = 0
+    private var fileHdrOffset: Int = 0
+    private var fileHdrSize: Int = 0
     private var fileDataSize: Long = 0
     private var fileBytesLeft: Long = 0
     private var crc = 0
     private var mesg: Mesg? = null
     private var localMesgIndex = 0
-    private val localMesgDefs: Array<MesgDefinition>? =
-        arrayOfNulls<MesgDefinition>(Fit.MAX_LOCAL_MESGS)
-    private val developerDataIds = HashMap<Short?, DeveloperDataIdMesg?>()
-    private val developerFields = HashMap<Short?, HashMap<Short?, FieldDescriptionMesg?>?>()
+    private val localMesgDefs: Array<MesgDefinition?> = arrayOfNulls(Fit.MAX_LOCAL_MESGS)
+    private val developerDataIds = HashMap<Short, DeveloperDataIdMesg>()
+    private val developerFields = HashMap<Short, HashMap<Short, FieldDescriptionMesg>>()
     private var decoderMesgIndex = 0
 
     /**
@@ -147,26 +140,25 @@ class Decode : MesgSource {
     private var fieldIndex = 0
     private var fieldDataIndex = 0
     private var fieldBytesLeft = 0
-    private val fieldData: ByteArray? = ByteArray(Fit.MAX_FIELD_SIZE)
+    private val fieldData: ByteArray = ByteArray(Fit.MAX_FIELD_SIZE)
     private var lastTimeOffset = 0
     private var timestamp: Long = 0
     private var systemTimeOffset: Long = 0
-    private val accumulator: Accumulator = Decode.Accumulator()
+    private val accumulator: Accumulator = Accumulator()
     private var pause = false
-    private var `in`: InputStream? = null
+    private var inputStream: InputStream? = null
     private var instreamIsComplete = true
     /**
      * Gets the property that indicates that the file has an invalid data size
-     * 
+     *
      * @return true if file has an invalid data size
      */
     /**
      * Sets the Invalid Data size Property (so that it can be reset)
-     * 
+     *
      * @param value
      * boolean value to set
      */
-    @JvmField
     var invalidFileDataSize: Boolean = false
     private var headerException: String? = null
     private var currentByteOffset = 0
@@ -191,7 +183,7 @@ class Decode : MesgSource {
 
     fun nextFile() {
         // Only reset the decoder if we have the entire chained file
-        if (instreamIsComplete == true) {
+        if (instreamIsComplete) {
             fileBytesLeft = 3 // Header byte + CRC.
             fileHdrOffset = 0
             crc = 0
@@ -204,8 +196,8 @@ class Decode : MesgSource {
         }
     }
 
-    override fun addListener(mesgListener: MesgListener?) {
-        if ((mesgListener != null) && !mesgListeners.contains(mesgListener)) {
+    override fun addListener(mesgListener: MesgListener) {
+        if (!mesgListeners.contains(mesgListener)) {
             mesgListeners.add(mesgListener)
         }
     }
@@ -216,8 +208,8 @@ class Decode : MesgSource {
         }
     }
 
-    fun addListener(listener: DeveloperFieldDescriptionListener?) {
-        if ((listener != null) && !devFieldDescListeners.contains(listener)) {
+    fun addListener(listener: DeveloperFieldDescriptionListener) {
+        if (!devFieldDescListeners.contains(listener)) {
             devFieldDescListeners.add(listener)
         }
     }
@@ -237,7 +229,7 @@ class Decode : MesgSource {
     fun skipHeader() {
         // Do not allow changing the settings after read has started
 
-        if (`in` != null) {
+        if (inputStream != null) {
             throw FitRuntimeException("Can't set skipHeader option after Decode started!")
         }
         // Skip header decode
@@ -251,11 +243,11 @@ class Decode : MesgSource {
      * If EOF is encountered no exception is raised.  Caller may choose to
      * call resume() possibly after more bytes have arrived in the stream.
      * May only be set prior to first calling read().
-     * 
+     *
      */
     fun incompleteStream() {
         // Do not allow changing the settings after read has started
-        if (`in` != null) {
+        if (inputStream != null) {
             throw FitRuntimeException("Can't set incompleteStream option after Decode started!")
         }
         // Don't raise an error if eof is encountered during decode,
@@ -269,21 +261,21 @@ class Decode : MesgSource {
      * CSV tool to allow for override at the application level. If this
      * behaviour is desired by default, Fit.ENABLE_LEGACY_BEHAVIOUR should
      * be modified instead. Can only be called before calling resume().
-     * 
+     *
      */
     fun showInvalidValues() {
         // Do not allow changing the settings after read has started
-        if (`in` != null) {
+        if (inputStream != null) {
             throw FitRuntimeException("Can't set showInvalidValues option after Decode started!")
         }
 
-        FieldBase.Companion.forceShowInvalids = true
+        FieldBase.forceShowInvalids = true
     }
 
     /**
      * Reads a FIT binary file.
-     * 
-     * @param in
+     *
+     * @param inputStream
      * file input stream
      * @param mesgListener
      * message listener
@@ -292,8 +284,8 @@ class Decode : MesgSource {
      * @return true if finished reading file
      */
     fun read(
-        `in`: InputStream,
-        mesgListener: MesgListener?,
+        inputStream: InputStream,
+        mesgListener: MesgListener,
         mesgDefListener: MesgDefinitionListener?
     ): Boolean {
         var status = true
@@ -301,8 +293,8 @@ class Decode : MesgSource {
         addListener(mesgDefListener)
         currentByteOffset = 0
         try {
-            while ((bytesAvailable(`in`)) && (status == true)) { // try to read a file while more data is available.
-                status = read(`in`)
+            while (bytesAvailable(inputStream) && status) { // try to read a file while more data is available.
+                status = read(inputStream)
                 nextFile()
             }
         } catch (e: IOException) {
@@ -314,20 +306,20 @@ class Decode : MesgSource {
 
     /**
      * Reads a FIT binary file.
-     * 
-     * @param in
+     *
+     * @param inputStream
      * file input stream
      * @param mesgListener
      * message listener
      * @return true if finished reading file
      */
-    fun read(`in`: InputStream?, mesgListener: MesgListener?): Boolean {
+    fun read(inputStream: InputStream, mesgListener: MesgListener): Boolean {
         addListener(mesgListener)
-        return read(`in`)
+        return read(inputStream)
     }
 
-    fun read(`in`: InputStream?): Boolean {
-        this.`in` = `in`
+    fun read(inputStream: InputStream): Boolean {
+        this.inputStream = inputStream
         return resume()
     }
 
@@ -337,7 +329,7 @@ class Decode : MesgSource {
 
     /**
      * Resumes reading the file.
-     * 
+     *
      * @return true if finished reading file
      */
     fun resume(): Boolean {
@@ -358,27 +350,23 @@ class Decode : MesgSource {
                         RETURN.MESG -> {
                             when (mesg!!.num) {
                                 MesgNum.DEVELOPER_DATA_ID -> {
-                                    val devIdMesg = DeveloperDataIdMesg(mesg)
-                                    val index = devIdMesg.getDeveloperDataIndex()
-                                    developerDataIds.put(index, devIdMesg)
-                                    developerFields.put(
-                                        index,
-                                        HashMap<Short?, FieldDescriptionMesg?>()
-                                    )
+                                    val devIdMesg = DeveloperDataIdMesg(mesg!!)
+                                    devIdMesg.developerDataIndex?.let { index ->
+                                        developerDataIds[index] = devIdMesg
+                                        developerFields[index] = HashMap()
+                                    }
                                 }
 
                                 MesgNum.FIELD_DESCRIPTION -> {
-                                    val fieldDescriptionMesg = FieldDescriptionMesg(mesg)
-                                    val index = fieldDescriptionMesg.getDeveloperDataIndex()
-                                    if (developerFields.containsKey(index)) {
-                                        developerFields.get(index)!!
-                                            .put(
-                                                fieldDescriptionMesg.getFieldDefinitionNumber(),
-                                                fieldDescriptionMesg
-                                            )
+                                    val fieldDescriptionMesg = FieldDescriptionMesg(mesg!!)
+                                    val index = fieldDescriptionMesg.developerDataIndex
+
+                                    developerFields[index]?.let {
+                                        it[fieldDescriptionMesg.fieldDefinitionNumber!!] =
+                                            fieldDescriptionMesg
 
                                         val description = DeveloperFieldDescription(
-                                            developerDataIds.get(index),
+                                            developerDataIds[index]!!,
                                             fieldDescriptionMesg
                                         )
                                         for (listener in devFieldDescListeners) {
@@ -388,12 +376,13 @@ class Decode : MesgSource {
                                 }
                             }
                             for (mesgListener in mesgListeners) {
-                                mesgListener.onMesg(mesg)
+
+                                mesgListener.onMesg(mesg!!)
                             }
                         }
 
                         RETURN.MESG_DEF -> for (mesgDefListener in mesgDefListeners) {
-                            mesgDefListener.onMesgDefinition(localMesgDefs!![localMesgIndex])
+                            mesgDefListener.onMesgDefinition(localMesgDefs[localMesgIndex]!!)
                         }
 
                         RETURN.END_OF_FILE -> {
@@ -402,46 +391,41 @@ class Decode : MesgSource {
                             currentByteOffset++
                             return true
                         }
-
-                        else -> {
-                            currentByteOffset++
-                            throw FitRuntimeException("FIT decode error: " + decodeReturn + " at byte: " + currentByteOffset)
-                        }
                     }
                     // Increment offset from the start of the file to get byte location for error reporting
                     currentByteOffset++
                     currentByteIndex++
                 }
                 currentByteIndex = 0
-            } while ((`in`!!.read(buffer, 0, buffer.size).also { bytesRead = it }) >= 0)
+            } while ((inputStream!!.read(buffer, 0, buffer.size).also { bytesRead = it }) >= 0)
         } catch (e: IOException) {
             throw FitRuntimeException(e)
         }
 
-        if ((instreamIsComplete == true) && (fileBytesLeft != DECODE_DATA_RECORDS_ONLY)) {
+        if (instreamIsComplete && (fileBytesLeft != DECODE_DATA_RECORDS_ONLY)) {
             // When decoding a complete file we should exit via END_OF_FILE state only
-            throw FitRuntimeException("FIT decode error: Unexpected end of input stream at byte: " + currentByteOffset)
+            throw FitRuntimeException("FIT decode error: Unexpected end of input stream at byte: $currentByteOffset")
         }
-        if (instreamIsComplete == false) {
+        if (!instreamIsComplete) {
             // If stream is not yet complete caller can resume() when there is more data
             // or decide there was an error.
-            if ((decodeReturn == RETURN.MESG) || (decodeReturn == RETURN.MESG_DEF)) {
+            return if ((decodeReturn == RETURN.MESG) || (decodeReturn == RETURN.MESG_DEF)) {
                 // Our stream ended on a complete message, maybe we are done decoding
-                return true
+                true
             } else {
                 // EOF was encountered mid message.  Caller may want to resume once
                 // more bytes are available.
-                return false
+                false
             }
         } else {
-            if ((decodeReturn == RETURN.MESG) || (decodeReturn == RETURN.MESG_DEF)) {
+            return if ((decodeReturn == RETURN.MESG) || (decodeReturn == RETURN.MESG_DEF)) {
                 // Our stream ended on a complete message, we are done decoding
-                return true
+                true
             } else {
                 if ((!invalidDataSize) || (!invalidFileDataSize)) {
-                    throw FitRuntimeException("FIT decode error: Unexpected end of input stream at byte: " + currentByteOffset)
+                    throw FitRuntimeException("FIT decode error: Unexpected end of input stream at byte: $currentByteOffset")
                 } else {
-                    return true
+                    true
                 }
             }
         }
@@ -449,21 +433,19 @@ class Decode : MesgSource {
 
     /**
      * Reads the header to determine if the file is FIT.
-     * 
-     * @param in
+     *
+     * @param inputStream
      * file input stream
-     * 
+     *
      * @return true if file is FIT
      */
-    fun isFileFit(`in`: InputStream): Boolean {
+    fun isFileFit(inputStream: InputStream): Boolean {
         try {
             do {
                 while (currentByteIndex < bytesRead) {
                     when (this.read(buffer[currentByteIndex])) {
                         RETURN.CONTINUE, RETURN.MESG, RETURN.MESG_DEF -> {}
                         RETURN.END_OF_FILE -> return true
-
-                        else -> return false
                     }
 
                     if (this.state != STATE.FILE_HDR) {
@@ -472,7 +454,7 @@ class Decode : MesgSource {
                     currentByteIndex++
                 }
                 currentByteIndex = 0
-            } while ((`in`.read(buffer, 0, buffer.size).also { bytesRead = it }) >= 0)
+            } while ((inputStream.read(buffer, 0, buffer.size).also { bytesRead = it }) >= 0)
         } catch (e: IOException) {
             throw FitRuntimeException(e)
         } catch (e: FitRuntimeException) {
@@ -486,13 +468,13 @@ class Decode : MesgSource {
 
     /**
      * Reads the FIT binary file header and crc to check compatibility and integrity.
-     * 
-     * @param in
+     *
+     * @param inputStream
      * file input stream
-     * 
+     *
      * @return true if file is ok (not corrupt)
      */
-    fun checkFileIntegrity(`in`: InputStream): Boolean {
+    fun checkFileIntegrity(inputStream: InputStream): Boolean {
         var status = true
 
         try {
@@ -501,12 +483,11 @@ class Decode : MesgSource {
                     when (this.read(buffer[currentByteIndex])) {
                         RETURN.CONTINUE, RETURN.MESG, RETURN.MESG_DEF -> {}
                         RETURN.END_OF_FILE -> this.nextFile()
-                        else -> status = false
                     }
                     currentByteIndex++
                 }
                 currentByteIndex = 0
-            } while ((`in`.read(buffer, 0, buffer.size).also { bytesRead = it }) >= 0)
+            } while ((inputStream.read(buffer, 0, buffer.size).also { bytesRead = it }) >= 0)
         } catch (e: IOException) {
             throw FitRuntimeException(e)
         } catch (e: FitRuntimeException) {
@@ -543,13 +524,13 @@ class Decode : MesgSource {
 
             if ((fileBytesLeft == 1L) && (state!!.ordinal > STATE.FILE_HDR.ordinal)) { // CRC low byte.
                 if (state != STATE.RECORD) {
-                    throw FitRuntimeException("FIT decode error: Decoder not in correct state after last data byte in file.  Check message definitions. Error at byte: " + currentByteOffset)
+                    throw FitRuntimeException("FIT decode error: Decoder not in correct state after last data byte in file.  Check message definitions. Error at byte: $currentByteOffset")
                 }
 
                 return RETURN.CONTINUE // Next byte.
             } else if ((fileBytesLeft == 0L) && (state!!.ordinal > STATE.FILE_HDR.ordinal)) { // CRC high byte.
                 if (crc != 0) {
-                    throw FitRuntimeException("FIT decode error: File CRC failed. Error at byte: " + currentByteOffset)
+                    throw FitRuntimeException("FIT decode error: File CRC failed. Error at byte: $currentByteOffset")
                 }
 
                 return RETURN.END_OF_FILE
@@ -566,9 +547,9 @@ class Decode : MesgSource {
                         crc = 0
                     } else if (data < FIT_HEADER_SIZE_NO_CRC) {
                         headerException =
-                            "FIT decode error: Header size is invalid. Error at byte: " + currentByteOffset
+                            "FIT decode error: Header size is invalid. Error at byte: $currentByteOffset"
                     } else {
-                        fileHdrSize = data
+                        fileHdrSize = data.toInt()
                         fileBytesLeft = (fileHdrSize + 2).toLong()
                     }
 
@@ -587,52 +568,52 @@ class Decode : MesgSource {
                             invalidDataSize = true
                             invalidFileDataSize = true
                             headerException =
-                                "FIT decode error: File Size is 0. Error at byte: " + currentByteOffset
+                                "FIT decode error: File Size is 0. Error at byte: $currentByteOffset"
                         }
                     }
 
                     8 -> if (data != '.'.code.toByte()) {
                         headerException =
-                            "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: " + currentByteOffset
+                            "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: $currentByteOffset"
                     }
 
                     9 -> if (data != 'F'.code.toByte()) {
                         headerException =
-                            "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: " + currentByteOffset
+                            "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: $currentByteOffset"
                     }
 
                     10 -> if (data != 'I'.code.toByte()) {
                         headerException =
-                            "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: " + currentByteOffset
+                            "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: $currentByteOffset"
                     }
 
                     11 -> {
                         if (data != 'T'.code.toByte()) {
                             headerException =
-                                "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: " + currentByteOffset
+                                "FIT decode error: File is not FIT format.  Check file header data type. Error at byte: $currentByteOffset"
                         }
-                        if ((headerException != null) && (fileHdrSize.toInt() == FIT_HEADER_SIZE_NO_CRC)) {
+                        if ((headerException != null) && (fileHdrSize == FIT_HEADER_SIZE_NO_CRC)) {
                             throw FitRuntimeException(headerException)
                         }
                     }
 
                     12 -> {}
-                    13 ->                 // CRC byte 2
-                        if (headerException != null) {
-                            // Error at current byte, increment index so we do not attempt to decode it again.
-                            currentByteIndex++
-                            throw FitRuntimeException(headerException)
-                        }
+                    // CRC byte 2
+                    13 -> if (headerException != null) {
+                        // Error at current byte, increment index so we do not attempt to decode it again.
+                        currentByteIndex++
+                        throw FitRuntimeException(headerException)
+                    }
 
                     else -> {}
                 }
 
-                if ((fileHdrOffset == fileHdrSize) && (fileHdrSize.toInt() != 0)) {
+                if ((fileHdrOffset == fileHdrSize) && (fileHdrSize != 0)) {
                     // We don't care about the CRC when the file size is invalid
-                    if ((invalidDataSize) && (invalidFileDataSize)) {
-                        fileBytesLeft = DECODE_DATA_RECORDS_ONLY
+                    fileBytesLeft = if ((invalidDataSize) && (invalidFileDataSize)) {
+                        DECODE_DATA_RECORDS_ONLY
                     } else {
-                        fileBytesLeft = fileDataSize + 2 // include crc
+                        fileDataSize + 2 // include crc
                     }
                     state = STATE.RECORD
                 }
@@ -644,36 +625,35 @@ class Decode : MesgSource {
 
                 if (fileBytesLeft > 1) {
                     if ((data.toInt() and Fit.HDR_TIME_REC_BIT) != 0) {
-                        val timestampField: Field?
                         val timeOffset = data.toInt() and Fit.HDR_TIME_OFFSET_MASK
 
                         localMesgIndex =
                             (data.toInt() and Fit.HDR_TIME_TYPE_MASK) shr Fit.HDR_TIME_TYPE_SHIFT
 
-                        if (localMesgDefs!![localMesgIndex] == null) {
-                            throw FitRuntimeException("FIT decode error: Missing message definition for local message number " + localMesgIndex + ". Error at byte: " + currentByteOffset)
-                        }
-                        timestampField = Factory.createField(
-                            localMesgDefs[localMesgIndex].num,
+                        val mesgDefs = localMesgDefs[localMesgIndex]
+                            ?: throw FitRuntimeException("FIT decode error: Missing message definition for local message number $localMesgIndex. Error at byte: $currentByteOffset")
+                        val timestampField = Factory.createField(
+                            mesgDefs.num,
                             Fit.FIELD_NUM_TIMESTAMP
                         )
                         timestamp += ((timeOffset - lastTimeOffset) and Fit.HDR_TIME_OFFSET_MASK).toLong()
                         lastTimeOffset = timeOffset
-                        timestampField.setValue(timestamp)
+                        timestampField.value = timestamp
 
-                        mesg = Factory.createMesg(localMesgDefs[localMesgIndex].num)
-                        mesg!!.localNum = localMesgIndex
-                        mesg!!.systemTimeOffset = systemTimeOffset
-                        mesg!!.setDecoderMessageIndex(decoderMesgIndex++)
-                        mesg!!.addField(timestampField)
+                        mesg = Factory.createMesg(mesgDefs.num).also {
+                            it.localNum = localMesgIndex
+                            it.systemTimeOffset = systemTimeOffset
+                            it.setDecoderMessageIndex(decoderMesgIndex++)
+                            it.addField(timestampField)
+                        }
 
                         // Determine where to go next
-                        if (localMesgDefs[localMesgIndex].fields.size != 0) {
+                        state = if (mesgDefs.fields.isNotEmpty()) {
                             // There is native data to parse
-                            state = STATE.FIELD_DATA
-                        } else if (localMesgDefs[localMesgIndex].getDeveloperFieldTotalSize() > 0) {
+                            STATE.FIELD_DATA
+                        } else if (mesgDefs.developerFieldTotalSize > 0) {
                             // There is no native data to parse but there are developer fields
-                            state = STATE.DEV_FIELD_DATA
+                            STATE.DEV_FIELD_DATA
                         } else {
                             // There is no data to parse return the message
                             return RETURN.MESG
@@ -682,8 +662,9 @@ class Decode : MesgSource {
                         localMesgIndex = data.toInt() and Fit.HDR_TYPE_MASK
 
                         if ((data.toInt() and Fit.HDR_TYPE_DEF_BIT) != 0) {
-                            localMesgDefs!![localMesgIndex] = MesgDefinition()
-                            localMesgDefs[localMesgIndex].localNum = localMesgIndex
+                            localMesgDefs[localMesgIndex] = MesgDefinition().also {
+                                it.localNum = localMesgIndex
+                            }
                             hasDevData = false
 
                             if ((data.toInt() and Fit.HDR_DEV_FIELDS_BIT) != 0) {
@@ -693,20 +674,22 @@ class Decode : MesgSource {
 
                             state = STATE.RESERVED1
                         } else {
-                            if (localMesgDefs!![localMesgIndex] == null) throw FitRuntimeException("FIT decode error: Missing message definition for local message number " + localMesgIndex + ". Error at byte: " + currentByteOffset)
+                            val mesgDefs = localMesgDefs[localMesgIndex]
+                                ?: throw FitRuntimeException("FIT decode error: Missing message definition for local message number $localMesgIndex. Error at byte: $currentByteOffset")
 
-                            mesg = Factory.createMesg(localMesgDefs[localMesgIndex].num)
-                            mesg!!.localNum = localMesgIndex
-                            mesg!!.systemTimeOffset = systemTimeOffset
-                            mesg!!.setDecoderMessageIndex(decoderMesgIndex++)
+                            mesg = Factory.createMesg(mesgDefs.num).also {
+                                it.localNum = localMesgIndex
+                                it.systemTimeOffset = systemTimeOffset
+                                it.setDecoderMessageIndex(decoderMesgIndex++)
+                            }
 
                             // Determine where to go next
-                            if (localMesgDefs[localMesgIndex].fields.size != 0) {
+                            state = if (mesgDefs.fields.isNotEmpty()) {
                                 // There is native data to parse
-                                state = STATE.FIELD_DATA
-                            } else if (localMesgDefs[localMesgIndex].getDeveloperFieldTotalSize() > 0) {
+                                STATE.FIELD_DATA
+                            } else if (mesgDefs.developerFieldTotalSize > 0) {
                                 // There is no native data to parse but there are developer fields
-                                state = STATE.DEV_FIELD_DATA
+                                STATE.DEV_FIELD_DATA
                             } else {
                                 // There is no data to parse return the message
                                 return RETURN.MESG
@@ -721,27 +704,27 @@ class Decode : MesgSource {
 
             STATE.RESERVED1 -> state = STATE.ARCH
             STATE.ARCH -> {
-                localMesgDefs!![localMesgIndex].arch = (data.toInt() and 0xFF)
+                localMesgDefs[localMesgIndex]!!.arch = (data.toInt() and 0xFF)
                 state = STATE.MESG_NUM_0
             }
 
             STATE.MESG_NUM_0 -> {
                 // Read the global message number bytes in as if they are in little
                 // endian format.
-                localMesgDefs!![localMesgIndex].num = (data.toInt() and 0xFF)
+                localMesgDefs[localMesgIndex]!!.num = (data.toInt() and 0xFF)
                 state = STATE.MESG_NUM_1
             }
 
             STATE.MESG_NUM_1 -> {
-                localMesgDefs!![localMesgIndex].num =
-                    localMesgDefs[localMesgIndex].num or ((data.toInt() and 0xFF) shl 8)
+                localMesgDefs[localMesgIndex]!!.num =
+                    localMesgDefs[localMesgIndex]!!.num or ((data.toInt() and 0xFF) shl 8)
 
                 // We have to check for endianness.
-                if (localMesgDefs[localMesgIndex].arch == Fit.ARCH_ENDIAN_BIG) {
-                    localMesgDefs[localMesgIndex].num =
-                        (localMesgDefs[localMesgIndex].num shr 8) or ((localMesgDefs[localMesgIndex].num and 0xFF) shl 8)
-                } else if (localMesgDefs[localMesgIndex].arch != Fit.ARCH_ENDIAN_LITTLE) {
-                    throw FitRuntimeException("FIT decode error: Endian " + localMesgDefs[localMesgIndex].arch + " not supported. Error at byte: " + currentByteOffset)
+                if (localMesgDefs[localMesgIndex]!!.arch == Fit.ARCH_ENDIAN_BIG) {
+                    localMesgDefs[localMesgIndex]!!.num =
+                        (localMesgDefs[localMesgIndex]!!.num shr 8) or ((localMesgDefs[localMesgIndex]!!.num and 0xFF) shl 8)
+                } else if (localMesgDefs[localMesgIndex]!!.arch != Fit.ARCH_ENDIAN_LITTLE) {
+                    throw FitRuntimeException("FIT decode error: Endian " + localMesgDefs[localMesgIndex]!!.arch + " not supported. Error at byte: " + currentByteOffset)
                 }
 
                 state = STATE.NUM_FIELDS
@@ -763,20 +746,18 @@ class Decode : MesgSource {
             }
 
             STATE.FIELD_NUM -> {
-                localMesgDefs!![localMesgIndex].fields.add(FieldDefinition())
-                localMesgDefs[localMesgIndex].fields.get(fieldIndex).num = (data.toInt() and 0xFF)
+                localMesgDefs[localMesgIndex]!!.fields.add(FieldDefinition())
+                localMesgDefs[localMesgIndex]!!.fields[fieldIndex].num = (data.toInt() and 0xFF)
                 state = STATE.FIELD_SIZE
             }
 
             STATE.FIELD_SIZE -> {
-                localMesgDefs!![localMesgIndex].fields.get(fieldIndex).size =
-                    (data.toInt() and 0xFF)
+                localMesgDefs[localMesgIndex]!!.fields[fieldIndex].size = (data.toInt() and 0xFF)
                 state = STATE.FIELD_TYPE
             }
 
             STATE.FIELD_TYPE -> {
-                localMesgDefs!![localMesgIndex].fields.get(fieldIndex).type =
-                    (data.toInt() and 0xFF)
+                localMesgDefs[localMesgIndex]!!.fields[fieldIndex].type = (data.toInt() and 0xFF)
 
                 if (++fieldIndex >= numFields) {
                     if (hasDevData) {
@@ -803,31 +784,31 @@ class Decode : MesgSource {
             }
 
             STATE.DEV_FIELD_NUM -> {
-                localMesgDefs!![localMesgIndex].developerFields.add(DeveloperFieldDefinition())
-                localMesgDefs[localMesgIndex].developerFields.get(fieldIndex)
-                    .setNum((data.toInt() and 0xFF).toShort())
+                localMesgDefs[localMesgIndex]!!.developerFields.add(DeveloperFieldDefinition())
+                localMesgDefs[localMesgIndex]!!.developerFields[fieldIndex].num =
+                    (data.toInt() and 0xFF).toShort()
                 state = STATE.DEV_FIELD_SIZE
             }
 
             STATE.DEV_FIELD_SIZE -> {
-                localMesgDefs!![localMesgIndex].developerFields.get(fieldIndex)
-                    .setSize(data.toInt() and 0xFF)
+                localMesgDefs[localMesgIndex]!!.developerFields[fieldIndex].size =
+                    (data.toInt() and 0xFF)
                 state = STATE.DEV_FIELD_DEV_ID
             }
 
             STATE.DEV_FIELD_DEV_ID -> {
                 val fieldDefinition: DeveloperFieldDefinition =
-                    localMesgDefs!![localMesgIndex].developerFields.get(fieldIndex)
+                    localMesgDefs[localMesgIndex]!!.developerFields[fieldIndex]
                 val castedData = data.toShort()
                 if (developerFields.containsKey(castedData)) {
                     // There is a Developer ID Message for this Field
-                    fieldDefinition.setDeveloperDataIdMesg(developerDataIds.get(castedData))
+                    fieldDefinition.setDeveloperDataIdMesg(developerDataIds[castedData])
 
-                    if (developerFields.get(castedData)!!.containsKey(fieldDefinition.getNum())) {
+                    if (developerFields[castedData]!!.containsKey(fieldDefinition.num)) {
                         // The Developer has Defined this field number
                         val fieldDescription =
-                            developerFields.get(castedData)!!.get(fieldDefinition.getNum())
-                        fieldDefinition.setFieldDescription(fieldDescription)
+                            developerFields[castedData]!![fieldDefinition.num]
+                        fieldDefinition.setFieldDescription(fieldDescription!!)
                     }
                 }
 
@@ -840,134 +821,128 @@ class Decode : MesgSource {
             }
 
             STATE.FIELD_DATA -> {
-                var fieldDef = localMesgDefs!![localMesgIndex].fields.get(fieldIndex)
+                var fieldDef = localMesgDefs[localMesgIndex]!!.fields[fieldIndex]
 
                 while (fieldBytesLeft == 0) {
                     fieldDataIndex = 0
                     fieldBytesLeft = fieldDef.size
 
                     if (fieldBytesLeft == 0) {
-                        if ((fieldIndex + 1) >= localMesgDefs[localMesgIndex].fields.size) {
+                        if ((fieldIndex + 1) >= localMesgDefs[localMesgIndex]!!.fields.size) {
                             break
                         }
-                        fieldDef = localMesgDefs[localMesgIndex].fields.get(++fieldIndex)
+                        fieldDef = localMesgDefs[localMesgIndex]!!.fields[++fieldIndex]
                     }
                 }
 
-                fieldData!![fieldDataIndex++] = data
+                fieldData[fieldDataIndex++] = data
                 fieldBytesLeft--
 
                 if (fieldBytesLeft == 0) {
-                    var field: Field?
-                    val typeSize: Int
-                    val elements: Int
                     var read = true
 
                     if ((fieldDef.type and Fit.BASE_TYPE_NUM_MASK) < Fit.BASE_TYPES) { // Ignore field if base type not supported.
-                        typeSize = Fit.baseTypeSizes[(fieldDef.type and Fit.BASE_TYPE_NUM_MASK)]
-                        elements = fieldDef.size / typeSize
+                        val typeSize = Fit.baseTypeSizes[(fieldDef.type and Fit.BASE_TYPE_NUM_MASK)]
+                        val elements = fieldDef.size / typeSize
 
                         if (((fieldDef.type and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) &&
-                            ((localMesgDefs[localMesgIndex].arch and Fit.ARCH_ENDIAN_MASK) != Fit.ARCH_ENDIAN_BIG)
+                            ((localMesgDefs[localMesgIndex]!!.arch and Fit.ARCH_ENDIAN_MASK) != Fit.ARCH_ENDIAN_BIG)
                         ) {
                             FlipFieldDataByteOrder(typeSize, elements)
                         }
 
-                        field = Factory.createField(mesg!!.num, fieldDef.num)
+                        var field = Factory.createField(mesg!!.num, fieldDef.num)
 
-                        if (field != null) {
-                            // For unknown fields the factory will create a field with the type set to 0, i.e. enum
-                            // In this situation we should use the type found in the fieldDef instead
-                            if (field.getName() == "unknown") {
-                                field = Field(
-                                    "unknown",
-                                    fieldDef.num,
-                                    fieldDef.type,
-                                    1.0,
-                                    0.0,
-                                    "",
-                                    false,
-                                    Profile.Type.Companion.fromBaseType(fieldDef.type)
-                                )
+                        // For unknown fields the factory will create a field with the type set to 0, i.e. enum
+                        // In this situation we should use the type found in the fieldDef instead
+                        if (field.name == "unknown") {
+                            field = Field(
+                                "unknown",
+                                fieldDef.num,
+                                fieldDef.type,
+                                1.0,
+                                0.0,
+                                "",
+                                false,
+                                Profile.Type.fromBaseType(fieldDef.type)
+                            )
+                        }
+
+                        if (field.type != fieldDef.type) {
+                            val profileSize =
+                                Fit.baseTypeSizes[(field.type and Fit.BASE_TYPE_NUM_MASK)]
+
+                            if (typeSize < profileSize) {
+                                field.type = fieldDef.type
+                            } else if (typeSize != profileSize) {
+                                // Demotion is hard. Don't read the field if the
+                                // sizes are different. Use the profile type if the
+                                // signedness of the field has changed.
+                                read = false
                             }
+                        }
 
-                            if (field.type != fieldDef.type) {
-                                val profileSize =
-                                    Fit.baseTypeSizes[(field.type and Fit.BASE_TYPE_NUM_MASK)]
+                        if (read) {
+                            field.read(ByteArrayInputStream(fieldData), fieldDef.size)
+                        }
 
-                                if (typeSize < profileSize) {
-                                    field.type = fieldDef.type
-                                } else if (typeSize != profileSize) {
-                                    // Demotion is hard. Don't read the field if the
-                                    // sizes are different. Use the profile type if the
-                                    // signedness of the field has changed.
-                                    read = false
-                                }
+                        if (fieldDef.num == Fit.FIELD_NUM_TIMESTAMP) {
+                            val fieldTimestamp = field.longValue
+
+                            if (fieldTimestamp != null) {
+                                timestamp = fieldTimestamp
+                                lastTimeOffset =
+                                    (timestamp and Fit.HDR_TIME_OFFSET_MASK.toLong()).toInt()
                             }
-
-                            if (read) {
-                                field.read(ByteArrayInputStream(fieldData), fieldDef.size)
-                            }
-
-                            if (fieldDef.num == Fit.FIELD_NUM_TIMESTAMP) {
-                                val fieldTimestamp = field.getLongValue()
-
-                                if (fieldTimestamp != null) {
-                                    timestamp = fieldTimestamp
-                                    lastTimeOffset =
-                                        (timestamp and Fit.HDR_TIME_OFFSET_MASK.toLong()).toInt()
-                                }
-                            }
-                            // Allow messages containing the accumulated field to set the accumulated value
-                            if (field.getIsAccumulated()) {
-                                var i: Int
-                                i = 0
-                                while (i < field.getNumValues()) {
-                                    var value = (field.getRawValue(i) as Number).toLong()
-                                    for (containingField in mesg!!.fields) {
-                                        for (component in containingField.components) {
-                                            if ((component.fieldNum == field.num) && (component.accumulate)) {
-                                                value =
-                                                    ((((value / field.scale) - field.offset) + component.offset) * component.scale).toLong()
-                                            }
+                        }
+                        // Allow messages containing the accumulated field to set the accumulated value
+                        if (field.isAccumulated) {
+                            var i = 0
+                            while (i < field.numValues) {
+                                var value = (field.getRawValue(i) as Number).toLong()
+                                for (containingField in mesg!!.fields) {
+                                    for (component in containingField.components) {
+                                        if ((component.fieldNum == field.num) && (component.accumulate)) {
+                                            value =
+                                                ((((value / field.scale) - field.offset) + component.offset) * component.scale).toLong()
                                         }
                                     }
-                                    accumulator.set(mesg!!.num, field.getNum(), value)
-                                    i++
                                 }
+                                accumulator.set(mesg!!.num, field.num, value)
+                                i++
                             }
+                        }
 
-                            if (field.getNumValues() > 0) {
-                                mesg!!.addField(field)
-                            }
+                        if (field.numValues > 0) {
+                            mesg!!.addField(field)
                         }
                     }
 
                     fieldIndex++
 
-                    if (fieldIndex >= localMesgDefs[localMesgIndex].fields.size) {
+                    if (fieldIndex >= localMesgDefs[localMesgIndex]!!.fields.size) {
                         // Now that the entire message is decoded we may evaluate subfields and expand components
                         if (!this.isSkipExpandComponentsEnabled) {
                             var i = 0
                             while (i < mesg!!.fields.size) {
                                 // Determine the active subfield and expand if it has any components
                                 val activeSubfield =
-                                    mesg!!.getActiveSubFieldIndex(mesg!!.fields.get(i).getNum())
+                                    mesg!!.getActiveSubFieldIndex(mesg!!.fields[i].num)
 
                                 if (activeSubfield == Fit.SUBFIELD_INDEX_MAIN_FIELD) {
-                                    if (mesg!!.fields.get(i).components.size > 0) {
+                                    if (mesg!!.fields[i].components.isNotEmpty()) {
                                         // Expand the main field components
                                         expandComponents(
-                                            mesg!!.fields.get(i),
-                                            mesg!!.fields.get(i).components
+                                            mesg!!.fields[i],
+                                            mesg!!.fields[i].components
                                         )
                                     }
                                 } else {
-                                    if (mesg!!.fields.get(i).subFields.get(activeSubfield).components.size > 0) {
+                                    if (mesg!!.fields[i].subFields[activeSubfield].components.isNotEmpty()) {
                                         // Expand the subfield components
                                         expandComponents(
-                                            mesg!!.fields.get(i),
-                                            mesg!!.fields.get(i).subFields.get(activeSubfield).components
+                                            mesg!!.fields[i],
+                                            mesg!!.fields[i].subFields[activeSubfield].components
                                         )
                                     }
                                 }
@@ -976,7 +951,7 @@ class Decode : MesgSource {
                         }
 
                         // Determine where to go next
-                        if (localMesgDefs[localMesgIndex].getDeveloperFieldTotalSize() > 0) {
+                        if (localMesgDefs[localMesgIndex]!!.developerFieldTotalSize > 0) {
                             // There is developer data we need to read it
                             fieldIndex = 0
                             fieldBytesLeft = 0
@@ -991,25 +966,25 @@ class Decode : MesgSource {
             }
 
             STATE.DEV_FIELD_DATA -> {
-                val localMesgDef = localMesgDefs!![localMesgIndex]
+                val localMesgDef = localMesgDefs[localMesgIndex]
                 val fieldDef: DeveloperFieldDefinition =
-                    localMesgDef.developerFields.get(fieldIndex)
+                    localMesgDef!!.developerFields[fieldIndex]
 
                 while (fieldBytesLeft == 0) {
                     fieldDataIndex = 0
-                    fieldBytesLeft = fieldDef.getSize()
+                    fieldBytesLeft = fieldDef.size
 
                     if (fieldBytesLeft == 0) {
-                        if ((fieldIndex + 1) >= localMesgDefs[localMesgIndex].developerFields.size) {
+                        if ((fieldIndex + 1) >= localMesgDefs[localMesgIndex]!!.developerFields.size) {
                             break
                         }
                         fieldBytesLeft =
-                            localMesgDefs[localMesgIndex].developerFields.get(++fieldIndex)
-                                .getSize()
+                            localMesgDefs[localMesgIndex]!!.developerFields[++fieldIndex]
+                                .size
                     }
                 }
 
-                fieldData!![fieldDataIndex++] = data
+                fieldData[fieldDataIndex++] = data
                 fieldBytesLeft--
 
                 if (fieldBytesLeft == 0) {
@@ -1018,20 +993,20 @@ class Decode : MesgSource {
                     val elements: Int
 
                     // Ignore field if type is not supported.
-                    if (((fieldDef.getType() and Fit.BASE_TYPE_NUM_MASK) < Fit.BASE_TYPES)) {
+                    if (((fieldDef.type and Fit.BASE_TYPE_NUM_MASK) < Fit.BASE_TYPES)) {
                         typeSize =
-                            Fit.baseTypeSizes[(fieldDef.getType() and Fit.BASE_TYPE_NUM_MASK)]
-                        elements = fieldDef.getSize() / typeSize
+                            Fit.baseTypeSizes[(fieldDef.type and Fit.BASE_TYPE_NUM_MASK)]
+                        elements = fieldDef.size / typeSize
 
-                        if (((fieldDef.getType() and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) &&
+                        if (((fieldDef.type and Fit.BASE_TYPE_ENDIAN_FLAG) != 0) &&
                             ((localMesgDef.arch and Fit.ARCH_ENDIAN_MASK) != Fit.ARCH_ENDIAN_BIG)
                         ) {
                             FlipFieldDataByteOrder(typeSize, elements)
                         }
 
-                        field.read(ByteArrayInputStream(fieldData), fieldDef.getSize())
+                        field.read(ByteArrayInputStream(fieldData), fieldDef.size)
 
-                        if (field.getNumValues() > 0) {
+                        if (field.numValues > 0) {
                             mesg!!.addDeveloperField(field)
                         }
                     }
@@ -1056,7 +1031,7 @@ class Decode : MesgSource {
         // Swap the bytes for each element.
         for (element in 0..<elements) {
             for (i in 0..<(typeSize / 2)) {
-                val tmp = fieldData!![element * typeSize + i]
+                val tmp = fieldData[element * typeSize + i]
                 fieldData[element * typeSize + i] =
                     fieldData[element * typeSize + typeSize - i - 1]
                 fieldData[element * typeSize + typeSize - i - 1] = tmp
@@ -1069,11 +1044,9 @@ class Decode : MesgSource {
         componentList: ArrayList<FieldComponent>
     ) {
         var offset = 0
-        var i: Int
-
-        i = 0
+        var i = 0
         while (i < componentList.size) {
-            val component = componentList.get(i)
+            val component = componentList[i]
 
             if (component.fieldNum != Fit.FIELD_NUM_INVALID) {
                 val componentField = Factory.createField(mesg!!.num, component.fieldNum)
@@ -1082,13 +1055,13 @@ class Decode : MesgSource {
                 var bitsValue: Long?
 
                 // Mark that this field has been generated through expansion
-                componentField.setIsExpanded(true)
+                componentField.isExpanded = true
 
                 // Get raw bits value
                 bitsValue = containingField.getBitsValue(
                     offset,
                     component.bits,
-                    componentField.isSignedInteger()
+                    componentField.isSignedInteger
                 )
 
                 if (bitsValue == null) {
@@ -1109,24 +1082,21 @@ class Decode : MesgSource {
                 if (componentField.components.size == 1) {
                     val nestedRawValue: Any?
 
-                    if (is64BitType(componentField.getType())) {
-                        nestedRawValue = applyScaleOffset64(
+                    nestedRawValue = if (is64BitType(componentField.type)) {
+                        applyScaleOffset64(
                             bitsValue,
-                            componentField.getType(),
+                            componentField.type,
                             component.scale,
                             component.offset,
-                            componentField.components.get(0).scale,
-                            componentField.components.get(0).offset
+                            componentField.components[0].scale,
+                            componentField.components[0].offset
                         )
                     } else {
-                        nestedRawValue =
-                            (((bitsValue / component.scale) - component.offset) + componentField.components.get(
-                                0
-                            ).offset) * componentField.components.get(0).scale
+                        (((bitsValue / component.scale) - component.offset) + componentField.components[0].offset) * componentField.components[0].scale
                     }
 
                     if (mesg!!.hasField(componentField.num)) {
-                        mesg!!.getField(componentField.num).addRawValue(nestedRawValue)
+                        mesg!!.getField(componentField.num)?.addRawValue(nestedRawValue)
                     } else {
                         componentField.addRawValue(nestedRawValue)
                         mesg!!.addField(componentField)
@@ -1139,13 +1109,13 @@ class Decode : MesgSource {
                         mask =
                             (1L shl Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]) - 1
                         if (mesg!!.hasField(componentField.num)) {
-                            mesg!!.getField(componentField.num).addValue(bitsValue!! and mask)
+                            mesg!!.getField(componentField.num)?.addValue(bitsValue!! and mask)
                         } else {
                             componentField.addValue(bitsValue!! and mask)
                             mesg!!.addField(componentField)
                         }
                         bitsValue =
-                            bitsValue ushr Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]
+                            bitsValue!! ushr Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]
                         bitsAdded += Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]
                     }
                 } else {
@@ -1154,22 +1124,21 @@ class Decode : MesgSource {
                     val compScale = if (subField == null) componentField.scale else subField.scale
                     val rawValue: Any?
 
-                    if (is64BitType(componentField.getType())) {
-                        rawValue = applyScaleOffset64(
+                    rawValue = if (is64BitType(componentField.type)) {
+                        applyScaleOffset64(
                             bitsValue,
-                            componentField.getType(),
+                            componentField.type,
                             component.scale,
                             component.offset,
                             compScale,
                             compOffset
                         )
                     } else {
-                        rawValue =
-                            (((bitsValue / component.scale) - component.offset) + compOffset) * compScale
+                        (((bitsValue / component.scale) - component.offset) + compOffset) * compScale
                     }
 
                     if (mesg!!.hasField(componentField.num)) {
-                        mesg!!.getField(componentField.num).addRawValue(rawValue)
+                        mesg!!.getField(componentField.num)?.addRawValue(rawValue)
                     } else {
                         componentField.addRawValue(rawValue)
                         mesg!!.addField(componentField)
@@ -1198,7 +1167,7 @@ class Decode : MesgSource {
 
     /**
      * Skips generating fields from component expansion. Default: false
-     * 
+     *
      * @param enable if true component expansion will be skipped; if false component expansion will be performed and expanded fields added to messages.
      */
     fun enableSkipExpandComponents(enable: Boolean) {
@@ -1206,7 +1175,7 @@ class Decode : MesgSource {
     }
 
     companion object {
-        private val DECODE_DATA_RECORDS_ONLY = Long.Companion.MAX_VALUE
+        private const val DECODE_DATA_RECORDS_ONLY = Long.MAX_VALUE
         private const val FIT_PROTOCOL_VERSION_ONE = 1
         private const val FIT_HEADER_SIZE_WITH_CRC = 14
         private const val FIT_HEADER_SIZE_NO_CRC = 12

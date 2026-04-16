@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface CameraEventMesgListener {
-    fun onMesg(mesg: CameraEventMesg?)
+    fun onMesg(mesg: CameraEventMesg)
 }

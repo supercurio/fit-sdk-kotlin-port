@@ -11,22 +11,22 @@ package com.garmin.fit
 object ProtocolValidatorFactory {
     /**
      * Factory method to create a ProtocolValidator object
-     * 
+     *
      * @param protocolVersion the protocol version
      * @return a ProtocolValidator object
      */
-    fun getProtocolValidator(protocolVersion: Fit.ProtocolVersion): ProtocolValidator {
-        when (protocolVersion) {
-            Fit.ProtocolVersion.V1_0 -> return V1Validator()
+    internal fun getProtocolValidator(protocolVersion: Fit.ProtocolVersion): ProtocolValidator {
+        return when (protocolVersion) {
+            Fit.ProtocolVersion.V1_0 -> V1Validator()
 
-            else -> return V2Validator()
+            else -> V2Validator()
         }
     }
 }
 
 internal class V1Validator : ProtocolValidator {
     private fun hasDeveloperData(defn: MesgDefinition): Boolean {
-        return defn.developerFields.size > 0
+        return defn.developerFields.isNotEmpty()
     }
 
     override fun validateMesgDefn(mesgDefinition: MesgDefinition): Boolean {
@@ -34,8 +34,8 @@ internal class V1Validator : ProtocolValidator {
             return false
         }
 
-        for (def in mesgDefinition.getFields()) {
-            val typeNum = def.getType() and Fit.BASE_TYPE_NUM_MASK
+        for (def in mesgDefinition.fields) {
+            val typeNum = def.type and Fit.BASE_TYPE_NUM_MASK
             if (typeNum > Fit.BASE_TYPE_BYTE) {
                 // Byte was the last type added to 1.0
                 return false
@@ -50,8 +50,8 @@ internal class V1Validator : ProtocolValidator {
             return false
         }
 
-        for (fld in mesg.getFields()) {
-            val typeNum = fld.getType() and Fit.BASE_TYPE_NUM_MASK
+        for (fld in mesg.fields) {
+            val typeNum = fld.type and Fit.BASE_TYPE_NUM_MASK
             if (typeNum > Fit.BASE_TYPE_BYTE) {
                 // Byte was the last type added to 1.0
                 return false
@@ -63,11 +63,11 @@ internal class V1Validator : ProtocolValidator {
 }
 
 internal class V2Validator : ProtocolValidator {
-    override fun validateMesgDefn(defn: MesgDefinition?): Boolean {
+    override fun validateMesgDefn(defn: MesgDefinition): Boolean {
         return true
     }
 
-    override fun validateMesg(mesg: Mesg?): Boolean {
+    override fun validateMesg(mesg: Mesg): Boolean {
         return true
     }
 }

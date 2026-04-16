@@ -13,7 +13,7 @@ import java.io.IOException
 import java.io.OutputStream
 import java.io.UnsupportedEncodingException
 
-internal class PrefixableByteArrayOutputStream : ByteArrayOutputStream,
+class PrefixableByteArrayOutputStream : ByteArrayOutputStream,
     ByteArrayOutputStreamPrefixable {
     private val prefixStream: ByteArrayOutputStream
 

@@ -23,7 +23,7 @@ enum class HrZoneCalc(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return HrZoneCalc.INVALID
+            return INVALID
         }
 
         /**

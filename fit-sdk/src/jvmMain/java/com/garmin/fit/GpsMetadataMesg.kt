@@ -12,7 +12,7 @@ package com.garmin.fit
 class GpsMetadataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.GPS_METADATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class GpsMetadataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp.
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class GpsMetadataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp.
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class GpsMetadataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,7 +48,7 @@ class GpsMetadataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -59,14 +59,14 @@ class GpsMetadataMesg : Mesg {
         /**
          * Get position_lat field
          * Units: semicircles
-         * 
+         *
          * @return position_lat
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_lat field
          * Units: semicircles
-         * 
+         *
          * @param positionLat The new positionLat value to be set
          */
         set(positionLat) {
@@ -77,14 +77,14 @@ class GpsMetadataMesg : Mesg {
         /**
          * Get position_long field
          * Units: semicircles
-         * 
+         *
          * @return position_long
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_long field
          * Units: semicircles
-         * 
+         *
          * @param positionLong The new positionLong value to be set
          */
         set(positionLong) {
@@ -95,14 +95,14 @@ class GpsMetadataMesg : Mesg {
         /**
          * Get enhanced_altitude field
          * Units: m
-         * 
+         *
          * @return enhanced_altitude
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_altitude field
          * Units: m
-         * 
+         *
          * @param enhancedAltitude The new enhancedAltitude value to be set
          */
         set(enhancedAltitude) {
@@ -113,14 +113,14 @@ class GpsMetadataMesg : Mesg {
         /**
          * Get enhanced_speed field
          * Units: m/s
-         * 
+         *
          * @return enhanced_speed
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_speed field
          * Units: m/s
-         * 
+         *
          * @param enhancedSpeed The new enhancedSpeed value to be set
          */
         set(enhancedSpeed) {
@@ -131,14 +131,14 @@ class GpsMetadataMesg : Mesg {
         /**
          * Get heading field
          * Units: degrees
-         * 
+         *
          * @return heading
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set heading field
          * Units: degrees
-         * 
+         *
          * @param heading The new heading value to be set
          */
         set(heading) {
@@ -150,7 +150,7 @@ class GpsMetadataMesg : Mesg {
          * Get utc_timestamp field
          * Units: s
          * Comment: Used to correlate UTC to system time if the timestamp of the message is in system time. This UTC time is derived from the GPS data.
-         * 
+         *
          * @return utc_timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -158,14 +158,14 @@ class GpsMetadataMesg : Mesg {
          * Set utc_timestamp field
          * Units: s
          * Comment: Used to correlate UTC to system time if the timestamp of the message is in system time. This UTC time is derived from the GPS data.
-         * 
+         *
          * @param utcTimestamp The new utcTimestamp value to be set
          */
         set(utcTimestamp) {
-            setFieldValue(6, 0, utcTimestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(6, 0, utcTimestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val velocity: Array<Float?>?
+    val velocity: Array<Float>?
         get() = getFieldFloatValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numVelocity: Int
@@ -178,7 +178,7 @@ class GpsMetadataMesg : Mesg {
      * Get velocity field
      * Units: m/s
      * Comment: velocity[0] is lon velocity. Velocity[1] is lat velocity. Velocity[2] is altitude velocity.
-     * 
+     *
      * @param index of velocity
      * @return velocity
      */
@@ -190,7 +190,7 @@ class GpsMetadataMesg : Mesg {
      * Set velocity field
      * Units: m/s
      * Comment: velocity[0] is lon velocity. Velocity[1] is lat velocity. Velocity[2] is altitude velocity.
-     * 
+     *
      * @param index of velocity
      * @param velocity The new velocity value to be set
      */
@@ -218,11 +218,10 @@ class GpsMetadataMesg : Mesg {
         const val VelocityFieldNum: Int = 7
 
 
-        val gpsMetadataMesg: Mesg
+        // gps_metadata
+        val gpsMetadataMesg: Mesg = Mesg("gps_metadata", MesgNum.GPS_METADATA)
 
         init {
-            // gps_metadata
-            gpsMetadataMesg = Mesg("gps_metadata", MesgNum.GPS_METADATA)
             gpsMetadataMesg.addField(
                 Field(
                     "timestamp",

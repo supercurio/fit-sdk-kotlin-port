@@ -24,7 +24,7 @@ enum class DisplayOrientation(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DisplayOrientation.INVALID
+            return INVALID
         }
 
         /**

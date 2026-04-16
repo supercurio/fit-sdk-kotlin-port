@@ -12,19 +12,19 @@ package com.garmin.fit
 class StressLevelMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.STRESS_LEVEL))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var stressLevelValue: Short?
         /**
          * Get stress_level_value field
-         * 
+         *
          * @return stress_level_value
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set stress_level_value field
-         * 
+         *
          * @param stressLevelValue The new stressLevelValue value to be set
          */
         set(stressLevelValue) {
@@ -36,7 +36,7 @@ class StressLevelMesg : Mesg {
          * Get stress_level_time field
          * Units: s
          * Comment: Time stress score was calculated
-         * 
+         *
          * @return stress_level_time
          */
         get() = timestampToDateTime(getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -44,11 +44,11 @@ class StressLevelMesg : Mesg {
          * Set stress_level_time field
          * Units: s
          * Comment: Time stress score was calculated
-         * 
+         *
          * @param stressLevelTime The new stressLevelTime value to be set
          */
         set(stressLevelTime) {
-            setFieldValue(1, 0, stressLevelTime!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(1, 0, stressLevelTime?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     companion object {
@@ -57,11 +57,10 @@ class StressLevelMesg : Mesg {
         const val StressLevelTimeFieldNum: Int = 1
 
 
-        val stressLevelMesg: Mesg
+        // stress_level
+        val stressLevelMesg: Mesg = Mesg("stress_level", MesgNum.STRESS_LEVEL)
 
         init {
-            // stress_level
-            stressLevelMesg = Mesg("stress_level", MesgNum.STRESS_LEVEL)
             stressLevelMesg.addField(
                 Field(
                     "stress_level_value",

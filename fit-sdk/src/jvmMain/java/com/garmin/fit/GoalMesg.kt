@@ -12,19 +12,19 @@ package com.garmin.fit
 class GoalMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.GOAL))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,19 +34,16 @@ class GoalMesg : Mesg {
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
@@ -56,19 +53,16 @@ class GoalMesg : Mesg {
     var subSport: SubSport?
         /**
          * Get sub_sport field
-         * 
+         *
          * @return sub_sport
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SubSport.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SubSport.getByValue(value)
         }
         /**
          * Set sub_sport field
-         * 
+         *
          * @param subSport The new subSport value to be set
          */
         set(subSport) {
@@ -78,51 +72,48 @@ class GoalMesg : Mesg {
     var startDate: DateTime?
         /**
          * Get start_date field
-         * 
+         *
          * @return start_date
          */
         get() = timestampToDateTime(getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set start_date field
-         * 
+         *
          * @param startDate The new startDate value to be set
          */
         set(startDate) {
-            setFieldValue(2, 0, startDate!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(2, 0, startDate?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var endDate: DateTime?
         /**
          * Get end_date field
-         * 
+         *
          * @return end_date
          */
         get() = timestampToDateTime(getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set end_date field
-         * 
+         *
          * @param endDate The new endDate value to be set
          */
         set(endDate) {
-            setFieldValue(3, 0, endDate!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(3, 0, endDate?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var type: Goal?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Goal.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Goal.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
@@ -132,13 +123,13 @@ class GoalMesg : Mesg {
     var value: Long?
         /**
          * Get value field
-         * 
+         *
          * @return value
          */
         get() = getFieldLongValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set value field
-         * 
+         *
          * @param value The new value value to be set
          */
         set(value) {
@@ -148,19 +139,16 @@ class GoalMesg : Mesg {
     var repeat: Bool?
         /**
          * Get repeat field
-         * 
+         *
          * @return repeat
          */
         get() {
-            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set repeat field
-         * 
+         *
          * @param repeat The new repeat value to be set
          */
         set(repeat) {
@@ -170,13 +158,13 @@ class GoalMesg : Mesg {
     var targetValue: Long?
         /**
          * Get target_value field
-         * 
+         *
          * @return target_value
          */
         get() = getFieldLongValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set target_value field
-         * 
+         *
          * @param targetValue The new targetValue value to be set
          */
         set(targetValue) {
@@ -186,19 +174,16 @@ class GoalMesg : Mesg {
     var recurrence: GoalRecurrence?
         /**
          * Get recurrence field
-         * 
+         *
          * @return recurrence
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return GoalRecurrence.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return GoalRecurrence.getByValue(value)
         }
         /**
          * Set recurrence field
-         * 
+         *
          * @param recurrence The new recurrence value to be set
          */
         set(recurrence) {
@@ -208,13 +193,13 @@ class GoalMesg : Mesg {
     var recurrenceValue: Int?
         /**
          * Get recurrence_value field
-         * 
+         *
          * @return recurrence_value
          */
         get() = getFieldIntegerValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set recurrence_value field
-         * 
+         *
          * @param recurrenceValue The new recurrenceValue value to be set
          */
         set(recurrenceValue) {
@@ -224,19 +209,16 @@ class GoalMesg : Mesg {
     var enabled: Bool?
         /**
          * Get enabled field
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -246,19 +228,16 @@ class GoalMesg : Mesg {
     var source: GoalSource?
         /**
          * Get source field
-         * 
+         *
          * @return source
          */
         get() {
-            val value = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return GoalSource.Companion.getByValue(value)
+            val value = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return GoalSource.getByValue(value)
         }
         /**
          * Set source field
-         * 
+         *
          * @param source The new source value to be set
          */
         set(source) {
@@ -293,11 +272,10 @@ class GoalMesg : Mesg {
         const val SourceFieldNum: Int = 11
 
 
-        val goalMesg: Mesg
+        // goal
+        val goalMesg: Mesg = Mesg("goal", MesgNum.GOAL)
 
         init {
-            // goal
-            goalMesg = Mesg("goal", MesgNum.GOAL)
             goalMesg.addField(
                 Field(
                     "message_index",

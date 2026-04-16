@@ -12,19 +12,19 @@ package com.garmin.fit
 class SegmentFileMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_FILE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,14 +35,14 @@ class SegmentFileMesg : Mesg {
         /**
          * Get file_uuid field
          * Comment: UUID of the segment file
-         * 
+         *
          * @return file_uuid
          */
         get() = getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set file_uuid field
          * Comment: UUID of the segment file
-         * 
+         *
          * @param fileUuid The new fileUuid value to be set
          */
         set(fileUuid) {
@@ -53,20 +53,17 @@ class SegmentFileMesg : Mesg {
         /**
          * Get enabled field
          * Comment: Enabled state of the segment file
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
          * Comment: Enabled state of the segment file
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -77,57 +74,48 @@ class SegmentFileMesg : Mesg {
         /**
          * Get user_profile_primary_key field
          * Comment: Primary key of the user that created the segment file
-         * 
+         *
          * @return user_profile_primary_key
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set user_profile_primary_key field
          * Comment: Primary key of the user that created the segment file
-         * 
+         *
          * @param userProfilePrimaryKey The new userProfilePrimaryKey value to be set
          */
         set(userProfilePrimaryKey) {
             setFieldValue(4, 0, userProfilePrimaryKey, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val leaderType: Array<SegmentLeaderboardType?>
-        get() {
-            val values =
-                getFieldShortValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            val rv =
-                arrayOfNulls<SegmentLeaderboardType>(values.size)
-            for (i in values.indices) {
-                rv[i] = SegmentLeaderboardType.Companion.getByValue(values[i])
-            }
-            return rv
-        }
+    val leaderType: Array<SegmentLeaderboardType>
+        get() = getFieldShortValues(LeaderTypeFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)?.map {
+            SegmentLeaderboardType.getByValue(it)
+        }?.toTypedArray() ?: emptyArray()
+
 
     val numLeaderType: Int
         /**
          * @return number of leader_type
          */
-        get() = getNumFieldValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(LeaderTypeFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get leader_type field
      * Comment: Leader type of each leader in the segment file
-     * 
+     *
      * @param index of leader_type
      * @return leader_type
      */
     fun getLeaderType(index: Int): SegmentLeaderboardType? {
-        val value = getFieldShortValue(7, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
-        }
-        return SegmentLeaderboardType.Companion.getByValue(value)
+        val value = getFieldShortValue(7, index, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+        return SegmentLeaderboardType.getByValue(value)
     }
 
     /**
      * Set leader_type field
      * Comment: Leader type of each leader in the segment file
-     * 
+     *
      * @param index of leader_type
      * @param leaderType The new leaderType value to be set
      */
@@ -135,7 +123,7 @@ class SegmentFileMesg : Mesg {
         setFieldValue(7, index, leaderType.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val leaderGroupPrimaryKey: Array<Long?>?
+    val leaderGroupPrimaryKey: Array<Long>?
         get() = getFieldLongValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLeaderGroupPrimaryKey: Int
@@ -147,7 +135,7 @@ class SegmentFileMesg : Mesg {
     /**
      * Get leader_group_primary_key field
      * Comment: Group primary key of each leader in the segment file
-     * 
+     *
      * @param index of leader_group_primary_key
      * @return leader_group_primary_key
      */
@@ -158,7 +146,7 @@ class SegmentFileMesg : Mesg {
     /**
      * Set leader_group_primary_key field
      * Comment: Group primary key of each leader in the segment file
-     * 
+     *
      * @param index of leader_group_primary_key
      * @param leaderGroupPrimaryKey The new leaderGroupPrimaryKey value to be set
      */
@@ -166,7 +154,7 @@ class SegmentFileMesg : Mesg {
         setFieldValue(8, index, leaderGroupPrimaryKey, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val leaderActivityId: Array<Long?>?
+    val leaderActivityId: Array<Long>?
         get() = getFieldLongValues(9, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLeaderActivityId: Int
@@ -178,7 +166,7 @@ class SegmentFileMesg : Mesg {
     /**
      * Get leader_activity_id field
      * Comment: Activity ID of each leader in the segment file
-     * 
+     *
      * @param index of leader_activity_id
      * @return leader_activity_id
      */
@@ -189,7 +177,7 @@ class SegmentFileMesg : Mesg {
     /**
      * Set leader_activity_id field
      * Comment: Activity ID of each leader in the segment file
-     * 
+     *
      * @param index of leader_activity_id
      * @param leaderActivityId The new leaderActivityId value to be set
      */
@@ -209,7 +197,7 @@ class SegmentFileMesg : Mesg {
     /**
      * Get leader_activity_id_string field
      * Comment: String version of the activity ID of each leader in the segment file. 21 characters long for each ID, express in decimal
-     * 
+     *
      * @param index of leader_activity_id_string
      * @return leader_activity_id_string
      */
@@ -220,7 +208,7 @@ class SegmentFileMesg : Mesg {
     /**
      * Set leader_activity_id_string field
      * Comment: String version of the activity ID of each leader in the segment file. 21 characters long for each ID, express in decimal
-     * 
+     *
      * @param index of leader_activity_id_string
      * @param leaderActivityIdString The new leaderActivityIdString value to be set
      */
@@ -232,14 +220,14 @@ class SegmentFileMesg : Mesg {
         /**
          * Get default_race_leader field
          * Comment: Index for the Leader Board entry selected as the default race participant
-         * 
+         *
          * @return default_race_leader
          */
         get() = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set default_race_leader field
          * Comment: Index for the Leader Board entry selected as the default race participant
-         * 
+         *
          * @param defaultRaceLeader The new defaultRaceLeader value to be set
          */
         set(defaultRaceLeader) {
@@ -266,11 +254,10 @@ class SegmentFileMesg : Mesg {
         const val DefaultRaceLeaderFieldNum: Int = 11
 
 
-        val segmentFileMesg: Mesg
+        // segment_file
+        val segmentFileMesg: Mesg = Mesg("segment_file", MesgNum.SEGMENT_FILE)
 
         init {
-            // segment_file
-            segmentFileMesg = Mesg("segment_file", MesgNum.SEGMENT_FILE)
             segmentFileMesg.addField(
                 Field(
                     "message_index",

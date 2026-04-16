@@ -23,22 +23,21 @@ object CourseCapabilities {
     const val AVIATION: Long = 0x00001000 // Denote course files to be used as flight plans
     val INVALID: Long = Fit.UINT32Z_INVALID
 
-    private val stringMap: MutableMap<Long?, String?>
+    private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap = HashMap<Long?, String?>()
-        stringMap.put(PROCESSED, "PROCESSED")
-        stringMap.put(VALID, "VALID")
-        stringMap.put(TIME, "TIME")
-        stringMap.put(DISTANCE, "DISTANCE")
-        stringMap.put(POSITION, "POSITION")
-        stringMap.put(HEART_RATE, "HEART_RATE")
-        stringMap.put(POWER, "POWER")
-        stringMap.put(CADENCE, "CADENCE")
-        stringMap.put(TRAINING, "TRAINING")
-        stringMap.put(NAVIGATION, "NAVIGATION")
-        stringMap.put(BIKEWAY, "BIKEWAY")
-        stringMap.put(AVIATION, "AVIATION")
+        stringMap[PROCESSED] = "PROCESSED"
+        stringMap[VALID] = "VALID"
+        stringMap[TIME] = "TIME"
+        stringMap[DISTANCE] = "DISTANCE"
+        stringMap[POSITION] = "POSITION"
+        stringMap[HEART_RATE] = "HEART_RATE"
+        stringMap[POWER] = "POWER"
+        stringMap[CADENCE] = "CADENCE"
+        stringMap[TRAINING] = "TRAINING"
+        stringMap[NAVIGATION] = "NAVIGATION"
+        stringMap[BIKEWAY] = "BIKEWAY"
+        stringMap[AVIATION] = "AVIATION"
     }
 
 
@@ -47,9 +46,9 @@ object CourseCapabilities {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Long?): String? {
+    fun getStringFromValue(value: Long): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -60,7 +59,7 @@ object CourseCapabilities {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Long? {
+    fun getValueFromString(value: String): Long {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

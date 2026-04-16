@@ -12,39 +12,39 @@ package com.garmin.fit
 class JumpMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.JUMP))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var distance: Float?
         /**
          * Get distance field
          * Units: m
-         * 
+         *
          * @return distance
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set distance field
          * Units: m
-         * 
+         *
          * @param distance The new distance value to be set
          */
         set(distance) {
@@ -55,14 +55,14 @@ class JumpMesg : Mesg {
         /**
          * Get height field
          * Units: m
-         * 
+         *
          * @return height
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set height field
          * Units: m
-         * 
+         *
          * @param height The new height value to be set
          */
         set(height) {
@@ -72,13 +72,13 @@ class JumpMesg : Mesg {
     var rotations: Short?
         /**
          * Get rotations field
-         * 
+         *
          * @return rotations
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set rotations field
-         * 
+         *
          * @param rotations The new rotations value to be set
          */
         set(rotations) {
@@ -89,14 +89,14 @@ class JumpMesg : Mesg {
         /**
          * Get hang_time field
          * Units: s
-         * 
+         *
          * @return hang_time
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set hang_time field
          * Units: s
-         * 
+         *
          * @param hangTime The new hangTime value to be set
          */
         set(hangTime) {
@@ -107,14 +107,14 @@ class JumpMesg : Mesg {
         /**
          * Get score field
          * Comment: A score for a jump calculated based on hang time, rotations, and distance.
-         * 
+         *
          * @return score
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set score field
          * Comment: A score for a jump calculated based on hang time, rotations, and distance.
-         * 
+         *
          * @param score The new score value to be set
          */
         set(score) {
@@ -125,14 +125,14 @@ class JumpMesg : Mesg {
         /**
          * Get position_lat field
          * Units: semicircles
-         * 
+         *
          * @return position_lat
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_lat field
          * Units: semicircles
-         * 
+         *
          * @param positionLat The new positionLat value to be set
          */
         set(positionLat) {
@@ -143,14 +143,14 @@ class JumpMesg : Mesg {
         /**
          * Get position_long field
          * Units: semicircles
-         * 
+         *
          * @return position_long
          */
         get() = getFieldIntegerValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_long field
          * Units: semicircles
-         * 
+         *
          * @param positionLong The new positionLong value to be set
          */
         set(positionLong) {
@@ -161,14 +161,14 @@ class JumpMesg : Mesg {
         /**
          * Get speed field
          * Units: m/s
-         * 
+         *
          * @return speed
          */
         get() = getFieldFloatValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set speed field
          * Units: m/s
-         * 
+         *
          * @param speed The new speed value to be set
          */
         set(speed) {
@@ -179,14 +179,14 @@ class JumpMesg : Mesg {
         /**
          * Get enhanced_speed field
          * Units: m/s
-         * 
+         *
          * @return enhanced_speed
          */
         get() = getFieldFloatValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_speed field
          * Units: m/s
-         * 
+         *
          * @param enhancedSpeed The new enhancedSpeed value to be set
          */
         set(enhancedSpeed) {
@@ -337,7 +337,7 @@ class JumpMesg : Mesg {
                     Profile.Type.UINT16
                 )
             )
-            jumpMesg.fields.get(field_index).components.add(
+            jumpMesg.fields[field_index].components.add(
                 FieldComponent(
                     8,
                     false,

@@ -23,7 +23,7 @@ enum class WaterType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return WaterType.INVALID
+            return INVALID
         }
 
         /**

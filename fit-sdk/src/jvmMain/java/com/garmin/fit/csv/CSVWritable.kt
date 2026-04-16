@@ -9,7 +9,7 @@
 package com.garmin.fit.csv
 
 internal interface CSVWritable {
-    fun close(headers: ArrayList<String?>?)
+    fun close(headers: ArrayList<String>)
 
-    fun writeln(values: ArrayList<String?>?, maxNumberValues: Int)
+    fun writeln(values: ArrayList<String>, maxNumberValues: Int)
 }

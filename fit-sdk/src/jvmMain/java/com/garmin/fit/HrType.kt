@@ -21,7 +21,7 @@ enum class HrType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return HrType.INVALID
+            return INVALID
         }
 
         /**

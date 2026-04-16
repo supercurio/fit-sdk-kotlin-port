@@ -23,7 +23,7 @@ enum class AntNetwork(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return AntNetwork.INVALID
+            return INVALID
         }
 
         /**

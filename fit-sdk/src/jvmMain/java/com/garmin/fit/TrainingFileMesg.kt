@@ -14,41 +14,38 @@ import com.garmin.fit.Profile.SubFields
 class TrainingFileMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TRAINING_FILE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var type: File?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return File.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return File.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
@@ -58,13 +55,13 @@ class TrainingFileMesg : Mesg {
     var manufacturer: Int?
         /**
          * Get manufacturer field
-         * 
+         *
          * @return manufacturer
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer field
-         * 
+         *
          * @param manufacturer The new manufacturer value to be set
          */
         set(manufacturer) {
@@ -74,13 +71,13 @@ class TrainingFileMesg : Mesg {
     var product: Int?
         /**
          * Get product field
-         * 
+         *
          * @return product
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product field
-         * 
+         *
          * @param product The new product value to be set
          */
         set(product) {
@@ -90,7 +87,7 @@ class TrainingFileMesg : Mesg {
     var faveroProduct: Int?
         /**
          * Get favero_product field
-         * 
+         *
          * @return favero_product
          */
         get() = getFieldIntegerValue(
@@ -100,7 +97,7 @@ class TrainingFileMesg : Mesg {
         )
         /**
          * Set favero_product field
-         * 
+         *
          * @param faveroProduct The new faveroProduct value to be set
          */
         set(faveroProduct) {
@@ -115,7 +112,7 @@ class TrainingFileMesg : Mesg {
     var garminProduct: Int?
         /**
          * Get garmin_product field
-         * 
+         *
          * @return garmin_product
          */
         get() = getFieldIntegerValue(
@@ -125,7 +122,7 @@ class TrainingFileMesg : Mesg {
         )
         /**
          * Set garmin_product field
-         * 
+         *
          * @param garminProduct The new garminProduct value to be set
          */
         set(garminProduct) {
@@ -140,13 +137,13 @@ class TrainingFileMesg : Mesg {
     var serialNumber: Long?
         /**
          * Get serial_number field
-         * 
+         *
          * @return serial_number
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set serial_number field
-         * 
+         *
          * @param serialNumber The new serialNumber value to be set
          */
         set(serialNumber) {
@@ -156,17 +153,17 @@ class TrainingFileMesg : Mesg {
     var timeCreated: DateTime?
         /**
          * Get time_created field
-         * 
+         *
          * @return time_created
          */
         get() = timestampToDateTime(getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set time_created field
-         * 
+         *
          * @param timeCreated The new timeCreated value to be set
          */
         set(timeCreated) {
-            setFieldValue(4, 0, timeCreated!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(4, 0, timeCreated?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     companion object {
@@ -242,7 +239,7 @@ class TrainingFileMesg : Mesg {
                 )
             )
             subfield_index = 0
-            trainingFileMesg.fields.get(field_index).subFields.add(
+            trainingFileMesg.fields[field_index].subFields.add(
                 SubField(
                     "favero_product",
                     132,
@@ -251,9 +248,9 @@ class TrainingFileMesg : Mesg {
                     ""
                 )
             )
-            trainingFileMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 263)
+            trainingFileMesg.fields[field_index].subFields[subfield_index].addMap(1, 263)
             subfield_index++
-            trainingFileMesg.fields.get(field_index).subFields.add(
+            trainingFileMesg.fields[field_index].subFields.add(
                 SubField(
                     "garmin_product",
                     132,
@@ -262,10 +259,10 @@ class TrainingFileMesg : Mesg {
                     ""
                 )
             )
-            trainingFileMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 1)
-            trainingFileMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 15)
-            trainingFileMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 13)
-            trainingFileMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 89)
+            trainingFileMesg.fields[field_index].subFields[subfield_index].addMap(1, 1)
+            trainingFileMesg.fields[field_index].subFields[subfield_index].addMap(1, 15)
+            trainingFileMesg.fields[field_index].subFields[subfield_index].addMap(1, 13)
+            trainingFileMesg.fields[field_index].subFields[subfield_index].addMap(1, 89)
             subfield_index++
             field_index++
             trainingFileMesg.addField(

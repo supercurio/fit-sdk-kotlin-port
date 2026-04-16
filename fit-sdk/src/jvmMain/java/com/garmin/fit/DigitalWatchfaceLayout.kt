@@ -22,7 +22,7 @@ enum class DigitalWatchfaceLayout(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DigitalWatchfaceLayout.INVALID
+            return INVALID
         }
 
         /**

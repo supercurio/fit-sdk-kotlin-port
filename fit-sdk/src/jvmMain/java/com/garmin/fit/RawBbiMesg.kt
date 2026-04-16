@@ -12,23 +12,23 @@ package com.garmin.fit
 class RawBbiMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.RAW_BBI))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -36,7 +36,7 @@ class RawBbiMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond resolution of the timestamp
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,14 +44,14 @@ class RawBbiMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond resolution of the timestamp
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val data: Array<Int?>?
+    val data: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numData: Int
@@ -63,7 +63,7 @@ class RawBbiMesg : Mesg {
     /**
      * Get data field
      * Comment: 1 bit for gap indicator, 1 bit for quality indicator, and 14 bits for Beat-to-Beat interval values in whole-integer millisecond resolution
-     * 
+     *
      * @param index of data
      * @return data
      */
@@ -74,7 +74,7 @@ class RawBbiMesg : Mesg {
     /**
      * Set data field
      * Comment: 1 bit for gap indicator, 1 bit for quality indicator, and 14 bits for Beat-to-Beat interval values in whole-integer millisecond resolution
-     * 
+     *
      * @param index of data
      * @param data The new data value to be set
      */
@@ -82,7 +82,7 @@ class RawBbiMesg : Mesg {
         setFieldValue(1, index, data, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val time: Array<Int?>?
+    val time: Array<Int>?
         get() = getFieldIntegerValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTime: Int
@@ -95,7 +95,7 @@ class RawBbiMesg : Mesg {
      * Get time field
      * Units: ms
      * Comment: Array of millisecond times between beats
-     * 
+     *
      * @param index of time
      * @return time
      */
@@ -107,7 +107,7 @@ class RawBbiMesg : Mesg {
      * Set time field
      * Units: ms
      * Comment: Array of millisecond times between beats
-     * 
+     *
      * @param index of time
      * @param time The new time value to be set
      */
@@ -115,19 +115,19 @@ class RawBbiMesg : Mesg {
         setFieldValue(2, index, time, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val quality: Array<Short?>?
-        get() = getFieldShortValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val quality: Array<Short>?
+        get() = getFieldShortValues(QualityFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numQuality: Int
         /**
          * @return number of quality
          */
-        get() = getNumFieldValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(QualityFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get quality field
      * Comment: 1 = high confidence. 0 = low confidence. N/A when gap = 1
-     * 
+     *
      * @param index of quality
      * @return quality
      */
@@ -138,7 +138,7 @@ class RawBbiMesg : Mesg {
     /**
      * Set quality field
      * Comment: 1 = high confidence. 0 = low confidence. N/A when gap = 1
-     * 
+     *
      * @param index of quality
      * @param quality The new quality value to be set
      */
@@ -146,19 +146,19 @@ class RawBbiMesg : Mesg {
         setFieldValue(3, index, quality, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val gap: Array<Short?>?
-        get() = getFieldShortValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val gap: Array<Short>?
+        get() = getFieldShortValues(GapFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGap: Int
         /**
          * @return number of gap
          */
-        get() = getNumFieldValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(GapFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get gap field
      * Comment: 1 = gap (time represents ms gap length). 0 = BBI data
-     * 
+     *
      * @param index of gap
      * @return gap
      */
@@ -169,7 +169,7 @@ class RawBbiMesg : Mesg {
     /**
      * Set gap field
      * Comment: 1 = gap (time represents ms gap length). 0 = BBI data
-     * 
+     *
      * @param index of gap
      * @param gap The new gap value to be set
      */
@@ -235,7 +235,7 @@ class RawBbiMesg : Mesg {
                     Profile.Type.UINT16
                 )
             )
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -244,7 +244,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -253,7 +253,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -262,7 +262,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -271,7 +271,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -280,7 +280,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -289,7 +289,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -298,7 +298,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -307,7 +307,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -316,7 +316,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -325,7 +325,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -334,7 +334,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -343,7 +343,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -352,7 +352,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -361,7 +361,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -370,7 +370,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -379,7 +379,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -388,7 +388,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -397,7 +397,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -406,7 +406,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -415,7 +415,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -424,7 +424,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -433,7 +433,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -442,7 +442,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -451,7 +451,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -460,7 +460,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -469,7 +469,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -478,7 +478,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -487,7 +487,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -496,7 +496,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -505,7 +505,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -514,7 +514,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -523,7 +523,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -532,7 +532,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -541,7 +541,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -550,7 +550,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -559,7 +559,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -568,7 +568,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -577,7 +577,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -586,7 +586,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -595,7 +595,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -604,7 +604,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -613,7 +613,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // gap
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -622,7 +622,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // time
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -631,7 +631,7 @@ class RawBbiMesg : Mesg {
                     0.0
                 )
             ) // quality
-            rawBbiMesg.fields.get(field_index).components.add(
+            rawBbiMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,

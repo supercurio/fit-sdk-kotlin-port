@@ -12,19 +12,19 @@ package com.garmin.fit
 class FieldDescriptionMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.FIELD_DESCRIPTION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var developerDataIndex: Short?
         /**
          * Get developer_data_index field
-         * 
+         *
          * @return developer_data_index
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set developer_data_index field
-         * 
+         *
          * @param developerDataIndex The new developerDataIndex value to be set
          */
         set(developerDataIndex) {
@@ -34,13 +34,13 @@ class FieldDescriptionMesg : Mesg {
     var fieldDefinitionNumber: Short?
         /**
          * Get field_definition_number field
-         * 
+         *
          * @return field_definition_number
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set field_definition_number field
-         * 
+         *
          * @param fieldDefinitionNumber The new fieldDefinitionNumber value to be set
          */
         set(fieldDefinitionNumber) {
@@ -50,13 +50,13 @@ class FieldDescriptionMesg : Mesg {
     var fitBaseTypeId: Short?
         /**
          * Get fit_base_type_id field
-         * 
+         *
          * @return fit_base_type_id
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set fit_base_type_id field
-         * 
+         *
          * @param fitBaseTypeId The new fitBaseTypeId value to be set
          */
         set(fitBaseTypeId) {
@@ -74,7 +74,7 @@ class FieldDescriptionMesg : Mesg {
 
     /**
      * Get field_name field
-     * 
+     *
      * @param index of field_name
      * @return field_name
      */
@@ -84,7 +84,7 @@ class FieldDescriptionMesg : Mesg {
 
     /**
      * Set field_name field
-     * 
+     *
      * @param index of field_name
      * @param fieldName The new fieldName value to be set
      */
@@ -95,13 +95,13 @@ class FieldDescriptionMesg : Mesg {
     var array: Short?
         /**
          * Get array field
-         * 
+         *
          * @return array
          */
         get() = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set array field
-         * 
+         *
          * @param array The new array value to be set
          */
         set(array) {
@@ -111,13 +111,13 @@ class FieldDescriptionMesg : Mesg {
     var components: String?
         /**
          * Get components field
-         * 
+         *
          * @return components
          */
         get() = getFieldStringValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set components field
-         * 
+         *
          * @param components The new components value to be set
          */
         set(components) {
@@ -127,13 +127,13 @@ class FieldDescriptionMesg : Mesg {
     var scale: Short?
         /**
          * Get scale field
-         * 
+         *
          * @return scale
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set scale field
-         * 
+         *
          * @param scale The new scale value to be set
          */
         set(scale) {
@@ -143,13 +143,13 @@ class FieldDescriptionMesg : Mesg {
     var offset: Byte?
         /**
          * Get offset field
-         * 
+         *
          * @return offset
          */
         get() = getFieldByteValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set offset field
-         * 
+         *
          * @param offset The new offset value to be set
          */
         set(offset) {
@@ -167,7 +167,7 @@ class FieldDescriptionMesg : Mesg {
 
     /**
      * Get units field
-     * 
+     *
      * @param index of units
      * @return units
      */
@@ -177,7 +177,7 @@ class FieldDescriptionMesg : Mesg {
 
     /**
      * Set units field
-     * 
+     *
      * @param index of units
      * @param units The new units value to be set
      */
@@ -188,13 +188,13 @@ class FieldDescriptionMesg : Mesg {
     var bits: String?
         /**
          * Get bits field
-         * 
+         *
          * @return bits
          */
         get() = getFieldStringValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bits field
-         * 
+         *
          * @param bits The new bits value to be set
          */
         set(bits) {
@@ -204,13 +204,13 @@ class FieldDescriptionMesg : Mesg {
     var accumulate: String?
         /**
          * Get accumulate field
-         * 
+         *
          * @return accumulate
          */
         get() = getFieldStringValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set accumulate field
-         * 
+         *
          * @param accumulate The new accumulate value to be set
          */
         set(accumulate) {
@@ -220,13 +220,13 @@ class FieldDescriptionMesg : Mesg {
     var fitBaseUnitId: Int?
         /**
          * Get fit_base_unit_id field
-         * 
+         *
          * @return fit_base_unit_id
          */
         get() = getFieldIntegerValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set fit_base_unit_id field
-         * 
+         *
          * @param fitBaseUnitId The new fitBaseUnitId value to be set
          */
         set(fitBaseUnitId) {
@@ -236,13 +236,13 @@ class FieldDescriptionMesg : Mesg {
     var nativeMesgNum: Int?
         /**
          * Get native_mesg_num field
-         * 
+         *
          * @return native_mesg_num
          */
         get() = getFieldIntegerValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set native_mesg_num field
-         * 
+         *
          * @param nativeMesgNum The new nativeMesgNum value to be set
          */
         set(nativeMesgNum) {
@@ -252,13 +252,13 @@ class FieldDescriptionMesg : Mesg {
     var nativeFieldNum: Short?
         /**
          * Get native_field_num field
-         * 
+         *
          * @return native_field_num
          */
         get() = getFieldShortValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set native_field_num field
-         * 
+         *
          * @param nativeFieldNum The new nativeFieldNum value to be set
          */
         set(nativeFieldNum) {
@@ -295,11 +295,10 @@ class FieldDescriptionMesg : Mesg {
         const val NativeFieldNumFieldNum: Int = 15
 
 
-        val fieldDescriptionMesg: Mesg
+        // field_description
+        val fieldDescriptionMesg: Mesg = Mesg("field_description", MesgNum.FIELD_DESCRIPTION)
 
         init {
-            // field_description
-            fieldDescriptionMesg = Mesg("field_description", MesgNum.FIELD_DESCRIPTION)
             fieldDescriptionMesg.addField(
                 Field(
                     "developer_data_index",

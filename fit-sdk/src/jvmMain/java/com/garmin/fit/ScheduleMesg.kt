@@ -14,21 +14,21 @@ import com.garmin.fit.Profile.SubFields
 class ScheduleMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SCHEDULE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var manufacturer: Int?
         /**
          * Get manufacturer field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @return manufacturer
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @param manufacturer The new manufacturer value to be set
          */
         set(manufacturer) {
@@ -39,14 +39,14 @@ class ScheduleMesg : Mesg {
         /**
          * Get product field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @return product
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @param product The new product value to be set
          */
         set(product) {
@@ -56,13 +56,13 @@ class ScheduleMesg : Mesg {
     var faveroProduct: Int?
         /**
          * Get favero_product field
-         * 
+         *
          * @return favero_product
          */
         get() = getFieldIntegerValue(1, 0, SubFields.SCHEDULE_MESG_PRODUCT_FIELD_FAVERO_PRODUCT)
         /**
          * Set favero_product field
-         * 
+         *
          * @param faveroProduct The new faveroProduct value to be set
          */
         set(faveroProduct) {
@@ -72,13 +72,13 @@ class ScheduleMesg : Mesg {
     var garminProduct: Int?
         /**
          * Get garmin_product field
-         * 
+         *
          * @return garmin_product
          */
         get() = getFieldIntegerValue(1, 0, SubFields.SCHEDULE_MESG_PRODUCT_FIELD_GARMIN_PRODUCT)
         /**
          * Set garmin_product field
-         * 
+         *
          * @param garminProduct The new garminProduct value to be set
          */
         set(garminProduct) {
@@ -89,14 +89,14 @@ class ScheduleMesg : Mesg {
         /**
          * Get serial_number field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @return serial_number
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set serial_number field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @param serialNumber The new serialNumber value to be set
          */
         set(serialNumber) {
@@ -107,38 +107,35 @@ class ScheduleMesg : Mesg {
         /**
          * Get time_created field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @return time_created
          */
         get() = timestampToDateTime(getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set time_created field
          * Comment: Corresponds to file_id of scheduled workout / course.
-         * 
+         *
          * @param timeCreated The new timeCreated value to be set
          */
         set(timeCreated) {
-            setFieldValue(3, 0, timeCreated!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(3, 0, timeCreated?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var completed: Bool?
         /**
          * Get completed field
          * Comment: TRUE if this activity has been started
-         * 
+         *
          * @return completed
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set completed field
          * Comment: TRUE if this activity has been started
-         * 
+         *
          * @param completed The new completed value to be set
          */
         set(completed) {
@@ -148,19 +145,16 @@ class ScheduleMesg : Mesg {
     var type: Schedule?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Schedule.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Schedule.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
@@ -170,13 +164,13 @@ class ScheduleMesg : Mesg {
     var scheduledTime: Long?
         /**
          * Get scheduled_time field
-         * 
+         *
          * @return scheduled_time
          */
         get() = getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set scheduled_time field
-         * 
+         *
          * @param scheduledTime The new scheduledTime value to be set
          */
         set(scheduledTime) {
@@ -232,7 +226,7 @@ class ScheduleMesg : Mesg {
                 )
             )
             subfield_index = 0
-            scheduleMesg.fields.get(field_index).subFields.add(
+            scheduleMesg.fields[field_index].subFields.add(
                 SubField(
                     "favero_product",
                     132,
@@ -241,9 +235,9 @@ class ScheduleMesg : Mesg {
                     ""
                 )
             )
-            scheduleMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 263)
+            scheduleMesg.fields[field_index].subFields[subfield_index].addMap(0, 263)
             subfield_index++
-            scheduleMesg.fields.get(field_index).subFields.add(
+            scheduleMesg.fields[field_index].subFields.add(
                 SubField(
                     "garmin_product",
                     132,
@@ -252,10 +246,10 @@ class ScheduleMesg : Mesg {
                     ""
                 )
             )
-            scheduleMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 1)
-            scheduleMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 15)
-            scheduleMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 13)
-            scheduleMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 89)
+            scheduleMesg.fields[field_index].subFields[subfield_index].addMap(0, 1)
+            scheduleMesg.fields[field_index].subFields[subfield_index].addMap(0, 15)
+            scheduleMesg.fields[field_index].subFields[subfield_index].addMap(0, 13)
+            scheduleMesg.fields[field_index].subFields[subfield_index].addMap(0, 89)
             subfield_index++
             field_index++
             scheduleMesg.addField(

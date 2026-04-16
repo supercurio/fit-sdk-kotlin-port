@@ -125,161 +125,127 @@ object PoseExerciseName {
     const val REVERSE_WARRIOR_WHEELCHAIR: Int = 113
     const val DOWNWARD_FACING_DOG_TO_COBRA: Int = 114
     const val SEATED_CAT_COW: Int = 115
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(ALL_FOURS, "ALL_FOURS")
-        stringMap.put(ANKLE_TO_KNEE, "ANKLE_TO_KNEE")
-        stringMap.put(BABY_COBRA, "BABY_COBRA")
-        stringMap.put(BOAT, "BOAT")
-        stringMap.put(BOUND_ANGLE, "BOUND_ANGLE")
-        stringMap.put(BOUND_SEATED_SINGLE_LEG_FORWARD_BEND, "BOUND_SEATED_SINGLE_LEG_FORWARD_BEND")
-        stringMap.put(BOW, "BOW")
-        stringMap.put(BOWED_HALF_MOON, "BOWED_HALF_MOON")
-        stringMap.put(BRIDGE, "BRIDGE")
-        stringMap.put(CAT, "CAT")
-        stringMap.put(CHAIR, "CHAIR")
-        stringMap.put(CHILDS, "CHILDS")
-        stringMap.put(CORPSE, "CORPSE")
-        stringMap.put(COW_FACE, "COW_FACE")
-        stringMap.put(COW, "COW")
-        stringMap.put(DEVOTIONAL_WARRIOR, "DEVOTIONAL_WARRIOR")
-        stringMap.put(DOLPHIN_PLANK, "DOLPHIN_PLANK")
-        stringMap.put(DOLPHIN, "DOLPHIN")
-        stringMap.put(DOWN_DOG_KNEE_TO_NOSE, "DOWN_DOG_KNEE_TO_NOSE")
-        stringMap.put(DOWN_DOG_SPLIT, "DOWN_DOG_SPLIT")
-        stringMap.put(DOWN_DOG_SPLIT_OPEN_HIP_BENT_KNEE, "DOWN_DOG_SPLIT_OPEN_HIP_BENT_KNEE")
-        stringMap.put(DOWNWARD_FACING_DOG, "DOWNWARD_FACING_DOG")
-        stringMap.put(EAGLE, "EAGLE")
-        stringMap.put(EASY_SEATED, "EASY_SEATED")
-        stringMap.put(EXTENDED_PUPPY, "EXTENDED_PUPPY")
-        stringMap.put(EXTENDED_SIDE_ANGLE, "EXTENDED_SIDE_ANGLE")
-        stringMap.put(FISH, "FISH")
-        stringMap.put(FOUR_LIMBED_STAFF, "FOUR_LIMBED_STAFF")
-        stringMap.put(FULL_SPLIT, "FULL_SPLIT")
-        stringMap.put(GATE, "GATE")
-        stringMap.put(HALF_CHAIR_HALF_ANKLE_TO_KNEE, "HALF_CHAIR_HALF_ANKLE_TO_KNEE")
-        stringMap.put(HALF_MOON, "HALF_MOON")
-        stringMap.put(HEAD_TO_KNEE, "HEAD_TO_KNEE")
-        stringMap.put(HERON, "HERON")
-        stringMap.put(HEROS, "HEROS")
-        stringMap.put(HIGH_LUNGE, "HIGH_LUNGE")
-        stringMap.put(KNEES_CHEST_CHIN, "KNEES_CHEST_CHIN")
-        stringMap.put(LIZARD, "LIZARD")
-        stringMap.put(LOCUST, "LOCUST")
-        stringMap.put(LOW_LUNGE, "LOW_LUNGE")
-        stringMap.put(LOW_LUNGE_TWIST, "LOW_LUNGE_TWIST")
-        stringMap.put(LOW_LUNGE_WITH_KNEE_DOWN, "LOW_LUNGE_WITH_KNEE_DOWN")
-        stringMap.put(MERMAID, "MERMAID")
-        stringMap.put(MOUNTAIN, "MOUNTAIN")
-        stringMap.put(
-            ONE_LEGGED_DOWNWARD_FACING_POSE_OPEN_HIP_BENT_KNEE,
-            "ONE_LEGGED_DOWNWARD_FACING_POSE_OPEN_HIP_BENT_KNEE"
-        )
-        stringMap.put(ONE_LEGGED_PIGEON, "ONE_LEGGED_PIGEON")
-        stringMap.put(PEACEFUL_WARRIOR, "PEACEFUL_WARRIOR")
-        stringMap.put(PLANK, "PLANK")
-        stringMap.put(PLOW, "PLOW")
-        stringMap.put(RECLINED_HAND_TO_FOOT, "RECLINED_HAND_TO_FOOT")
-        stringMap.put(REVOLVED_HALF_MOON, "REVOLVED_HALF_MOON")
-        stringMap.put(REVOLVED_HEAD_TO_KNEE, "REVOLVED_HEAD_TO_KNEE")
-        stringMap.put(REVOLVED_TRIANGLE, "REVOLVED_TRIANGLE")
-        stringMap.put(RUNNERS_LUNGE, "RUNNERS_LUNGE")
-        stringMap.put(SEATED_EASY_SIDE_BEND, "SEATED_EASY_SIDE_BEND")
-        stringMap.put(SEATED_EASY_TWIST, "SEATED_EASY_TWIST")
-        stringMap.put(SEATED_LONG_LEG_FORWARD_BEND, "SEATED_LONG_LEG_FORWARD_BEND")
-        stringMap.put(SEATED_WIDE_LEG_FORWARD_BEND, "SEATED_WIDE_LEG_FORWARD_BEND")
-        stringMap.put(SHOULDER_STAND, "SHOULDER_STAND")
-        stringMap.put(SIDE_BOAT, "SIDE_BOAT")
-        stringMap.put(SIDE_PLANK, "SIDE_PLANK")
-        stringMap.put(SPHINX, "SPHINX")
-        stringMap.put(SQUAT_OPEN_ARM_TWIST, "SQUAT_OPEN_ARM_TWIST")
-        stringMap.put(SQUAT_PALM_PRESS, "SQUAT_PALM_PRESS")
-        stringMap.put(STAFF, "STAFF")
-        stringMap.put(STANDING_ARMS_UP, "STANDING_ARMS_UP")
-        stringMap.put(STANDING_FORWARD_BEND_HALFWAY_UP, "STANDING_FORWARD_BEND_HALFWAY_UP")
-        stringMap.put(STANDING_FORWARD_BEND, "STANDING_FORWARD_BEND")
-        stringMap.put(STANDING_SIDE_OPENER, "STANDING_SIDE_OPENER")
-        stringMap.put(STANDING_SINGLE_LEG_FORWARD_BEND, "STANDING_SINGLE_LEG_FORWARD_BEND")
-        stringMap.put(STANDING_SPLIT, "STANDING_SPLIT")
-        stringMap.put(STANDING_WIDE_LEG_FORWARD_BEND, "STANDING_WIDE_LEG_FORWARD_BEND")
-        stringMap.put(
-            STANDING_WIDE_LEG_FORWARD_BEND_WITH_TWIST,
-            "STANDING_WIDE_LEG_FORWARD_BEND_WITH_TWIST"
-        )
-        stringMap.put(SUPINE_SPINAL_TWIST, "SUPINE_SPINAL_TWIST")
-        stringMap.put(TABLE_TOP, "TABLE_TOP")
-        stringMap.put(THREAD_THE_NEEDLE, "THREAD_THE_NEEDLE")
-        stringMap.put(THUNDERBOLT, "THUNDERBOLT")
-        stringMap.put(
-            THUNDERBOLT_POSE_BOTH_SIDES_ARM_STRETCH,
-            "THUNDERBOLT_POSE_BOTH_SIDES_ARM_STRETCH"
-        )
-        stringMap.put(TREE, "TREE")
-        stringMap.put(TRIANGLE, "TRIANGLE")
-        stringMap.put(UP_DOG, "UP_DOG")
-        stringMap.put(UPWARD_FACING_PLANK, "UPWARD_FACING_PLANK")
-        stringMap.put(WARRIOR_ONE, "WARRIOR_ONE")
-        stringMap.put(WARRIOR_THREE, "WARRIOR_THREE")
-        stringMap.put(WARRIOR_TWO, "WARRIOR_TWO")
-        stringMap.put(WHEEL, "WHEEL")
-        stringMap.put(WIDE_SIDE_LUNGE, "WIDE_SIDE_LUNGE")
-        stringMap.put(DEEP_BREATHING_WHEELCHAIR, "DEEP_BREATHING_WHEELCHAIR")
-        stringMap.put(DEEP_BREATHING_LOW_WHEELCHAIR, "DEEP_BREATHING_LOW_WHEELCHAIR")
-        stringMap.put(DEEP_BREATHING_MID_WHEELCHAIR, "DEEP_BREATHING_MID_WHEELCHAIR")
-        stringMap.put(DEEP_BREATHING_HIGH_WHEELCHAIR, "DEEP_BREATHING_HIGH_WHEELCHAIR")
-        stringMap.put(PRAYER_WHEELCHAIR, "PRAYER_WHEELCHAIR")
-        stringMap.put(OVERHEAD_PRAYER_WHEELCHAIR, "OVERHEAD_PRAYER_WHEELCHAIR")
-        stringMap.put(CACTUS_WHEELCHAIR, "CACTUS_WHEELCHAIR")
-        stringMap.put(BREATHING_PUNCHES_WHEELCHAIR, "BREATHING_PUNCHES_WHEELCHAIR")
-        stringMap.put(
-            BREATHING_PUNCHES_EXTENDED_WHEELCHAIR,
-            "BREATHING_PUNCHES_EXTENDED_WHEELCHAIR"
-        )
-        stringMap.put(
-            BREATHING_PUNCHES_OVERHEAD_WHEELCHAIR,
-            "BREATHING_PUNCHES_OVERHEAD_WHEELCHAIR"
-        )
-        stringMap.put(
-            BREATHING_PUNCHES_OVERHEAD_AND_DOWN_WHEELCHAIR,
-            "BREATHING_PUNCHES_OVERHEAD_AND_DOWN_WHEELCHAIR"
-        )
-        stringMap.put(BREATHING_PUNCHES_SIDE_WHEELCHAIR, "BREATHING_PUNCHES_SIDE_WHEELCHAIR")
-        stringMap.put(
-            BREATHING_PUNCHES_EXTENDED_SIDE_WHEELCHAIR,
-            "BREATHING_PUNCHES_EXTENDED_SIDE_WHEELCHAIR"
-        )
-        stringMap.put(
-            BREATHING_PUNCHES_OVERHEAD_SIDE_WHEELCHAIR,
-            "BREATHING_PUNCHES_OVERHEAD_SIDE_WHEELCHAIR"
-        )
-        stringMap.put(
-            BREATHING_PUNCHES_OVERHEAD_AND_DOWN_SIDE_WHEELCHAIR,
-            "BREATHING_PUNCHES_OVERHEAD_AND_DOWN_SIDE_WHEELCHAIR"
-        )
-        stringMap.put(LEFT_HAND_BACK_WHEELCHAIR, "LEFT_HAND_BACK_WHEELCHAIR")
-        stringMap.put(TRIANGLE_WHEELCHAIR, "TRIANGLE_WHEELCHAIR")
-        stringMap.put(THREAD_THE_NEEDLE_WHEELCHAIR, "THREAD_THE_NEEDLE_WHEELCHAIR")
-        stringMap.put(
-            NECK_FLEXION_AND_EXTENSION_WHEELCHAIR,
-            "NECK_FLEXION_AND_EXTENSION_WHEELCHAIR"
-        )
-        stringMap.put(NECK_LATERAL_FLEXION_WHEELCHAIR, "NECK_LATERAL_FLEXION_WHEELCHAIR")
-        stringMap.put(
-            SPINE_FLEXION_AND_EXTENSION_WHEELCHAIR,
-            "SPINE_FLEXION_AND_EXTENSION_WHEELCHAIR"
-        )
-        stringMap.put(SPINE_ROTATION_WHEELCHAIR, "SPINE_ROTATION_WHEELCHAIR")
-        stringMap.put(SPINE_LATERAL_FLEXION_WHEELCHAIR, "SPINE_LATERAL_FLEXION_WHEELCHAIR")
-        stringMap.put(ALTERNATIVE_SKIING_WHEELCHAIR, "ALTERNATIVE_SKIING_WHEELCHAIR")
-        stringMap.put(REACH_FORWARD_WHEELCHAIR, "REACH_FORWARD_WHEELCHAIR")
-        stringMap.put(WARRIOR_WHEELCHAIR, "WARRIOR_WHEELCHAIR")
-        stringMap.put(REVERSE_WARRIOR_WHEELCHAIR, "REVERSE_WARRIOR_WHEELCHAIR")
-        stringMap.put(DOWNWARD_FACING_DOG_TO_COBRA, "DOWNWARD_FACING_DOG_TO_COBRA")
-        stringMap.put(SEATED_CAT_COW, "SEATED_CAT_COW")
+        stringMap[ALL_FOURS] = "ALL_FOURS"
+        stringMap[ANKLE_TO_KNEE] = "ANKLE_TO_KNEE"
+        stringMap[BABY_COBRA] = "BABY_COBRA"
+        stringMap[BOAT] = "BOAT"
+        stringMap[BOUND_ANGLE] = "BOUND_ANGLE"
+        stringMap[BOUND_SEATED_SINGLE_LEG_FORWARD_BEND] = "BOUND_SEATED_SINGLE_LEG_FORWARD_BEND"
+        stringMap[BOW] = "BOW"
+        stringMap[BOWED_HALF_MOON] = "BOWED_HALF_MOON"
+        stringMap[BRIDGE] = "BRIDGE"
+        stringMap[CAT] = "CAT"
+        stringMap[CHAIR] = "CHAIR"
+        stringMap[CHILDS] = "CHILDS"
+        stringMap[CORPSE] = "CORPSE"
+        stringMap[COW_FACE] = "COW_FACE"
+        stringMap[COW] = "COW"
+        stringMap[DEVOTIONAL_WARRIOR] = "DEVOTIONAL_WARRIOR"
+        stringMap[DOLPHIN_PLANK] = "DOLPHIN_PLANK"
+        stringMap[DOLPHIN] = "DOLPHIN"
+        stringMap[DOWN_DOG_KNEE_TO_NOSE] = "DOWN_DOG_KNEE_TO_NOSE"
+        stringMap[DOWN_DOG_SPLIT] = "DOWN_DOG_SPLIT"
+        stringMap[DOWN_DOG_SPLIT_OPEN_HIP_BENT_KNEE] = "DOWN_DOG_SPLIT_OPEN_HIP_BENT_KNEE"
+        stringMap[DOWNWARD_FACING_DOG] = "DOWNWARD_FACING_DOG"
+        stringMap[EAGLE] = "EAGLE"
+        stringMap[EASY_SEATED] = "EASY_SEATED"
+        stringMap[EXTENDED_PUPPY] = "EXTENDED_PUPPY"
+        stringMap[EXTENDED_SIDE_ANGLE] = "EXTENDED_SIDE_ANGLE"
+        stringMap[FISH] = "FISH"
+        stringMap[FOUR_LIMBED_STAFF] = "FOUR_LIMBED_STAFF"
+        stringMap[FULL_SPLIT] = "FULL_SPLIT"
+        stringMap[GATE] = "GATE"
+        stringMap[HALF_CHAIR_HALF_ANKLE_TO_KNEE] = "HALF_CHAIR_HALF_ANKLE_TO_KNEE"
+        stringMap[HALF_MOON] = "HALF_MOON"
+        stringMap[HEAD_TO_KNEE] = "HEAD_TO_KNEE"
+        stringMap[HERON] = "HERON"
+        stringMap[HEROS] = "HEROS"
+        stringMap[HIGH_LUNGE] = "HIGH_LUNGE"
+        stringMap[KNEES_CHEST_CHIN] = "KNEES_CHEST_CHIN"
+        stringMap[LIZARD] = "LIZARD"
+        stringMap[LOCUST] = "LOCUST"
+        stringMap[LOW_LUNGE] = "LOW_LUNGE"
+        stringMap[LOW_LUNGE_TWIST] = "LOW_LUNGE_TWIST"
+        stringMap[LOW_LUNGE_WITH_KNEE_DOWN] = "LOW_LUNGE_WITH_KNEE_DOWN"
+        stringMap[MERMAID] = "MERMAID"
+        stringMap[MOUNTAIN] = "MOUNTAIN"
+        stringMap[ONE_LEGGED_DOWNWARD_FACING_POSE_OPEN_HIP_BENT_KNEE] = "ONE_LEGGED_DOWNWARD_FACING_POSE_OPEN_HIP_BENT_KNEE"
+        stringMap[ONE_LEGGED_PIGEON] = "ONE_LEGGED_PIGEON"
+        stringMap[PEACEFUL_WARRIOR] = "PEACEFUL_WARRIOR"
+        stringMap[PLANK] = "PLANK"
+        stringMap[PLOW] = "PLOW"
+        stringMap[RECLINED_HAND_TO_FOOT] = "RECLINED_HAND_TO_FOOT"
+        stringMap[REVOLVED_HALF_MOON] = "REVOLVED_HALF_MOON"
+        stringMap[REVOLVED_HEAD_TO_KNEE] = "REVOLVED_HEAD_TO_KNEE"
+        stringMap[REVOLVED_TRIANGLE] = "REVOLVED_TRIANGLE"
+        stringMap[RUNNERS_LUNGE] = "RUNNERS_LUNGE"
+        stringMap[SEATED_EASY_SIDE_BEND] = "SEATED_EASY_SIDE_BEND"
+        stringMap[SEATED_EASY_TWIST] = "SEATED_EASY_TWIST"
+        stringMap[SEATED_LONG_LEG_FORWARD_BEND] = "SEATED_LONG_LEG_FORWARD_BEND"
+        stringMap[SEATED_WIDE_LEG_FORWARD_BEND] = "SEATED_WIDE_LEG_FORWARD_BEND"
+        stringMap[SHOULDER_STAND] = "SHOULDER_STAND"
+        stringMap[SIDE_BOAT] = "SIDE_BOAT"
+        stringMap[SIDE_PLANK] = "SIDE_PLANK"
+        stringMap[SPHINX] = "SPHINX"
+        stringMap[SQUAT_OPEN_ARM_TWIST] = "SQUAT_OPEN_ARM_TWIST"
+        stringMap[SQUAT_PALM_PRESS] = "SQUAT_PALM_PRESS"
+        stringMap[STAFF] = "STAFF"
+        stringMap[STANDING_ARMS_UP] = "STANDING_ARMS_UP"
+        stringMap[STANDING_FORWARD_BEND_HALFWAY_UP] = "STANDING_FORWARD_BEND_HALFWAY_UP"
+        stringMap[STANDING_FORWARD_BEND] = "STANDING_FORWARD_BEND"
+        stringMap[STANDING_SIDE_OPENER] = "STANDING_SIDE_OPENER"
+        stringMap[STANDING_SINGLE_LEG_FORWARD_BEND] = "STANDING_SINGLE_LEG_FORWARD_BEND"
+        stringMap[STANDING_SPLIT] = "STANDING_SPLIT"
+        stringMap[STANDING_WIDE_LEG_FORWARD_BEND] = "STANDING_WIDE_LEG_FORWARD_BEND"
+        stringMap[STANDING_WIDE_LEG_FORWARD_BEND_WITH_TWIST] = "STANDING_WIDE_LEG_FORWARD_BEND_WITH_TWIST"
+        stringMap[SUPINE_SPINAL_TWIST] = "SUPINE_SPINAL_TWIST"
+        stringMap[TABLE_TOP] = "TABLE_TOP"
+        stringMap[THREAD_THE_NEEDLE] = "THREAD_THE_NEEDLE"
+        stringMap[THUNDERBOLT] = "THUNDERBOLT"
+        stringMap[THUNDERBOLT_POSE_BOTH_SIDES_ARM_STRETCH] = "THUNDERBOLT_POSE_BOTH_SIDES_ARM_STRETCH"
+        stringMap[TREE] = "TREE"
+        stringMap[TRIANGLE] = "TRIANGLE"
+        stringMap[UP_DOG] = "UP_DOG"
+        stringMap[UPWARD_FACING_PLANK] = "UPWARD_FACING_PLANK"
+        stringMap[WARRIOR_ONE] = "WARRIOR_ONE"
+        stringMap[WARRIOR_THREE] = "WARRIOR_THREE"
+        stringMap[WARRIOR_TWO] = "WARRIOR_TWO"
+        stringMap[WHEEL] = "WHEEL"
+        stringMap[WIDE_SIDE_LUNGE] = "WIDE_SIDE_LUNGE"
+        stringMap[DEEP_BREATHING_WHEELCHAIR] = "DEEP_BREATHING_WHEELCHAIR"
+        stringMap[DEEP_BREATHING_LOW_WHEELCHAIR] = "DEEP_BREATHING_LOW_WHEELCHAIR"
+        stringMap[DEEP_BREATHING_MID_WHEELCHAIR] = "DEEP_BREATHING_MID_WHEELCHAIR"
+        stringMap[DEEP_BREATHING_HIGH_WHEELCHAIR] = "DEEP_BREATHING_HIGH_WHEELCHAIR"
+        stringMap[PRAYER_WHEELCHAIR] = "PRAYER_WHEELCHAIR"
+        stringMap[OVERHEAD_PRAYER_WHEELCHAIR] = "OVERHEAD_PRAYER_WHEELCHAIR"
+        stringMap[CACTUS_WHEELCHAIR] = "CACTUS_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_WHEELCHAIR] = "BREATHING_PUNCHES_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_EXTENDED_WHEELCHAIR] = "BREATHING_PUNCHES_EXTENDED_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_OVERHEAD_WHEELCHAIR] = "BREATHING_PUNCHES_OVERHEAD_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_OVERHEAD_AND_DOWN_WHEELCHAIR] = "BREATHING_PUNCHES_OVERHEAD_AND_DOWN_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_SIDE_WHEELCHAIR] = "BREATHING_PUNCHES_SIDE_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_EXTENDED_SIDE_WHEELCHAIR] = "BREATHING_PUNCHES_EXTENDED_SIDE_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_OVERHEAD_SIDE_WHEELCHAIR] = "BREATHING_PUNCHES_OVERHEAD_SIDE_WHEELCHAIR"
+        stringMap[BREATHING_PUNCHES_OVERHEAD_AND_DOWN_SIDE_WHEELCHAIR] = "BREATHING_PUNCHES_OVERHEAD_AND_DOWN_SIDE_WHEELCHAIR"
+        stringMap[LEFT_HAND_BACK_WHEELCHAIR] = "LEFT_HAND_BACK_WHEELCHAIR"
+        stringMap[TRIANGLE_WHEELCHAIR] = "TRIANGLE_WHEELCHAIR"
+        stringMap[THREAD_THE_NEEDLE_WHEELCHAIR] = "THREAD_THE_NEEDLE_WHEELCHAIR"
+        stringMap[NECK_FLEXION_AND_EXTENSION_WHEELCHAIR] = "NECK_FLEXION_AND_EXTENSION_WHEELCHAIR"
+        stringMap[NECK_LATERAL_FLEXION_WHEELCHAIR] = "NECK_LATERAL_FLEXION_WHEELCHAIR"
+        stringMap[SPINE_FLEXION_AND_EXTENSION_WHEELCHAIR] = "SPINE_FLEXION_AND_EXTENSION_WHEELCHAIR"
+        stringMap[SPINE_ROTATION_WHEELCHAIR] = "SPINE_ROTATION_WHEELCHAIR"
+        stringMap[SPINE_LATERAL_FLEXION_WHEELCHAIR] = "SPINE_LATERAL_FLEXION_WHEELCHAIR"
+        stringMap[ALTERNATIVE_SKIING_WHEELCHAIR] = "ALTERNATIVE_SKIING_WHEELCHAIR"
+        stringMap[REACH_FORWARD_WHEELCHAIR] = "REACH_FORWARD_WHEELCHAIR"
+        stringMap[WARRIOR_WHEELCHAIR] = "WARRIOR_WHEELCHAIR"
+        stringMap[REVERSE_WARRIOR_WHEELCHAIR] = "REVERSE_WARRIOR_WHEELCHAIR"
+        stringMap[DOWNWARD_FACING_DOG_TO_COBRA] = "DOWNWARD_FACING_DOG_TO_COBRA"
+        stringMap[SEATED_CAT_COW] = "SEATED_CAT_COW"
     }
 
 
@@ -288,9 +254,9 @@ object PoseExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -301,7 +267,7 @@ object PoseExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

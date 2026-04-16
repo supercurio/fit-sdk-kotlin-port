@@ -85,12 +85,12 @@ object EncodeWorkout {
         )
 
         val workoutMesg = WorkoutMesg()
-        workoutMesg.setWktName("Tempo Bike")
-        workoutMesg.setSport(Sport.CYCLING)
-        workoutMesg.setSubSport(SubSport.INVALID)
-        workoutMesg.setNumValidSteps(workoutSteps.size)
+        workoutMesg.wktName = "Tempo Bike"
+        workoutMesg.sport = Sport.CYCLING
+        workoutMesg.subSport = SubSport.INVALID
+        workoutMesg.numValidSteps = workoutSteps.size
 
-        CreateWorkout(workoutMesg, workoutSteps)
+        CreateWorkout(workoutMesg, workoutSteps.filterNotNull())
     }
 
     fun CreateRun800RepeatWorkout() {
@@ -162,12 +162,12 @@ object EncodeWorkout {
         )
 
         val workoutMesg = WorkoutMesg()
-        workoutMesg.setWktName("Running 800m Repeats")
-        workoutMesg.setSport(Sport.RUNNING)
-        workoutMesg.setSubSport(SubSport.INVALID)
-        workoutMesg.setNumValidSteps(workoutSteps.size)
+        workoutMesg.wktName = "Running 800m Repeats"
+        workoutMesg.sport = Sport.RUNNING
+        workoutMesg.subSport = SubSport.INVALID
+        workoutMesg.numValidSteps = workoutSteps.size
 
-        CreateWorkout(workoutMesg, workoutSteps)
+        CreateWorkout(workoutMesg, workoutSteps.filterNotNull())
     }
 
     fun CreateCustomTargetValuesWorkout() {
@@ -219,16 +219,16 @@ object EncodeWorkout {
         )
 
         val workoutMesg = WorkoutMesg()
-        workoutMesg.setWktName("Custom Target Values")
-        workoutMesg.setSport(Sport.CYCLING)
-        workoutMesg.setSubSport(SubSport.INVALID)
-        workoutMesg.setNumValidSteps(workoutSteps.size)
+        workoutMesg.wktName = "Custom Target Values"
+        workoutMesg.sport = Sport.CYCLING
+        workoutMesg.subSport = SubSport.INVALID
+        workoutMesg.numValidSteps = workoutSteps.size
 
-        CreateWorkout(workoutMesg, workoutSteps)
+        CreateWorkout(workoutMesg, workoutSteps.filterNotNull())
     }
 
     fun CreatePoolSwimWorkout() {
-        val workoutSteps = ArrayList<WorkoutStepMesg?>()
+        val workoutSteps = ArrayList<WorkoutStepMesg>()
 
         // Warm Up 200 yds
         workoutSteps.add(
@@ -328,17 +328,17 @@ object EncodeWorkout {
         )
 
         val workoutMesg = WorkoutMesg()
-        workoutMesg.setWktName("Pool Swim")
-        workoutMesg.setSport(Sport.SWIMMING)
-        workoutMesg.setSubSport(SubSport.LAP_SWIMMING)
-        workoutMesg.setPoolLength(22.86f) // 25 yards
-        workoutMesg.setPoolLengthUnit(DisplayMeasure.STATUTE)
-        workoutMesg.setNumValidSteps(workoutSteps.size)
+        workoutMesg.wktName = "Pool Swim"
+        workoutMesg.sport = Sport.SWIMMING
+        workoutMesg.subSport = SubSport.LAP_SWIMMING
+        workoutMesg.poolLength = 22.86f // 25 yards
+        workoutMesg.poolLengthUnit = DisplayMeasure.STATUTE
+        workoutMesg.numValidSteps = workoutSteps.size
 
         CreateWorkout(workoutMesg, workoutSteps)
     }
 
-    fun CreateWorkout(workoutMesg: WorkoutMesg, workoutSteps: ArrayList<WorkoutStepMesg?>) {
+    fun CreateWorkout(workoutMesg: WorkoutMesg, workoutSteps: List<WorkoutStepMesg>) {
         // The combination of file type, manufacturer id, product id, and serial number should be unique.
         // When available, a non-random serial number should be used.
         val filetype = File.WORKOUT
@@ -349,20 +349,20 @@ object EncodeWorkout {
 
         // Every FIT file MUST contain a File ID message
         val fileIdMesg = FileIdMesg()
-        fileIdMesg.setType(filetype)
-        fileIdMesg.setManufacturer(manufacturerId.toInt())
-        fileIdMesg.setProduct(productId.toInt())
-        fileIdMesg.setTimeCreated(DateTime(Date()))
-        fileIdMesg.setSerialNumber(serialNumber.toLong())
+        fileIdMesg.type = filetype
+        fileIdMesg.manufacturer = manufacturerId.toInt()
+        fileIdMesg.product = productId.toInt()
+        fileIdMesg.timeCreated = DateTime(Date())
+        fileIdMesg.serialNumber = serialNumber.toLong()
 
         // Create the output stream
         val encode: FileEncoder?
-        val filename = workoutMesg.getWktName().replace(" ", "_") + ".fit"
+        val filename = workoutMesg.wktName?.replace(" ", "_") + ".fit"
 
         try {
             encode = FileEncoder(java.io.File(filename), Fit.ProtocolVersion.V1_0)
         } catch (e: FitRuntimeException) {
-            System.err.println("Error opening file " + filename)
+            System.err.println("Error opening file $filename")
             e.printStackTrace()
             return
         }
@@ -384,7 +384,7 @@ object EncodeWorkout {
             return
         }
 
-        println("Encoded FIT Workout File " + filename)
+        println("Encoded FIT Workout File $filename")
     }
 
     private fun CreateWorkoutStep(
@@ -418,37 +418,37 @@ object EncodeWorkout {
         customTargetValueHigh: Int? = null
     ): WorkoutStepMesg? {
         val workoutStepMesg = WorkoutStepMesg()
-        workoutStepMesg.setMessageIndex(messageIndex)
+        workoutStepMesg.messageIndex = messageIndex
 
         if (name != null) {
-            workoutStepMesg.setWktStepName(name)
+            workoutStepMesg.wktStepName = name
         }
 
         if (notes != null) {
-            workoutStepMesg.setNotes(notes)
+            workoutStepMesg.notes = notes
         }
 
         if (durationType == WktStepDuration.INVALID) {
             return null
         }
 
-        workoutStepMesg.setIntensity(intensity)
-        workoutStepMesg.setDurationType(durationType)
+        workoutStepMesg.intensity = intensity
+        workoutStepMesg.durationType = durationType
 
         if (durationValue != null) {
-            workoutStepMesg.setDurationValue(durationValue.toLong())
+            workoutStepMesg.durationValue = durationValue.toLong()
         }
 
         if (targetType != WktStepTarget.INVALID && customTargetValueLow != null && customTargetValueHigh != null) {
-            workoutStepMesg.setTargetType(targetType)
-            workoutStepMesg.setTargetValue(0L)
-            workoutStepMesg.setCustomTargetValueLow(customTargetValueLow.toLong())
-            workoutStepMesg.setCustomTargetValueHigh(customTargetValueHigh.toLong())
+            workoutStepMesg.targetType = targetType
+            workoutStepMesg.targetValue = 0L
+            workoutStepMesg.customTargetValueLow = customTargetValueLow.toLong()
+            workoutStepMesg.customTargetValueHigh = customTargetValueHigh.toLong()
         } else if (targetType != WktStepTarget.INVALID) {
-            workoutStepMesg.setTargetValue(targetValue.toLong())
-            workoutStepMesg.setTargetType(targetType)
-            workoutStepMesg.setCustomTargetValueLow(0L)
-            workoutStepMesg.setCustomTargetValueHigh(0L)
+            workoutStepMesg.targetValue = targetValue.toLong()
+            workoutStepMesg.targetType = targetType
+            workoutStepMesg.customTargetValueLow = 0L
+            workoutStepMesg.customTargetValueHigh = 0L
         }
 
         return workoutStepMesg
@@ -460,13 +460,13 @@ object EncodeWorkout {
         repetitions: Int
     ): WorkoutStepMesg {
         val workoutStepMesg = WorkoutStepMesg()
-        workoutStepMesg.setMessageIndex((messageIndex))
+        workoutStepMesg.messageIndex = (messageIndex)
 
-        workoutStepMesg.setDurationType(WktStepDuration.REPEAT_UNTIL_STEPS_CMPLT)
-        workoutStepMesg.setDurationValue(repeatFrom.toLong())
+        workoutStepMesg.durationType = WktStepDuration.REPEAT_UNTIL_STEPS_CMPLT
+        workoutStepMesg.durationValue = repeatFrom.toLong()
 
-        workoutStepMesg.setTargetType(WktStepTarget.OPEN)
-        workoutStepMesg.setTargetValue(repetitions.toLong())
+        workoutStepMesg.targetType = WktStepTarget.OPEN
+        workoutStepMesg.targetValue = repetitions.toLong()
 
         return workoutStepMesg
     }
@@ -481,27 +481,27 @@ object EncodeWorkout {
         equipment: WorkoutEquipment?
     ): WorkoutStepMesg {
         val workoutStepMesg = WorkoutStepMesg()
-        workoutStepMesg.setMessageIndex(messageIndex)
+        workoutStepMesg.messageIndex = messageIndex
 
         if (name != null) {
-            workoutStepMesg.setWktStepName(name)
+            workoutStepMesg.wktStepName = name
         }
 
         if (notes != null) {
-            workoutStepMesg.setNotes(notes)
+            workoutStepMesg.notes = notes
         }
 
-        workoutStepMesg.setIntensity(intensity)
+        workoutStepMesg.intensity = intensity
 
-        workoutStepMesg.setDurationType(WktStepDuration.DISTANCE)
-        workoutStepMesg.setDurationDistance(distance)
+        workoutStepMesg.durationType = WktStepDuration.DISTANCE
+        workoutStepMesg.durationDistance = distance
 
-        workoutStepMesg.setTargetType(WktStepTarget.SWIM_STROKE)
+        workoutStepMesg.targetType = WktStepTarget.SWIM_STROKE
 
-        workoutStepMesg.setTargetStrokeType(swimStroke)
+        workoutStepMesg.targetStrokeType = swimStroke
 
         if (equipment != null) {
-            workoutStepMesg.setEquipment(equipment)
+            workoutStepMesg.equipment = equipment
         }
 
         return workoutStepMesg
@@ -513,14 +513,14 @@ object EncodeWorkout {
         durationTime: Float?
     ): WorkoutStepMesg {
         val workoutStepMesg = WorkoutStepMesg()
-        workoutStepMesg.setMessageIndex(messageIndex)
+        workoutStepMesg.messageIndex = messageIndex
 
-        workoutStepMesg.setDurationType(durationType)
-        workoutStepMesg.setDurationTime(durationTime)
+        workoutStepMesg.durationType = durationType
+        workoutStepMesg.durationTime = durationTime
 
-        workoutStepMesg.setTargetType(WktStepTarget.OPEN)
+        workoutStepMesg.targetType = WktStepTarget.OPEN
 
-        workoutStepMesg.setIntensity(Intensity.REST)
+        workoutStepMesg.intensity = Intensity.REST
 
         return workoutStepMesg
     }

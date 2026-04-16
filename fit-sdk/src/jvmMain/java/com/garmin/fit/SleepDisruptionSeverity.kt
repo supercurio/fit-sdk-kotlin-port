@@ -23,7 +23,7 @@ enum class SleepDisruptionSeverity(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SleepDisruptionSeverity.INVALID
+            return INVALID
         }
 
         /**

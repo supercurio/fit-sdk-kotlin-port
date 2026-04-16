@@ -12,23 +12,23 @@ package com.garmin.fit
 class RespirationRateMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.RESPIRATION_RATE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var respirationRate: Float?
@@ -36,7 +36,7 @@ class RespirationRateMesg : Mesg {
          * Get respiration_rate field
          * Units: breaths/min
          * Comment: Breaths * 100 /min, -300 indicates invalid, -200 indicates large motion, -100 indicates off wrist
-         * 
+         *
          * @return respiration_rate
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,7 +44,7 @@ class RespirationRateMesg : Mesg {
          * Set respiration_rate field
          * Units: breaths/min
          * Comment: Breaths * 100 /min, -300 indicates invalid, -200 indicates large motion, -100 indicates off wrist
-         * 
+         *
          * @param respirationRate The new respirationRate value to be set
          */
         set(respirationRate) {
@@ -57,11 +57,10 @@ class RespirationRateMesg : Mesg {
         const val RespirationRateFieldNum: Int = 0
 
 
-        val respirationRateMesg: Mesg
+        // respiration_rate
+        val respirationRateMesg: Mesg = Mesg("respiration_rate", MesgNum.RESPIRATION_RATE)
 
         init {
-            // respiration_rate
-            respirationRateMesg = Mesg("respiration_rate", MesgNum.RESPIRATION_RATE)
             respirationRateMesg.addField(
                 Field(
                     "timestamp",

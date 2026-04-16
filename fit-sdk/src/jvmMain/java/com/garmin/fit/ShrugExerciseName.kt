@@ -34,37 +34,36 @@ object ShrugExerciseName {
     const val SHRUG_ARM_MID_WHEELCHAIR: Int = 22
     const val SHRUG_ARM_UP_WHEELCHAIR: Int = 23
     const val UPRIGHT_ROW: Int = 24
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = HashMap<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BARBELL_JUMP_SHRUG, "BARBELL_JUMP_SHRUG")
-        stringMap.put(BARBELL_SHRUG, "BARBELL_SHRUG")
-        stringMap.put(BARBELL_UPRIGHT_ROW, "BARBELL_UPRIGHT_ROW")
-        stringMap.put(BEHIND_THE_BACK_SMITH_MACHINE_SHRUG, "BEHIND_THE_BACK_SMITH_MACHINE_SHRUG")
-        stringMap.put(DUMBBELL_JUMP_SHRUG, "DUMBBELL_JUMP_SHRUG")
-        stringMap.put(DUMBBELL_SHRUG, "DUMBBELL_SHRUG")
-        stringMap.put(DUMBBELL_UPRIGHT_ROW, "DUMBBELL_UPRIGHT_ROW")
-        stringMap.put(INCLINE_DUMBBELL_SHRUG, "INCLINE_DUMBBELL_SHRUG")
-        stringMap.put(OVERHEAD_BARBELL_SHRUG, "OVERHEAD_BARBELL_SHRUG")
-        stringMap.put(OVERHEAD_DUMBBELL_SHRUG, "OVERHEAD_DUMBBELL_SHRUG")
-        stringMap.put(SCAPTION_AND_SHRUG, "SCAPTION_AND_SHRUG")
-        stringMap.put(SCAPULAR_RETRACTION, "SCAPULAR_RETRACTION")
-        stringMap.put(SERRATUS_CHAIR_SHRUG, "SERRATUS_CHAIR_SHRUG")
-        stringMap.put(WEIGHTED_SERRATUS_CHAIR_SHRUG, "WEIGHTED_SERRATUS_CHAIR_SHRUG")
-        stringMap.put(SERRATUS_SHRUG, "SERRATUS_SHRUG")
-        stringMap.put(WEIGHTED_SERRATUS_SHRUG, "WEIGHTED_SERRATUS_SHRUG")
-        stringMap.put(WIDE_GRIP_JUMP_SHRUG, "WIDE_GRIP_JUMP_SHRUG")
-        stringMap.put(WIDE_GRIP_BARBELL_SHRUG, "WIDE_GRIP_BARBELL_SHRUG")
-        stringMap.put(BEHIND_THE_BACK_SHRUG, "BEHIND_THE_BACK_SHRUG")
-        stringMap.put(DUMBBELL_SHRUG_WHEELCHAIR, "DUMBBELL_SHRUG_WHEELCHAIR")
-        stringMap.put(SHRUG_WHEELCHAIR, "SHRUG_WHEELCHAIR")
-        stringMap.put(SHRUG_ARM_DOWN_WHEELCHAIR, "SHRUG_ARM_DOWN_WHEELCHAIR")
-        stringMap.put(SHRUG_ARM_MID_WHEELCHAIR, "SHRUG_ARM_MID_WHEELCHAIR")
-        stringMap.put(SHRUG_ARM_UP_WHEELCHAIR, "SHRUG_ARM_UP_WHEELCHAIR")
-        stringMap.put(UPRIGHT_ROW, "UPRIGHT_ROW")
+        stringMap[BARBELL_JUMP_SHRUG] = "BARBELL_JUMP_SHRUG"
+        stringMap[BARBELL_SHRUG] = "BARBELL_SHRUG"
+        stringMap[BARBELL_UPRIGHT_ROW] = "BARBELL_UPRIGHT_ROW"
+        stringMap[BEHIND_THE_BACK_SMITH_MACHINE_SHRUG] = "BEHIND_THE_BACK_SMITH_MACHINE_SHRUG"
+        stringMap[DUMBBELL_JUMP_SHRUG] = "DUMBBELL_JUMP_SHRUG"
+        stringMap[DUMBBELL_SHRUG] = "DUMBBELL_SHRUG"
+        stringMap[DUMBBELL_UPRIGHT_ROW] = "DUMBBELL_UPRIGHT_ROW"
+        stringMap[INCLINE_DUMBBELL_SHRUG] = "INCLINE_DUMBBELL_SHRUG"
+        stringMap[OVERHEAD_BARBELL_SHRUG] = "OVERHEAD_BARBELL_SHRUG"
+        stringMap[OVERHEAD_DUMBBELL_SHRUG] = "OVERHEAD_DUMBBELL_SHRUG"
+        stringMap[SCAPTION_AND_SHRUG] = "SCAPTION_AND_SHRUG"
+        stringMap[SCAPULAR_RETRACTION] = "SCAPULAR_RETRACTION"
+        stringMap[SERRATUS_CHAIR_SHRUG] = "SERRATUS_CHAIR_SHRUG"
+        stringMap[WEIGHTED_SERRATUS_CHAIR_SHRUG] = "WEIGHTED_SERRATUS_CHAIR_SHRUG"
+        stringMap[SERRATUS_SHRUG] = "SERRATUS_SHRUG"
+        stringMap[WEIGHTED_SERRATUS_SHRUG] = "WEIGHTED_SERRATUS_SHRUG"
+        stringMap[WIDE_GRIP_JUMP_SHRUG] = "WIDE_GRIP_JUMP_SHRUG"
+        stringMap[WIDE_GRIP_BARBELL_SHRUG] = "WIDE_GRIP_BARBELL_SHRUG"
+        stringMap[BEHIND_THE_BACK_SHRUG] = "BEHIND_THE_BACK_SHRUG"
+        stringMap[DUMBBELL_SHRUG_WHEELCHAIR] = "DUMBBELL_SHRUG_WHEELCHAIR"
+        stringMap[SHRUG_WHEELCHAIR] = "SHRUG_WHEELCHAIR"
+        stringMap[SHRUG_ARM_DOWN_WHEELCHAIR] = "SHRUG_ARM_DOWN_WHEELCHAIR"
+        stringMap[SHRUG_ARM_MID_WHEELCHAIR] = "SHRUG_ARM_MID_WHEELCHAIR"
+        stringMap[SHRUG_ARM_UP_WHEELCHAIR] = "SHRUG_ARM_UP_WHEELCHAIR"
+        stringMap[UPRIGHT_ROW] = "UPRIGHT_ROW"
     }
 
 
@@ -73,9 +72,9 @@ object ShrugExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -86,7 +85,7 @@ object ShrugExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

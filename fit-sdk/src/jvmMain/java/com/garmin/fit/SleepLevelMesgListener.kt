@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SleepLevelMesgListener {
-    fun onMesg(mesg: SleepLevelMesg?)
+    fun onMesg(mesg: SleepLevelMesg)
 }

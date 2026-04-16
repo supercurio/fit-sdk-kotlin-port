@@ -22,28 +22,24 @@ object FlyeExerciseName {
     const val FACE_DOWN_INCLINE_REVERSE_FLYE: Int = 10
     const val INCLINE_REVERSE_FLYE: Int = 11
     const val REAR_DELT_FLY_WHEELCHAIR: Int = 12
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(CABLE_CROSSOVER, "CABLE_CROSSOVER")
-        stringMap.put(DECLINE_DUMBBELL_FLYE, "DECLINE_DUMBBELL_FLYE")
-        stringMap.put(DUMBBELL_FLYE, "DUMBBELL_FLYE")
-        stringMap.put(INCLINE_DUMBBELL_FLYE, "INCLINE_DUMBBELL_FLYE")
-        stringMap.put(KETTLEBELL_FLYE, "KETTLEBELL_FLYE")
-        stringMap.put(KNEELING_REAR_FLYE, "KNEELING_REAR_FLYE")
-        stringMap.put(
-            SINGLE_ARM_STANDING_CABLE_REVERSE_FLYE,
-            "SINGLE_ARM_STANDING_CABLE_REVERSE_FLYE"
-        )
-        stringMap.put(SWISS_BALL_DUMBBELL_FLYE, "SWISS_BALL_DUMBBELL_FLYE")
-        stringMap.put(ARM_ROTATIONS, "ARM_ROTATIONS")
-        stringMap.put(HUG_A_TREE, "HUG_A_TREE")
-        stringMap.put(FACE_DOWN_INCLINE_REVERSE_FLYE, "FACE_DOWN_INCLINE_REVERSE_FLYE")
-        stringMap.put(INCLINE_REVERSE_FLYE, "INCLINE_REVERSE_FLYE")
-        stringMap.put(REAR_DELT_FLY_WHEELCHAIR, "REAR_DELT_FLY_WHEELCHAIR")
+        stringMap[CABLE_CROSSOVER] = "CABLE_CROSSOVER"
+        stringMap[DECLINE_DUMBBELL_FLYE] = "DECLINE_DUMBBELL_FLYE"
+        stringMap[DUMBBELL_FLYE] = "DUMBBELL_FLYE"
+        stringMap[INCLINE_DUMBBELL_FLYE] = "INCLINE_DUMBBELL_FLYE"
+        stringMap[KETTLEBELL_FLYE] = "KETTLEBELL_FLYE"
+        stringMap[KNEELING_REAR_FLYE] = "KNEELING_REAR_FLYE"
+        stringMap[SINGLE_ARM_STANDING_CABLE_REVERSE_FLYE] = "SINGLE_ARM_STANDING_CABLE_REVERSE_FLYE"
+        stringMap[SWISS_BALL_DUMBBELL_FLYE] = "SWISS_BALL_DUMBBELL_FLYE"
+        stringMap[ARM_ROTATIONS] = "ARM_ROTATIONS"
+        stringMap[HUG_A_TREE] = "HUG_A_TREE"
+        stringMap[FACE_DOWN_INCLINE_REVERSE_FLYE] = "FACE_DOWN_INCLINE_REVERSE_FLYE"
+        stringMap[INCLINE_REVERSE_FLYE] = "INCLINE_REVERSE_FLYE"
+        stringMap[REAR_DELT_FLY_WHEELCHAIR] = "REAR_DELT_FLY_WHEELCHAIR"
     }
 
 
@@ -52,9 +48,9 @@ object FlyeExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -65,7 +61,7 @@ object FlyeExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

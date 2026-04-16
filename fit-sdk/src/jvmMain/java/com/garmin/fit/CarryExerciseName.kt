@@ -18,21 +18,20 @@ object CarryExerciseName {
     const val FARMERS_CARRY_WALK_LUNGE: Int = 6
     const val FARMERS_CARRY: Int = 7
     const val FARMERS_CARRY_ON_TOES: Int = 8
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BAR_HOLDS, "BAR_HOLDS")
-        stringMap.put(FARMERS_WALK, "FARMERS_WALK")
-        stringMap.put(FARMERS_WALK_ON_TOES, "FARMERS_WALK_ON_TOES")
-        stringMap.put(HEX_DUMBBELL_HOLD, "HEX_DUMBBELL_HOLD")
-        stringMap.put(OVERHEAD_CARRY, "OVERHEAD_CARRY")
-        stringMap.put(DUMBBELL_WAITER_CARRY, "DUMBBELL_WAITER_CARRY")
-        stringMap.put(FARMERS_CARRY_WALK_LUNGE, "FARMERS_CARRY_WALK_LUNGE")
-        stringMap.put(FARMERS_CARRY, "FARMERS_CARRY")
-        stringMap.put(FARMERS_CARRY_ON_TOES, "FARMERS_CARRY_ON_TOES")
+        stringMap[BAR_HOLDS] = "BAR_HOLDS"
+        stringMap[FARMERS_WALK] = "FARMERS_WALK"
+        stringMap[FARMERS_WALK_ON_TOES] = "FARMERS_WALK_ON_TOES"
+        stringMap[HEX_DUMBBELL_HOLD] = "HEX_DUMBBELL_HOLD"
+        stringMap[OVERHEAD_CARRY] = "OVERHEAD_CARRY"
+        stringMap[DUMBBELL_WAITER_CARRY] = "DUMBBELL_WAITER_CARRY"
+        stringMap[FARMERS_CARRY_WALK_LUNGE] = "FARMERS_CARRY_WALK_LUNGE"
+        stringMap[FARMERS_CARRY] = "FARMERS_CARRY"
+        stringMap[FARMERS_CARRY_ON_TOES] = "FARMERS_CARRY_ON_TOES"
     }
 
 
@@ -41,9 +40,9 @@ object CarryExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -54,7 +53,7 @@ object CarryExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

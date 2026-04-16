@@ -23,26 +23,25 @@ object LegCurlExerciseName {
     const val ZERCHER_GOOD_MORNING: Int = 11
     const val BAND_GOOD_MORNING: Int = 12
     const val BAR_GOOD_MORNING: Int = 13
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(LEG_CURL, "LEG_CURL")
-        stringMap.put(WEIGHTED_LEG_CURL, "WEIGHTED_LEG_CURL")
-        stringMap.put(GOOD_MORNING, "GOOD_MORNING")
-        stringMap.put(SEATED_BARBELL_GOOD_MORNING, "SEATED_BARBELL_GOOD_MORNING")
-        stringMap.put(SINGLE_LEG_BARBELL_GOOD_MORNING, "SINGLE_LEG_BARBELL_GOOD_MORNING")
-        stringMap.put(SINGLE_LEG_SLIDING_LEG_CURL, "SINGLE_LEG_SLIDING_LEG_CURL")
-        stringMap.put(SLIDING_LEG_CURL, "SLIDING_LEG_CURL")
-        stringMap.put(SPLIT_BARBELL_GOOD_MORNING, "SPLIT_BARBELL_GOOD_MORNING")
-        stringMap.put(SPLIT_STANCE_EXTENSION, "SPLIT_STANCE_EXTENSION")
-        stringMap.put(STAGGERED_STANCE_GOOD_MORNING, "STAGGERED_STANCE_GOOD_MORNING")
-        stringMap.put(SWISS_BALL_HIP_RAISE_AND_LEG_CURL, "SWISS_BALL_HIP_RAISE_AND_LEG_CURL")
-        stringMap.put(ZERCHER_GOOD_MORNING, "ZERCHER_GOOD_MORNING")
-        stringMap.put(BAND_GOOD_MORNING, "BAND_GOOD_MORNING")
-        stringMap.put(BAR_GOOD_MORNING, "BAR_GOOD_MORNING")
+        stringMap[LEG_CURL] = "LEG_CURL"
+        stringMap[WEIGHTED_LEG_CURL] = "WEIGHTED_LEG_CURL"
+        stringMap[GOOD_MORNING] = "GOOD_MORNING"
+        stringMap[SEATED_BARBELL_GOOD_MORNING] = "SEATED_BARBELL_GOOD_MORNING"
+        stringMap[SINGLE_LEG_BARBELL_GOOD_MORNING] = "SINGLE_LEG_BARBELL_GOOD_MORNING"
+        stringMap[SINGLE_LEG_SLIDING_LEG_CURL] = "SINGLE_LEG_SLIDING_LEG_CURL"
+        stringMap[SLIDING_LEG_CURL] = "SLIDING_LEG_CURL"
+        stringMap[SPLIT_BARBELL_GOOD_MORNING] = "SPLIT_BARBELL_GOOD_MORNING"
+        stringMap[SPLIT_STANCE_EXTENSION] = "SPLIT_STANCE_EXTENSION"
+        stringMap[STAGGERED_STANCE_GOOD_MORNING] = "STAGGERED_STANCE_GOOD_MORNING"
+        stringMap[SWISS_BALL_HIP_RAISE_AND_LEG_CURL] = "SWISS_BALL_HIP_RAISE_AND_LEG_CURL"
+        stringMap[ZERCHER_GOOD_MORNING] = "ZERCHER_GOOD_MORNING"
+        stringMap[BAND_GOOD_MORNING] = "BAND_GOOD_MORNING"
+        stringMap[BAR_GOOD_MORNING] = "BAR_GOOD_MORNING"
     }
 
 
@@ -51,9 +50,9 @@ object LegCurlExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -64,7 +63,7 @@ object LegCurlExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

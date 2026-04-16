@@ -12,19 +12,19 @@ package com.garmin.fit
 class ZonesTargetMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.ZONES_TARGET))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var maxHeartRate: Short?
         /**
          * Get max_heart_rate field
-         * 
+         *
          * @return max_heart_rate
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_heart_rate field
-         * 
+         *
          * @param maxHeartRate The new maxHeartRate value to be set
          */
         set(maxHeartRate) {
@@ -34,13 +34,13 @@ class ZonesTargetMesg : Mesg {
     var thresholdHeartRate: Short?
         /**
          * Get threshold_heart_rate field
-         * 
+         *
          * @return threshold_heart_rate
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set threshold_heart_rate field
-         * 
+         *
          * @param thresholdHeartRate The new thresholdHeartRate value to be set
          */
         set(thresholdHeartRate) {
@@ -50,13 +50,13 @@ class ZonesTargetMesg : Mesg {
     var functionalThresholdPower: Int?
         /**
          * Get functional_threshold_power field
-         * 
+         *
          * @return functional_threshold_power
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set functional_threshold_power field
-         * 
+         *
          * @param functionalThresholdPower The new functionalThresholdPower value to be set
          */
         set(functionalThresholdPower) {
@@ -66,19 +66,16 @@ class ZonesTargetMesg : Mesg {
     var hrCalcType: HrZoneCalc?
         /**
          * Get hr_calc_type field
-         * 
+         *
          * @return hr_calc_type
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return HrZoneCalc.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return HrZoneCalc.getByValue(value)
         }
         /**
          * Set hr_calc_type field
-         * 
+         *
          * @param hrCalcType The new hrCalcType value to be set
          */
         set(hrCalcType) {
@@ -88,19 +85,16 @@ class ZonesTargetMesg : Mesg {
     var pwrCalcType: PwrZoneCalc?
         /**
          * Get pwr_calc_type field
-         * 
+         *
          * @return pwr_calc_type
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return PwrZoneCalc.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return PwrZoneCalc.getByValue(value)
         }
         /**
          * Set pwr_calc_type field
-         * 
+         *
          * @param pwrCalcType The new pwrCalcType value to be set
          */
         set(pwrCalcType) {
@@ -119,11 +113,10 @@ class ZonesTargetMesg : Mesg {
         const val PwrCalcTypeFieldNum: Int = 7
 
 
-        val zonesTargetMesg: Mesg
+        // zones_target
+        val zonesTargetMesg: Mesg = Mesg("zones_target", MesgNum.ZONES_TARGET)
 
         init {
-            // zones_target
-            zonesTargetMesg = Mesg("zones_target", MesgNum.ZONES_TARGET)
             zonesTargetMesg.addField(
                 Field(
                     "max_heart_rate",

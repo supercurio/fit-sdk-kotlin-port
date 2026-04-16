@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface ConnectivityMesgListener {
-    fun onMesg(mesg: ConnectivityMesg?)
+    fun onMesg(mesg: ConnectivityMesg)
 }

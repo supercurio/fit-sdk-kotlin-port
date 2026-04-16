@@ -22,7 +22,7 @@ enum class NapSource(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return NapSource.INVALID
+            return INVALID
         }
 
         /**

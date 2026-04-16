@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SleepDisruptionSeverityPeriodMesgListener {
-    fun onMesg(mesg: SleepDisruptionSeverityPeriodMesg?)
+    fun onMesg(mesg: SleepDisruptionSeverityPeriodMesg)
 }

@@ -12,41 +12,38 @@ package com.garmin.fit
 class SleepDisruptionOvernightSeverityMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SLEEP_DISRUPTION_OVERNIGHT_SEVERITY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var severity: SleepDisruptionSeverity?
         /**
          * Get severity field
-         * 
+         *
          * @return severity
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SleepDisruptionSeverity.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SleepDisruptionSeverity.getByValue(value)
         }
         /**
          * Set severity field
-         * 
+         *
          * @param severity The new severity value to be set
          */
         set(severity) {
@@ -59,14 +56,13 @@ class SleepDisruptionOvernightSeverityMesg : Mesg {
         const val SeverityFieldNum: Int = 0
 
 
-        val sleepDisruptionOvernightSeverityMesg: Mesg
+        // sleep_disruption_overnight_severity
+        val sleepDisruptionOvernightSeverityMesg: Mesg = Mesg(
+            "sleep_disruption_overnight_severity",
+            MesgNum.SLEEP_DISRUPTION_OVERNIGHT_SEVERITY
+        )
 
         init {
-            // sleep_disruption_overnight_severity
-            sleepDisruptionOvernightSeverityMesg = Mesg(
-                "sleep_disruption_overnight_severity",
-                MesgNum.SLEEP_DISRUPTION_OVERNIGHT_SEVERITY
-            )
             sleepDisruptionOvernightSeverityMesg.addField(
                 Field(
                     "timestamp",

@@ -37,7 +37,7 @@ enum class NapPeriodFeedback(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return NapPeriodFeedback.INVALID
+            return INVALID
         }
 
         /**

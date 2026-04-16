@@ -19,8 +19,8 @@ class DeveloperField : FieldBase {
     }
 
     constructor(
-        descriptionMesg: FieldDescriptionMesg?,
-        developerDataIdMesg: DeveloperDataIdMesg?
+        descriptionMesg: FieldDescriptionMesg,
+        developerDataIdMesg: DeveloperDataIdMesg
     ) : super() {
         this.fieldDefinition = DeveloperFieldDefinition(descriptionMesg, developerDataIdMesg)
     }
@@ -30,47 +30,41 @@ class DeveloperField : FieldBase {
     }
 
     val isDefined: Boolean
-        get() = fieldDefinition.isDefined()
+        get() = fieldDefinition.isDefined
 
     val num: Int
-        get() = fieldDefinition.getNum().toInt()
+        get() = fieldDefinition.num.toInt()
 
-    override fun getUnits(): String? {
-        return fieldDefinition.getUnits()
-    }
+    override val units
+        get() = fieldDefinition.units
 
-    override fun getType(): Int {
-        return fieldDefinition.getType()
-    }
+    override val type get() = fieldDefinition.type
 
-    override fun getOffset(): Double {
-        return fieldDefinition.getOffset().toDouble()
-    }
+    override val offset: Double
+        get() = fieldDefinition.offset.toDouble()
 
-    override fun getScale(): Double {
-        return fieldDefinition.getScale().toDouble()
-    }
+    override val scale: Double
+        get() = fieldDefinition.scale.toDouble()
 
-    override fun getFieldName(): String? {
-        return fieldDefinition.getFieldName()
-    }
+    override val fieldName: String?
+        get() = fieldDefinition.fieldName
 
     val developerDataIndex: Short
-        get() = fieldDefinition.getDeveloperDataIndex()
+        get() = fieldDefinition.developerDataIndex
 
     val appVersion: Long
-        get() = fieldDefinition.getAppVersion()
+        get() = fieldDefinition.appVersion
 
-    val appId: Array<Byte?>
-        get() = fieldDefinition.getAppId()
+    val appId: Array<Byte>?
+        get() = fieldDefinition.appId
 
     val appUUID: UUID
         get() {
-            val appId = fieldDefinition.getAppId()
-            val primativeId = ByteArray(appId.size)
+            val appId = fieldDefinition.appId
+            val primativeId = ByteArray(appId!!.size)
 
             for (i in appId.indices) {
-                primativeId[i.toInt()] = appId[i.toInt()]!!
+                primativeId[i] = appId[i]
             }
 
             val bb = ByteBuffer.wrap(primativeId)
@@ -96,5 +90,5 @@ class DeveloperField : FieldBase {
          * 
          * @return The Field Number of the Overridden Field, [Fit.UINT8_INVALID] otherwise.
          */
-        get() = fieldDefinition.getNativeOverride()
+        get() = fieldDefinition.nativeOverride
 }

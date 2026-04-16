@@ -9,6 +9,5 @@
 package com.garmin.fit
 
 abstract class FieldDefinitionBase {
-    @JvmField
     abstract var size: Int
 }

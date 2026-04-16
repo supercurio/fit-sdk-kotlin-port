@@ -12,7 +12,7 @@ package com.garmin.fit
 class TimestampCorrelationMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TIMESTAMP_CORRELATION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of UTC timestamp at the time the system timestamp was recorded.
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class TimestampCorrelationMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of UTC timestamp at the time the system timestamp was recorded.
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var fractionalTimestamp: Float?
@@ -40,7 +40,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get fractional_timestamp field
          * Units: s
          * Comment: Fractional part of the UTC timestamp at the time the system timestamp was recorded.
-         * 
+         *
          * @return fractional_timestamp
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,7 +48,7 @@ class TimestampCorrelationMesg : Mesg {
          * Set fractional_timestamp field
          * Units: s
          * Comment: Fractional part of the UTC timestamp at the time the system timestamp was recorded.
-         * 
+         *
          * @param fractionalTimestamp The new fractionalTimestamp value to be set
          */
         set(fractionalTimestamp) {
@@ -60,7 +60,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get system_timestamp field
          * Units: s
          * Comment: Whole second part of the system timestamp
-         * 
+         *
          * @return system_timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -68,11 +68,11 @@ class TimestampCorrelationMesg : Mesg {
          * Set system_timestamp field
          * Units: s
          * Comment: Whole second part of the system timestamp
-         * 
+         *
          * @param systemTimestamp The new systemTimestamp value to be set
          */
         set(systemTimestamp) {
-            setFieldValue(1, 0, systemTimestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(1, 0, systemTimestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var fractionalSystemTimestamp: Float?
@@ -80,7 +80,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get fractional_system_timestamp field
          * Units: s
          * Comment: Fractional part of the system timestamp
-         * 
+         *
          * @return fractional_system_timestamp
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -88,7 +88,7 @@ class TimestampCorrelationMesg : Mesg {
          * Set fractional_system_timestamp field
          * Units: s
          * Comment: Fractional part of the system timestamp
-         * 
+         *
          * @param fractionalSystemTimestamp The new fractionalSystemTimestamp value to be set
          */
         set(fractionalSystemTimestamp) {
@@ -100,7 +100,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get local_timestamp field
          * Units: s
          * Comment: timestamp epoch expressed in local time used to convert timestamps to local time
-         * 
+         *
          * @return local_timestamp
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -108,7 +108,7 @@ class TimestampCorrelationMesg : Mesg {
          * Set local_timestamp field
          * Units: s
          * Comment: timestamp epoch expressed in local time used to convert timestamps to local time
-         * 
+         *
          * @param localTimestamp The new localTimestamp value to be set
          */
         set(localTimestamp) {
@@ -120,7 +120,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the UTC timestamp at the time the system timestamp was recorded.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -128,7 +128,7 @@ class TimestampCorrelationMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the UTC timestamp at the time the system timestamp was recorded.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -140,7 +140,7 @@ class TimestampCorrelationMesg : Mesg {
          * Get system_timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the system timestamp
-         * 
+         *
          * @return system_timestamp_ms
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -148,7 +148,7 @@ class TimestampCorrelationMesg : Mesg {
          * Set system_timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the system timestamp
-         * 
+         *
          * @param systemTimestampMs The new systemTimestampMs value to be set
          */
         set(systemTimestampMs) {
@@ -171,11 +171,10 @@ class TimestampCorrelationMesg : Mesg {
         const val SystemTimestampMsFieldNum: Int = 5
 
 
-        val timestampCorrelationMesg: Mesg
+        // timestamp_correlation
+        val timestampCorrelationMesg: Mesg = Mesg("timestamp_correlation", MesgNum.TIMESTAMP_CORRELATION)
 
         init {
-            // timestamp_correlation
-            timestampCorrelationMesg = Mesg("timestamp_correlation", MesgNum.TIMESTAMP_CORRELATION)
             timestampCorrelationMesg.addField(
                 Field(
                     "timestamp",

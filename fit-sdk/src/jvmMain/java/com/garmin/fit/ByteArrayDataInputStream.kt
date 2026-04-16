@@ -16,24 +16,24 @@ import java.io.ByteArrayInputStream
 class ByteArrayDataInputStream
 /**
  * Creates a ByteArrayDataInputStream so that it uses buf as its buffer array
- * 
+ *
  * @param buf - the input buffer
  * @see ByteArrayInputStream
- * 
+ *
  * @see java.io.DataInputStream
  */
     (buf: ByteArray) : ByteArrayInputStream(buf) {
     val position: Int
         /**
          * Returns the current stream position
-         * 
+         *
          * @return the current stream position
          */
         get() = super.pos
 
     /**
      * Returns the next available byte without changing the current stream position
-     * 
+     *
      * @return A byte representing the next value to be read
      */
     fun peek(): Byte {
@@ -42,7 +42,7 @@ class ByteArrayDataInputStream
 
     /**
      * Reads an unsigned short value from the stream as little endian
-     * 
+     *
      * @return an int value representing an unsigned short value read from the stream as little endian
      */
     fun readUShort(): Int {

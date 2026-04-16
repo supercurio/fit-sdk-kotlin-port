@@ -12,21 +12,21 @@ package com.garmin.fit
 class VideoTitleMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.VIDEO_TITLE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
          * Comment: Long titles will be split into multiple parts
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
          * Comment: Long titles will be split into multiple parts
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -37,14 +37,14 @@ class VideoTitleMesg : Mesg {
         /**
          * Get message_count field
          * Comment: Total number of title parts
-         * 
+         *
          * @return message_count
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_count field
          * Comment: Total number of title parts
-         * 
+         *
          * @param messageCount The new messageCount value to be set
          */
         set(messageCount) {
@@ -54,13 +54,13 @@ class VideoTitleMesg : Mesg {
     var text: String?
         /**
          * Get text field
-         * 
+         *
          * @return text
          */
         get() = getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set text field
-         * 
+         *
          * @param text The new text value to be set
          */
         set(text) {
@@ -75,11 +75,10 @@ class VideoTitleMesg : Mesg {
         const val TextFieldNum: Int = 1
 
 
-        val videoTitleMesg: Mesg
+        // video_title
+        val videoTitleMesg: Mesg = Mesg("video_title", MesgNum.VIDEO_TITLE)
 
         init {
-            // video_title
-            videoTitleMesg = Mesg("video_title", MesgNum.VIDEO_TITLE)
             videoTitleMesg.addField(
                 Field(
                     "message_index",

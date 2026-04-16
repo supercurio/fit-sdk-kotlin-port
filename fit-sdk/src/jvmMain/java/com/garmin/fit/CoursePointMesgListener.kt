@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface CoursePointMesgListener {
-    fun onMesg(mesg: CoursePointMesg?)
+    fun onMesg(mesg: CoursePointMesg)
 }

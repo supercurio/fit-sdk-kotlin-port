@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MonitoringHrDataMesgListener {
-    fun onMesg(mesg: MonitoringHrDataMesg?)
+    fun onMesg(mesg: MonitoringHrDataMesg)
 }

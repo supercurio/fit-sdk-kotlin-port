@@ -16,7 +16,7 @@ object ActivityFileValidationExample {
     fun main(args: Array<String>) {
         println("Activity File Validator")
 
-        if (!ActivityFileValidationExample.validateCommandLine(args)) {
+        if (!validateCommandLine(args)) {
             printUsage()
             return
         }
@@ -48,7 +48,7 @@ object ActivityFileValidationExample {
             // may still be decoded messages that are worth validating,
             // so force the validation checks to execute. Some tests may be
             // skipped or fail due to missing messages.
-            if (plugin.getResults().size == 0) {
+            if (plugin.getResults().isEmpty()) {
                 plugin.repeatValidation()
             }
 
@@ -56,7 +56,7 @@ object ActivityFileValidationExample {
         }
     }
 
-    private fun validateCommandLine(args: Array<String?>): Boolean {
+    private fun validateCommandLine(args: Array<String>): Boolean {
         return args.size == 1
     }
 
@@ -66,12 +66,12 @@ object ActivityFileValidationExample {
     }
 
     private fun printValidationReport(plugin: ActivityFileValidationPlugin) {
-        println("Message Count: " + plugin.getMesgCount())
+        println("Message Count: " + plugin.mesgCount)
 
         for (result in plugin.getResults()) {
             println(result)
-            if (result.getDescription() != null) {
-                println("\t" + result.getDescription())
+            if (result?.description != null) {
+                println("\t" + result.description)
             }
         }
     }

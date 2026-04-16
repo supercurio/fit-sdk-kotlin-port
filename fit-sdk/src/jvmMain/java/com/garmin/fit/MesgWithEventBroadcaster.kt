@@ -15,15 +15,12 @@ class MesgWithEventBroadcaster : MesgWithEventListener {
     private val DEFAULT_GROUP = 255
     private val BEGIN_END_GROUP = 254
 
-    private val listeners: ArrayList<MesgWithEventListener>
-    private val startedEvents: ArrayList<LinkedList<MesgWithEvent?>?>
+    private val listeners: ArrayList<MesgWithEventListener> = ArrayList()
+    private val startedEvents: ArrayList<LinkedList<MesgWithEvent>> = ArrayList()
 
     init {
-        listeners = ArrayList<MesgWithEventListener>()
-        startedEvents = ArrayList<LinkedList<MesgWithEvent?>?>()
-
         for (i in 0..<MAX_GROUPS) {
-            startedEvents.add(LinkedList<MesgWithEvent?>())
+            startedEvents.add(LinkedList<MesgWithEvent>())
         }
     }
 
@@ -35,92 +32,83 @@ class MesgWithEventBroadcaster : MesgWithEventListener {
         listeners.remove(mesgObserver)
     }
 
-    override fun onMesg(mesg: MesgWithEvent?) {
-        val broadcastMesg = Factory.createMesg(mesg as Mesg?) as MesgWithEvent
+    override fun onMesg(mesg: MesgWithEvent) {
+        val broadcastMesg = Factory.createMesg(mesg as Mesg) as MesgWithEvent
         var group = DEFAULT_GROUP
 
-        if (broadcastMesg.getEventGroup() != null) {
-            group = broadcastMesg.getEventGroup().toInt()
+        if (broadcastMesg.eventGroup != null) {
+            group = broadcastMesg.eventGroup!!.toInt()
         }
 
-        if (broadcastMesg.getEventType() == null) {
+        if (broadcastMesg.eventType == null) {
             return  // Invalid so ignore.
         }
 
         // Convert depreciated events types for backwards compatibility.
-        when (broadcastMesg.getEventType()) {
+        when (broadcastMesg.eventType) {
             EventType.BEGIN_DEPRECIATED -> {
                 group = BEGIN_END_GROUP
-                broadcastMesg.setEventType(EventType.START)
+                broadcastMesg.eventType = EventType.START
             }
 
             EventType.END_DEPRECIATED -> {
                 group = BEGIN_END_GROUP
-                broadcastMesg.setEventType(EventType.STOP)
+                broadcastMesg.eventType = EventType.STOP
             }
 
-            EventType.CONSECUTIVE_DEPRECIATED -> broadcastMesg.setEventType(EventType.STOP)
+            EventType.CONSECUTIVE_DEPRECIATED -> broadcastMesg.eventType = EventType.STOP
             EventType.END_ALL_DEPRECIATED -> {
                 group = BEGIN_END_GROUP
-                broadcastMesg.setEventType(EventType.STOP_ALL)
+                broadcastMesg.eventType = EventType.STOP_ALL
             }
 
             else -> {}
         }
 
-        when (broadcastMesg.getEventType()) {
+        when (broadcastMesg.eventType) {
             EventType.START -> {
-                val i = 0
-                while (i < startedEvents.get(group)!!.size) {
-                    if (startedEvents.get(group)!!.get(i)!!
-                            .getEvent() == broadcastMesg.getEvent()
-                    ) {
-                        val stopEvent = Factory.createMesg(
-                            startedEvents.get(group)!!.get(i) as Mesg?
-                        ) as MesgWithEvent
-                        val timestamp = broadcastMesg.getTimestamp()
-                        stopEvent.setEventType(EventType.STOP)
+                var i = 0
+                while (i < startedEvents[group].size) {
+                    if (startedEvents[group][i].event == broadcastMesg.event) {
+                        val stopEvent =
+                            Factory.createMesg(startedEvents[group][i] as Mesg) as MesgWithEvent
+                        val timestamp = broadcastMesg.timestamp
+                        stopEvent.eventType = EventType.STOP
 
                         if (timestamp != null) {
-                            stopEvent.setTimestamp(timestamp)
+                            stopEvent.timestamp = timestamp
                         }
 
                         broadcast(stopEvent)
-                        startedEvents.get(group)!!.removeAt(i)
+                        startedEvents[group].removeAt(i)
                     }
                     i++
                 }
 
-                startedEvents.get(group)!!
-                    .add(Factory.createMesg(broadcastMesg as Mesg) as MesgWithEvent)
+                startedEvents[group].add(Factory.createMesg(broadcastMesg as Mesg) as MesgWithEvent)
             }
 
             EventType.STOP, EventType.STOP_DISABLE -> {
-                val i = 0
-                while (i < startedEvents.get(group)!!.size) {
-                    if (startedEvents.get(group)!!.get(i)!!
-                            .getEvent() == broadcastMesg.getEvent()
-                    ) {
-                        startedEvents.get(group)!!.removeAt(i)
+                var i = 0
+                while (i < startedEvents[group].size) {
+                    if (startedEvents[group][i].event == broadcastMesg.event) {
+                        startedEvents[group].removeAt(i)
                     }
                     i++
                 }
             }
 
             EventType.STOP_ALL -> {
-                val i = 0
-                while (i < startedEvents.get(group)!!.size) {
-                    if (startedEvents.get(group)!!.get(i)!!
-                            .getEvent() != broadcastMesg.getEvent()
-                    ) {
-                        val stopEvent = Factory.createMesg(
-                            startedEvents.get(group)!!.get(i) as Mesg?
-                        ) as MesgWithEvent
-                        val timestamp = broadcastMesg.getTimestamp()
-                        stopEvent.setEventType(EventType.STOP)
+                var i = 0
+                while (i < startedEvents[group].size) {
+                    if (startedEvents[group][i].event != broadcastMesg.event) {
+                        val stopEvent =
+                            Factory.createMesg(startedEvents[group][i] as Mesg) as MesgWithEvent
+                        val timestamp = broadcastMesg.timestamp
+                        stopEvent.eventType = EventType.STOP
 
                         if (timestamp != null) {
-                            stopEvent.setTimestamp(timestamp)
+                            stopEvent.timestamp = timestamp
                         }
 
                         broadcast(stopEvent)
@@ -128,24 +116,21 @@ class MesgWithEventBroadcaster : MesgWithEventListener {
                     i++
                 }
 
-                startedEvents.get(group)!!.clear()
-                broadcastMesg.setEventType(EventType.STOP)
+                startedEvents[group].clear()
+                broadcastMesg.eventType = EventType.STOP
             }
 
             EventType.STOP_DISABLE_ALL -> {
-                val i = 0
-                while (i < startedEvents.get(group)!!.size) {
-                    if (startedEvents.get(group)!!.get(i)!!
-                            .getEvent() != broadcastMesg.getEvent()
-                    ) {
-                        val stopEvent = Factory.createMesg(
-                            startedEvents.get(group)!!.get(i) as Mesg?
-                        ) as MesgWithEvent
-                        val timestamp = broadcastMesg.getTimestamp()
-                        stopEvent.setEventType(EventType.STOP_DISABLE)
+                var i = 0
+                while (i < startedEvents[group].size) {
+                    if (startedEvents[group][i].event != broadcastMesg.event) {
+                        val stopEvent =
+                            Factory.createMesg(startedEvents[group][i] as Mesg) as MesgWithEvent
+                        val timestamp = broadcastMesg.timestamp
+                        stopEvent.eventType = EventType.STOP_DISABLE
 
                         if (timestamp != null) {
-                            stopEvent.setTimestamp(timestamp)
+                            stopEvent.timestamp = timestamp
                         }
 
                         broadcast(stopEvent)
@@ -153,8 +138,8 @@ class MesgWithEventBroadcaster : MesgWithEventListener {
                     i++
                 }
 
-                startedEvents.get(group)!!.clear()
-                broadcastMesg.setEventType(EventType.STOP_DISABLE)
+                startedEvents[group].clear()
+                broadcastMesg.eventType = EventType.STOP_DISABLE
             }
 
             EventType.MARKER -> {}
@@ -164,7 +149,7 @@ class MesgWithEventBroadcaster : MesgWithEventListener {
         broadcast(broadcastMesg)
     }
 
-    private fun broadcast(mesg: MesgWithEvent?) {
+    private fun broadcast(mesg: MesgWithEvent) {
         for (listener in listeners) {
             listener.onMesg(mesg)
         }

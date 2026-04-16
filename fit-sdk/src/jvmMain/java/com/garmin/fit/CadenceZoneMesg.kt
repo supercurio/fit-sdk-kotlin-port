@@ -12,19 +12,19 @@ package com.garmin.fit
 class CadenceZoneMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CADENCE_ZONE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,37 +35,38 @@ class CadenceZoneMesg : Mesg {
         /**
          * Get high_value field
          * Units: rpm
-         * 
+         *
          * @return high_value
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set high_value field
          * Units: rpm
-         * 
+         *
          * @param highValue The new highValue value to be set
          */
         set(highValue) {
             setFieldValue(0, 0, highValue, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(1, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
 
     companion object {
         const val MessageIndexFieldNum: Int = 254
@@ -75,11 +76,10 @@ class CadenceZoneMesg : Mesg {
         const val NameFieldNum: Int = 1
 
 
-        val cadenceZoneMesg: Mesg
+        // cadence_zone
+        val cadenceZoneMesg: Mesg = Mesg("cadence_zone", MesgNum.CADENCE_ZONE)
 
         init {
-            // cadence_zone
-            cadenceZoneMesg = Mesg("cadence_zone", MesgNum.CADENCE_ZONE)
             cadenceZoneMesg.addField(
                 Field(
                     "message_index",

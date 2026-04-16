@@ -12,37 +12,37 @@ package com.garmin.fit
 class TimeInZoneMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TIME_IN_ZONE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var referenceMesg: Int?
         /**
          * Get reference_mesg field
-         * 
+         *
          * @return reference_mesg
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set reference_mesg field
-         * 
+         *
          * @param referenceMesg The new referenceMesg value to be set
          */
         set(referenceMesg) {
@@ -52,20 +52,20 @@ class TimeInZoneMesg : Mesg {
     var referenceIndex: Int?
         /**
          * Get reference_index field
-         * 
+         *
          * @return reference_index
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set reference_index field
-         * 
+         *
          * @param referenceIndex The new referenceIndex value to be set
          */
         set(referenceIndex) {
             setFieldValue(1, 0, referenceIndex, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val timeInHrZone: Array<Float?>?
+    val timeInHrZone: Array<Float>?
         get() = getFieldFloatValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInHrZone: Int
@@ -77,7 +77,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Get time_in_hr_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_hr_zone
      * @return time_in_hr_zone
      */
@@ -88,7 +88,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set time_in_hr_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_hr_zone
      * @param timeInHrZone The new timeInHrZone value to be set
      */
@@ -96,7 +96,7 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(2, index, timeInHrZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeInSpeedZone: Array<Float?>?
+    val timeInSpeedZone: Array<Float>?
         get() = getFieldFloatValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInSpeedZone: Int
@@ -108,7 +108,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Get time_in_speed_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_speed_zone
      * @return time_in_speed_zone
      */
@@ -119,7 +119,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set time_in_speed_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_speed_zone
      * @param timeInSpeedZone The new timeInSpeedZone value to be set
      */
@@ -127,7 +127,7 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(3, index, timeInSpeedZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeInCadenceZone: Array<Float?>?
+    val timeInCadenceZone: Array<Float>?
         get() = getFieldFloatValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInCadenceZone: Int
@@ -139,7 +139,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Get time_in_cadence_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_cadence_zone
      * @return time_in_cadence_zone
      */
@@ -150,7 +150,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set time_in_cadence_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_cadence_zone
      * @param timeInCadenceZone The new timeInCadenceZone value to be set
      */
@@ -158,7 +158,7 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(4, index, timeInCadenceZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeInPowerZone: Array<Float?>?
+    val timeInPowerZone: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInPowerZone: Int
@@ -170,7 +170,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Get time_in_power_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_power_zone
      * @return time_in_power_zone
      */
@@ -181,7 +181,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set time_in_power_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_power_zone
      * @param timeInPowerZone The new timeInPowerZone value to be set
      */
@@ -189,19 +189,19 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(5, index, timeInPowerZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val hrZoneHighBoundary: Array<Short?>?
-        get() = getFieldShortValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val hrZoneHighBoundary: Array<Short>?
+        get() = getFieldShortValues(HrZoneHighBoundaryFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numHrZoneHighBoundary: Int
         /**
          * @return number of hr_zone_high_boundary
          */
-        get() = getNumFieldValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(HrZoneHighBoundaryFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get hr_zone_high_boundary field
      * Units: bpm
-     * 
+     *
      * @param index of hr_zone_high_boundary
      * @return hr_zone_high_boundary
      */
@@ -212,7 +212,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set hr_zone_high_boundary field
      * Units: bpm
-     * 
+     *
      * @param index of hr_zone_high_boundary
      * @param hrZoneHighBoundary The new hrZoneHighBoundary value to be set
      */
@@ -220,7 +220,7 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(6, index, hrZoneHighBoundary, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val speedZoneHighBoundary: Array<Float?>?
+    val speedZoneHighBoundary: Array<Float>?
         get() = getFieldFloatValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSpeedZoneHighBoundary: Int
@@ -232,7 +232,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Get speed_zone_high_boundary field
      * Units: m/s
-     * 
+     *
      * @param index of speed_zone_high_boundary
      * @return speed_zone_high_boundary
      */
@@ -243,7 +243,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set speed_zone_high_boundary field
      * Units: m/s
-     * 
+     *
      * @param index of speed_zone_high_boundary
      * @param speedZoneHighBoundary The new speedZoneHighBoundary value to be set
      */
@@ -251,19 +251,19 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(7, index, speedZoneHighBoundary, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val cadenceZoneHighBondary: Array<Short?>?
-        get() = getFieldShortValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val cadenceZoneHighBondary: Array<Short>?
+        get() = getFieldShortValues(CadenceZoneHighBondaryFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCadenceZoneHighBondary: Int
         /**
          * @return number of cadence_zone_high_bondary
          */
-        get() = getNumFieldValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(CadenceZoneHighBondaryFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get cadence_zone_high_bondary field
      * Units: rpm
-     * 
+     *
      * @param index of cadence_zone_high_bondary
      * @return cadence_zone_high_bondary
      */
@@ -274,7 +274,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set cadence_zone_high_bondary field
      * Units: rpm
-     * 
+     *
      * @param index of cadence_zone_high_bondary
      * @param cadenceZoneHighBondary The new cadenceZoneHighBondary value to be set
      */
@@ -282,7 +282,7 @@ class TimeInZoneMesg : Mesg {
         setFieldValue(8, index, cadenceZoneHighBondary, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val powerZoneHighBoundary: Array<Int?>?
+    val powerZoneHighBoundary: Array<Int>?
         get() = getFieldIntegerValues(9, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numPowerZoneHighBoundary: Int
@@ -294,7 +294,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Get power_zone_high_boundary field
      * Units: watts
-     * 
+     *
      * @param index of power_zone_high_boundary
      * @return power_zone_high_boundary
      */
@@ -305,7 +305,7 @@ class TimeInZoneMesg : Mesg {
     /**
      * Set power_zone_high_boundary field
      * Units: watts
-     * 
+     *
      * @param index of power_zone_high_boundary
      * @param powerZoneHighBoundary The new powerZoneHighBoundary value to be set
      */
@@ -316,19 +316,16 @@ class TimeInZoneMesg : Mesg {
     var hrCalcType: HrZoneCalc?
         /**
          * Get hr_calc_type field
-         * 
+         *
          * @return hr_calc_type
          */
         get() {
-            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return HrZoneCalc.Companion.getByValue(value)
+            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return HrZoneCalc.getByValue(value)
         }
         /**
          * Set hr_calc_type field
-         * 
+         *
          * @param hrCalcType The new hrCalcType value to be set
          */
         set(hrCalcType) {
@@ -338,13 +335,13 @@ class TimeInZoneMesg : Mesg {
     var maxHeartRate: Short?
         /**
          * Get max_heart_rate field
-         * 
+         *
          * @return max_heart_rate
          */
         get() = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_heart_rate field
-         * 
+         *
          * @param maxHeartRate The new maxHeartRate value to be set
          */
         set(maxHeartRate) {
@@ -354,13 +351,13 @@ class TimeInZoneMesg : Mesg {
     var restingHeartRate: Short?
         /**
          * Get resting_heart_rate field
-         * 
+         *
          * @return resting_heart_rate
          */
         get() = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set resting_heart_rate field
-         * 
+         *
          * @param restingHeartRate The new restingHeartRate value to be set
          */
         set(restingHeartRate) {
@@ -370,13 +367,13 @@ class TimeInZoneMesg : Mesg {
     var thresholdHeartRate: Short?
         /**
          * Get threshold_heart_rate field
-         * 
+         *
          * @return threshold_heart_rate
          */
         get() = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set threshold_heart_rate field
-         * 
+         *
          * @param thresholdHeartRate The new thresholdHeartRate value to be set
          */
         set(thresholdHeartRate) {
@@ -386,19 +383,16 @@ class TimeInZoneMesg : Mesg {
     var pwrCalcType: PwrZoneCalc?
         /**
          * Get pwr_calc_type field
-         * 
+         *
          * @return pwr_calc_type
          */
         get() {
-            val value = getFieldShortValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return PwrZoneCalc.Companion.getByValue(value)
+            val value = getFieldShortValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return PwrZoneCalc.getByValue(value)
         }
         /**
          * Set pwr_calc_type field
-         * 
+         *
          * @param pwrCalcType The new pwrCalcType value to be set
          */
         set(pwrCalcType) {
@@ -408,13 +402,13 @@ class TimeInZoneMesg : Mesg {
     var functionalThresholdPower: Int?
         /**
          * Get functional_threshold_power field
-         * 
+         *
          * @return functional_threshold_power
          */
         get() = getFieldIntegerValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set functional_threshold_power field
-         * 
+         *
          * @param functionalThresholdPower The new functionalThresholdPower value to be set
          */
         set(functionalThresholdPower) {
@@ -457,11 +451,10 @@ class TimeInZoneMesg : Mesg {
         const val FunctionalThresholdPowerFieldNum: Int = 15
 
 
-        val timeInZoneMesg: Mesg
+        // time_in_zone
+        val timeInZoneMesg: Mesg = Mesg("time_in_zone", MesgNum.TIME_IN_ZONE)
 
         init {
-            // time_in_zone
-            timeInZoneMesg = Mesg("time_in_zone", MesgNum.TIME_IN_ZONE)
             timeInZoneMesg.addField(
                 Field(
                     "timestamp",

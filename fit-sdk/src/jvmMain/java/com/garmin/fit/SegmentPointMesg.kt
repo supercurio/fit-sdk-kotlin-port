@@ -12,19 +12,19 @@ package com.garmin.fit
 class SegmentPointMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_POINT))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,14 +35,14 @@ class SegmentPointMesg : Mesg {
         /**
          * Get position_lat field
          * Units: semicircles
-         * 
+         *
          * @return position_lat
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_lat field
          * Units: semicircles
-         * 
+         *
          * @param positionLat The new positionLat value to be set
          */
         set(positionLat) {
@@ -53,14 +53,14 @@ class SegmentPointMesg : Mesg {
         /**
          * Get position_long field
          * Units: semicircles
-         * 
+         *
          * @return position_long
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_long field
          * Units: semicircles
-         * 
+         *
          * @param positionLong The new positionLong value to be set
          */
         set(positionLong) {
@@ -72,7 +72,7 @@ class SegmentPointMesg : Mesg {
          * Get distance field
          * Units: m
          * Comment: Accumulated distance along the segment at the described point
-         * 
+         *
          * @return distance
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -80,7 +80,7 @@ class SegmentPointMesg : Mesg {
          * Set distance field
          * Units: m
          * Comment: Accumulated distance along the segment at the described point
-         * 
+         *
          * @param distance The new distance value to be set
          */
         set(distance) {
@@ -92,7 +92,7 @@ class SegmentPointMesg : Mesg {
          * Get altitude field
          * Units: m
          * Comment: Accumulated altitude along the segment at the described point
-         * 
+         *
          * @return altitude
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -100,14 +100,14 @@ class SegmentPointMesg : Mesg {
          * Set altitude field
          * Units: m
          * Comment: Accumulated altitude along the segment at the described point
-         * 
+         *
          * @param altitude The new altitude value to be set
          */
         set(altitude) {
             setFieldValue(4, 0, altitude, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val leaderTime: Array<Float?>?
+    val leaderTime: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLeaderTime: Int
@@ -120,7 +120,7 @@ class SegmentPointMesg : Mesg {
      * Get leader_time field
      * Units: s
      * Comment: Accumualted time each leader board member required to reach the described point. This value is zero for all leader board members at the starting point of the segment.
-     * 
+     *
      * @param index of leader_time
      * @return leader_time
      */
@@ -132,7 +132,7 @@ class SegmentPointMesg : Mesg {
      * Set leader_time field
      * Units: s
      * Comment: Accumualted time each leader board member required to reach the described point. This value is zero for all leader board members at the starting point of the segment.
-     * 
+     *
      * @param index of leader_time
      * @param leaderTime The new leaderTime value to be set
      */
@@ -145,7 +145,7 @@ class SegmentPointMesg : Mesg {
          * Get enhanced_altitude field
          * Units: m
          * Comment: Accumulated altitude along the segment at the described point
-         * 
+         *
          * @return enhanced_altitude
          */
         get() = getFieldFloatValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -153,7 +153,7 @@ class SegmentPointMesg : Mesg {
          * Set enhanced_altitude field
          * Units: m
          * Comment: Accumulated altitude along the segment at the described point
-         * 
+         *
          * @param enhancedAltitude The new enhancedAltitude value to be set
          */
         set(enhancedAltitude) {
@@ -246,7 +246,7 @@ class SegmentPointMesg : Mesg {
                     Profile.Type.UINT16
                 )
             )
-            segmentPointMesg.fields.get(field_index).components.add(
+            segmentPointMesg.fields[field_index].components.add(
                 FieldComponent(
                     6,
                     false,

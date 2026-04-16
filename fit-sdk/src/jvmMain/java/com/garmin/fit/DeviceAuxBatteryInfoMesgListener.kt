@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface DeviceAuxBatteryInfoMesgListener {
-    fun onMesg(mesg: DeviceAuxBatteryInfoMesg?)
+    fun onMesg(mesg: DeviceAuxBatteryInfoMesg)
 }

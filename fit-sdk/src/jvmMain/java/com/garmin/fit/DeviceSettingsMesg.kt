@@ -12,21 +12,21 @@ package com.garmin.fit
 class DeviceSettingsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVICE_SETTINGS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var activeTimeZone: Short?
         /**
          * Get active_time_zone field
          * Comment: Index into time zone arrays.
-         * 
+         *
          * @return active_time_zone
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set active_time_zone field
          * Comment: Index into time zone arrays.
-         * 
+         *
          * @param activeTimeZone The new activeTimeZone value to be set
          */
         set(activeTimeZone) {
@@ -37,21 +37,21 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get utc_offset field
          * Comment: Offset from system time. Required to convert timestamp from system time to UTC.
-         * 
+         *
          * @return utc_offset
          */
         get() = getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set utc_offset field
          * Comment: Offset from system time. Required to convert timestamp from system time to UTC.
-         * 
+         *
          * @param utcOffset The new utcOffset value to be set
          */
         set(utcOffset) {
             setFieldValue(1, 0, utcOffset, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val timeOffset: Array<Long?>?
+    val timeOffset: Array<Long>?
         get() = getFieldLongValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeOffset: Int
@@ -64,7 +64,7 @@ class DeviceSettingsMesg : Mesg {
      * Get time_offset field
      * Units: s
      * Comment: Offset from system time.
-     * 
+     *
      * @param index of time_offset
      * @return time_offset
      */
@@ -76,7 +76,7 @@ class DeviceSettingsMesg : Mesg {
      * Set time_offset field
      * Units: s
      * Comment: Offset from system time.
-     * 
+     *
      * @param index of time_offset
      * @param timeOffset The new timeOffset value to be set
      */
@@ -84,14 +84,10 @@ class DeviceSettingsMesg : Mesg {
         setFieldValue(2, index, timeOffset, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeMode: Array<TimeMode?>
+    val timeMode: Array<TimeMode>
         get() {
-            val values =
-                getFieldShortValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            val rv = arrayOfNulls<TimeMode>(values.size)
-            for (i in values.indices) {
-                rv[i] = TimeMode.Companion.getByValue(values[i])
-            }
+            val values = getFieldShortValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)!!
+            val rv = values.map { TimeMode.getByValue(it) }.toTypedArray()
             return rv
         }
 
@@ -104,22 +100,19 @@ class DeviceSettingsMesg : Mesg {
     /**
      * Get time_mode field
      * Comment: Display mode for the time
-     * 
+     *
      * @param index of time_mode
      * @return time_mode
      */
     fun getTimeMode(index: Int): TimeMode? {
-        val value = getFieldShortValue(4, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
-        }
-        return TimeMode.Companion.getByValue(value)
+        val value = getFieldShortValue(4, index, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+        return TimeMode.getByValue(value)
     }
 
     /**
      * Set time_mode field
      * Comment: Display mode for the time
-     * 
+     *
      * @param index of time_mode
      * @param timeMode The new timeMode value to be set
      */
@@ -127,7 +120,7 @@ class DeviceSettingsMesg : Mesg {
         setFieldValue(4, index, timeMode.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeZoneOffset: Array<Float?>?
+    val timeZoneOffset: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeZoneOffset: Int
@@ -140,7 +133,7 @@ class DeviceSettingsMesg : Mesg {
      * Get time_zone_offset field
      * Units: hr
      * Comment: timezone offset in 1/4 hour increments
-     * 
+     *
      * @param index of time_zone_offset
      * @return time_zone_offset
      */
@@ -152,7 +145,7 @@ class DeviceSettingsMesg : Mesg {
      * Set time_zone_offset field
      * Units: hr
      * Comment: timezone offset in 1/4 hour increments
-     * 
+     *
      * @param index of time_zone_offset
      * @param timeZoneOffset The new timeZoneOffset value to be set
      */
@@ -164,20 +157,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get backlight_mode field
          * Comment: Mode for backlight
-         * 
+         *
          * @return backlight_mode
          */
         get() {
-            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return BacklightMode.Companion.getByValue(value)
+            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return BacklightMode.getByValue(value)
         }
         /**
          * Set backlight_mode field
          * Comment: Mode for backlight
-         * 
+         *
          * @param backlightMode The new backlightMode value to be set
          */
         set(backlightMode) {
@@ -188,20 +178,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get activity_tracker_enabled field
          * Comment: Enabled state of the activity tracker functionality
-         * 
+         *
          * @return activity_tracker_enabled
          */
         get() {
-            val value = getFieldShortValue(36, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(36, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set activity_tracker_enabled field
          * Comment: Enabled state of the activity tracker functionality
-         * 
+         *
          * @param activityTrackerEnabled The new activityTrackerEnabled value to be set
          */
         set(activityTrackerEnabled) {
@@ -212,21 +199,21 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get clock_time field
          * Comment: UTC timestamp used to set the devices clock and date
-         * 
+         *
          * @return clock_time
          */
         get() = timestampToDateTime(getFieldLongValue(39, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set clock_time field
          * Comment: UTC timestamp used to set the devices clock and date
-         * 
+         *
          * @param clockTime The new clockTime value to be set
          */
         set(clockTime) {
-            setFieldValue(39, 0, clockTime!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(39, 0, clockTime?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val pagesEnabled: Array<Int?>?
+    val pagesEnabled: Array<Int>?
         get() = getFieldIntegerValues(40, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numPagesEnabled: Int
@@ -238,7 +225,7 @@ class DeviceSettingsMesg : Mesg {
     /**
      * Get pages_enabled field
      * Comment: Bitfield to configure enabled screens for each supported loop
-     * 
+     *
      * @param index of pages_enabled
      * @return pages_enabled
      */
@@ -249,7 +236,7 @@ class DeviceSettingsMesg : Mesg {
     /**
      * Set pages_enabled field
      * Comment: Bitfield to configure enabled screens for each supported loop
-     * 
+     *
      * @param index of pages_enabled
      * @param pagesEnabled The new pagesEnabled value to be set
      */
@@ -261,20 +248,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get move_alert_enabled field
          * Comment: Enabled state of the move alert
-         * 
+         *
          * @return move_alert_enabled
          */
         get() {
-            val value = getFieldShortValue(46, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(46, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set move_alert_enabled field
          * Comment: Enabled state of the move alert
-         * 
+         *
          * @param moveAlertEnabled The new moveAlertEnabled value to be set
          */
         set(moveAlertEnabled) {
@@ -285,20 +269,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get date_mode field
          * Comment: Display mode for the date
-         * 
+         *
          * @return date_mode
          */
         get() {
-            val value = getFieldShortValue(47, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DateMode.Companion.getByValue(value)
+            val value = getFieldShortValue(47, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DateMode.getByValue(value)
         }
         /**
          * Set date_mode field
          * Comment: Display mode for the date
-         * 
+         *
          * @param dateMode The new dateMode value to be set
          */
         set(dateMode) {
@@ -308,19 +289,16 @@ class DeviceSettingsMesg : Mesg {
     var displayOrientation: DisplayOrientation?
         /**
          * Get display_orientation field
-         * 
+         *
          * @return display_orientation
          */
         get() {
-            val value = getFieldShortValue(55, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayOrientation.Companion.getByValue(value)
+            val value = getFieldShortValue(55, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayOrientation.getByValue(value)
         }
         /**
          * Set display_orientation field
-         * 
+         *
          * @param displayOrientation The new displayOrientation value to be set
          */
         set(displayOrientation) {
@@ -330,26 +308,23 @@ class DeviceSettingsMesg : Mesg {
     var mountingSide: Side?
         /**
          * Get mounting_side field
-         * 
+         *
          * @return mounting_side
          */
         get() {
-            val value = getFieldShortValue(56, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Side.Companion.getByValue(value)
+            val value = getFieldShortValue(56, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Side.getByValue(value)
         }
         /**
          * Set mounting_side field
-         * 
+         *
          * @param mountingSide The new mountingSide value to be set
          */
         set(mountingSide) {
             setFieldValue(56, 0, mountingSide!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val defaultPage: Array<Int?>?
+    val defaultPage: Array<Int>?
         get() = getFieldIntegerValues(57, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numDefaultPage: Int
@@ -361,7 +336,7 @@ class DeviceSettingsMesg : Mesg {
     /**
      * Get default_page field
      * Comment: Bitfield to indicate one page as default for each supported loop
-     * 
+     *
      * @param index of default_page
      * @return default_page
      */
@@ -372,7 +347,7 @@ class DeviceSettingsMesg : Mesg {
     /**
      * Set default_page field
      * Comment: Bitfield to indicate one page as default for each supported loop
-     * 
+     *
      * @param index of default_page
      * @param defaultPage The new defaultPage value to be set
      */
@@ -385,7 +360,7 @@ class DeviceSettingsMesg : Mesg {
          * Get autosync_min_steps field
          * Units: steps
          * Comment: Minimum steps before an autosync can occur
-         * 
+         *
          * @return autosync_min_steps
          */
         get() = getFieldIntegerValue(58, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -393,7 +368,7 @@ class DeviceSettingsMesg : Mesg {
          * Set autosync_min_steps field
          * Units: steps
          * Comment: Minimum steps before an autosync can occur
-         * 
+         *
          * @param autosyncMinSteps The new autosyncMinSteps value to be set
          */
         set(autosyncMinSteps) {
@@ -405,7 +380,7 @@ class DeviceSettingsMesg : Mesg {
          * Get autosync_min_time field
          * Units: minutes
          * Comment: Minimum minutes before an autosync can occur
-         * 
+         *
          * @return autosync_min_time
          */
         get() = getFieldIntegerValue(59, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -413,7 +388,7 @@ class DeviceSettingsMesg : Mesg {
          * Set autosync_min_time field
          * Units: minutes
          * Comment: Minimum minutes before an autosync can occur
-         * 
+         *
          * @param autosyncMinTime The new autosyncMinTime value to be set
          */
         set(autosyncMinTime) {
@@ -424,20 +399,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get lactate_threshold_autodetect_enabled field
          * Comment: Enable auto-detect setting for the lactate threshold feature.
-         * 
+         *
          * @return lactate_threshold_autodetect_enabled
          */
         get() {
-            val value = getFieldShortValue(80, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(80, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set lactate_threshold_autodetect_enabled field
          * Comment: Enable auto-detect setting for the lactate threshold feature.
-         * 
+         *
          * @param lactateThresholdAutodetectEnabled The new lactateThresholdAutodetectEnabled value to be set
          */
         set(lactateThresholdAutodetectEnabled) {
@@ -453,20 +425,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get ble_auto_upload_enabled field
          * Comment: Automatically upload using BLE
-         * 
+         *
          * @return ble_auto_upload_enabled
          */
         get() {
-            val value = getFieldShortValue(86, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(86, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set ble_auto_upload_enabled field
          * Comment: Automatically upload using BLE
-         * 
+         *
          * @param bleAutoUploadEnabled The new bleAutoUploadEnabled value to be set
          */
         set(bleAutoUploadEnabled) {
@@ -477,20 +446,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get auto_sync_frequency field
          * Comment: Helps to conserve battery by changing modes
-         * 
+         *
          * @return auto_sync_frequency
          */
         get() {
-            val value = getFieldShortValue(89, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return AutoSyncFrequency.Companion.getByValue(value)
+            val value = getFieldShortValue(89, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return AutoSyncFrequency.getByValue(value)
         }
         /**
          * Set auto_sync_frequency field
          * Comment: Helps to conserve battery by changing modes
-         * 
+         *
          * @param autoSyncFrequency The new autoSyncFrequency value to be set
          */
         set(autoSyncFrequency) {
@@ -501,14 +467,14 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get auto_activity_detect field
          * Comment: Allows setting specific activities auto-activity detect enabled/disabled settings
-         * 
+         *
          * @return auto_activity_detect
          */
         get() = getFieldLongValue(90, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set auto_activity_detect field
          * Comment: Allows setting specific activities auto-activity detect enabled/disabled settings
-         * 
+         *
          * @param autoActivityDetect The new autoActivityDetect value to be set
          */
         set(autoActivityDetect) {
@@ -519,14 +485,14 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get number_of_screens field
          * Comment: Number of screens configured to display
-         * 
+         *
          * @return number_of_screens
          */
         get() = getFieldShortValue(94, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set number_of_screens field
          * Comment: Number of screens configured to display
-         * 
+         *
          * @param numberOfScreens The new numberOfScreens value to be set
          */
         set(numberOfScreens) {
@@ -537,20 +503,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get smart_notification_display_orientation field
          * Comment: Smart Notification display orientation
-         * 
+         *
          * @return smart_notification_display_orientation
          */
         get() {
-            val value = getFieldShortValue(95, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayOrientation.Companion.getByValue(value)
+            val value = getFieldShortValue(95, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayOrientation.getByValue(value)
         }
         /**
          * Set smart_notification_display_orientation field
          * Comment: Smart Notification display orientation
-         * 
+         *
          * @param smartNotificationDisplayOrientation The new smartNotificationDisplayOrientation value to be set
          */
         set(smartNotificationDisplayOrientation) {
@@ -565,19 +528,16 @@ class DeviceSettingsMesg : Mesg {
     var tapInterface: Switch?
         /**
          * Get tap_interface field
-         * 
+         *
          * @return tap_interface
          */
         get() {
-            val value = getFieldShortValue(134, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Switch.Companion.getByValue(value)
+            val value = getFieldShortValue(134, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Switch.getByValue(value)
         }
         /**
          * Set tap_interface field
-         * 
+         *
          * @param tapInterface The new tapInterface value to be set
          */
         set(tapInterface) {
@@ -588,20 +548,17 @@ class DeviceSettingsMesg : Mesg {
         /**
          * Get tap_sensitivity field
          * Comment: Used to hold the tap threshold setting
-         * 
+         *
          * @return tap_sensitivity
          */
         get() {
-            val value = getFieldShortValue(174, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return TapSensitivity.Companion.getByValue(value)
+            val value = getFieldShortValue(174, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return TapSensitivity.getByValue(value)
         }
         /**
          * Set tap_sensitivity field
          * Comment: Used to hold the tap threshold setting
-         * 
+         *
          * @param tapSensitivity The new tapSensitivity value to be set
          */
         set(tapSensitivity) {
@@ -658,11 +615,10 @@ class DeviceSettingsMesg : Mesg {
         const val TapSensitivityFieldNum: Int = 174
 
 
-        val deviceSettingsMesg: Mesg
+        // device_settings
+        val deviceSettingsMesg: Mesg = Mesg("device_settings", MesgNum.DEVICE_SETTINGS)
 
         init {
-            // device_settings
-            deviceSettingsMesg = Mesg("device_settings", MesgNum.DEVICE_SETTINGS)
             deviceSettingsMesg.addField(
                 Field(
                     "active_time_zone",

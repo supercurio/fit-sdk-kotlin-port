@@ -57,7 +57,7 @@ enum class TurnType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return TurnType.INVALID
+            return INVALID
         }
 
         /**

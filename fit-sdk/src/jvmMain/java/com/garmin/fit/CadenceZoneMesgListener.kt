@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface CadenceZoneMesgListener {
-    fun onMesg(mesg: CadenceZoneMesg?)
+    fun onMesg(mesg: CadenceZoneMesg)
 }

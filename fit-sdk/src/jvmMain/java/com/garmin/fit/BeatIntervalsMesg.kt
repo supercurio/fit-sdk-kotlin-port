@@ -12,23 +12,23 @@ package com.garmin.fit
 class BeatIntervalsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.BEAT_INTERVALS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -36,7 +36,7 @@ class BeatIntervalsMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Milliseconds past date_time
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,14 +44,14 @@ class BeatIntervalsMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Milliseconds past date_time
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val time: Array<Int?>?
+    val time: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTime: Int
@@ -64,7 +64,7 @@ class BeatIntervalsMesg : Mesg {
      * Get time field
      * Units: ms
      * Comment: Array of millisecond times between beats
-     * 
+     *
      * @param index of time
      * @return time
      */
@@ -76,7 +76,7 @@ class BeatIntervalsMesg : Mesg {
      * Set time field
      * Units: ms
      * Comment: Array of millisecond times between beats
-     * 
+     *
      * @param index of time
      * @param time The new time value to be set
      */
@@ -92,11 +92,10 @@ class BeatIntervalsMesg : Mesg {
         const val TimeFieldNum: Int = 1
 
 
-        val beatIntervalsMesg: Mesg
+        // beat_intervals
+        val beatIntervalsMesg: Mesg = Mesg("beat_intervals", MesgNum.BEAT_INTERVALS)
 
         init {
-            // beat_intervals
-            beatIntervalsMesg = Mesg("beat_intervals", MesgNum.BEAT_INTERVALS)
             beatIntervalsMesg.addField(
                 Field(
                     "timestamp",

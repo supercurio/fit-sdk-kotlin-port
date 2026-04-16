@@ -21,7 +21,7 @@ enum class PwrZoneCalc(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return PwrZoneCalc.INVALID
+            return INVALID
         }
 
         /**

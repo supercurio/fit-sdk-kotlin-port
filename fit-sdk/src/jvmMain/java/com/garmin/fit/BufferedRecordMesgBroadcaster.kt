@@ -9,13 +9,8 @@
 package com.garmin.fit
 
 class BufferedRecordMesgBroadcaster : RecordMesgListener {
-    private val bufferedRecordMesg: BufferedRecordMesg
-    private val listeners: ArrayList<BufferedRecordMesgListener>
-
-    init {
-        bufferedRecordMesg = BufferedRecordMesg()
-        listeners = ArrayList<BufferedRecordMesgListener>()
-    }
+    private val bufferedRecordMesg: BufferedRecordMesg = BufferedRecordMesg()
+    private val listeners: ArrayList<BufferedRecordMesgListener> = ArrayList()
 
     fun addListener(mesgListener: BufferedRecordMesgListener?) {
         listeners.add(mesgListener!!)

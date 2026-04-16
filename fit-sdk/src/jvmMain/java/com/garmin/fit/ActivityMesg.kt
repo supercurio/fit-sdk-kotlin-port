@@ -12,33 +12,30 @@ package com.garmin.fit
 class ActivityMesg : Mesg, MesgWithEvent {
     constructor() : super(Factory.createMesg(MesgNum.ACTIVITY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
-
-    /**
-     * Get timestamp field
-     * 
-     * @return timestamp
-     */
-    override fun getTimestamp(): DateTime? {
-        return timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
-    }
-
-    /**
-     * Set timestamp field
-     * 
-     * @param timestamp The new timestamp value to be set
-     */
-    override fun setTimestamp(timestamp: DateTime) {
-        setFieldValue(253, 0, timestamp.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var timestamp: DateTime?
+        /**
+         * Get timestamp field
+         *
+         * @return timestamp
+         */
+        get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
+        /**
+         * Set timestamp field
+         *
+         * @param timestamp The new timestamp value to be set
+         */
+        set(timestamp) {
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var totalTimerTime: Float?
         /**
          * Get total_timer_time field
          * Units: s
          * Comment: Exclude pauses
-         * 
+         *
          * @return total_timer_time
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,7 +43,7 @@ class ActivityMesg : Mesg, MesgWithEvent {
          * Set total_timer_time field
          * Units: s
          * Comment: Exclude pauses
-         * 
+         *
          * @param totalTimerTime The new totalTimerTime value to be set
          */
         set(totalTimerTime) {
@@ -56,13 +53,13 @@ class ActivityMesg : Mesg, MesgWithEvent {
     var numSessions: Int?
         /**
          * Get num_sessions field
-         * 
+         *
          * @return num_sessions
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set num_sessions field
-         * 
+         *
          * @param numSessions The new numSessions value to be set
          */
         set(numSessions) {
@@ -72,104 +69,97 @@ class ActivityMesg : Mesg, MesgWithEvent {
     var type: Activity?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Activity.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Activity.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
             setFieldValue(2, 0, type!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get event field
-     * 
-     * @return event
-     */
-    override fun getEvent(): Event? {
-        val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
+    override var event: Event?
+        /**
+         * Get event field
+         * Comment: session
+         *
+         * @return event
+         */
+        get() {
+            val value = getFieldShortValue(EventFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+                ?: return null
+            return Event.getByValue(value)
         }
-        return Event.Companion.getByValue(value)
-    }
-
-    /**
-     * Set event field
-     * 
-     * @param event The new event value to be set
-     */
-    override fun setEvent(event: Event) {
-        setFieldValue(3, 0, event.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Get event_type field
-     * 
-     * @return event_type
-     */
-    override fun getEventType(): EventType? {
-        val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
+        /**
+         * Set event field
+         * Comment: session
+         *
+         * @param event The new event value to be set
+         */
+        set(event) {
+            setFieldValue(EventFieldNum, 0, event?.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
-        return EventType.Companion.getByValue(value)
-    }
 
-    /**
-     * Set event_type field
-     * 
-     * @param eventType The new eventType value to be set
-     */
-    override fun setEventType(eventType: EventType) {
-        setFieldValue(4, 0, eventType.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var eventType: EventType?
+        /**
+         * Get event_type field
+         *
+         * @return event_type
+         */
+        get() {
+            val value = getFieldShortValue(EventTypeFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+                ?: return null
+            return EventType.getByValue(value)
+        }
+        /**
+         * Set event_type field
+         *
+         * @param eventType The new eventType value to be set
+         */
+        set(eventType) {
+            setFieldValue(EventTypeFieldNum, 0, eventType?.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var localTimestamp: Long?
         /**
          * Get local_timestamp field
          * Comment: timestamp epoch expressed in local time, used to convert activity timestamps to local time
-         * 
+         *
          * @return local_timestamp
          */
         get() = getFieldLongValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set local_timestamp field
          * Comment: timestamp epoch expressed in local time, used to convert activity timestamps to local time
-         * 
+         *
          * @param localTimestamp The new localTimestamp value to be set
          */
         set(localTimestamp) {
             setFieldValue(5, 0, localTimestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get event_group field
-     * 
-     * @return event_group
-     */
-    override fun getEventGroup(): Short? {
-        return getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set event_group field
-     * 
-     * @param eventGroup The new eventGroup value to be set
-     */
-    override fun setEventGroup(eventGroup: Short?) {
-        setFieldValue(6, 0, eventGroup, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var eventGroup: Short?
+        /**
+         * Get event_group field
+         *
+         * @return event_group
+         */
+        get() = getFieldShortValue(EventGroupFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set event_group field
+         *
+         * @param eventGroup The new eventGroup value to be set
+         */
+        set(eventGroup) {
+            setFieldValue(EventGroupFieldNum, 0, eventGroup, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     companion object {
         const val TimestampFieldNum: Int = 253
@@ -189,11 +179,10 @@ class ActivityMesg : Mesg, MesgWithEvent {
         const val EventGroupFieldNum: Int = 6
 
 
-        val activityMesg: Mesg
+        // activity
+        val activityMesg: Mesg = Mesg("activity", MesgNum.ACTIVITY)
 
         init {
-            // activity
-            activityMesg = Mesg("activity", MesgNum.ACTIVITY)
             activityMesg.addField(
                 Field(
                     "timestamp",

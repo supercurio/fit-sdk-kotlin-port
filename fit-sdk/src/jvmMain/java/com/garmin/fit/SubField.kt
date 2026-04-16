@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 class SubField {
-    private inner class SubFieldMap(private val refFieldNum: Int, private val refFieldValue: Long) {
+    private class SubFieldMap(private val refFieldNum: Int, private val refFieldValue: Long) {
         fun canMesgSupport(mesg: Mesg): Boolean {
             val field = mesg.getField(refFieldNum)
 
@@ -30,9 +30,10 @@ class SubField {
     var type: Int
     var scale: Double
     var offset: Double
-    protected var units: String?
+    var units: String?
+        internal set
     private var maps: ArrayList<SubFieldMap>
-    var components: ArrayList<FieldComponent?>
+    var components: ArrayList<FieldComponent>
 
     protected constructor(subField: SubField?) {
         if (subField == null) {
@@ -42,7 +43,7 @@ class SubField {
             this.offset = 0.0
             this.units = ""
             this.maps = ArrayList<SubFieldMap>()
-            this.components = ArrayList<FieldComponent?>()
+            this.components = ArrayList<FieldComponent>()
             return
         }
 
@@ -62,14 +63,14 @@ class SubField {
         this.offset = offset
         this.units = units
         this.maps = ArrayList<SubFieldMap>()
-        this.components = ArrayList<FieldComponent?>()
+        this.components = ArrayList<FieldComponent>()
     }
 
     fun addMap(refFieldNum: Int, refFieldValue: Long) {
         maps.add(SubFieldMap(refFieldNum, refFieldValue))
     }
 
-    fun addComponent(component: FieldComponent?) {
+    fun addComponent(component: FieldComponent) {
         components.add(component)
     }
 

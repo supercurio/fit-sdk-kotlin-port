@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface OhrSettingsMesgListener {
-    fun onMesg(mesg: OhrSettingsMesg?)
+    fun onMesg(mesg: OhrSettingsMesg)
 }

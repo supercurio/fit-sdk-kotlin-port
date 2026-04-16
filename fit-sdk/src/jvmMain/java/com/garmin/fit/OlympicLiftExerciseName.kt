@@ -38,44 +38,40 @@ object OlympicLiftExerciseName {
     const val MEDICINE_BALL_CLEAN: Int = 26
     const val CLEAN_AND_PRESS: Int = 27
     const val SNATCH: Int = 28
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BARBELL_HANG_POWER_CLEAN, "BARBELL_HANG_POWER_CLEAN")
-        stringMap.put(BARBELL_HANG_SQUAT_CLEAN, "BARBELL_HANG_SQUAT_CLEAN")
-        stringMap.put(BARBELL_POWER_CLEAN, "BARBELL_POWER_CLEAN")
-        stringMap.put(BARBELL_POWER_SNATCH, "BARBELL_POWER_SNATCH")
-        stringMap.put(BARBELL_SQUAT_CLEAN, "BARBELL_SQUAT_CLEAN")
-        stringMap.put(CLEAN_AND_JERK, "CLEAN_AND_JERK")
-        stringMap.put(BARBELL_HANG_POWER_SNATCH, "BARBELL_HANG_POWER_SNATCH")
-        stringMap.put(BARBELL_HANG_PULL, "BARBELL_HANG_PULL")
-        stringMap.put(BARBELL_HIGH_PULL, "BARBELL_HIGH_PULL")
-        stringMap.put(BARBELL_SNATCH, "BARBELL_SNATCH")
-        stringMap.put(BARBELL_SPLIT_JERK, "BARBELL_SPLIT_JERK")
-        stringMap.put(CLEAN, "CLEAN")
-        stringMap.put(DUMBBELL_CLEAN, "DUMBBELL_CLEAN")
-        stringMap.put(DUMBBELL_HANG_PULL, "DUMBBELL_HANG_PULL")
-        stringMap.put(ONE_HAND_DUMBBELL_SPLIT_SNATCH, "ONE_HAND_DUMBBELL_SPLIT_SNATCH")
-        stringMap.put(PUSH_JERK, "PUSH_JERK")
-        stringMap.put(SINGLE_ARM_DUMBBELL_SNATCH, "SINGLE_ARM_DUMBBELL_SNATCH")
-        stringMap.put(SINGLE_ARM_HANG_SNATCH, "SINGLE_ARM_HANG_SNATCH")
-        stringMap.put(SINGLE_ARM_KETTLEBELL_SNATCH, "SINGLE_ARM_KETTLEBELL_SNATCH")
-        stringMap.put(SPLIT_JERK, "SPLIT_JERK")
-        stringMap.put(SQUAT_CLEAN_AND_JERK, "SQUAT_CLEAN_AND_JERK")
-        stringMap.put(DUMBBELL_HANG_SNATCH, "DUMBBELL_HANG_SNATCH")
-        stringMap.put(DUMBBELL_POWER_CLEAN_AND_JERK, "DUMBBELL_POWER_CLEAN_AND_JERK")
-        stringMap.put(DUMBBELL_POWER_CLEAN_AND_PUSH_PRESS, "DUMBBELL_POWER_CLEAN_AND_PUSH_PRESS")
-        stringMap.put(
-            DUMBBELL_POWER_CLEAN_AND_STRICT_PRESS,
-            "DUMBBELL_POWER_CLEAN_AND_STRICT_PRESS"
-        )
-        stringMap.put(DUMBBELL_SNATCH, "DUMBBELL_SNATCH")
-        stringMap.put(MEDICINE_BALL_CLEAN, "MEDICINE_BALL_CLEAN")
-        stringMap.put(CLEAN_AND_PRESS, "CLEAN_AND_PRESS")
-        stringMap.put(SNATCH, "SNATCH")
+        stringMap[BARBELL_HANG_POWER_CLEAN] = "BARBELL_HANG_POWER_CLEAN"
+        stringMap[BARBELL_HANG_SQUAT_CLEAN] = "BARBELL_HANG_SQUAT_CLEAN"
+        stringMap[BARBELL_POWER_CLEAN] = "BARBELL_POWER_CLEAN"
+        stringMap[BARBELL_POWER_SNATCH] = "BARBELL_POWER_SNATCH"
+        stringMap[BARBELL_SQUAT_CLEAN] = "BARBELL_SQUAT_CLEAN"
+        stringMap[CLEAN_AND_JERK] = "CLEAN_AND_JERK"
+        stringMap[BARBELL_HANG_POWER_SNATCH] = "BARBELL_HANG_POWER_SNATCH"
+        stringMap[BARBELL_HANG_PULL] = "BARBELL_HANG_PULL"
+        stringMap[BARBELL_HIGH_PULL] = "BARBELL_HIGH_PULL"
+        stringMap[BARBELL_SNATCH] = "BARBELL_SNATCH"
+        stringMap[BARBELL_SPLIT_JERK] = "BARBELL_SPLIT_JERK"
+        stringMap[CLEAN] = "CLEAN"
+        stringMap[DUMBBELL_CLEAN] = "DUMBBELL_CLEAN"
+        stringMap[DUMBBELL_HANG_PULL] = "DUMBBELL_HANG_PULL"
+        stringMap[ONE_HAND_DUMBBELL_SPLIT_SNATCH] = "ONE_HAND_DUMBBELL_SPLIT_SNATCH"
+        stringMap[PUSH_JERK] = "PUSH_JERK"
+        stringMap[SINGLE_ARM_DUMBBELL_SNATCH] = "SINGLE_ARM_DUMBBELL_SNATCH"
+        stringMap[SINGLE_ARM_HANG_SNATCH] = "SINGLE_ARM_HANG_SNATCH"
+        stringMap[SINGLE_ARM_KETTLEBELL_SNATCH] = "SINGLE_ARM_KETTLEBELL_SNATCH"
+        stringMap[SPLIT_JERK] = "SPLIT_JERK"
+        stringMap[SQUAT_CLEAN_AND_JERK] = "SQUAT_CLEAN_AND_JERK"
+        stringMap[DUMBBELL_HANG_SNATCH] = "DUMBBELL_HANG_SNATCH"
+        stringMap[DUMBBELL_POWER_CLEAN_AND_JERK] = "DUMBBELL_POWER_CLEAN_AND_JERK"
+        stringMap[DUMBBELL_POWER_CLEAN_AND_PUSH_PRESS] = "DUMBBELL_POWER_CLEAN_AND_PUSH_PRESS"
+        stringMap[DUMBBELL_POWER_CLEAN_AND_STRICT_PRESS] = "DUMBBELL_POWER_CLEAN_AND_STRICT_PRESS"
+        stringMap[DUMBBELL_SNATCH] = "DUMBBELL_SNATCH"
+        stringMap[MEDICINE_BALL_CLEAN] = "MEDICINE_BALL_CLEAN"
+        stringMap[CLEAN_AND_PRESS] = "CLEAN_AND_PRESS"
+        stringMap[SNATCH] = "SNATCH"
     }
 
 
@@ -84,9 +80,9 @@ object OlympicLiftExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -97,7 +93,7 @@ object OlympicLiftExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

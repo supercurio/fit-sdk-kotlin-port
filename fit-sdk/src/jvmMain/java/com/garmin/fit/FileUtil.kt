@@ -55,12 +55,12 @@ object FileUtil {
                     break
                 }
 
-                files.add(Arrays.copyOfRange(data, pos, pos + fileSize))
+                files.add(data.copyOfRange(pos, pos + fileSize))
                 pos += fileSize
             }
 
             if (pos < data.size) {
-                files.add(Arrays.copyOfRange(data, pos, data.size))
+                files.add(data.copyOfRange(pos, data.size))
             }
         } catch (e: IOException) {
         }
@@ -101,11 +101,11 @@ object FileUtil {
                         if (mesg.name == "file_id") {
                             val fileIdMesg = FileIdMesg(mesg)
 
-                            if (fileIdMesg.getType() == fromFileType) {
+                            if (fileIdMesg.type == fromFileType) {
                                 fromFiles.add(file)
                             }
 
-                            if (fileIdMesg.getType() == toFileType) {
+                            if (fileIdMesg.type == toFileType) {
                                 toFiles.add(file)
                             }
 

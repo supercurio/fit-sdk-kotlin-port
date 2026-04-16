@@ -12,7 +12,7 @@ package com.garmin.fit
 class CameraEventMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CAMERA_EVENT))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class CameraEventMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp.
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class CameraEventMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp.
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class CameraEventMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,7 +48,7 @@ class CameraEventMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -58,19 +58,16 @@ class CameraEventMesg : Mesg {
     var cameraEventType: CameraEventType?
         /**
          * Get camera_event_type field
-         * 
+         *
          * @return camera_event_type
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return CameraEventType.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return CameraEventType.getByValue(value)
         }
         /**
          * Set camera_event_type field
-         * 
+         *
          * @param cameraEventType The new cameraEventType value to be set
          */
         set(cameraEventType) {
@@ -80,13 +77,13 @@ class CameraEventMesg : Mesg {
     var cameraFileUuid: String?
         /**
          * Get camera_file_uuid field
-         * 
+         *
          * @return camera_file_uuid
          */
         get() = getFieldStringValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set camera_file_uuid field
-         * 
+         *
          * @param cameraFileUuid The new cameraFileUuid value to be set
          */
         set(cameraFileUuid) {
@@ -96,19 +93,16 @@ class CameraEventMesg : Mesg {
     var cameraOrientation: CameraOrientationType?
         /**
          * Get camera_orientation field
-         * 
+         *
          * @return camera_orientation
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return CameraOrientationType.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return CameraOrientationType.getByValue(value)
         }
         /**
          * Set camera_orientation field
-         * 
+         *
          * @param cameraOrientation The new cameraOrientation value to be set
          */
         set(cameraOrientation) {
@@ -127,11 +121,10 @@ class CameraEventMesg : Mesg {
         const val CameraOrientationFieldNum: Int = 3
 
 
-        val cameraEventMesg: Mesg
+        // camera_event
+        val cameraEventMesg: Mesg = Mesg("camera_event", MesgNum.CAMERA_EVENT)
 
         init {
-            // camera_event
-            cameraEventMesg = Mesg("camera_event", MesgNum.CAMERA_EVENT)
             cameraEventMesg.addField(
                 Field(
                     "timestamp",

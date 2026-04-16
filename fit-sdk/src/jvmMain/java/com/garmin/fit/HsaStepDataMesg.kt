@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaStepDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_STEP_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -38,7 +38,7 @@ class HsaStepDataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds. File start: 0xFFFFFFEF File stop: 0xFFFFFFEE
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,14 +46,14 @@ class HsaStepDataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds. File start: 0xFFFFFFEF File stop: 0xFFFFFFEE
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
             setFieldValue(0, 0, processingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val steps: Array<Long?>?
+    val steps: Array<Long>?
         get() = getFieldLongValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSteps: Int
@@ -66,7 +66,7 @@ class HsaStepDataMesg : Mesg {
      * Get steps field
      * Units: steps
      * Comment: Total step sum
-     * 
+     *
      * @param index of steps
      * @return steps
      */
@@ -78,7 +78,7 @@ class HsaStepDataMesg : Mesg {
      * Set steps field
      * Units: steps
      * Comment: Total step sum
-     * 
+     *
      * @param index of steps
      * @param steps The new steps value to be set
      */
@@ -94,11 +94,10 @@ class HsaStepDataMesg : Mesg {
         const val StepsFieldNum: Int = 1
 
 
-        val hsaStepDataMesg: Mesg
+        // hsa_step_data
+        val hsaStepDataMesg: Mesg = Mesg("hsa_step_data", MesgNum.HSA_STEP_DATA)
 
         init {
-            // hsa_step_data
-            hsaStepDataMesg = Mesg("hsa_step_data", MesgNum.HSA_STEP_DATA)
             hsaStepDataMesg.addField(
                 Field(
                     "timestamp",

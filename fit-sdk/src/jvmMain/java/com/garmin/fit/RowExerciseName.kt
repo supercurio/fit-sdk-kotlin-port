@@ -62,77 +62,64 @@ object RowExerciseName {
     const val WEIGHTED_INVERTED_ROW: Int = 50
     const val WEIGHTED_TRX_INVERTED_ROW: Int = 51
     const val DUMBBELL_ROW_WHEELCHAIR: Int = 52
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BARBELL_STRAIGHT_LEG_DEADLIFT_TO_ROW, "BARBELL_STRAIGHT_LEG_DEADLIFT_TO_ROW")
-        stringMap.put(CABLE_ROW_STANDING, "CABLE_ROW_STANDING")
-        stringMap.put(DUMBBELL_ROW, "DUMBBELL_ROW")
-        stringMap.put(ELEVATED_FEET_INVERTED_ROW, "ELEVATED_FEET_INVERTED_ROW")
-        stringMap.put(WEIGHTED_ELEVATED_FEET_INVERTED_ROW, "WEIGHTED_ELEVATED_FEET_INVERTED_ROW")
-        stringMap.put(FACE_PULL, "FACE_PULL")
-        stringMap.put(FACE_PULL_WITH_EXTERNAL_ROTATION, "FACE_PULL_WITH_EXTERNAL_ROTATION")
-        stringMap.put(INVERTED_ROW_WITH_FEET_ON_SWISS_BALL, "INVERTED_ROW_WITH_FEET_ON_SWISS_BALL")
-        stringMap.put(
-            WEIGHTED_INVERTED_ROW_WITH_FEET_ON_SWISS_BALL,
-            "WEIGHTED_INVERTED_ROW_WITH_FEET_ON_SWISS_BALL"
-        )
-        stringMap.put(KETTLEBELL_ROW, "KETTLEBELL_ROW")
-        stringMap.put(MODIFIED_INVERTED_ROW, "MODIFIED_INVERTED_ROW")
-        stringMap.put(WEIGHTED_MODIFIED_INVERTED_ROW, "WEIGHTED_MODIFIED_INVERTED_ROW")
-        stringMap.put(
-            NEUTRAL_GRIP_ALTERNATING_DUMBBELL_ROW,
-            "NEUTRAL_GRIP_ALTERNATING_DUMBBELL_ROW"
-        )
-        stringMap.put(ONE_ARM_BENT_OVER_ROW, "ONE_ARM_BENT_OVER_ROW")
-        stringMap.put(ONE_LEGGED_DUMBBELL_ROW, "ONE_LEGGED_DUMBBELL_ROW")
-        stringMap.put(RENEGADE_ROW, "RENEGADE_ROW")
-        stringMap.put(REVERSE_GRIP_BARBELL_ROW, "REVERSE_GRIP_BARBELL_ROW")
-        stringMap.put(ROPE_HANDLE_CABLE_ROW, "ROPE_HANDLE_CABLE_ROW")
-        stringMap.put(SEATED_CABLE_ROW, "SEATED_CABLE_ROW")
-        stringMap.put(SEATED_DUMBBELL_ROW, "SEATED_DUMBBELL_ROW")
-        stringMap.put(SINGLE_ARM_CABLE_ROW, "SINGLE_ARM_CABLE_ROW")
-        stringMap.put(SINGLE_ARM_CABLE_ROW_AND_ROTATION, "SINGLE_ARM_CABLE_ROW_AND_ROTATION")
-        stringMap.put(SINGLE_ARM_INVERTED_ROW, "SINGLE_ARM_INVERTED_ROW")
-        stringMap.put(WEIGHTED_SINGLE_ARM_INVERTED_ROW, "WEIGHTED_SINGLE_ARM_INVERTED_ROW")
-        stringMap.put(SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW, "SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW")
-        stringMap.put(
-            SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW_AND_ROTATION,
-            "SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW_AND_ROTATION"
-        )
-        stringMap.put(SUSPENDED_INVERTED_ROW, "SUSPENDED_INVERTED_ROW")
-        stringMap.put(WEIGHTED_SUSPENDED_INVERTED_ROW, "WEIGHTED_SUSPENDED_INVERTED_ROW")
-        stringMap.put(T_BAR_ROW, "T_BAR_ROW")
-        stringMap.put(TOWEL_GRIP_INVERTED_ROW, "TOWEL_GRIP_INVERTED_ROW")
-        stringMap.put(WEIGHTED_TOWEL_GRIP_INVERTED_ROW, "WEIGHTED_TOWEL_GRIP_INVERTED_ROW")
-        stringMap.put(UNDERHAND_GRIP_CABLE_ROW, "UNDERHAND_GRIP_CABLE_ROW")
-        stringMap.put(V_GRIP_CABLE_ROW, "V_GRIP_CABLE_ROW")
-        stringMap.put(WIDE_GRIP_SEATED_CABLE_ROW, "WIDE_GRIP_SEATED_CABLE_ROW")
-        stringMap.put(ALTERNATING_DUMBBELL_ROW, "ALTERNATING_DUMBBELL_ROW")
-        stringMap.put(INVERTED_ROW, "INVERTED_ROW")
-        stringMap.put(ROW, "ROW")
-        stringMap.put(WEIGHTED_ROW, "WEIGHTED_ROW")
-        stringMap.put(INDOOR_ROW, "INDOOR_ROW")
-        stringMap.put(BANDED_FACE_PULLS, "BANDED_FACE_PULLS")
-        stringMap.put(CHEST_SUPPORTED_DUMBBELL_ROW, "CHEST_SUPPORTED_DUMBBELL_ROW")
-        stringMap.put(DECLINE_RING_ROW, "DECLINE_RING_ROW")
-        stringMap.put(ELEVATED_RING_ROW, "ELEVATED_RING_ROW")
-        stringMap.put(
-            RDL_BENT_OVER_ROW_WITH_BARBELL_DUMBBELL,
-            "RDL_BENT_OVER_ROW_WITH_BARBELL_DUMBBELL"
-        )
-        stringMap.put(RING_ROW, "RING_ROW")
-        stringMap.put(BARBELL_ROW, "BARBELL_ROW")
-        stringMap.put(BENT_OVER_ROW_WITH_BARBELL, "BENT_OVER_ROW_WITH_BARBELL")
-        stringMap.put(BENT_OVER_ROW_WITH_DUMBELL, "BENT_OVER_ROW_WITH_DUMBELL")
-        stringMap.put(SEATED_UNDERHAND_GRIP_CABLE_ROW, "SEATED_UNDERHAND_GRIP_CABLE_ROW")
-        stringMap.put(TRX_INVERTED_ROW, "TRX_INVERTED_ROW")
-        stringMap.put(WEIGHTED_INVERTED_ROW, "WEIGHTED_INVERTED_ROW")
-        stringMap.put(WEIGHTED_TRX_INVERTED_ROW, "WEIGHTED_TRX_INVERTED_ROW")
-        stringMap.put(DUMBBELL_ROW_WHEELCHAIR, "DUMBBELL_ROW_WHEELCHAIR")
+        stringMap[BARBELL_STRAIGHT_LEG_DEADLIFT_TO_ROW] = "BARBELL_STRAIGHT_LEG_DEADLIFT_TO_ROW"
+        stringMap[CABLE_ROW_STANDING] = "CABLE_ROW_STANDING"
+        stringMap[DUMBBELL_ROW] = "DUMBBELL_ROW"
+        stringMap[ELEVATED_FEET_INVERTED_ROW] = "ELEVATED_FEET_INVERTED_ROW"
+        stringMap[WEIGHTED_ELEVATED_FEET_INVERTED_ROW] = "WEIGHTED_ELEVATED_FEET_INVERTED_ROW"
+        stringMap[FACE_PULL] = "FACE_PULL"
+        stringMap[FACE_PULL_WITH_EXTERNAL_ROTATION] = "FACE_PULL_WITH_EXTERNAL_ROTATION"
+        stringMap[INVERTED_ROW_WITH_FEET_ON_SWISS_BALL] = "INVERTED_ROW_WITH_FEET_ON_SWISS_BALL"
+        stringMap[WEIGHTED_INVERTED_ROW_WITH_FEET_ON_SWISS_BALL] = "WEIGHTED_INVERTED_ROW_WITH_FEET_ON_SWISS_BALL"
+        stringMap[KETTLEBELL_ROW] = "KETTLEBELL_ROW"
+        stringMap[MODIFIED_INVERTED_ROW] = "MODIFIED_INVERTED_ROW"
+        stringMap[WEIGHTED_MODIFIED_INVERTED_ROW] = "WEIGHTED_MODIFIED_INVERTED_ROW"
+        stringMap[NEUTRAL_GRIP_ALTERNATING_DUMBBELL_ROW] = "NEUTRAL_GRIP_ALTERNATING_DUMBBELL_ROW"
+        stringMap[ONE_ARM_BENT_OVER_ROW] = "ONE_ARM_BENT_OVER_ROW"
+        stringMap[ONE_LEGGED_DUMBBELL_ROW] = "ONE_LEGGED_DUMBBELL_ROW"
+        stringMap[RENEGADE_ROW] = "RENEGADE_ROW"
+        stringMap[REVERSE_GRIP_BARBELL_ROW] = "REVERSE_GRIP_BARBELL_ROW"
+        stringMap[ROPE_HANDLE_CABLE_ROW] = "ROPE_HANDLE_CABLE_ROW"
+        stringMap[SEATED_CABLE_ROW] = "SEATED_CABLE_ROW"
+        stringMap[SEATED_DUMBBELL_ROW] = "SEATED_DUMBBELL_ROW"
+        stringMap[SINGLE_ARM_CABLE_ROW] = "SINGLE_ARM_CABLE_ROW"
+        stringMap[SINGLE_ARM_CABLE_ROW_AND_ROTATION] = "SINGLE_ARM_CABLE_ROW_AND_ROTATION"
+        stringMap[SINGLE_ARM_INVERTED_ROW] = "SINGLE_ARM_INVERTED_ROW"
+        stringMap[WEIGHTED_SINGLE_ARM_INVERTED_ROW] = "WEIGHTED_SINGLE_ARM_INVERTED_ROW"
+        stringMap[SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW] = "SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW"
+        stringMap[SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW_AND_ROTATION] = "SINGLE_ARM_NEUTRAL_GRIP_DUMBBELL_ROW_AND_ROTATION"
+        stringMap[SUSPENDED_INVERTED_ROW] = "SUSPENDED_INVERTED_ROW"
+        stringMap[WEIGHTED_SUSPENDED_INVERTED_ROW] = "WEIGHTED_SUSPENDED_INVERTED_ROW"
+        stringMap[T_BAR_ROW] = "T_BAR_ROW"
+        stringMap[TOWEL_GRIP_INVERTED_ROW] = "TOWEL_GRIP_INVERTED_ROW"
+        stringMap[WEIGHTED_TOWEL_GRIP_INVERTED_ROW] = "WEIGHTED_TOWEL_GRIP_INVERTED_ROW"
+        stringMap[UNDERHAND_GRIP_CABLE_ROW] = "UNDERHAND_GRIP_CABLE_ROW"
+        stringMap[V_GRIP_CABLE_ROW] = "V_GRIP_CABLE_ROW"
+        stringMap[WIDE_GRIP_SEATED_CABLE_ROW] = "WIDE_GRIP_SEATED_CABLE_ROW"
+        stringMap[ALTERNATING_DUMBBELL_ROW] = "ALTERNATING_DUMBBELL_ROW"
+        stringMap[INVERTED_ROW] = "INVERTED_ROW"
+        stringMap[ROW] = "ROW"
+        stringMap[WEIGHTED_ROW] = "WEIGHTED_ROW"
+        stringMap[INDOOR_ROW] = "INDOOR_ROW"
+        stringMap[BANDED_FACE_PULLS] = "BANDED_FACE_PULLS"
+        stringMap[CHEST_SUPPORTED_DUMBBELL_ROW] = "CHEST_SUPPORTED_DUMBBELL_ROW"
+        stringMap[DECLINE_RING_ROW] = "DECLINE_RING_ROW"
+        stringMap[ELEVATED_RING_ROW] = "ELEVATED_RING_ROW"
+        stringMap[RDL_BENT_OVER_ROW_WITH_BARBELL_DUMBBELL] = "RDL_BENT_OVER_ROW_WITH_BARBELL_DUMBBELL"
+        stringMap[RING_ROW] = "RING_ROW"
+        stringMap[BARBELL_ROW] = "BARBELL_ROW"
+        stringMap[BENT_OVER_ROW_WITH_BARBELL] = "BENT_OVER_ROW_WITH_BARBELL"
+        stringMap[BENT_OVER_ROW_WITH_DUMBELL] = "BENT_OVER_ROW_WITH_DUMBELL"
+        stringMap[SEATED_UNDERHAND_GRIP_CABLE_ROW] = "SEATED_UNDERHAND_GRIP_CABLE_ROW"
+        stringMap[TRX_INVERTED_ROW] = "TRX_INVERTED_ROW"
+        stringMap[WEIGHTED_INVERTED_ROW] = "WEIGHTED_INVERTED_ROW"
+        stringMap[WEIGHTED_TRX_INVERTED_ROW] = "WEIGHTED_TRX_INVERTED_ROW"
+        stringMap[DUMBBELL_ROW_WHEELCHAIR] = "DUMBBELL_ROW_WHEELCHAIR"
     }
 
 
@@ -141,9 +128,9 @@ object RowExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -154,7 +141,7 @@ object RowExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

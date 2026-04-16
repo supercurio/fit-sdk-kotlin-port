@@ -12,45 +12,42 @@ package com.garmin.fit
 class WeatherConditionsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.WEATHER_CONDITIONS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Comment: time of update for current conditions, else forecast time
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Comment: time of update for current conditions, else forecast time
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var weatherReport: WeatherReport?
         /**
          * Get weather_report field
          * Comment: Current or forecast
-         * 
+         *
          * @return weather_report
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WeatherReport.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WeatherReport.getByValue(value)
         }
         /**
          * Set weather_report field
          * Comment: Current or forecast
-         * 
+         *
          * @param weatherReport The new weatherReport value to be set
          */
         set(weatherReport) {
@@ -61,14 +58,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get temperature field
          * Units: C
-         * 
+         *
          * @return temperature
          */
         get() = getFieldByteValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set temperature field
          * Units: C
-         * 
+         *
          * @param temperature The new temperature value to be set
          */
         set(temperature) {
@@ -79,20 +76,17 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get condition field
          * Comment: Corresponds to GSC Response weatherIcon field
-         * 
+         *
          * @return condition
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WeatherStatus.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WeatherStatus.getByValue(value)
         }
         /**
          * Set condition field
          * Comment: Corresponds to GSC Response weatherIcon field
-         * 
+         *
          * @param condition The new condition value to be set
          */
         set(condition) {
@@ -103,14 +97,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get wind_direction field
          * Units: degrees
-         * 
+         *
          * @return wind_direction
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set wind_direction field
          * Units: degrees
-         * 
+         *
          * @param windDirection The new windDirection value to be set
          */
         set(windDirection) {
@@ -121,14 +115,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get wind_speed field
          * Units: m/s
-         * 
+         *
          * @return wind_speed
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set wind_speed field
          * Units: m/s
-         * 
+         *
          * @param windSpeed The new windSpeed value to be set
          */
         set(windSpeed) {
@@ -139,14 +133,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get precipitation_probability field
          * Comment: range 0-100
-         * 
+         *
          * @return precipitation_probability
          */
         get() = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set precipitation_probability field
          * Comment: range 0-100
-         * 
+         *
          * @param precipitationProbability The new precipitationProbability value to be set
          */
         set(precipitationProbability) {
@@ -158,7 +152,7 @@ class WeatherConditionsMesg : Mesg {
          * Get temperature_feels_like field
          * Units: C
          * Comment: Heat Index if GCS heatIdx above or equal to 90F or wind chill if GCS windChill below or equal to 32F
-         * 
+         *
          * @return temperature_feels_like
          */
         get() = getFieldByteValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -166,7 +160,7 @@ class WeatherConditionsMesg : Mesg {
          * Set temperature_feels_like field
          * Units: C
          * Comment: Heat Index if GCS heatIdx above or equal to 90F or wind chill if GCS windChill below or equal to 32F
-         * 
+         *
          * @param temperatureFeelsLike The new temperatureFeelsLike value to be set
          */
         set(temperatureFeelsLike) {
@@ -176,13 +170,13 @@ class WeatherConditionsMesg : Mesg {
     var relativeHumidity: Short?
         /**
          * Get relative_humidity field
-         * 
+         *
          * @return relative_humidity
          */
         get() = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set relative_humidity field
-         * 
+         *
          * @param relativeHumidity The new relativeHumidity value to be set
          */
         set(relativeHumidity) {
@@ -193,14 +187,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get location field
          * Comment: string corresponding to GCS response location string
-         * 
+         *
          * @return location
          */
         get() = getFieldStringValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set location field
          * Comment: string corresponding to GCS response location string
-         * 
+         *
          * @param location The new location value to be set
          */
         set(location) {
@@ -210,31 +204,31 @@ class WeatherConditionsMesg : Mesg {
     var observedAtTime: DateTime?
         /**
          * Get observed_at_time field
-         * 
+         *
          * @return observed_at_time
          */
         get() = timestampToDateTime(getFieldLongValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set observed_at_time field
-         * 
+         *
          * @param observedAtTime The new observedAtTime value to be set
          */
         set(observedAtTime) {
-            setFieldValue(9, 0, observedAtTime!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(9, 0, observedAtTime?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var observedLocationLat: Int?
         /**
          * Get observed_location_lat field
          * Units: semicircles
-         * 
+         *
          * @return observed_location_lat
          */
         get() = getFieldIntegerValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set observed_location_lat field
          * Units: semicircles
-         * 
+         *
          * @param observedLocationLat The new observedLocationLat value to be set
          */
         set(observedLocationLat) {
@@ -245,14 +239,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get observed_location_long field
          * Units: semicircles
-         * 
+         *
          * @return observed_location_long
          */
         get() = getFieldIntegerValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set observed_location_long field
          * Units: semicircles
-         * 
+         *
          * @param observedLocationLong The new observedLocationLong value to be set
          */
         set(observedLocationLong) {
@@ -262,19 +256,16 @@ class WeatherConditionsMesg : Mesg {
     var dayOfWeek: DayOfWeek?
         /**
          * Get day_of_week field
-         * 
+         *
          * @return day_of_week
          */
         get() {
-            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DayOfWeek.Companion.getByValue(value)
+            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DayOfWeek.getByValue(value)
         }
         /**
          * Set day_of_week field
-         * 
+         *
          * @param dayOfWeek The new dayOfWeek value to be set
          */
         set(dayOfWeek) {
@@ -285,14 +276,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get high_temperature field
          * Units: C
-         * 
+         *
          * @return high_temperature
          */
         get() = getFieldByteValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set high_temperature field
          * Units: C
-         * 
+         *
          * @param highTemperature The new highTemperature value to be set
          */
         set(highTemperature) {
@@ -303,14 +294,14 @@ class WeatherConditionsMesg : Mesg {
         /**
          * Get low_temperature field
          * Units: C
-         * 
+         *
          * @return low_temperature
          */
         get() = getFieldByteValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set low_temperature field
          * Units: C
-         * 
+         *
          * @param lowTemperature The new lowTemperature value to be set
          */
         set(lowTemperature) {
@@ -351,11 +342,10 @@ class WeatherConditionsMesg : Mesg {
         const val LowTemperatureFieldNum: Int = 14
 
 
-        val weatherConditionsMesg: Mesg
+        // weather_conditions
+        val weatherConditionsMesg: Mesg = Mesg("weather_conditions", MesgNum.WEATHER_CONDITIONS)
 
         init {
-            // weather_conditions
-            weatherConditionsMesg = Mesg("weather_conditions", MesgNum.WEATHER_CONDITIONS)
             weatherConditionsMesg.addField(
                 Field(
                     "timestamp",

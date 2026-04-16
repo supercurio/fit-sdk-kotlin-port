@@ -46,42 +46,41 @@ object ConnectivityCapabilities {
     const val INSTANT_INPUT: Long = -0x80000000 // Device supports instant input feature
     val INVALID: Long = Fit.UINT32Z_INVALID
 
-    private val stringMap: MutableMap<Long?, String?>
+    private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap = HashMap<Long?, String?>()
-        stringMap.put(BLUETOOTH, "BLUETOOTH")
-        stringMap.put(BLUETOOTH_LE, "BLUETOOTH_LE")
-        stringMap.put(ANT, "ANT")
-        stringMap.put(ACTIVITY_UPLOAD, "ACTIVITY_UPLOAD")
-        stringMap.put(COURSE_DOWNLOAD, "COURSE_DOWNLOAD")
-        stringMap.put(WORKOUT_DOWNLOAD, "WORKOUT_DOWNLOAD")
-        stringMap.put(LIVE_TRACK, "LIVE_TRACK")
-        stringMap.put(WEATHER_CONDITIONS, "WEATHER_CONDITIONS")
-        stringMap.put(WEATHER_ALERTS, "WEATHER_ALERTS")
-        stringMap.put(GPS_EPHEMERIS_DOWNLOAD, "GPS_EPHEMERIS_DOWNLOAD")
-        stringMap.put(EXPLICIT_ARCHIVE, "EXPLICIT_ARCHIVE")
-        stringMap.put(SETUP_INCOMPLETE, "SETUP_INCOMPLETE")
-        stringMap.put(CONTINUE_SYNC_AFTER_SOFTWARE_UPDATE, "CONTINUE_SYNC_AFTER_SOFTWARE_UPDATE")
-        stringMap.put(CONNECT_IQ_APP_DOWNLOAD, "CONNECT_IQ_APP_DOWNLOAD")
-        stringMap.put(GOLF_COURSE_DOWNLOAD, "GOLF_COURSE_DOWNLOAD")
-        stringMap.put(DEVICE_INITIATES_SYNC, "DEVICE_INITIATES_SYNC")
-        stringMap.put(CONNECT_IQ_WATCH_APP_DOWNLOAD, "CONNECT_IQ_WATCH_APP_DOWNLOAD")
-        stringMap.put(CONNECT_IQ_WIDGET_DOWNLOAD, "CONNECT_IQ_WIDGET_DOWNLOAD")
-        stringMap.put(CONNECT_IQ_WATCH_FACE_DOWNLOAD, "CONNECT_IQ_WATCH_FACE_DOWNLOAD")
-        stringMap.put(CONNECT_IQ_DATA_FIELD_DOWNLOAD, "CONNECT_IQ_DATA_FIELD_DOWNLOAD")
-        stringMap.put(CONNECT_IQ_APP_MANAGMENT, "CONNECT_IQ_APP_MANAGMENT")
-        stringMap.put(SWING_SENSOR, "SWING_SENSOR")
-        stringMap.put(SWING_SENSOR_REMOTE, "SWING_SENSOR_REMOTE")
-        stringMap.put(INCIDENT_DETECTION, "INCIDENT_DETECTION")
-        stringMap.put(AUDIO_PROMPTS, "AUDIO_PROMPTS")
-        stringMap.put(WIFI_VERIFICATION, "WIFI_VERIFICATION")
-        stringMap.put(TRUE_UP, "TRUE_UP")
-        stringMap.put(FIND_MY_WATCH, "FIND_MY_WATCH")
-        stringMap.put(REMOTE_MANUAL_SYNC, "REMOTE_MANUAL_SYNC")
-        stringMap.put(LIVE_TRACK_AUTO_START, "LIVE_TRACK_AUTO_START")
-        stringMap.put(LIVE_TRACK_MESSAGING, "LIVE_TRACK_MESSAGING")
-        stringMap.put(INSTANT_INPUT, "INSTANT_INPUT")
+        stringMap[BLUETOOTH] = "BLUETOOTH"
+        stringMap[BLUETOOTH_LE] = "BLUETOOTH_LE"
+        stringMap[ANT] = "ANT"
+        stringMap[ACTIVITY_UPLOAD] = "ACTIVITY_UPLOAD"
+        stringMap[COURSE_DOWNLOAD] = "COURSE_DOWNLOAD"
+        stringMap[WORKOUT_DOWNLOAD] = "WORKOUT_DOWNLOAD"
+        stringMap[LIVE_TRACK] = "LIVE_TRACK"
+        stringMap[WEATHER_CONDITIONS] = "WEATHER_CONDITIONS"
+        stringMap[WEATHER_ALERTS] = "WEATHER_ALERTS"
+        stringMap[GPS_EPHEMERIS_DOWNLOAD] = "GPS_EPHEMERIS_DOWNLOAD"
+        stringMap[EXPLICIT_ARCHIVE] = "EXPLICIT_ARCHIVE"
+        stringMap[SETUP_INCOMPLETE] = "SETUP_INCOMPLETE"
+        stringMap[CONTINUE_SYNC_AFTER_SOFTWARE_UPDATE] = "CONTINUE_SYNC_AFTER_SOFTWARE_UPDATE"
+        stringMap[CONNECT_IQ_APP_DOWNLOAD] = "CONNECT_IQ_APP_DOWNLOAD"
+        stringMap[GOLF_COURSE_DOWNLOAD] = "GOLF_COURSE_DOWNLOAD"
+        stringMap[DEVICE_INITIATES_SYNC] = "DEVICE_INITIATES_SYNC"
+        stringMap[CONNECT_IQ_WATCH_APP_DOWNLOAD] = "CONNECT_IQ_WATCH_APP_DOWNLOAD"
+        stringMap[CONNECT_IQ_WIDGET_DOWNLOAD] = "CONNECT_IQ_WIDGET_DOWNLOAD"
+        stringMap[CONNECT_IQ_WATCH_FACE_DOWNLOAD] = "CONNECT_IQ_WATCH_FACE_DOWNLOAD"
+        stringMap[CONNECT_IQ_DATA_FIELD_DOWNLOAD] = "CONNECT_IQ_DATA_FIELD_DOWNLOAD"
+        stringMap[CONNECT_IQ_APP_MANAGMENT] = "CONNECT_IQ_APP_MANAGMENT"
+        stringMap[SWING_SENSOR] = "SWING_SENSOR"
+        stringMap[SWING_SENSOR_REMOTE] = "SWING_SENSOR_REMOTE"
+        stringMap[INCIDENT_DETECTION] = "INCIDENT_DETECTION"
+        stringMap[AUDIO_PROMPTS] = "AUDIO_PROMPTS"
+        stringMap[WIFI_VERIFICATION] = "WIFI_VERIFICATION"
+        stringMap[TRUE_UP] = "TRUE_UP"
+        stringMap[FIND_MY_WATCH] = "FIND_MY_WATCH"
+        stringMap[REMOTE_MANUAL_SYNC] = "REMOTE_MANUAL_SYNC"
+        stringMap[LIVE_TRACK_AUTO_START] = "LIVE_TRACK_AUTO_START"
+        stringMap[LIVE_TRACK_MESSAGING] = "LIVE_TRACK_MESSAGING"
+        stringMap[INSTANT_INPUT] = "INSTANT_INPUT"
     }
 
 
@@ -90,9 +89,9 @@ object ConnectivityCapabilities {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Long?): String? {
+    fun getStringFromValue(value: Long): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -103,7 +102,7 @@ object ConnectivityCapabilities {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Long? {
+    fun getValueFromString(value: String): Long {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

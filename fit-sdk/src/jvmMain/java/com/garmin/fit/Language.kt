@@ -58,7 +58,7 @@ enum class Language(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Language.INVALID
+            return INVALID
         }
 
         /**

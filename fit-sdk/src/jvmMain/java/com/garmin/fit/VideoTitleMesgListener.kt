@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface VideoTitleMesgListener {
-    fun onMesg(mesg: VideoTitleMesg?)
+    fun onMesg(mesg: VideoTitleMesg)
 }

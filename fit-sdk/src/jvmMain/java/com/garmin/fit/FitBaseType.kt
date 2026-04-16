@@ -26,29 +26,28 @@ object FitBaseType {
     const val SINT64: Short = 142
     const val UINT64: Short = 143
     const val UINT64Z: Short = 144
-    val INVALID: Short = Fit.UINT8_INVALID
+    const val INVALID: Short = Fit.UINT8_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(ENUM, "ENUM")
-        stringMap.put(SINT8, "SINT8")
-        stringMap.put(UINT8, "UINT8")
-        stringMap.put(SINT16, "SINT16")
-        stringMap.put(UINT16, "UINT16")
-        stringMap.put(SINT32, "SINT32")
-        stringMap.put(UINT32, "UINT32")
-        stringMap.put(STRING, "STRING")
-        stringMap.put(FLOAT32, "FLOAT32")
-        stringMap.put(FLOAT64, "FLOAT64")
-        stringMap.put(UINT8Z, "UINT8Z")
-        stringMap.put(UINT16Z, "UINT16Z")
-        stringMap.put(UINT32Z, "UINT32Z")
-        stringMap.put(BYTE, "BYTE")
-        stringMap.put(SINT64, "SINT64")
-        stringMap.put(UINT64, "UINT64")
-        stringMap.put(UINT64Z, "UINT64Z")
+        stringMap[ENUM] = "ENUM"
+        stringMap[SINT8] = "SINT8"
+        stringMap[UINT8] = "UINT8"
+        stringMap[SINT16] = "SINT16"
+        stringMap[UINT16] = "UINT16"
+        stringMap[SINT32] = "SINT32"
+        stringMap[UINT32] = "UINT32"
+        stringMap[STRING] = "STRING"
+        stringMap[FLOAT32] = "FLOAT32"
+        stringMap[FLOAT64] = "FLOAT64"
+        stringMap[UINT8Z] = "UINT8Z"
+        stringMap[UINT16Z] = "UINT16Z"
+        stringMap[UINT32Z] = "UINT32Z"
+        stringMap[BYTE] = "BYTE"
+        stringMap[SINT64] = "SINT64"
+        stringMap[UINT64] = "UINT64"
+        stringMap[UINT64Z] = "UINT64Z"
     }
 
 
@@ -57,9 +56,9 @@ object FitBaseType {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -70,7 +69,7 @@ object FitBaseType {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

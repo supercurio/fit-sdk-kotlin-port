@@ -11,19 +11,15 @@ package com.garmin.fit.csv
 import java.io.ByteArrayOutputStream
 import java.util.Collections
 
-class CSVWriter(outputStream: ByteArrayOutputStream?) {
-    var csvWriter: CSVWritable
-    @JvmField
-    val headers: ArrayList<String?> = ArrayList<String?>()
-    private val values = ArrayList<String?>()
-    private var maxNumberValues = 0
+class CSVWriter(outputStream: ByteArrayOutputStream) {
+    internal var csvWriter: CSVWritable = if (outputStream is ByteArrayOutputStreamPrefixable)
+        CSVWriterPrefixable(outputStream)
+    else
+        CSVWriterBufferedOutput(outputStream)
 
-    init {
-        csvWriter =
-            if (outputStream is ByteArrayOutputStreamPrefixable) CSVWriterPrefixable(outputStream) else CSVWriterBufferedOutput(
-                outputStream
-            )
-    }
+    val headers: ArrayList<String> = ArrayList()
+    private val values = ArrayList<String>()
+    private var maxNumberValues = 0
 
     fun close() {
         csvWriter.close(headers)
@@ -34,7 +30,7 @@ class CSVWriter(outputStream: ByteArrayOutputStream?) {
     }
 
     fun clear() {
-        Collections.fill<String?>(values, "")
+        values.fill("")
     }
 
     fun set(header: String?, value: Any?) {
@@ -49,8 +45,8 @@ class CSVWriter(outputStream: ByteArrayOutputStream?) {
         }
 
         for (i in headers.indices) {
-            if (headers.get(i)!!.compareTo(header) == 0) {
-                values.set(i, value.toString())
+            if (headers[i].compareTo(header) == 0) {
+                values[i] = value.toString()
                 return
             }
         }

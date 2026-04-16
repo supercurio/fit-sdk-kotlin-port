@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface WeatherAlertMesgListener {
-    fun onMesg(mesg: WeatherAlertMesg?)
+    fun onMesg(mesg: WeatherAlertMesg)
 }

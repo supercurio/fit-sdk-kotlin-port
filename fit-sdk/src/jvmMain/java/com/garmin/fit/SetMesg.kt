@@ -12,39 +12,39 @@ package com.garmin.fit
 class SetMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SET))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Comment: Timestamp of the set
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Comment: Timestamp of the set
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(254, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(254, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var duration: Float?
         /**
          * Get duration field
          * Units: s
-         * 
+         *
          * @return duration
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set duration field
          * Units: s
-         * 
+         *
          * @param duration The new duration value to be set
          */
         set(duration) {
@@ -55,14 +55,14 @@ class SetMesg : Mesg {
         /**
          * Get repetitions field
          * Comment: # of repitions of the movement
-         * 
+         *
          * @return repetitions
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set repetitions field
          * Comment: # of repitions of the movement
-         * 
+         *
          * @param repetitions The new repetitions value to be set
          */
         set(repetitions) {
@@ -74,7 +74,7 @@ class SetMesg : Mesg {
          * Get weight field
          * Units: kg
          * Comment: Amount of weight applied for the set
-         * 
+         *
          * @return weight
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -82,7 +82,7 @@ class SetMesg : Mesg {
          * Set weight field
          * Units: kg
          * Comment: Amount of weight applied for the set
-         * 
+         *
          * @param weight The new weight value to be set
          */
         set(weight) {
@@ -92,13 +92,13 @@ class SetMesg : Mesg {
     var setType: Short?
         /**
          * Get set_type field
-         * 
+         *
          * @return set_type
          */
         get() = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set set_type field
-         * 
+         *
          * @param setType The new setType value to be set
          */
         set(setType) {
@@ -109,21 +109,21 @@ class SetMesg : Mesg {
         /**
          * Get start_time field
          * Comment: Start time of the set
-         * 
+         *
          * @return start_time
          */
         get() = timestampToDateTime(getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set start_time field
          * Comment: Start time of the set
-         * 
+         *
          * @param startTime The new startTime value to be set
          */
         set(startTime) {
-            setFieldValue(6, 0, startTime!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(6, 0, startTime?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val category: Array<Int?>?
+    val category: Array<Int>?
         get() = getFieldIntegerValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCategory: Int
@@ -134,7 +134,7 @@ class SetMesg : Mesg {
 
     /**
      * Get category field
-     * 
+     *
      * @param index of category
      * @return category
      */
@@ -144,7 +144,7 @@ class SetMesg : Mesg {
 
     /**
      * Set category field
-     * 
+     *
      * @param index of category
      * @param category The new category value to be set
      */
@@ -152,7 +152,7 @@ class SetMesg : Mesg {
         setFieldValue(7, index, category, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val categorySubtype: Array<Int?>?
+    val categorySubtype: Array<Int>?
         get() = getFieldIntegerValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCategorySubtype: Int
@@ -164,7 +164,7 @@ class SetMesg : Mesg {
     /**
      * Get category_subtype field
      * Comment: Based on the associated category, see [category]_exercise_names
-     * 
+     *
      * @param index of category_subtype
      * @return category_subtype
      */
@@ -175,7 +175,7 @@ class SetMesg : Mesg {
     /**
      * Set category_subtype field
      * Comment: Based on the associated category, see [category]_exercise_names
-     * 
+     *
      * @param index of category_subtype
      * @param categorySubtype The new categorySubtype value to be set
      */
@@ -186,13 +186,13 @@ class SetMesg : Mesg {
     var weightDisplayUnit: Int?
         /**
          * Get weight_display_unit field
-         * 
+         *
          * @return weight_display_unit
          */
         get() = getFieldIntegerValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set weight_display_unit field
-         * 
+         *
          * @param weightDisplayUnit The new weightDisplayUnit value to be set
          */
         set(weightDisplayUnit) {
@@ -202,13 +202,13 @@ class SetMesg : Mesg {
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -218,13 +218,13 @@ class SetMesg : Mesg {
     var wktStepIndex: Int?
         /**
          * Get wkt_step_index field
-         * 
+         *
          * @return wkt_step_index
          */
         get() = getFieldIntegerValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set wkt_step_index field
-         * 
+         *
          * @param wktStepIndex The new wktStepIndex value to be set
          */
         set(wktStepIndex) {
@@ -255,11 +255,10 @@ class SetMesg : Mesg {
         const val WktStepIndexFieldNum: Int = 11
 
 
-        val setMesg: Mesg
+        // set
+        val setMesg: Mesg = Mesg("set", MesgNum.SET)
 
         init {
-            // set
-            setMesg = Mesg("set", MesgNum.SET)
             setMesg.addField(
                 Field(
                     "timestamp",

@@ -14,7 +14,7 @@ import java.io.OutputStream
 class DeveloperFieldDefinition : FieldDefinitionBase {
     private var fieldDescriptionMesg: FieldDescriptionMesg? = null
     private var developerDataIdMesg: DeveloperDataIdMesg? = null
-    private var size = 0
+    override var size = 0
     var type: Int = 0
         private set
     var num: Short = 0
@@ -24,19 +24,21 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
         type = FitBaseType.UINT8.toInt()
     }
 
-    constructor(mesg: FieldDescriptionMesg?, developerDataIdMesg: DeveloperDataIdMesg?) {
+    constructor(mesg: FieldDescriptionMesg, developerDataIdMesg: DeveloperDataIdMesg) {
         setFieldDescription(mesg)
         this.developerDataIdMesg = developerDataIdMesg
     }
 
-    constructor(field: DeveloperField) : this(field.getFieldDefinition()) {
-        this.size = field.getSize()
+    constructor(field: DeveloperField) : this(field.fieldDefinition) {
+        this.size = field.size
     }
 
     constructor(other: DeveloperFieldDefinition) {
-        setFieldDescription(other.fieldDescriptionMesg)
-        this.developerDataIdMesg = other.developerDataIdMesg
-        size = other.getSize()
+        other.fieldDescriptionMesg?.let {
+            setFieldDescription(it)
+            this.developerDataIdMesg = other.developerDataIdMesg
+            size = other.size
+        }
     }
 
     val appVersion: Long
@@ -44,7 +46,7 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
             var `val`: Long? = null
 
             if (this.isDefined) {
-                `val` = developerDataIdMesg!!.getApplicationVersion()
+                `val` = developerDataIdMesg!!.applicationVersion
             }
 
             if (null == `val`) {
@@ -54,10 +56,10 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
             return `val`
         }
 
-    val appId: Array<Byte?>?
+    val appId: Array<Byte>?
         get() {
             if (this.isDefined) {
-                return developerDataIdMesg!!.getApplicationId()
+                return developerDataIdMesg!!.applicationId
             }
 
             return null
@@ -67,7 +69,7 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
         get() {
             var `val`: Short? = null
             if (this.isDefined) {
-                `val` = fieldDescriptionMesg!!.getDeveloperDataIndex()
+                `val` = fieldDescriptionMesg!!.developerDataIndex
             }
 
             if (null == `val`) {
@@ -91,11 +93,9 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
 
     val scale: Short
         get() {
-            if (this.isDefined &&
-                (fieldDescriptionMesg!!.getScale() != null) &&
-                (fieldDescriptionMesg!!.getScale() != Fit.UINT8_INVALID)
-            ) {
-                return fieldDescriptionMesg!!.getScale()
+            val fieldScale = fieldDescriptionMesg!!.scale
+            if (this.isDefined && (fieldScale != null) && (fieldScale != Fit.UINT8_INVALID)) {
+                return fieldScale
             }
 
             return Fit.FIELD_DEFAULT_SCALE.toShort()
@@ -103,11 +103,12 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
 
     val offset: Short
         get() {
+            val fieldOffset = fieldDescriptionMesg!!.offset
             if (this.isDefined &&
-                (fieldDescriptionMesg!!.getOffset() != null) &&
-                (fieldDescriptionMesg!!.getOffset() != Fit.SINT8_INVALID)
+                (fieldOffset != null) &&
+                (fieldOffset != Fit.SINT8_INVALID)
             ) {
-                return fieldDescriptionMesg!!.getOffset().toShort()
+                return fieldOffset.toShort()
             }
 
             return Fit.FIELD_DEFAULT_OFFSET.toShort()
@@ -127,20 +128,12 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
 
     fun write(out: OutputStream) {
         try {
-            out.write(fieldDescriptionMesg!!.getFieldDefinitionNumber().toInt())
+            out.write(fieldDescriptionMesg!!.fieldDefinitionNumber!!.toInt())
             out.write(size)
-            out.write(fieldDescriptionMesg!!.getDeveloperDataIndex().toInt())
+            out.write(fieldDescriptionMesg!!.developerDataIndex!!.toInt())
         } catch (e: IOException) {
             throw FitRuntimeException(e)
         }
-    }
-
-    override fun getSize(): Int {
-        return size
-    }
-
-    override fun setSize(size: Int) {
-        this.size = size
     }
 
     val nativeOverride: Short
@@ -151,7 +144,7 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
          */
         get() {
             if (this.isDefined) {
-                val nativeNum = fieldDescriptionMesg!!.getNativeFieldNum()
+                val nativeNum = fieldDescriptionMesg!!.nativeFieldNum
                 if (null != nativeNum) {
                     return nativeNum
                 }
@@ -160,10 +153,10 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
             return Fit.UINT8_INVALID
         }
 
-    fun setFieldDescription(description: FieldDescriptionMesg?) {
+    fun setFieldDescription(description: FieldDescriptionMesg) {
         this.fieldDescriptionMesg = description
-        this.num = fieldDescriptionMesg!!.getFieldDefinitionNumber()
-        this.type = fieldDescriptionMesg!!.getFitBaseTypeId().toInt()
+        fieldDescriptionMesg!!.fieldDefinitionNumber?.let { this.num = it }
+        fieldDescriptionMesg!!.fitBaseTypeId?.toInt()?.let { this.type = it }
     }
 
     fun setDeveloperDataIdMesg(developerDataIdMesg: DeveloperDataIdMesg?) {

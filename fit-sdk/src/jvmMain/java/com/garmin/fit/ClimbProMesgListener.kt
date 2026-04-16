@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface ClimbProMesgListener {
-    fun onMesg(mesg: ClimbProMesg?)
+    fun onMesg(mesg: ClimbProMesg)
 }

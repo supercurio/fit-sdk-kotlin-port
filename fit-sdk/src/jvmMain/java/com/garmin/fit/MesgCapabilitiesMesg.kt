@@ -14,19 +14,19 @@ import com.garmin.fit.Profile.SubFields
 class MesgCapabilitiesMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MESG_CAPABILITIES))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -36,19 +36,16 @@ class MesgCapabilitiesMesg : Mesg {
     var file: File?
         /**
          * Get file field
-         * 
+         *
          * @return file
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return File.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return File.getByValue(value)
         }
         /**
          * Set file field
-         * 
+         *
          * @param file The new file value to be set
          */
         set(file) {
@@ -58,13 +55,13 @@ class MesgCapabilitiesMesg : Mesg {
     var mesgNum: Int?
         /**
          * Get mesg_num field
-         * 
+         *
          * @return mesg_num
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set mesg_num field
-         * 
+         *
          * @param mesgNum The new mesgNum value to be set
          */
         set(mesgNum) {
@@ -74,19 +71,16 @@ class MesgCapabilitiesMesg : Mesg {
     var countType: MesgCount?
         /**
          * Get count_type field
-         * 
+         *
          * @return count_type
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return MesgCount.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return MesgCount.getByValue(value)
         }
         /**
          * Set count_type field
-         * 
+         *
          * @param countType The new countType value to be set
          */
         set(countType) {
@@ -96,13 +90,13 @@ class MesgCapabilitiesMesg : Mesg {
     var count: Int?
         /**
          * Get count field
-         * 
+         *
          * @return count
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set count field
-         * 
+         *
          * @param count The new count value to be set
          */
         set(count) {
@@ -112,7 +106,7 @@ class MesgCapabilitiesMesg : Mesg {
     var numPerFile: Int?
         /**
          * Get num_per_file field
-         * 
+         *
          * @return num_per_file
          */
         get() = getFieldIntegerValue(
@@ -122,7 +116,7 @@ class MesgCapabilitiesMesg : Mesg {
         )
         /**
          * Set num_per_file field
-         * 
+         *
          * @param numPerFile The new numPerFile value to be set
          */
         set(numPerFile) {
@@ -137,7 +131,7 @@ class MesgCapabilitiesMesg : Mesg {
     var maxPerFile: Int?
         /**
          * Get max_per_file field
-         * 
+         *
          * @return max_per_file
          */
         get() = getFieldIntegerValue(
@@ -147,7 +141,7 @@ class MesgCapabilitiesMesg : Mesg {
         )
         /**
          * Set max_per_file field
-         * 
+         *
          * @param maxPerFile The new maxPerFile value to be set
          */
         set(maxPerFile) {
@@ -162,7 +156,7 @@ class MesgCapabilitiesMesg : Mesg {
     var maxPerFileType: Int?
         /**
          * Get max_per_file_type field
-         * 
+         *
          * @return max_per_file_type
          */
         get() = getFieldIntegerValue(
@@ -172,7 +166,7 @@ class MesgCapabilitiesMesg : Mesg {
         )
         /**
          * Set max_per_file_type field
-         * 
+         *
          * @param maxPerFileType The new maxPerFileType value to be set
          */
         set(maxPerFileType) {
@@ -268,7 +262,7 @@ class MesgCapabilitiesMesg : Mesg {
                 )
             )
             subfield_index = 0
-            mesgCapabilitiesMesg.fields.get(field_index).subFields.add(
+            mesgCapabilitiesMesg.fields[field_index].subFields.add(
                 SubField(
                     "num_per_file",
                     132,
@@ -277,9 +271,9 @@ class MesgCapabilitiesMesg : Mesg {
                     ""
                 )
             )
-            mesgCapabilitiesMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 0)
+            mesgCapabilitiesMesg.fields[field_index].subFields[subfield_index].addMap(2, 0)
             subfield_index++
-            mesgCapabilitiesMesg.fields.get(field_index).subFields.add(
+            mesgCapabilitiesMesg.fields[field_index].subFields.add(
                 SubField(
                     "max_per_file",
                     132,
@@ -288,9 +282,9 @@ class MesgCapabilitiesMesg : Mesg {
                     ""
                 )
             )
-            mesgCapabilitiesMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 1)
+            mesgCapabilitiesMesg.fields[field_index].subFields[subfield_index].addMap(2, 1)
             subfield_index++
-            mesgCapabilitiesMesg.fields.get(field_index).subFields.add(
+            mesgCapabilitiesMesg.fields[field_index].subFields.add(
                 SubField(
                     "max_per_file_type",
                     132,
@@ -299,7 +293,7 @@ class MesgCapabilitiesMesg : Mesg {
                     ""
                 )
             )
-            mesgCapabilitiesMesg.fields.get(field_index).subFields.get(subfield_index).addMap(2, 2)
+            mesgCapabilitiesMesg.fields[field_index].subFields[subfield_index].addMap(2, 2)
             subfield_index++
             field_index++
         }

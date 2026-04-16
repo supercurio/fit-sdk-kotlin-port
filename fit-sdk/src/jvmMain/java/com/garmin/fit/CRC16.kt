@@ -26,9 +26,8 @@ class CRC16 : Checksum {
     }
 
     override fun update(b: Int) {
-        var tmp: Int
         // compute checksum of lower four bits of byte
-        tmp = crc16_table[crc and 0x0F]
+        var tmp: Int = crc16_table[crc and 0x0F]
         crc = (crc shr 4) and 0x0FFF
         crc = crc xor tmp xor crc16_table[b and 0x0F]
 

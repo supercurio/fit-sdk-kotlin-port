@@ -30,7 +30,7 @@ enum class ExdDisplayType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ExdDisplayType.INVALID
+            return INVALID
         }
 
         /**

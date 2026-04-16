@@ -23,7 +23,7 @@ enum class BikeLightNetworkConfigType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return BikeLightNetworkConfigType.INVALID
+            return INVALID
         }
 
         /**

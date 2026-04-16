@@ -61,7 +61,7 @@ enum class DisplayPosition(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DisplayPosition.INVALID
+            return INVALID
         }
 
         /**

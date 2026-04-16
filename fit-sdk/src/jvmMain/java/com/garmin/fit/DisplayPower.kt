@@ -21,7 +21,7 @@ enum class DisplayPower(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DisplayPower.INVALID
+            return INVALID
         }
 
         /**

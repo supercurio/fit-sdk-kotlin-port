@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface HsaWristTemperatureDataMesgListener {
-    fun onMesg(mesg: HsaWristTemperatureDataMesg?)
+    fun onMesg(mesg: HsaWristTemperatureDataMesg)
 }

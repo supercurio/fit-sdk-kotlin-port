@@ -10,7 +10,7 @@ package com.garmin.fit
 
 object Factory {
     fun createMesg(mesg: Mesg): Mesg {
-        when (mesg.getNum()) {
+        when (mesg.num) {
             MesgNum.FILE_ID -> return FileIdMesg(mesg)
             MesgNum.FILE_CREATOR -> return FileCreatorMesg(mesg)
             MesgNum.TIMESTAMP_CORRELATION -> return TimestampCorrelationMesg(mesg)
@@ -148,8 +148,8 @@ object Factory {
 
     @JvmStatic
     fun createMesg(mesgNum: Int): Mesg {
-        for (i in mesgs!!.indices) {
-            if (mesgs[i]!!.num == mesgNum) {
+        for (i in mesgs.indices) {
+            if (mesgs[i].num == mesgNum) {
                 return Mesg(mesgs[i])
             }
         }
@@ -158,8 +158,8 @@ object Factory {
 
     @JvmStatic
     fun createMesg(mesgName: String?): Mesg {
-        for (i in mesgs!!.indices) {
-            if (mesgs[i]!!.name == mesgName) {
+        for (i in mesgs.indices) {
+            if (mesgs[i].name == mesgName) {
                 return Mesg(mesgs[i])
             }
         }
@@ -168,301 +168,171 @@ object Factory {
 
     @JvmStatic
     fun createField(mesgName: String?, fieldName: String?): Field {
-        for (i in mesgs!!.indices) {
-            if (mesgs[i]!!.name == mesgName) {
-                return Field(mesgs[i]!!.getField(fieldName, false))
+        for (i in mesgs.indices) {
+            if (mesgs[i].name == mesgName) {
+                return Field(mesgs[i].getField(fieldName, false))
             }
         }
         return Field(fieldName, Fit.FIELD_NUM_INVALID, 0, 1.0, 0.0, "", false, Profile.Type.ENUM)
     }
 
     fun createField(mesgName: String?, fieldNum: Int): Field {
-        for (i in mesgs!!.indices) {
-            if (mesgs[i]!!.name == mesgName) {
-                return Field(mesgs[i]!!.getField(fieldNum))
+        for (i in mesgs.indices) {
+            if (mesgs[i].name == mesgName) {
+                return Field(mesgs[i].getField(fieldNum))
             }
         }
         return Field("unknown", fieldNum, 0, 1.0, 0.0, "", false, Profile.Type.ENUM)
     }
 
     fun createField(mesgNum: Int, fieldNum: Int): Field {
-        for (i in mesgs!!.indices) {
-            if (mesgs[i]!!.num == mesgNum) {
-                return Field(mesgs[i]!!.getField(fieldNum))
+        for (i in mesgs.indices) {
+            if (mesgs[i].num == mesgNum) {
+                return Field(mesgs[i].getField(fieldNum))
             }
         }
         return Field("unknown", fieldNum, 0, 1.0, 0.0, "", false, Profile.Type.ENUM)
     }
 
     fun createField(mesgNum: Int, fieldName: String?): Field {
-        for (i in mesgs!!.indices) {
-            if (mesgs[i]!!.num == mesgNum) {
-                return Field(mesgs[i]!!.getField(fieldName, false))
+        for (i in mesgs.indices) {
+            if (mesgs[i].num == mesgNum) {
+                return Field(mesgs[i].getField(fieldName, false))
             }
         }
         return Field(fieldName, Fit.FIELD_NUM_INVALID, 0, 1.0, 0.0, "", false, Profile.Type.ENUM)
     }
 
-    fun createField(mesgName: String?, fieldName: String?, values: ArrayList<Any?>?): Field {
+    fun createField(mesgName: String?, fieldName: String?, values: ArrayList<Any?>): Field {
         val field = createField(mesgName, fieldName)
         field.values = values
         return field
     }
 
-    private val mesgs: Array<Mesg?>? = arrayOfNulls<Mesg>(124)
-
-    init {
-        var mesg_index = 0
-        mesgs!![mesg_index] = FileIdMesg.Companion.fileIdMesg
-        mesg_index++
-        mesgs[mesg_index] = FileCreatorMesg.Companion.fileCreatorMesg
-        mesg_index++
-        mesgs[mesg_index] = TimestampCorrelationMesg.Companion.timestampCorrelationMesg
-        mesg_index++
-        mesgs[mesg_index] = SoftwareMesg.Companion.softwareMesg
-        mesg_index++
-        mesgs[mesg_index] = SlaveDeviceMesg.Companion.slaveDeviceMesg
-        mesg_index++
-        mesgs[mesg_index] = CapabilitiesMesg.Companion.capabilitiesMesg
-        mesg_index++
-        mesgs[mesg_index] = FileCapabilitiesMesg.Companion.fileCapabilitiesMesg
-        mesg_index++
-        mesgs[mesg_index] = MesgCapabilitiesMesg.Companion.mesgCapabilitiesMesg
-        mesg_index++
-        mesgs[mesg_index] = FieldCapabilitiesMesg.Companion.fieldCapabilitiesMesg
-        mesg_index++
-        mesgs[mesg_index] = DeviceSettingsMesg.Companion.deviceSettingsMesg
-        mesg_index++
-        mesgs[mesg_index] = UserProfileMesg.Companion.userProfileMesg
-        mesg_index++
-        mesgs[mesg_index] = HrmProfileMesg.Companion.hrmProfileMesg
-        mesg_index++
-        mesgs[mesg_index] = SdmProfileMesg.Companion.sdmProfileMesg
-        mesg_index++
-        mesgs[mesg_index] = BikeProfileMesg.Companion.bikeProfileMesg
-        mesg_index++
-        mesgs[mesg_index] = ConnectivityMesg.Companion.connectivityMesg
-        mesg_index++
-        mesgs[mesg_index] = WatchfaceSettingsMesg.Companion.watchfaceSettingsMesg
-        mesg_index++
-        mesgs[mesg_index] = OhrSettingsMesg.Companion.ohrSettingsMesg
-        mesg_index++
-        mesgs[mesg_index] = TimeInZoneMesg.Companion.timeInZoneMesg
-        mesg_index++
-        mesgs[mesg_index] = ZonesTargetMesg.Companion.zonesTargetMesg
-        mesg_index++
-        mesgs[mesg_index] = SportMesg.Companion.sportMesg
-        mesg_index++
-        mesgs[mesg_index] = HrZoneMesg.Companion.hrZoneMesg
-        mesg_index++
-        mesgs[mesg_index] = SpeedZoneMesg.Companion.speedZoneMesg
-        mesg_index++
-        mesgs[mesg_index] = CadenceZoneMesg.Companion.cadenceZoneMesg
-        mesg_index++
-        mesgs[mesg_index] = PowerZoneMesg.Companion.powerZoneMesg
-        mesg_index++
-        mesgs[mesg_index] = MetZoneMesg.Companion.metZoneMesg
-        mesg_index++
-        mesgs[mesg_index] = TrainingSettingsMesg.Companion.trainingSettingsMesg
-        mesg_index++
-        mesgs[mesg_index] = DiveSettingsMesg.Companion.diveSettingsMesg
-        mesg_index++
-        mesgs[mesg_index] = DiveAlarmMesg.Companion.diveAlarmMesg
-        mesg_index++
-        mesgs[mesg_index] = DiveApneaAlarmMesg.Companion.diveApneaAlarmMesg
-        mesg_index++
-        mesgs[mesg_index] = DiveGasMesg.Companion.diveGasMesg
-        mesg_index++
-        mesgs[mesg_index] = GoalMesg.Companion.goalMesg
-        mesg_index++
-        mesgs[mesg_index] = ActivityMesg.Companion.activityMesg
-        mesg_index++
-        mesgs[mesg_index] = SessionMesg.Companion.sessionMesg
-        mesg_index++
-        mesgs[mesg_index] = LapMesg.Companion.lapMesg
-        mesg_index++
-        mesgs[mesg_index] = LengthMesg.Companion.lengthMesg
-        mesg_index++
-        mesgs[mesg_index] = RecordMesg.Companion.recordMesg
-        mesg_index++
-        mesgs[mesg_index] = EventMesg.Companion.eventMesg
-        mesg_index++
-        mesgs[mesg_index] = DeviceInfoMesg.Companion.deviceInfoMesg
-        mesg_index++
-        mesgs[mesg_index] = DeviceAuxBatteryInfoMesg.Companion.deviceAuxBatteryInfoMesg
-        mesg_index++
-        mesgs[mesg_index] = TrainingFileMesg.Companion.trainingFileMesg
-        mesg_index++
-        mesgs[mesg_index] = WeatherConditionsMesg.Companion.weatherConditionsMesg
-        mesg_index++
-        mesgs[mesg_index] = WeatherAlertMesg.Companion.weatherAlertMesg
-        mesg_index++
-        mesgs[mesg_index] = GpsMetadataMesg.Companion.gpsMetadataMesg
-        mesg_index++
-        mesgs[mesg_index] = CameraEventMesg.Companion.cameraEventMesg
-        mesg_index++
-        mesgs[mesg_index] = GyroscopeDataMesg.Companion.gyroscopeDataMesg
-        mesg_index++
-        mesgs[mesg_index] = AccelerometerDataMesg.Companion.accelerometerDataMesg
-        mesg_index++
-        mesgs[mesg_index] = MagnetometerDataMesg.Companion.magnetometerDataMesg
-        mesg_index++
-        mesgs[mesg_index] = BarometerDataMesg.Companion.barometerDataMesg
-        mesg_index++
-        mesgs[mesg_index] = ThreeDSensorCalibrationMesg.Companion.threeDSensorCalibrationMesg
-        mesg_index++
-        mesgs[mesg_index] = OneDSensorCalibrationMesg.Companion.oneDSensorCalibrationMesg
-        mesg_index++
-        mesgs[mesg_index] = VideoFrameMesg.Companion.videoFrameMesg
-        mesg_index++
-        mesgs[mesg_index] = ObdiiDataMesg.Companion.obdiiDataMesg
-        mesg_index++
-        mesgs[mesg_index] = NmeaSentenceMesg.Companion.nmeaSentenceMesg
-        mesg_index++
-        mesgs[mesg_index] = AviationAttitudeMesg.Companion.aviationAttitudeMesg
-        mesg_index++
-        mesgs[mesg_index] = VideoMesg.Companion.videoMesg
-        mesg_index++
-        mesgs[mesg_index] = VideoTitleMesg.Companion.videoTitleMesg
-        mesg_index++
-        mesgs[mesg_index] = VideoDescriptionMesg.Companion.videoDescriptionMesg
-        mesg_index++
-        mesgs[mesg_index] = VideoClipMesg.Companion.videoClipMesg
-        mesg_index++
-        mesgs[mesg_index] = SetMesg.Companion.setMesg
-        mesg_index++
-        mesgs[mesg_index] = JumpMesg.Companion.jumpMesg
-        mesg_index++
-        mesgs[mesg_index] = SplitMesg.Companion.splitMesg
-        mesg_index++
-        mesgs[mesg_index] = SplitSummaryMesg.Companion.splitSummaryMesg
-        mesg_index++
-        mesgs[mesg_index] = ClimbProMesg.Companion.climbProMesg
-        mesg_index++
-        mesgs[mesg_index] = FieldDescriptionMesg.Companion.fieldDescriptionMesg
-        mesg_index++
-        mesgs[mesg_index] = DeveloperDataIdMesg.Companion.developerDataIdMesg
-        mesg_index++
-        mesgs[mesg_index] = CourseMesg.Companion.courseMesg
-        mesg_index++
-        mesgs[mesg_index] = CoursePointMesg.Companion.coursePointMesg
-        mesg_index++
-        mesgs[mesg_index] = SegmentIdMesg.Companion.segmentIdMesg
-        mesg_index++
-        mesgs[mesg_index] = SegmentLeaderboardEntryMesg.Companion.segmentLeaderboardEntryMesg
-        mesg_index++
-        mesgs[mesg_index] = SegmentPointMesg.Companion.segmentPointMesg
-        mesg_index++
-        mesgs[mesg_index] = SegmentLapMesg.Companion.segmentLapMesg
-        mesg_index++
-        mesgs[mesg_index] = SegmentFileMesg.Companion.segmentFileMesg
-        mesg_index++
-        mesgs[mesg_index] = WorkoutMesg.Companion.workoutMesg
-        mesg_index++
-        mesgs[mesg_index] = WorkoutSessionMesg.Companion.workoutSessionMesg
-        mesg_index++
-        mesgs[mesg_index] = WorkoutStepMesg.Companion.workoutStepMesg
-        mesg_index++
-        mesgs[mesg_index] = ExerciseTitleMesg.Companion.exerciseTitleMesg
-        mesg_index++
-        mesgs[mesg_index] = ScheduleMesg.Companion.scheduleMesg
-        mesg_index++
-        mesgs[mesg_index] = TotalsMesg.Companion.totalsMesg
-        mesg_index++
-        mesgs[mesg_index] = WeightScaleMesg.Companion.weightScaleMesg
-        mesg_index++
-        mesgs[mesg_index] = BloodPressureMesg.Companion.bloodPressureMesg
-        mesg_index++
-        mesgs[mesg_index] = MonitoringInfoMesg.Companion.monitoringInfoMesg
-        mesg_index++
-        mesgs[mesg_index] = MonitoringMesg.Companion.monitoringMesg
-        mesg_index++
-        mesgs[mesg_index] = MonitoringHrDataMesg.Companion.monitoringHrDataMesg
-        mesg_index++
-        mesgs[mesg_index] = Spo2DataMesg.Companion.spo2DataMesg
-        mesg_index++
-        mesgs[mesg_index] = HrMesg.Companion.hrMesg
-        mesg_index++
-        mesgs[mesg_index] = StressLevelMesg.Companion.stressLevelMesg
-        mesg_index++
-        mesgs[mesg_index] = MaxMetDataMesg.Companion.maxMetDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaBodyBatteryDataMesg.Companion.hsaBodyBatteryDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaEventMesg.Companion.hsaEventMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaAccelerometerDataMesg.Companion.hsaAccelerometerDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaGyroscopeDataMesg.Companion.hsaGyroscopeDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaStepDataMesg.Companion.hsaStepDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaSpo2DataMesg.Companion.hsaSpo2DataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaStressDataMesg.Companion.hsaStressDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaRespirationDataMesg.Companion.hsaRespirationDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaHeartRateDataMesg.Companion.hsaHeartRateDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaConfigurationDataMesg.Companion.hsaConfigurationDataMesg
-        mesg_index++
-        mesgs[mesg_index] = HsaWristTemperatureDataMesg.Companion.hsaWristTemperatureDataMesg
-        mesg_index++
-        mesgs[mesg_index] = MemoGlobMesg.Companion.memoGlobMesg
-        mesg_index++
-        mesgs[mesg_index] = SleepLevelMesg.Companion.sleepLevelMesg
-        mesg_index++
-        mesgs[mesg_index] = AntChannelIdMesg.Companion.antChannelIdMesg
-        mesg_index++
-        mesgs[mesg_index] = AntRxMesg.Companion.antRxMesg
-        mesg_index++
-        mesgs[mesg_index] = AntTxMesg.Companion.antTxMesg
-        mesg_index++
-        mesgs[mesg_index] = ExdScreenConfigurationMesg.Companion.exdScreenConfigurationMesg
-        mesg_index++
-        mesgs[mesg_index] = ExdDataFieldConfigurationMesg.Companion.exdDataFieldConfigurationMesg
-        mesg_index++
-        mesgs[mesg_index] =
-            ExdDataConceptConfigurationMesg.Companion.exdDataConceptConfigurationMesg
-        mesg_index++
-        mesgs[mesg_index] = DiveSummaryMesg.Companion.diveSummaryMesg
-        mesg_index++
-        mesgs[mesg_index] = AadAccelFeaturesMesg.Companion.aadAccelFeaturesMesg
-        mesg_index++
-        mesgs[mesg_index] = HrvMesg.Companion.hrvMesg
-        mesg_index++
-        mesgs[mesg_index] = BeatIntervalsMesg.Companion.beatIntervalsMesg
-        mesg_index++
-        mesgs[mesg_index] = HrvStatusSummaryMesg.Companion.hrvStatusSummaryMesg
-        mesg_index++
-        mesgs[mesg_index] = HrvValueMesg.Companion.hrvValueMesg
-        mesg_index++
-        mesgs[mesg_index] = RawBbiMesg.Companion.rawBbiMesg
-        mesg_index++
-        mesgs[mesg_index] = RespirationRateMesg.Companion.respirationRateMesg
-        mesg_index++
-        mesgs[mesg_index] = ChronoShotSessionMesg.Companion.chronoShotSessionMesg
-        mesg_index++
-        mesgs[mesg_index] = ChronoShotDataMesg.Companion.chronoShotDataMesg
-        mesg_index++
-        mesgs[mesg_index] = TankUpdateMesg.Companion.tankUpdateMesg
-        mesg_index++
-        mesgs[mesg_index] = TankSummaryMesg.Companion.tankSummaryMesg
-        mesg_index++
-        mesgs[mesg_index] = SleepAssessmentMesg.Companion.sleepAssessmentMesg
-        mesg_index++
-        mesgs[mesg_index] =
-            SleepDisruptionSeverityPeriodMesg.Companion.sleepDisruptionSeverityPeriodMesg
-        mesg_index++
-        mesgs[mesg_index] =
-            SleepDisruptionOvernightSeverityMesg.Companion.sleepDisruptionOvernightSeverityMesg
-        mesg_index++
-        mesgs[mesg_index] = NapEventMesg.Companion.napEventMesg
-        mesg_index++
-        mesgs[mesg_index] = SkinTempOvernightMesg.Companion.skinTempOvernightMesg
-        mesg_index++
-        mesgs[mesg_index] = PadMesg.Companion.padMesg
-        mesg_index++
-    }
+    private val mesgs = listOf(
+        FileIdMesg.fileIdMesg,
+        FileCreatorMesg.fileCreatorMesg,
+        TimestampCorrelationMesg.timestampCorrelationMesg,
+        SoftwareMesg.softwareMesg,
+        SlaveDeviceMesg.slaveDeviceMesg,
+        CapabilitiesMesg.capabilitiesMesg,
+        FileCapabilitiesMesg.fileCapabilitiesMesg,
+        MesgCapabilitiesMesg.mesgCapabilitiesMesg,
+        FieldCapabilitiesMesg.fieldCapabilitiesMesg,
+        DeviceSettingsMesg.deviceSettingsMesg,
+        UserProfileMesg.userProfileMesg,
+        HrmProfileMesg.hrmProfileMesg,
+        SdmProfileMesg.sdmProfileMesg,
+        BikeProfileMesg.bikeProfileMesg,
+        ConnectivityMesg.connectivityMesg,
+        WatchfaceSettingsMesg.watchfaceSettingsMesg,
+        OhrSettingsMesg.ohrSettingsMesg,
+        TimeInZoneMesg.timeInZoneMesg,
+        ZonesTargetMesg.zonesTargetMesg,
+        SportMesg.sportMesg,
+        HrZoneMesg.hrZoneMesg,
+        SpeedZoneMesg.speedZoneMesg,
+        CadenceZoneMesg.cadenceZoneMesg,
+        PowerZoneMesg.powerZoneMesg,
+        MetZoneMesg.metZoneMesg,
+        TrainingSettingsMesg.trainingSettingsMesg,
+        DiveSettingsMesg.diveSettingsMesg,
+        DiveAlarmMesg.diveAlarmMesg,
+        DiveApneaAlarmMesg.diveApneaAlarmMesg,
+        DiveGasMesg.diveGasMesg,
+        GoalMesg.goalMesg,
+        ActivityMesg.activityMesg,
+        SessionMesg.sessionMesg,
+        LapMesg.lapMesg,
+        LengthMesg.lengthMesg,
+        RecordMesg.recordMesg,
+        EventMesg.eventMesg,
+        DeviceInfoMesg.deviceInfoMesg,
+        DeviceAuxBatteryInfoMesg.deviceAuxBatteryInfoMesg,
+        TrainingFileMesg.trainingFileMesg,
+        WeatherConditionsMesg.weatherConditionsMesg,
+        WeatherAlertMesg.weatherAlertMesg,
+        GpsMetadataMesg.gpsMetadataMesg,
+        CameraEventMesg.cameraEventMesg,
+        GyroscopeDataMesg.gyroscopeDataMesg,
+        AccelerometerDataMesg.accelerometerDataMesg,
+        MagnetometerDataMesg.magnetometerDataMesg,
+        BarometerDataMesg.barometerDataMesg,
+        ThreeDSensorCalibrationMesg.threeDSensorCalibrationMesg,
+        OneDSensorCalibrationMesg.oneDSensorCalibrationMesg,
+        VideoFrameMesg.videoFrameMesg,
+        ObdiiDataMesg.obdiiDataMesg,
+        NmeaSentenceMesg.nmeaSentenceMesg,
+        AviationAttitudeMesg.aviationAttitudeMesg,
+        VideoMesg.videoMesg,
+        VideoTitleMesg.videoTitleMesg,
+        VideoDescriptionMesg.videoDescriptionMesg,
+        VideoClipMesg.videoClipMesg,
+        SetMesg.setMesg,
+        JumpMesg.jumpMesg,
+        SplitMesg.splitMesg,
+        SplitSummaryMesg.splitSummaryMesg,
+        ClimbProMesg.climbProMesg,
+        FieldDescriptionMesg.fieldDescriptionMesg,
+        DeveloperDataIdMesg.developerDataIdMesg,
+        CourseMesg.courseMesg,
+        CoursePointMesg.coursePointMesg,
+        SegmentIdMesg.segmentIdMesg,
+        SegmentLeaderboardEntryMesg.segmentLeaderboardEntryMesg,
+        SegmentPointMesg.segmentPointMesg,
+        SegmentLapMesg.segmentLapMesg,
+        SegmentFileMesg.segmentFileMesg,
+        WorkoutMesg.workoutMesg,
+        WorkoutSessionMesg.workoutSessionMesg,
+        WorkoutStepMesg.workoutStepMesg,
+        ExerciseTitleMesg.exerciseTitleMesg,
+        ScheduleMesg.scheduleMesg,
+        TotalsMesg.totalsMesg,
+        WeightScaleMesg.weightScaleMesg,
+        BloodPressureMesg.bloodPressureMesg,
+        MonitoringInfoMesg.monitoringInfoMesg,
+        MonitoringMesg.monitoringMesg,
+        MonitoringHrDataMesg.monitoringHrDataMesg,
+        Spo2DataMesg.spo2DataMesg,
+        HrMesg.hrMesg,
+        StressLevelMesg.stressLevelMesg,
+        MaxMetDataMesg.maxMetDataMesg,
+        HsaBodyBatteryDataMesg.hsaBodyBatteryDataMesg,
+        HsaEventMesg.hsaEventMesg,
+        HsaAccelerometerDataMesg.hsaAccelerometerDataMesg,
+        HsaGyroscopeDataMesg.hsaGyroscopeDataMesg,
+        HsaStepDataMesg.hsaStepDataMesg,
+        HsaSpo2DataMesg.hsaSpo2DataMesg,
+        HsaStressDataMesg.hsaStressDataMesg,
+        HsaRespirationDataMesg.hsaRespirationDataMesg,
+        HsaHeartRateDataMesg.hsaHeartRateDataMesg,
+        HsaConfigurationDataMesg.hsaConfigurationDataMesg,
+        HsaWristTemperatureDataMesg.hsaWristTemperatureDataMesg,
+        MemoGlobMesg.memoGlobMesg,
+        SleepLevelMesg.sleepLevelMesg,
+        AntChannelIdMesg.antChannelIdMesg,
+        AntRxMesg.antRxMesg,
+        AntTxMesg.antTxMesg,
+        ExdScreenConfigurationMesg.exdScreenConfigurationMesg,
+        ExdDataFieldConfigurationMesg.exdDataFieldConfigurationMesg,
+        ExdDataConceptConfigurationMesg.exdDataConceptConfigurationMesg,
+        DiveSummaryMesg.diveSummaryMesg,
+        AadAccelFeaturesMesg.aadAccelFeaturesMesg,
+        HrvMesg.hrvMesg,
+        BeatIntervalsMesg.beatIntervalsMesg,
+        HrvStatusSummaryMesg.hrvStatusSummaryMesg,
+        HrvValueMesg.hrvValueMesg,
+        RawBbiMesg.rawBbiMesg,
+        RespirationRateMesg.respirationRateMesg,
+        ChronoShotSessionMesg.chronoShotSessionMesg,
+        ChronoShotDataMesg.chronoShotDataMesg,
+        TankUpdateMesg.tankUpdateMesg,
+        TankSummaryMesg.tankSummaryMesg,
+        SleepAssessmentMesg.sleepAssessmentMesg,
+        SleepDisruptionSeverityPeriodMesg.sleepDisruptionSeverityPeriodMesg,
+        SleepDisruptionOvernightSeverityMesg.sleepDisruptionOvernightSeverityMesg,
+        NapEventMesg.napEventMesg,
+        SkinTempOvernightMesg.skinTempOvernightMesg,
+        PadMesg.padMesg
+    )
 }

@@ -15,18 +15,17 @@ object UserLocalId {
     const val STATIONARY_MAX: Int = 0x00FF
     const val PORTABLE_MIN: Int = 0x0100
     const val PORTABLE_MAX: Int = 0xFFFE
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(LOCAL_MIN, "LOCAL_MIN")
-        stringMap.put(LOCAL_MAX, "LOCAL_MAX")
-        stringMap.put(STATIONARY_MIN, "STATIONARY_MIN")
-        stringMap.put(STATIONARY_MAX, "STATIONARY_MAX")
-        stringMap.put(PORTABLE_MIN, "PORTABLE_MIN")
-        stringMap.put(PORTABLE_MAX, "PORTABLE_MAX")
+        stringMap[LOCAL_MIN] = "LOCAL_MIN"
+        stringMap[LOCAL_MAX] = "LOCAL_MAX"
+        stringMap[STATIONARY_MIN] = "STATIONARY_MIN"
+        stringMap[STATIONARY_MAX] = "STATIONARY_MAX"
+        stringMap[PORTABLE_MIN] = "PORTABLE_MIN"
+        stringMap[PORTABLE_MAX] = "PORTABLE_MAX"
     }
 
 
@@ -35,9 +34,9 @@ object UserLocalId {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -48,7 +47,7 @@ object UserLocalId {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

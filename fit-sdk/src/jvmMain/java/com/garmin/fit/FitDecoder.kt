@@ -11,7 +11,7 @@ package com.garmin.fit
 import java.io.InputStream
 
 class FitDecoder {
-    fun decode(inputStream: InputStream?): FitMessages {
+    fun decode(inputStream: InputStream): FitMessages {
         val decode = Decode()
         val fitListener = FitListener()
 
@@ -20,7 +20,7 @@ class FitDecoder {
         } catch (fre: FitRuntimeException) {
             // If a FIT file with 0 data size is encountered, attempt to
             // process the next chained FIT file in the input stream.
-            if (decode.getInvalidFileDataSize()) {
+            if (decode.invalidFileDataSize) {
                 decode.nextFile()
                 decode.read(inputStream, fitListener, null)
             } else {
@@ -28,10 +28,10 @@ class FitDecoder {
             }
         }
 
-        return fitListener.getFitMessages()
+        return fitListener.fitMessages
     }
 
-    fun decode(inputStream: InputStream?, plugin: MesgBroadcastPlugin?): FitMessages {
+    fun decode(inputStream: InputStream, plugin: MesgBroadcastPlugin?): FitMessages {
         val decode = Decode()
         val fitListener = FitListener()
         val mesgBroadcaster = BufferedMesgBroadcaster(decode)
@@ -45,7 +45,7 @@ class FitDecoder {
         } catch (fre: FitRuntimeException) {
             // If a FIT file with 0 data size is encountered, attempt to
             // process the next chained FIT file in the input stream.
-            if (decode.getInvalidFileDataSize()) {
+            if (decode.invalidFileDataSize) {
                 decode.nextFile()
                 mesgBroadcaster.run(inputStream)
                 mesgBroadcaster.broadcast()
@@ -54,6 +54,6 @@ class FitDecoder {
             }
         }
 
-        return fitListener.getFitMessages()
+        return fitListener.fitMessages
     }
 }

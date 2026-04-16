@@ -23,7 +23,7 @@ enum class Autoscroll(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Autoscroll.INVALID
+            return INVALID
         }
 
         /**

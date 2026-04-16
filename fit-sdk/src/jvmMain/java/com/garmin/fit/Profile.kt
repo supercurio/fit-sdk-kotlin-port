@@ -12,13 +12,13 @@ object Profile {
     /**
      * Returns the string name associated with a given enum value. If there is no such
      * label, returns the string representation of the numerical value instead.
-     * 
+     *
      * @param enumType the type of the enum
      * @param enumVal the numerical value of the enum
      * @return the enum label associated with this value for the given enum type, or the
      * string representation of the numerical value if there is no such label.
      */
-    fun enumValueName(enumType: Type, enumVal: Long): String {
+    fun enumValueName(enumType: Type?, enumVal: Long): String {
         var retVal = ""
         val shortVal = enumVal.toShort()
 
@@ -42,23 +42,23 @@ object Profile {
             Type.UINT64Z -> {}
             Type.BOOL -> {}
             Type.FILE -> retVal =
-                File.Companion.getStringFromValue(File.Companion.getByValue(shortVal))
+                File.getStringFromValue(File.getByValue(shortVal))
 
             Type.MESG_NUM -> retVal = MesgNum.getStringFromValue(enumVal.toInt())
             Type.CHECKSUM -> retVal = Checksum.getStringFromValue(enumVal.toShort())
             Type.FILE_FLAGS -> retVal = FileFlags.getStringFromValue(enumVal.toShort())
             Type.MESG_COUNT -> retVal =
-                MesgCount.Companion.getStringFromValue(MesgCount.Companion.getByValue(shortVal))
+                MesgCount.getStringFromValue(MesgCount.getByValue(shortVal))
 
-            Type.DATE_TIME -> retVal = DateTime.Companion.getStringFromValue(enumVal)
-            Type.LOCAL_DATE_TIME -> retVal = LocalDateTime.Companion.getStringFromValue(enumVal)
+            Type.DATE_TIME -> retVal = DateTime.getStringFromValue(enumVal)
+            Type.LOCAL_DATE_TIME -> retVal = LocalDateTime.getStringFromValue(enumVal)
             Type.MESSAGE_INDEX -> retVal = MessageIndex.getStringFromValue(enumVal.toInt())
             Type.DEVICE_INDEX -> retVal = DeviceIndex.getStringFromValue(enumVal.toShort())
             Type.GENDER -> retVal =
-                Gender.Companion.getStringFromValue(Gender.Companion.getByValue(shortVal))
+                Gender.getStringFromValue(Gender.getByValue(shortVal))
 
             Type.LANGUAGE -> retVal =
-                Language.Companion.getStringFromValue(Language.Companion.getByValue(shortVal))
+                Language.getStringFromValue(Language.getByValue(shortVal))
 
             Type.LANGUAGE_BITS_0 -> retVal = LanguageBits0.getStringFromValue(enumVal.toShort())
             Type.LANGUAGE_BITS_1 -> retVal = LanguageBits1.getStringFromValue(enumVal.toShort())
@@ -66,27 +66,27 @@ object Profile {
             Type.LANGUAGE_BITS_3 -> retVal = LanguageBits3.getStringFromValue(enumVal.toShort())
             Type.LANGUAGE_BITS_4 -> retVal = LanguageBits4.getStringFromValue(enumVal.toShort())
             Type.TIME_ZONE -> retVal =
-                TimeZone.Companion.getStringFromValue(TimeZone.Companion.getByValue(shortVal))
+                TimeZone.getStringFromValue(TimeZone.getByValue(shortVal))
 
-            Type.DISPLAY_MEASURE -> retVal = DisplayMeasure.Companion.getStringFromValue(
-                DisplayMeasure.Companion.getByValue(shortVal)
+            Type.DISPLAY_MEASURE -> retVal = DisplayMeasure.getStringFromValue(
+                DisplayMeasure.getByValue(shortVal)
             )
 
             Type.DISPLAY_HEART -> retVal =
-                DisplayHeart.Companion.getStringFromValue(DisplayHeart.Companion.getByValue(shortVal))
+                DisplayHeart.getStringFromValue(DisplayHeart.getByValue(shortVal))
 
             Type.DISPLAY_POWER -> retVal =
-                DisplayPower.Companion.getStringFromValue(DisplayPower.Companion.getByValue(shortVal))
+                DisplayPower.getStringFromValue(DisplayPower.getByValue(shortVal))
 
-            Type.DISPLAY_POSITION -> retVal = DisplayPosition.Companion.getStringFromValue(
-                DisplayPosition.Companion.getByValue(shortVal)
+            Type.DISPLAY_POSITION -> retVal = DisplayPosition.getStringFromValue(
+                DisplayPosition.getByValue(shortVal)
             )
 
             Type.SWITCH -> retVal =
-                Switch.Companion.getStringFromValue(Switch.Companion.getByValue(shortVal))
+                Switch.getStringFromValue(Switch.getByValue(shortVal))
 
             Type.SPORT -> retVal =
-                Sport.Companion.getStringFromValue(Sport.Companion.getByValue(shortVal))
+                Sport.getStringFromValue(Sport.getByValue(shortVal))
 
             Type.SPORT_BITS_0 -> retVal = SportBits0.getStringFromValue(enumVal.toShort())
             Type.SPORT_BITS_1 -> retVal = SportBits1.getStringFromValue(enumVal.toShort())
@@ -96,94 +96,94 @@ object Profile {
             Type.SPORT_BITS_5 -> retVal = SportBits5.getStringFromValue(enumVal.toShort())
             Type.SPORT_BITS_6 -> retVal = SportBits6.getStringFromValue(enumVal.toShort())
             Type.SUB_SPORT -> retVal =
-                SubSport.Companion.getStringFromValue(SubSport.Companion.getByValue(shortVal))
+                SubSport.getStringFromValue(SubSport.getByValue(shortVal))
 
             Type.SPORT_EVENT -> retVal =
-                SportEvent.Companion.getStringFromValue(SportEvent.Companion.getByValue(shortVal))
+                SportEvent.getStringFromValue(SportEvent.getByValue(shortVal))
 
             Type.ACTIVITY -> retVal =
-                Activity.Companion.getStringFromValue(Activity.Companion.getByValue(shortVal))
+                Activity.getStringFromValue(Activity.getByValue(shortVal))
 
             Type.INTENSITY -> retVal =
-                Intensity.Companion.getStringFromValue(Intensity.Companion.getByValue(shortVal))
+                Intensity.getStringFromValue(Intensity.getByValue(shortVal))
 
-            Type.SESSION_TRIGGER -> retVal = SessionTrigger.Companion.getStringFromValue(
-                SessionTrigger.Companion.getByValue(shortVal)
+            Type.SESSION_TRIGGER -> retVal = SessionTrigger.getStringFromValue(
+                SessionTrigger.getByValue(shortVal)
             )
 
-            Type.AUTOLAP_TRIGGER -> retVal = AutolapTrigger.Companion.getStringFromValue(
-                AutolapTrigger.Companion.getByValue(shortVal)
+            Type.AUTOLAP_TRIGGER -> retVal = AutolapTrigger.getStringFromValue(
+                AutolapTrigger.getByValue(shortVal)
             )
 
             Type.LAP_TRIGGER -> retVal =
-                LapTrigger.Companion.getStringFromValue(LapTrigger.Companion.getByValue(shortVal))
+                LapTrigger.getStringFromValue(LapTrigger.getByValue(shortVal))
 
             Type.TIME_MODE -> retVal =
-                TimeMode.Companion.getStringFromValue(TimeMode.Companion.getByValue(shortVal))
+                TimeMode.getStringFromValue(TimeMode.getByValue(shortVal))
 
-            Type.BACKLIGHT_MODE -> retVal = BacklightMode.Companion.getStringFromValue(
-                BacklightMode.Companion.getByValue(shortVal)
+            Type.BACKLIGHT_MODE -> retVal = BacklightMode.getStringFromValue(
+                BacklightMode.getByValue(shortVal)
             )
 
             Type.DATE_MODE -> retVal =
-                DateMode.Companion.getStringFromValue(DateMode.Companion.getByValue(shortVal))
+                DateMode.getStringFromValue(DateMode.getByValue(shortVal))
 
             Type.BACKLIGHT_TIMEOUT -> retVal =
                 BacklightTimeout.getStringFromValue(enumVal.toShort())
 
             Type.EVENT -> retVal =
-                Event.Companion.getStringFromValue(Event.Companion.getByValue(shortVal))
+                Event.getStringFromValue(Event.getByValue(shortVal))
 
             Type.EVENT_TYPE -> retVal =
-                EventType.Companion.getStringFromValue(EventType.Companion.getByValue(shortVal))
+                EventType.getStringFromValue(EventType.getByValue(shortVal))
 
             Type.TIMER_TRIGGER -> retVal =
-                TimerTrigger.Companion.getStringFromValue(TimerTrigger.Companion.getByValue(shortVal))
+                TimerTrigger.getStringFromValue(TimerTrigger.getByValue(shortVal))
 
             Type.FITNESS_EQUIPMENT_STATE -> retVal =
-                FitnessEquipmentState.Companion.getStringFromValue(
-                    FitnessEquipmentState.Companion.getByValue(shortVal)
+                FitnessEquipmentState.getStringFromValue(
+                    FitnessEquipmentState.getByValue(shortVal)
                 )
 
             Type.TONE -> retVal =
-                Tone.Companion.getStringFromValue(Tone.Companion.getByValue(shortVal))
+                Tone.getStringFromValue(Tone.getByValue(shortVal))
 
             Type.AUTOSCROLL -> retVal =
-                Autoscroll.Companion.getStringFromValue(Autoscroll.Companion.getByValue(shortVal))
+                Autoscroll.getStringFromValue(Autoscroll.getByValue(shortVal))
 
-            Type.ACTIVITY_CLASS -> retVal = ActivityClass.Companion.getStringFromValue(
-                ActivityClass.Companion.getByValue(shortVal)
+            Type.ACTIVITY_CLASS -> retVal = ActivityClass.getStringFromValue(
+                ActivityClass.getByValue(shortVal)
             )
 
             Type.HR_ZONE_CALC -> retVal =
-                HrZoneCalc.Companion.getStringFromValue(HrZoneCalc.Companion.getByValue(shortVal))
+                HrZoneCalc.getStringFromValue(HrZoneCalc.getByValue(shortVal))
 
             Type.PWR_ZONE_CALC -> retVal =
-                PwrZoneCalc.Companion.getStringFromValue(PwrZoneCalc.Companion.getByValue(shortVal))
+                PwrZoneCalc.getStringFromValue(PwrZoneCalc.getByValue(shortVal))
 
-            Type.WKT_STEP_DURATION -> retVal = WktStepDuration.Companion.getStringFromValue(
-                WktStepDuration.Companion.getByValue(shortVal)
+            Type.WKT_STEP_DURATION -> retVal = WktStepDuration.getStringFromValue(
+                WktStepDuration.getByValue(shortVal)
             )
 
-            Type.WKT_STEP_TARGET -> retVal = WktStepTarget.Companion.getStringFromValue(
-                WktStepTarget.Companion.getByValue(shortVal)
+            Type.WKT_STEP_TARGET -> retVal = WktStepTarget.getStringFromValue(
+                WktStepTarget.getByValue(shortVal)
             )
 
             Type.GOAL -> retVal =
-                Goal.Companion.getStringFromValue(Goal.Companion.getByValue(shortVal))
+                Goal.getStringFromValue(Goal.getByValue(shortVal))
 
-            Type.GOAL_RECURRENCE -> retVal = GoalRecurrence.Companion.getStringFromValue(
-                GoalRecurrence.Companion.getByValue(shortVal)
+            Type.GOAL_RECURRENCE -> retVal = GoalRecurrence.getStringFromValue(
+                GoalRecurrence.getByValue(shortVal)
             )
 
             Type.GOAL_SOURCE -> retVal =
-                GoalSource.Companion.getStringFromValue(GoalSource.Companion.getByValue(shortVal))
+                GoalSource.getStringFromValue(GoalSource.getByValue(shortVal))
 
             Type.SCHEDULE -> retVal =
-                Schedule.Companion.getStringFromValue(Schedule.Companion.getByValue(shortVal))
+                Schedule.getStringFromValue(Schedule.getByValue(shortVal))
 
             Type.COURSE_POINT -> retVal =
-                CoursePoint.Companion.getStringFromValue(CoursePoint.Companion.getByValue(shortVal))
+                CoursePoint.getStringFromValue(CoursePoint.getByValue(shortVal))
 
             Type.MANUFACTURER -> retVal = Manufacturer.getStringFromValue(enumVal.toInt())
             Type.GARMIN_PRODUCT -> retVal = GarminProduct.getStringFromValue(enumVal.toInt())
@@ -191,37 +191,37 @@ object Profile {
                 AntplusDeviceType.getStringFromValue(enumVal.toShort())
 
             Type.ANT_NETWORK -> retVal =
-                AntNetwork.Companion.getStringFromValue(AntNetwork.Companion.getByValue(shortVal))
+                AntNetwork.getStringFromValue(AntNetwork.getByValue(shortVal))
 
             Type.WORKOUT_CAPABILITIES -> retVal = WorkoutCapabilities.getStringFromValue(enumVal)
             Type.BATTERY_STATUS -> retVal = BatteryStatus.getStringFromValue(enumVal.toShort())
             Type.HR_TYPE -> retVal =
-                HrType.Companion.getStringFromValue(HrType.Companion.getByValue(shortVal))
+                HrType.getStringFromValue(HrType.getByValue(shortVal))
 
             Type.COURSE_CAPABILITIES -> retVal = CourseCapabilities.getStringFromValue(enumVal)
             Type.WEIGHT -> retVal = Weight.getStringFromValue(enumVal.toInt())
             Type.WORKOUT_HR -> retVal = WorkoutHr.getStringFromValue(enumVal)
             Type.WORKOUT_POWER -> retVal = WorkoutPower.getStringFromValue(enumVal)
             Type.BP_STATUS -> retVal =
-                BpStatus.Companion.getStringFromValue(BpStatus.Companion.getByValue(shortVal))
+                BpStatus.getStringFromValue(BpStatus.getByValue(shortVal))
 
             Type.USER_LOCAL_ID -> retVal = UserLocalId.getStringFromValue(enumVal.toInt())
             Type.SWIM_STROKE -> retVal =
-                SwimStroke.Companion.getStringFromValue(SwimStroke.Companion.getByValue(shortVal))
+                SwimStroke.getStringFromValue(SwimStroke.getByValue(shortVal))
 
             Type.ACTIVITY_TYPE -> retVal =
-                ActivityType.Companion.getStringFromValue(ActivityType.Companion.getByValue(shortVal))
+                ActivityType.getStringFromValue(ActivityType.getByValue(shortVal))
 
-            Type.ACTIVITY_SUBTYPE -> retVal = ActivitySubtype.Companion.getStringFromValue(
-                ActivitySubtype.Companion.getByValue(shortVal)
+            Type.ACTIVITY_SUBTYPE -> retVal = ActivitySubtype.getStringFromValue(
+                ActivitySubtype.getByValue(shortVal)
             )
 
-            Type.ACTIVITY_LEVEL -> retVal = ActivityLevel.Companion.getStringFromValue(
-                ActivityLevel.Companion.getByValue(shortVal)
+            Type.ACTIVITY_LEVEL -> retVal = ActivityLevel.getStringFromValue(
+                ActivityLevel.getByValue(shortVal)
             )
 
             Type.SIDE -> retVal =
-                Side.Companion.getStringFromValue(Side.Companion.getByValue(shortVal))
+                Side.getStringFromValue(Side.getByValue(shortVal))
 
             Type.LEFT_RIGHT_BALANCE -> retVal =
                 LeftRightBalance.getStringFromValue(enumVal.toShort())
@@ -230,135 +230,135 @@ object Profile {
                 LeftRightBalance100.getStringFromValue(enumVal.toInt())
 
             Type.LENGTH_TYPE -> retVal =
-                LengthType.Companion.getStringFromValue(LengthType.Companion.getByValue(shortVal))
+                LengthType.getStringFromValue(LengthType.getByValue(shortVal))
 
             Type.DAY_OF_WEEK -> retVal =
-                DayOfWeek.Companion.getStringFromValue(DayOfWeek.Companion.getByValue(shortVal))
+                DayOfWeek.getStringFromValue(DayOfWeek.getByValue(shortVal))
 
             Type.CONNECTIVITY_CAPABILITIES -> retVal =
                 ConnectivityCapabilities.getStringFromValue(enumVal)
 
-            Type.WEATHER_REPORT -> retVal = WeatherReport.Companion.getStringFromValue(
-                WeatherReport.Companion.getByValue(shortVal)
+            Type.WEATHER_REPORT -> retVal = WeatherReport.getStringFromValue(
+                WeatherReport.getByValue(shortVal)
             )
 
-            Type.WEATHER_STATUS -> retVal = WeatherStatus.Companion.getStringFromValue(
-                WeatherStatus.Companion.getByValue(shortVal)
+            Type.WEATHER_STATUS -> retVal = WeatherStatus.getStringFromValue(
+                WeatherStatus.getByValue(shortVal)
             )
 
-            Type.WEATHER_SEVERITY -> retVal = WeatherSeverity.Companion.getStringFromValue(
-                WeatherSeverity.Companion.getByValue(shortVal)
+            Type.WEATHER_SEVERITY -> retVal = WeatherSeverity.getStringFromValue(
+                WeatherSeverity.getByValue(shortVal)
             )
 
-            Type.WEATHER_SEVERE_TYPE -> retVal = WeatherSevereType.Companion.getStringFromValue(
-                WeatherSevereType.Companion.getByValue(shortVal)
+            Type.WEATHER_SEVERE_TYPE -> retVal = WeatherSevereType.getStringFromValue(
+                WeatherSevereType.getByValue(shortVal)
             )
 
             Type.TIME_INTO_DAY -> retVal = TimeIntoDay.getStringFromValue(enumVal)
             Type.LOCALTIME_INTO_DAY -> retVal = LocaltimeIntoDay.getStringFromValue(enumVal)
             Type.STROKE_TYPE -> retVal =
-                StrokeType.Companion.getStringFromValue(StrokeType.Companion.getByValue(shortVal))
+                StrokeType.getStringFromValue(StrokeType.getByValue(shortVal))
 
             Type.BODY_LOCATION -> retVal =
-                BodyLocation.Companion.getStringFromValue(BodyLocation.Companion.getByValue(shortVal))
+                BodyLocation.getStringFromValue(BodyLocation.getByValue(shortVal))
 
-            Type.SEGMENT_LAP_STATUS -> retVal = SegmentLapStatus.Companion.getStringFromValue(
-                SegmentLapStatus.Companion.getByValue(shortVal)
+            Type.SEGMENT_LAP_STATUS -> retVal = SegmentLapStatus.getStringFromValue(
+                SegmentLapStatus.getByValue(shortVal)
             )
 
             Type.SEGMENT_LEADERBOARD_TYPE -> retVal =
-                SegmentLeaderboardType.Companion.getStringFromValue(
-                    SegmentLeaderboardType.Companion.getByValue(shortVal)
+                SegmentLeaderboardType.getStringFromValue(
+                    SegmentLeaderboardType.getByValue(shortVal)
                 )
 
-            Type.SEGMENT_DELETE_STATUS -> retVal = SegmentDeleteStatus.Companion.getStringFromValue(
-                SegmentDeleteStatus.Companion.getByValue(shortVal)
+            Type.SEGMENT_DELETE_STATUS -> retVal = SegmentDeleteStatus.getStringFromValue(
+                SegmentDeleteStatus.getByValue(shortVal)
             )
 
             Type.SEGMENT_SELECTION_TYPE -> retVal =
-                SegmentSelectionType.Companion.getStringFromValue(
-                    SegmentSelectionType.Companion.getByValue(shortVal)
+                SegmentSelectionType.getStringFromValue(
+                    SegmentSelectionType.getByValue(shortVal)
                 )
 
             Type.SOURCE_TYPE -> retVal =
-                SourceType.Companion.getStringFromValue(SourceType.Companion.getByValue(shortVal))
+                SourceType.getStringFromValue(SourceType.getByValue(shortVal))
 
             Type.LOCAL_DEVICE_TYPE -> retVal = LocalDeviceType.getStringFromValue(enumVal.toShort())
             Type.BLE_DEVICE_TYPE -> retVal = BleDeviceType.getStringFromValue(enumVal.toShort())
             Type.ANT_CHANNEL_ID -> retVal = AntChannelId.getStringFromValue(enumVal)
-            Type.DISPLAY_ORIENTATION -> retVal = DisplayOrientation.Companion.getStringFromValue(
-                DisplayOrientation.Companion.getByValue(shortVal)
+            Type.DISPLAY_ORIENTATION -> retVal = DisplayOrientation.getStringFromValue(
+                DisplayOrientation.getByValue(shortVal)
             )
 
-            Type.WORKOUT_EQUIPMENT -> retVal = WorkoutEquipment.Companion.getStringFromValue(
-                WorkoutEquipment.Companion.getByValue(shortVal)
+            Type.WORKOUT_EQUIPMENT -> retVal = WorkoutEquipment.getStringFromValue(
+                WorkoutEquipment.getByValue(shortVal)
             )
 
-            Type.WATCHFACE_MODE -> retVal = WatchfaceMode.Companion.getStringFromValue(
-                WatchfaceMode.Companion.getByValue(shortVal)
+            Type.WATCHFACE_MODE -> retVal = WatchfaceMode.getStringFromValue(
+                WatchfaceMode.getByValue(shortVal)
             )
 
             Type.DIGITAL_WATCHFACE_LAYOUT -> retVal =
-                DigitalWatchfaceLayout.Companion.getStringFromValue(
-                    DigitalWatchfaceLayout.Companion.getByValue(shortVal)
+                DigitalWatchfaceLayout.getStringFromValue(
+                    DigitalWatchfaceLayout.getByValue(shortVal)
                 )
 
             Type.ANALOG_WATCHFACE_LAYOUT -> retVal =
-                AnalogWatchfaceLayout.Companion.getStringFromValue(
-                    AnalogWatchfaceLayout.Companion.getByValue(shortVal)
+                AnalogWatchfaceLayout.getStringFromValue(
+                    AnalogWatchfaceLayout.getByValue(shortVal)
                 )
 
-            Type.RIDER_POSITION_TYPE -> retVal = RiderPositionType.Companion.getStringFromValue(
-                RiderPositionType.Companion.getByValue(shortVal)
+            Type.RIDER_POSITION_TYPE -> retVal = RiderPositionType.getStringFromValue(
+                RiderPositionType.getByValue(shortVal)
             )
 
-            Type.POWER_PHASE_TYPE -> retVal = PowerPhaseType.Companion.getStringFromValue(
-                PowerPhaseType.Companion.getByValue(shortVal)
+            Type.POWER_PHASE_TYPE -> retVal = PowerPhaseType.getStringFromValue(
+                PowerPhaseType.getByValue(shortVal)
             )
 
-            Type.CAMERA_EVENT_TYPE -> retVal = CameraEventType.Companion.getStringFromValue(
-                CameraEventType.Companion.getByValue(shortVal)
+            Type.CAMERA_EVENT_TYPE -> retVal = CameraEventType.getStringFromValue(
+                CameraEventType.getByValue(shortVal)
             )
 
             Type.SENSOR_TYPE -> retVal =
-                SensorType.Companion.getStringFromValue(SensorType.Companion.getByValue(shortVal))
+                SensorType.getStringFromValue(SensorType.getByValue(shortVal))
 
             Type.BIKE_LIGHT_NETWORK_CONFIG_TYPE -> retVal =
-                BikeLightNetworkConfigType.Companion.getStringFromValue(
-                    BikeLightNetworkConfigType.Companion.getByValue(shortVal)
+                BikeLightNetworkConfigType.getStringFromValue(
+                    BikeLightNetworkConfigType.getByValue(shortVal)
                 )
 
             Type.COMM_TIMEOUT_TYPE -> retVal = CommTimeoutType.getStringFromValue(enumVal.toInt())
             Type.CAMERA_ORIENTATION_TYPE -> retVal =
-                CameraOrientationType.Companion.getStringFromValue(
-                    CameraOrientationType.Companion.getByValue(shortVal)
+                CameraOrientationType.getStringFromValue(
+                    CameraOrientationType.getByValue(shortVal)
                 )
 
-            Type.ATTITUDE_STAGE -> retVal = AttitudeStage.Companion.getStringFromValue(
-                AttitudeStage.Companion.getByValue(shortVal)
+            Type.ATTITUDE_STAGE -> retVal = AttitudeStage.getStringFromValue(
+                AttitudeStage.getByValue(shortVal)
             )
 
             Type.ATTITUDE_VALIDITY -> retVal = AttitudeValidity.getStringFromValue(enumVal.toInt())
-            Type.AUTO_SYNC_FREQUENCY -> retVal = AutoSyncFrequency.Companion.getStringFromValue(
-                AutoSyncFrequency.Companion.getByValue(shortVal)
+            Type.AUTO_SYNC_FREQUENCY -> retVal = AutoSyncFrequency.getStringFromValue(
+                AutoSyncFrequency.getByValue(shortVal)
             )
 
             Type.EXD_LAYOUT -> retVal =
-                ExdLayout.Companion.getStringFromValue(ExdLayout.Companion.getByValue(shortVal))
+                ExdLayout.getStringFromValue(ExdLayout.getByValue(shortVal))
 
-            Type.EXD_DISPLAY_TYPE -> retVal = ExdDisplayType.Companion.getStringFromValue(
-                ExdDisplayType.Companion.getByValue(shortVal)
+            Type.EXD_DISPLAY_TYPE -> retVal = ExdDisplayType.getStringFromValue(
+                ExdDisplayType.getByValue(shortVal)
             )
 
             Type.EXD_DATA_UNITS -> retVal =
-                ExdDataUnits.Companion.getStringFromValue(ExdDataUnits.Companion.getByValue(shortVal))
+                ExdDataUnits.getStringFromValue(ExdDataUnits.getByValue(shortVal))
 
-            Type.EXD_QUALIFIERS -> retVal = ExdQualifiers.Companion.getStringFromValue(
-                ExdQualifiers.Companion.getByValue(shortVal)
+            Type.EXD_QUALIFIERS -> retVal = ExdQualifiers.getStringFromValue(
+                ExdQualifiers.getByValue(shortVal)
             )
 
-            Type.EXD_DESCRIPTORS -> retVal = ExdDescriptors.Companion.getStringFromValue(
-                ExdDescriptors.Companion.getByValue(shortVal)
+            Type.EXD_DESCRIPTORS -> retVal = ExdDescriptors.getStringFromValue(
+                ExdDescriptors.getByValue(shortVal)
             )
 
             Type.AUTO_ACTIVITY_DETECT -> retVal = AutoActivityDetect.getStringFromValue(enumVal)
@@ -367,15 +367,15 @@ object Profile {
 
             Type.FIT_BASE_TYPE -> retVal = FitBaseType.getStringFromValue(enumVal.toShort())
             Type.TURN_TYPE -> retVal =
-                TurnType.Companion.getStringFromValue(TurnType.Companion.getByValue(shortVal))
+                TurnType.getStringFromValue(TurnType.getByValue(shortVal))
 
             Type.BIKE_LIGHT_BEAM_ANGLE_MODE -> retVal =
                 BikeLightBeamAngleMode.getStringFromValue(enumVal.toShort())
 
             Type.FIT_BASE_UNIT -> retVal = FitBaseUnit.getStringFromValue(enumVal.toInt())
             Type.SET_TYPE -> retVal = SetType.getStringFromValue(enumVal.toShort())
-            Type.MAX_MET_CATEGORY -> retVal = MaxMetCategory.Companion.getStringFromValue(
-                MaxMetCategory.Companion.getByValue(shortVal)
+            Type.MAX_MET_CATEGORY -> retVal = MaxMetCategory.getStringFromValue(
+                MaxMetCategory.getByValue(shortVal)
             )
 
             Type.EXERCISE_CATEGORY -> retVal = ExerciseCategory.getStringFromValue(enumVal.toInt())
@@ -509,94 +509,94 @@ object Profile {
                 RunIndoorExerciseName.getStringFromValue(enumVal.toInt())
 
             Type.WATER_TYPE -> retVal =
-                WaterType.Companion.getStringFromValue(WaterType.Companion.getByValue(shortVal))
+                WaterType.getStringFromValue(WaterType.getByValue(shortVal))
 
-            Type.TISSUE_MODEL_TYPE -> retVal = TissueModelType.Companion.getStringFromValue(
-                TissueModelType.Companion.getByValue(shortVal)
+            Type.TISSUE_MODEL_TYPE -> retVal = TissueModelType.getStringFromValue(
+                TissueModelType.getByValue(shortVal)
             )
 
-            Type.DIVE_GAS_STATUS -> retVal = DiveGasStatus.Companion.getStringFromValue(
-                DiveGasStatus.Companion.getByValue(shortVal)
+            Type.DIVE_GAS_STATUS -> retVal = DiveGasStatus.getStringFromValue(
+                DiveGasStatus.getByValue(shortVal)
             )
 
             Type.DIVE_ALERT -> retVal =
-                DiveAlert.Companion.getStringFromValue(DiveAlert.Companion.getByValue(shortVal))
+                DiveAlert.getStringFromValue(DiveAlert.getByValue(shortVal))
 
-            Type.DIVE_ALARM_TYPE -> retVal = DiveAlarmType.Companion.getStringFromValue(
-                DiveAlarmType.Companion.getByValue(shortVal)
+            Type.DIVE_ALARM_TYPE -> retVal = DiveAlarmType.getStringFromValue(
+                DiveAlarmType.getByValue(shortVal)
             )
 
-            Type.DIVE_BACKLIGHT_MODE -> retVal = DiveBacklightMode.Companion.getStringFromValue(
-                DiveBacklightMode.Companion.getByValue(shortVal)
+            Type.DIVE_BACKLIGHT_MODE -> retVal = DiveBacklightMode.getStringFromValue(
+                DiveBacklightMode.getByValue(shortVal)
             )
 
             Type.SLEEP_LEVEL -> retVal =
-                SleepLevel.Companion.getStringFromValue(SleepLevel.Companion.getByValue(shortVal))
+                SleepLevel.getStringFromValue(SleepLevel.getByValue(shortVal))
 
-            Type.SPO2_MEASUREMENT_TYPE -> retVal = Spo2MeasurementType.Companion.getStringFromValue(
-                Spo2MeasurementType.Companion.getByValue(shortVal)
+            Type.SPO2_MEASUREMENT_TYPE -> retVal = Spo2MeasurementType.getStringFromValue(
+                Spo2MeasurementType.getByValue(shortVal)
             )
 
             Type.CCR_SETPOINT_SWITCH_MODE -> retVal =
-                CcrSetpointSwitchMode.Companion.getStringFromValue(
-                    CcrSetpointSwitchMode.Companion.getByValue(shortVal)
+                CcrSetpointSwitchMode.getStringFromValue(
+                    CcrSetpointSwitchMode.getByValue(shortVal)
                 )
 
             Type.DIVE_GAS_MODE -> retVal =
-                DiveGasMode.Companion.getStringFromValue(DiveGasMode.Companion.getByValue(shortVal))
+                DiveGasMode.getStringFromValue(DiveGasMode.getByValue(shortVal))
 
-            Type.PROJECTILE_TYPE -> retVal = ProjectileType.Companion.getStringFromValue(
-                ProjectileType.Companion.getByValue(shortVal)
+            Type.PROJECTILE_TYPE -> retVal = ProjectileType.getStringFromValue(
+                ProjectileType.getByValue(shortVal)
             )
 
             Type.FAVERO_PRODUCT -> retVal = FaveroProduct.getStringFromValue(enumVal.toInt())
             Type.SPLIT_TYPE -> retVal =
-                SplitType.Companion.getStringFromValue(SplitType.Companion.getByValue(shortVal))
+                SplitType.getStringFromValue(SplitType.getByValue(shortVal))
 
-            Type.CLIMB_PRO_EVENT -> retVal = ClimbProEvent.Companion.getStringFromValue(
-                ClimbProEvent.Companion.getByValue(shortVal)
+            Type.CLIMB_PRO_EVENT -> retVal = ClimbProEvent.getStringFromValue(
+                ClimbProEvent.getByValue(shortVal)
             )
 
             Type.GAS_CONSUMPTION_RATE_TYPE -> retVal =
-                GasConsumptionRateType.Companion.getStringFromValue(
-                    GasConsumptionRateType.Companion.getByValue(shortVal)
+                GasConsumptionRateType.getStringFromValue(
+                    GasConsumptionRateType.getByValue(shortVal)
                 )
 
-            Type.TAP_SENSITIVITY -> retVal = TapSensitivity.Companion.getStringFromValue(
-                TapSensitivity.Companion.getByValue(shortVal)
+            Type.TAP_SENSITIVITY -> retVal = TapSensitivity.getStringFromValue(
+                TapSensitivity.getByValue(shortVal)
             )
 
             Type.RADAR_THREAT_LEVEL_TYPE -> retVal =
-                RadarThreatLevelType.Companion.getStringFromValue(
-                    RadarThreatLevelType.Companion.getByValue(shortVal)
+                RadarThreatLevelType.getStringFromValue(
+                    RadarThreatLevelType.getByValue(shortVal)
                 )
 
             Type.SLEEP_DISRUPTION_SEVERITY -> retVal =
-                SleepDisruptionSeverity.Companion.getStringFromValue(
-                    SleepDisruptionSeverity.Companion.getByValue(shortVal)
+                SleepDisruptionSeverity.getStringFromValue(
+                    SleepDisruptionSeverity.getByValue(shortVal)
                 )
 
-            Type.NAP_PERIOD_FEEDBACK -> retVal = NapPeriodFeedback.Companion.getStringFromValue(
-                NapPeriodFeedback.Companion.getByValue(shortVal)
+            Type.NAP_PERIOD_FEEDBACK -> retVal = NapPeriodFeedback.getStringFromValue(
+                NapPeriodFeedback.getByValue(shortVal)
             )
 
             Type.NAP_SOURCE -> retVal =
-                NapSource.Companion.getStringFromValue(NapSource.Companion.getByValue(shortVal))
+                NapSource.getStringFromValue(NapSource.getByValue(shortVal))
 
-            Type.MAX_MET_SPEED_SOURCE -> retVal = MaxMetSpeedSource.Companion.getStringFromValue(
-                MaxMetSpeedSource.Companion.getByValue(shortVal)
+            Type.MAX_MET_SPEED_SOURCE -> retVal = MaxMetSpeedSource.getStringFromValue(
+                MaxMetSpeedSource.getByValue(shortVal)
             )
 
             Type.MAX_MET_HEART_RATE_SOURCE -> retVal =
-                MaxMetHeartRateSource.Companion.getStringFromValue(
-                    MaxMetHeartRateSource.Companion.getByValue(shortVal)
+                MaxMetHeartRateSource.getStringFromValue(
+                    MaxMetHeartRateSource.getByValue(shortVal)
                 )
 
             Type.HRV_STATUS -> retVal =
-                HrvStatus.Companion.getStringFromValue(HrvStatus.Companion.getByValue(shortVal))
+                HrvStatus.getStringFromValue(HrvStatus.getByValue(shortVal))
 
-            Type.NO_FLY_TIME_MODE -> retVal = NoFlyTimeMode.Companion.getStringFromValue(
-                NoFlyTimeMode.Companion.getByValue(shortVal)
+            Type.NO_FLY_TIME_MODE -> retVal = NoFlyTimeMode.getStringFromValue(
+                NoFlyTimeMode.getByValue(shortVal)
             )
 
             else -> {}
@@ -616,81 +616,88 @@ object Profile {
         const val FILE_ID_MESG_PRODUCT_FIELD_FAVERO_PRODUCT: Int = 0
         const val FILE_ID_MESG_PRODUCT_FIELD_GARMIN_PRODUCT: Int = 1
         const val FILE_ID_MESG_PRODUCT_FIELD_SUBFIELDS: Int = 2
-        val FILE_ID_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val FILE_ID_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val FILE_ID_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val FILE_ID_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // slave_device message, product field
         const val SLAVE_DEVICE_MESG_PRODUCT_FIELD_FAVERO_PRODUCT: Int = 0
         const val SLAVE_DEVICE_MESG_PRODUCT_FIELD_GARMIN_PRODUCT: Int = 1
         const val SLAVE_DEVICE_MESG_PRODUCT_FIELD_SUBFIELDS: Int = 2
-        val SLAVE_DEVICE_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
+        const val SLAVE_DEVICE_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val SLAVE_DEVICE_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val SLAVE_DEVICE_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // mesg_capabilities message, count field
         const val MESG_CAPABILITIES_MESG_COUNT_FIELD_NUM_PER_FILE: Int = 0
         const val MESG_CAPABILITIES_MESG_COUNT_FIELD_MAX_PER_FILE: Int = 1
         const val MESG_CAPABILITIES_MESG_COUNT_FIELD_MAX_PER_FILE_TYPE: Int = 2
         const val MESG_CAPABILITIES_MESG_COUNT_FIELD_SUBFIELDS: Int = 3
-        val MESG_CAPABILITIES_MESG_COUNT_FIELD_ACTIVE_SUBFIELD: Int =
+        const val MESG_CAPABILITIES_MESG_COUNT_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val MESG_CAPABILITIES_MESG_COUNT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val MESG_CAPABILITIES_MESG_COUNT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // watchface_settings message, layout field
         const val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_DIGITAL_LAYOUT: Int = 0
         const val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_ANALOG_LAYOUT: Int = 1
         const val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_SUBFIELDS: Int = 2
-        val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val WATCHFACE_SETTINGS_MESG_LAYOUT_FIELD_MAIN_FIELD: Int =
+            Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // dive_settings message, heart_rate_source field
         const val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_HEART_RATE_ANTPLUS_DEVICE_TYPE: Int = 0
         const val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_HEART_RATE_LOCAL_DEVICE_TYPE: Int = 1
         const val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_SUBFIELDS: Int = 2
-        val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_ACTIVE_SUBFIELD: Int =
+        const val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_MAIN_FIELD: Int =
+        const val DIVE_SETTINGS_MESG_HEART_RATE_SOURCE_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // session message, total_cycles field
         const val SESSION_MESG_TOTAL_CYCLES_FIELD_TOTAL_STRIDES: Int = 0
         const val SESSION_MESG_TOTAL_CYCLES_FIELD_TOTAL_STROKES: Int = 1
         const val SESSION_MESG_TOTAL_CYCLES_FIELD_SUBFIELDS: Int = 2
-        val SESSION_MESG_TOTAL_CYCLES_FIELD_ACTIVE_SUBFIELD: Int =
+        const val SESSION_MESG_TOTAL_CYCLES_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val SESSION_MESG_TOTAL_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val SESSION_MESG_TOTAL_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // session message, avg_cadence field
         const val SESSION_MESG_AVG_CADENCE_FIELD_AVG_RUNNING_CADENCE: Int = 0
         const val SESSION_MESG_AVG_CADENCE_FIELD_SUBFIELDS: Int = 1
-        val SESSION_MESG_AVG_CADENCE_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val SESSION_MESG_AVG_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val SESSION_MESG_AVG_CADENCE_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val SESSION_MESG_AVG_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // session message, max_cadence field
         const val SESSION_MESG_MAX_CADENCE_FIELD_MAX_RUNNING_CADENCE: Int = 0
         const val SESSION_MESG_MAX_CADENCE_FIELD_SUBFIELDS: Int = 1
-        val SESSION_MESG_MAX_CADENCE_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val SESSION_MESG_MAX_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val SESSION_MESG_MAX_CADENCE_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val SESSION_MESG_MAX_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // lap message, total_cycles field
         const val LAP_MESG_TOTAL_CYCLES_FIELD_TOTAL_STRIDES: Int = 0
         const val LAP_MESG_TOTAL_CYCLES_FIELD_TOTAL_STROKES: Int = 1
         const val LAP_MESG_TOTAL_CYCLES_FIELD_SUBFIELDS: Int = 2
-        val LAP_MESG_TOTAL_CYCLES_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val LAP_MESG_TOTAL_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val LAP_MESG_TOTAL_CYCLES_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val LAP_MESG_TOTAL_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // lap message, avg_cadence field
         const val LAP_MESG_AVG_CADENCE_FIELD_AVG_RUNNING_CADENCE: Int = 0
         const val LAP_MESG_AVG_CADENCE_FIELD_SUBFIELDS: Int = 1
-        val LAP_MESG_AVG_CADENCE_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val LAP_MESG_AVG_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val LAP_MESG_AVG_CADENCE_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val LAP_MESG_AVG_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // lap message, max_cadence field
         const val LAP_MESG_MAX_CADENCE_FIELD_MAX_RUNNING_CADENCE: Int = 0
         const val LAP_MESG_MAX_CADENCE_FIELD_SUBFIELDS: Int = 1
-        val LAP_MESG_MAX_CADENCE_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val LAP_MESG_MAX_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val LAP_MESG_MAX_CADENCE_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val LAP_MESG_MAX_CADENCE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // event message, data field
         const val EVENT_MESG_DATA_FIELD_TIMER_TRIGGER: Int = 0
@@ -717,15 +724,15 @@ object Profile {
         const val EVENT_MESG_DATA_FIELD_AUTO_ACTIVITY_DETECT_DURATION: Int = 21
         const val EVENT_MESG_DATA_FIELD_RADAR_THREAT_ALERT: Int = 22
         const val EVENT_MESG_DATA_FIELD_SUBFIELDS: Int = 23
-        val EVENT_MESG_DATA_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val EVENT_MESG_DATA_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val EVENT_MESG_DATA_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val EVENT_MESG_DATA_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // event message, start_timestamp field
         const val EVENT_MESG_START_TIMESTAMP_FIELD_AUTO_ACTIVITY_DETECT_START_TIMESTAMP: Int = 0
         const val EVENT_MESG_START_TIMESTAMP_FIELD_SUBFIELDS: Int = 1
-        val EVENT_MESG_START_TIMESTAMP_FIELD_ACTIVE_SUBFIELD: Int =
+        const val EVENT_MESG_START_TIMESTAMP_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val EVENT_MESG_START_TIMESTAMP_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val EVENT_MESG_START_TIMESTAMP_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // device_info message, device_type field
         const val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_BLE_DEVICE_TYPE: Int = 0
@@ -733,48 +740,50 @@ object Profile {
         const val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_ANT_DEVICE_TYPE: Int = 2
         const val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_LOCAL_DEVICE_TYPE: Int = 3
         const val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_SUBFIELDS: Int = 4
-        val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_ACTIVE_SUBFIELD: Int =
+        const val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val DEVICE_INFO_MESG_DEVICE_TYPE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // device_info message, product field
         const val DEVICE_INFO_MESG_PRODUCT_FIELD_FAVERO_PRODUCT: Int = 0
         const val DEVICE_INFO_MESG_PRODUCT_FIELD_GARMIN_PRODUCT: Int = 1
         const val DEVICE_INFO_MESG_PRODUCT_FIELD_SUBFIELDS: Int = 2
-        val DEVICE_INFO_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val DEVICE_INFO_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val DEVICE_INFO_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val DEVICE_INFO_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // training_file message, product field
         const val TRAINING_FILE_MESG_PRODUCT_FIELD_FAVERO_PRODUCT: Int = 0
         const val TRAINING_FILE_MESG_PRODUCT_FIELD_GARMIN_PRODUCT: Int = 1
         const val TRAINING_FILE_MESG_PRODUCT_FIELD_SUBFIELDS: Int = 2
-        val TRAINING_FILE_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
+        const val TRAINING_FILE_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val TRAINING_FILE_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val TRAINING_FILE_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // three_d_sensor_calibration message, calibration_factor field
         const val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_ACCEL_CAL_FACTOR: Int = 0
         const val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_GYRO_CAL_FACTOR: Int = 1
         const val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_SUBFIELDS: Int = 2
-        val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_ACTIVE_SUBFIELD: Int =
+        const val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_MAIN_FIELD: Int =
+        const val THREE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // one_d_sensor_calibration message, calibration_factor field
         const val ONE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_BARO_CAL_FACTOR: Int = 0
         const val ONE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_SUBFIELDS: Int = 1
-        val ONE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_ACTIVE_SUBFIELD: Int =
+        const val ONE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val ONE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_MAIN_FIELD: Int =
+        const val ONE_D_SENSOR_CALIBRATION_MESG_CALIBRATION_FACTOR_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // segment_lap message, total_cycles field
         const val SEGMENT_LAP_MESG_TOTAL_CYCLES_FIELD_TOTAL_STROKES: Int = 0
         const val SEGMENT_LAP_MESG_TOTAL_CYCLES_FIELD_SUBFIELDS: Int = 1
-        val SEGMENT_LAP_MESG_TOTAL_CYCLES_FIELD_ACTIVE_SUBFIELD: Int =
+        const val SEGMENT_LAP_MESG_TOTAL_CYCLES_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val SEGMENT_LAP_MESG_TOTAL_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val SEGMENT_LAP_MESG_TOTAL_CYCLES_FIELD_MAIN_FIELD: Int =
+            Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, duration_value field
         const val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_DURATION_TIME: Int = 0
@@ -785,9 +794,10 @@ object Profile {
         const val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_DURATION_POWER: Int = 5
         const val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_DURATION_REPS: Int = 6
         const val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_SUBFIELDS: Int = 7
-        val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val WORKOUT_STEP_MESG_DURATION_VALUE_FIELD_MAIN_FIELD: Int =
+            Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, target_value field
         const val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_TARGET_SPEED_ZONE: Int = 0
@@ -802,9 +812,10 @@ object Profile {
         const val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_REPEAT_POWER: Int = 9
         const val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_TARGET_STROKE_TYPE: Int = 10
         const val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_SUBFIELDS: Int = 11
-        val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val WORKOUT_STEP_MESG_TARGET_VALUE_FIELD_MAIN_FIELD: Int =
+            Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, custom_target_value_low field
         const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_CUSTOM_TARGET_SPEED_LOW: Int = 0
@@ -813,9 +824,9 @@ object Profile {
         const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_CUSTOM_TARGET_CADENCE_LOW: Int = 2
         const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_CUSTOM_TARGET_POWER_LOW: Int = 3
         const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_SUBFIELDS: Int = 4
-        val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_MAIN_FIELD: Int =
+        const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_LOW_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, custom_target_value_high field
@@ -826,9 +837,9 @@ object Profile {
             2
         const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_HIGH_FIELD_CUSTOM_TARGET_POWER_HIGH: Int = 3
         const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_HIGH_FIELD_SUBFIELDS: Int = 4
-        val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_HIGH_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_HIGH_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_HIGH_FIELD_MAIN_FIELD: Int =
+        const val WORKOUT_STEP_MESG_CUSTOM_TARGET_VALUE_HIGH_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, secondary_target_value field
@@ -842,9 +853,9 @@ object Profile {
         const val WORKOUT_STEP_MESG_SECONDARY_TARGET_VALUE_FIELD_SECONDARY_TARGET_STROKE_TYPE: Int =
             4
         const val WORKOUT_STEP_MESG_SECONDARY_TARGET_VALUE_FIELD_SUBFIELDS: Int = 5
-        val WORKOUT_STEP_MESG_SECONDARY_TARGET_VALUE_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_SECONDARY_TARGET_VALUE_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_SECONDARY_TARGET_VALUE_FIELD_MAIN_FIELD: Int =
+        const val WORKOUT_STEP_MESG_SECONDARY_TARGET_VALUE_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, secondary_custom_target_value_low field
@@ -857,9 +868,9 @@ object Profile {
         const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_LOW_FIELD_SECONDARY_CUSTOM_TARGET_POWER_LOW: Int =
             3
         const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_LOW_FIELD_SUBFIELDS: Int = 4
-        val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_LOW_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_LOW_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_LOW_FIELD_MAIN_FIELD: Int =
+        const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_LOW_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // workout_step message, secondary_custom_target_value_high field
@@ -872,24 +883,26 @@ object Profile {
         const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_HIGH_FIELD_SECONDARY_CUSTOM_TARGET_POWER_HIGH: Int =
             3
         const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_HIGH_FIELD_SUBFIELDS: Int = 4
-        val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_HIGH_FIELD_ACTIVE_SUBFIELD: Int =
+        const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_HIGH_FIELD_ACTIVE_SUBFIELD: Int =
             Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_HIGH_FIELD_MAIN_FIELD: Int =
+        const val WORKOUT_STEP_MESG_SECONDARY_CUSTOM_TARGET_VALUE_HIGH_FIELD_MAIN_FIELD: Int =
             Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // schedule message, product field
         const val SCHEDULE_MESG_PRODUCT_FIELD_FAVERO_PRODUCT: Int = 0
         const val SCHEDULE_MESG_PRODUCT_FIELD_GARMIN_PRODUCT: Int = 1
         const val SCHEDULE_MESG_PRODUCT_FIELD_SUBFIELDS: Int = 2
-        val SCHEDULE_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val SCHEDULE_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val SCHEDULE_MESG_PRODUCT_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val SCHEDULE_MESG_PRODUCT_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
 
         // monitoring message, cycles field
         const val MONITORING_MESG_CYCLES_FIELD_STEPS: Int = 0
         const val MONITORING_MESG_CYCLES_FIELD_STROKES: Int = 1
         const val MONITORING_MESG_CYCLES_FIELD_SUBFIELDS: Int = 2
-        val MONITORING_MESG_CYCLES_FIELD_ACTIVE_SUBFIELD: Int = Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
-        val MONITORING_MESG_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
+        const val MONITORING_MESG_CYCLES_FIELD_ACTIVE_SUBFIELD: Int =
+            Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD
+        const val MONITORING_MESG_CYCLES_FIELD_MAIN_FIELD: Int = Fit.SUBFIELD_INDEX_MAIN_FIELD
     }
 
     enum class Type {
@@ -1117,28 +1130,28 @@ object Profile {
         companion object {
             fun fromBaseType(baseType: Int): Type {
                 when (baseType) {
-                    Fit.BASE_TYPE_SINT8 -> return Type.SINT8
-                    Fit.BASE_TYPE_UINT8 -> return Type.UINT8
-                    Fit.BASE_TYPE_SINT16 -> return Type.SINT16
-                    Fit.BASE_TYPE_UINT16 -> return Type.UINT16
-                    Fit.BASE_TYPE_SINT32 -> return Type.SINT32
-                    Fit.BASE_TYPE_UINT32 -> return Type.UINT32
+                    Fit.BASE_TYPE_SINT8 -> return SINT8
+                    Fit.BASE_TYPE_UINT8 -> return UINT8
+                    Fit.BASE_TYPE_SINT16 -> return SINT16
+                    Fit.BASE_TYPE_UINT16 -> return UINT16
+                    Fit.BASE_TYPE_SINT32 -> return SINT32
+                    Fit.BASE_TYPE_UINT32 -> return UINT32
 
-                    Fit.BASE_TYPE_STRING -> return Type.STRING
+                    Fit.BASE_TYPE_STRING -> return STRING
 
-                    Fit.BASE_TYPE_FLOAT32 -> return Type.FLOAT32
-                    Fit.BASE_TYPE_FLOAT64 -> return Type.FLOAT64
+                    Fit.BASE_TYPE_FLOAT32 -> return FLOAT32
+                    Fit.BASE_TYPE_FLOAT64 -> return FLOAT64
 
-                    Fit.BASE_TYPE_UINT8Z -> return Type.UINT8Z
-                    Fit.BASE_TYPE_UINT16Z -> return Type.UINT16Z
-                    Fit.BASE_TYPE_UINT32Z -> return Type.UINT32Z
+                    Fit.BASE_TYPE_UINT8Z -> return UINT8Z
+                    Fit.BASE_TYPE_UINT16Z -> return UINT16Z
+                    Fit.BASE_TYPE_UINT32Z -> return UINT32Z
 
-                    Fit.BASE_TYPE_UINT64 -> return Type.UINT64
-                    Fit.BASE_TYPE_SINT64 -> return Type.SINT64
-                    Fit.BASE_TYPE_UINT64Z -> return Type.UINT64Z
+                    Fit.BASE_TYPE_UINT64 -> return UINT64
+                    Fit.BASE_TYPE_SINT64 -> return SINT64
+                    Fit.BASE_TYPE_UINT64Z -> return UINT64Z
 
-                    Fit.BASE_TYPE_ENUM -> return Type.ENUM
-                    else -> return Type.ENUM
+                    Fit.BASE_TYPE_ENUM -> return ENUM
+                    else -> return ENUM
                 }
             }
         }

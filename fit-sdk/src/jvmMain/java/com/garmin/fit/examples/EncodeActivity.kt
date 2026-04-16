@@ -33,11 +33,11 @@ import com.garmin.fit.SessionMesg
 import com.garmin.fit.Sport
 import com.garmin.fit.SubSport
 import com.garmin.fit.SwimStroke
-import java.util.Arrays
 import java.util.Date
 import java.util.Random
 import java.util.TimeZone
 import kotlin.math.abs
+import kotlin.math.roundToLong
 import kotlin.math.sin
 
 object EncodeActivity {
@@ -57,16 +57,16 @@ object EncodeActivity {
         val semiCirclesPerMeter = 107.173
         val filename = "ActivityEncodeRecipe.fit"
 
-        val messages: MutableList<Mesg?> = ArrayList<Mesg?>()
+        val messages = mutableListOf<Mesg>()
 
         // The starting timestamp for the activity
         val startTime = DateTime(Date())
 
         // Timer Events are a BEST PRACTICE for FIT ACTIVITY files
         val eventMesg = EventMesg()
-        eventMesg.setTimestamp(startTime)
-        eventMesg.setEvent(Event.TIMER)
-        eventMesg.setEventType(EventType.START)
+        eventMesg.timestamp = startTime
+        eventMesg.event = Event.TIMER
+        eventMesg.eventType = EventType.START
         messages.add(eventMesg)
 
         // Create the Developer Id message for the developer data fields.
@@ -83,26 +83,26 @@ object EncodeActivity {
             developerIdMesg.setApplicationId(i, appId[i])
         }
 
-        developerIdMesg.setDeveloperDataIndex(0.toShort())
+        developerIdMesg.developerDataIndex = 0.toShort()
         messages.add(developerIdMesg)
 
         // Create the Developer Data Field Descriptions
         val doughnutsFieldDescMesg = FieldDescriptionMesg()
-        doughnutsFieldDescMesg.setDeveloperDataIndex(0.toShort())
-        doughnutsFieldDescMesg.setFieldDefinitionNumber(0.toShort())
-        doughnutsFieldDescMesg.setFitBaseTypeId(FitBaseType.FLOAT32)
+        doughnutsFieldDescMesg.developerDataIndex = 0.toShort()
+        doughnutsFieldDescMesg.fieldDefinitionNumber = 0.toShort()
+        doughnutsFieldDescMesg.fitBaseTypeId = FitBaseType.FLOAT32
         doughnutsFieldDescMesg.setUnits(0, "doughnuts")
-        doughnutsFieldDescMesg.setNativeMesgNum(MesgNum.SESSION)
+        doughnutsFieldDescMesg.nativeMesgNum = MesgNum.SESSION
         messages.add(doughnutsFieldDescMesg)
 
         val hrFieldDescMesg = FieldDescriptionMesg()
-        hrFieldDescMesg.setDeveloperDataIndex(0.toShort())
-        hrFieldDescMesg.setFieldDefinitionNumber(1.toShort())
-        hrFieldDescMesg.setFitBaseTypeId(FitBaseType.UINT8)
+        hrFieldDescMesg.developerDataIndex = 0.toShort()
+        hrFieldDescMesg.fieldDefinitionNumber = 1.toShort()
+        hrFieldDescMesg.fitBaseTypeId = FitBaseType.UINT8
         hrFieldDescMesg.setFieldName(0, "Heart Rate")
         hrFieldDescMesg.setUnits(0, "bpm")
-        hrFieldDescMesg.setNativeFieldNum(RecordMesg.Companion.HeartRateFieldNum.toShort())
-        hrFieldDescMesg.setNativeMesgNum(MesgNum.RECORD)
+        hrFieldDescMesg.nativeFieldNum = RecordMesg.HeartRateFieldNum.toShort()
+        hrFieldDescMesg.nativeMesgNum = MesgNum.RECORD
         messages.add(hrFieldDescMesg)
 
         // Every FIT ACTIVITY file MUST contain Record messages
@@ -112,24 +112,23 @@ object EncodeActivity {
         for (i in 0..3600) {
             // Create a new Record message and set the timestamp
             val recordMesg = RecordMesg()
-            recordMesg.setTimestamp(timestamp)
+            recordMesg.timestamp = timestamp
 
             // Fake Record Data of Various Signal Patterns
-            recordMesg.setDistance(i.toFloat())
-            recordMesg.setSpeed(1f)
-            recordMesg.setHeartRate(
-                ((sin(twoPI * (0.01 * i + 10)) + 1.0) * 127.0).toInt().toShort()
-            ) // Sine
-            recordMesg.setCadence((i % 255).toShort()) // Sawtooth
-            recordMesg.setPower((if ((i % 255).toShort() < 157) 150 else 250)) //Square
-            recordMesg.setAltitude((abs(i.toDouble() % 255.0) - 127.0).toFloat()) // Triangle
-            recordMesg.setPositionLat(0)
-            recordMesg.setPositionLong(Math.round(i * semiCirclesPerMeter).toInt())
+            recordMesg.distance = i.toFloat()
+            recordMesg.speed = 1f
+            recordMesg.heartRate = ((sin(twoPI * (0.01 * i + 10)) + 1.0) * 127.0).toInt().toShort()
+            // Sine
+            recordMesg.cadence = (i % 255).toShort() // Sawtooth
+            recordMesg.power = (if ((i % 255).toShort() < 157) 150 else 250) //Square
+            recordMesg.altitude = (abs(i.toDouble() % 255.0) - 127.0).toFloat() // Triangle
+            recordMesg.positionLat = 0
+            recordMesg.positionLong = (i * semiCirclesPerMeter).roundToLong().toInt()
 
             // Add a Developer Field to the Record Message
             val hrDevField = DeveloperField(hrFieldDescMesg, developerIdMesg)
             recordMesg.addDeveloperField(hrDevField)
-            hrDevField.setValue((sin(twoPI * (.01 * i + 10)) + 1.0).toInt().toShort() * 127.0)
+            hrDevField.value = (sin(twoPI * (.01 * i + 10)) + 1.0).toInt().toShort() * 127.0
 
             // Write the Record message to the output stream
             messages.add(recordMesg)
@@ -140,46 +139,46 @@ object EncodeActivity {
 
         // Timer Events are a BEST PRACTICE for FIT ACTIVITY files
         val eventMesgStop = EventMesg()
-        eventMesgStop.setTimestamp(timestamp)
-        eventMesgStop.setEvent(Event.TIMER)
-        eventMesgStop.setEventType(EventType.STOP_ALL)
+        eventMesgStop.timestamp = timestamp
+        eventMesgStop.event = Event.TIMER
+        eventMesgStop.eventType = EventType.STOP_ALL
         messages.add(eventMesgStop)
 
         // Every FIT ACTIVITY file MUST contain at least one Lap message
         val lapMesg = LapMesg()
-        lapMesg.setMessageIndex(0)
-        lapMesg.setTimestamp(timestamp)
-        lapMesg.setStartTime(startTime)
-        lapMesg.setTotalElapsedTime((timestamp.getTimestamp() - startTime.getTimestamp()).toFloat())
-        lapMesg.setTotalTimerTime((timestamp.getTimestamp() - startTime.getTimestamp()).toFloat())
+        lapMesg.messageIndex = 0
+        lapMesg.timestamp = timestamp
+        lapMesg.startTime = startTime
+        lapMesg.totalElapsedTime = (timestamp.timestamp - startTime.timestamp).toFloat()
+        lapMesg.totalTimerTime = (timestamp.timestamp - startTime.timestamp).toFloat()
         messages.add(lapMesg)
 
         // Every FIT ACTIVITY file MUST contain at least one Session message
         val sessionMesg = SessionMesg()
-        sessionMesg.setMessageIndex(0)
-        sessionMesg.setTimestamp(timestamp)
-        sessionMesg.setStartTime(startTime)
-        sessionMesg.setTotalElapsedTime((timestamp.getTimestamp() - startTime.getTimestamp()).toFloat())
-        sessionMesg.setTotalTimerTime((timestamp.getTimestamp() - startTime.getTimestamp()).toFloat())
-        sessionMesg.setSport(Sport.STAND_UP_PADDLEBOARDING)
-        sessionMesg.setSubSport(SubSport.GENERIC)
-        sessionMesg.setFirstLapIndex(0)
-        sessionMesg.setNumLaps(1)
+        sessionMesg.messageIndex = 0
+        sessionMesg.timestamp = timestamp
+        sessionMesg.startTime = startTime
+        sessionMesg.totalElapsedTime = (timestamp.timestamp - startTime.timestamp).toFloat()
+        sessionMesg.totalTimerTime = (timestamp.timestamp - startTime.timestamp).toFloat()
+        sessionMesg.sport = Sport.STAND_UP_PADDLEBOARDING
+        sessionMesg.subSport = SubSport.GENERIC
+        sessionMesg.firstLapIndex = 0
+        sessionMesg.numLaps = 1
         messages.add(sessionMesg)
 
         // Add a Developer Field to the Session message
         val doughnutsEarnedDevField = DeveloperField(doughnutsFieldDescMesg, developerIdMesg)
-        doughnutsEarnedDevField.setValue(sessionMesg.getTotalElapsedTime() / 1200.0f)
+        doughnutsEarnedDevField.value = sessionMesg.totalElapsedTime?.let { it / 1200.0f }
         sessionMesg.addDeveloperField(doughnutsEarnedDevField)
 
         // Every FIT ACTIVITY file MUST contain EXACTLY one Activity message
         val activityMesg = ActivityMesg()
-        activityMesg.setTimestamp(timestamp)
-        activityMesg.setNumSessions(1)
+        activityMesg.timestamp = timestamp
+        activityMesg.numSessions = 1
         val timeZone = TimeZone.getTimeZone("America/Denver")
-        val timezoneOffset = ((timeZone.getRawOffset() + timeZone.getDSTSavings()) / 1000).toLong()
-        activityMesg.setLocalTimestamp(timestamp.getTimestamp() + timezoneOffset)
-        activityMesg.setTotalTimerTime((timestamp.getTimestamp() - startTime.getTimestamp()).toFloat())
+        val timezoneOffset = ((timeZone.rawOffset + timeZone.getDSTSavings()) / 1000).toLong()
+        activityMesg.localTimestamp = timestamp.timestamp + timezoneOffset
+        activityMesg.totalTimerTime = (timestamp.timestamp - startTime.timestamp).toFloat()
         messages.add(activityMesg)
 
         CreateActivityFile(messages, filename, startTime)
@@ -187,16 +186,16 @@ object EncodeActivity {
 
     fun CreateLapSwimActivity() {
         val filename = "ActivityEncodeRecipeLapSwim.fit"
-        val messages: MutableList<Mesg?> = ArrayList<Mesg?>()
+        val messages = mutableListOf<Mesg>()
 
         // The starting timestamp for the activity
         val startTime = DateTime(Date())
 
         // Timer Events are a BEST PRACTICE for FIT ACTIVITY files
         val eventMesgStart = EventMesg()
-        eventMesgStart.setTimestamp(startTime)
-        eventMesgStart.setEvent(Event.TIMER)
-        eventMesgStart.setEventType(EventType.START)
+        eventMesgStart.timestamp = startTime
+        eventMesgStart.event = Event.TIMER
+        eventMesgStart.eventType = EventType.START
         messages.add(eventMesgStart)
 
         // Create a Length or Lap message for each item in the sample swim data. Calculate
@@ -228,24 +227,24 @@ object EncodeActivity {
             swimLengths
 
         for (swimLength in swimData) {
-            val type = swimLength.get("type") as String
+            val type = swimLength["type"] as String
 
             if (type == "LAP") {
                 // Create a Lap message, set its fields, and write it to the file
                 val lapMesg = LapMesg()
-                lapMesg.setMessageIndex(sessionNumLaps)
-                lapMesg.setTimestamp(timestamp)
-                lapMesg.setStartTime(lapStartTime)
-                lapMesg.setTotalElapsedTime(lapTotalElapsedTime.toFloat())
-                lapMesg.setTotalTimerTime(lapTotalElapsedTime.toFloat())
-                lapMesg.setTotalDistance(lapDistance)
-                lapMesg.setFirstLengthIndex(lapFirstLengthIndex.toInt())
-                lapMesg.setNumActiveLengths(lapNumActiveLengths.toInt())
-                lapMesg.setNumLengths(lapNumLengths.toInt())
-                lapMesg.setTotalStrokes(lapTotalStrokes.toLong())
-                lapMesg.setAvgStrokeDistance(lapDistance / lapTotalStrokes)
-                lapMesg.setSport(Sport.SWIMMING)
-                lapMesg.setSubSport(SubSport.LAP_SWIMMING)
+                lapMesg.messageIndex = sessionNumLaps
+                lapMesg.timestamp = timestamp
+                lapMesg.startTime = lapStartTime
+                lapMesg.totalElapsedTime = lapTotalElapsedTime.toFloat()
+                lapMesg.totalTimerTime = lapTotalElapsedTime.toFloat()
+                lapMesg.totalDistance = lapDistance
+                lapMesg.firstLengthIndex = lapFirstLengthIndex.toInt()
+                lapMesg.numActiveLengths = lapNumActiveLengths.toInt()
+                lapMesg.numLengths = lapNumLengths.toInt()
+                lapMesg.totalStrokes = lapTotalStrokes.toLong()
+                lapMesg.avgStrokeDistance = lapDistance / lapTotalStrokes
+                lapMesg.sport = Sport.SWIMMING
+                lapMesg.subSport = SubSport.LAP_SWIMMING
                 messages.add(lapMesg)
 
                 sessionNumLaps++
@@ -259,49 +258,49 @@ object EncodeActivity {
                 lapTotalStrokes = 0
                 lapStartTime = DateTime(timestamp)
             } else {
-                val duration = swimLength.get("duration") as Int
+                val duration = swimLength["duration"] as Int
                 val lengthType = LengthType.valueOf(type)
 
                 // Create a Length message and its fields
                 val lengthMesg = LengthMesg()
-                lengthMesg.setMessageIndex((messageIndex++).toInt())
-                lengthMesg.setStartTime(timestamp)
-                lengthMesg.setTotalElapsedTime(duration.toFloat())
-                lengthMesg.setTotalTimerTime(duration.toFloat())
-                lengthMesg.setLengthType(lengthType)
+                lengthMesg.messageIndex = (messageIndex++).toInt()
+                lengthMesg.startTime = timestamp
+                lengthMesg.totalElapsedTime = duration.toFloat()
+                lengthMesg.totalTimerTime = duration.toFloat()
+                lengthMesg.lengthType = lengthType
 
                 timestamp.add(duration.toLong())
-                lengthMesg.setTimestamp(timestamp)
+                lengthMesg.timestamp = timestamp
 
                 // Create the Record message that pairs with the Length Message
                 val recordMesg = RecordMesg()
-                recordMesg.setTimestamp(timestamp)
-                recordMesg.setDistance(sessionDistance + poolLength)
+                recordMesg.timestamp = timestamp
+                recordMesg.distance = sessionDistance + poolLength
 
                 // Is this an Active Length?
                 if (lengthType == LengthType.ACTIVE) {
                     // Get the Active data from the model
                     val stroke =
-                        if (swimLength.containsKey("stroke")) swimLength.get("stroke") as String? else "FREESTYLE"
+                        if (swimLength.containsKey("stroke")) swimLength["stroke"] as String? else "FREESTYLE"
                     val strokes =
-                        if (swimLength.containsKey("strokes")) swimLength.get("strokes") as Int else 0
+                        if (swimLength.containsKey("strokes")) swimLength["strokes"] as Int else 0
                     val swimStroke = SwimStroke.valueOf(stroke!!)
 
                     // Set the Active data on the Length Message
-                    lengthMesg.setAvgSpeed(poolLength / (duration.toFloat()))
-                    lengthMesg.setSwimStroke(swimStroke)
+                    lengthMesg.avgSpeed = poolLength / (duration.toFloat())
+                    lengthMesg.swimStroke = swimStroke
                     val cadence = (strokes * 60 / duration).toShort()
 
                     if (strokes > 0) {
-                        lengthMesg.setTotalStrokes(strokes)
-                        lengthMesg.setAvgSwimmingCadence(cadence)
+                        lengthMesg.totalStrokes = strokes
+                        lengthMesg.avgSwimmingCadence = cadence
                     }
 
                     // Set the Active data on the Record Message
-                    recordMesg.setSpeed(poolLength / (duration.toFloat()))
+                    recordMesg.speed = poolLength / (duration.toFloat())
 
                     if (strokes > 0) {
-                        recordMesg.setCadence(cadence)
+                        recordMesg.cadence = cadence
                     }
 
                     // Increment the "Active" accumulators
@@ -327,46 +326,46 @@ object EncodeActivity {
 
         // Timer Events are a BEST PRACTICE for FIT ACTIVITY files
         val eventMesgStop = EventMesg()
-        eventMesgStop.setTimestamp(timestamp)
-        eventMesgStop.setEvent(Event.TIMER)
-        eventMesgStop.setEventType(EventType.STOP_ALL)
+        eventMesgStop.timestamp = timestamp
+        eventMesgStop.event = Event.TIMER
+        eventMesgStop.eventType = EventType.STOP_ALL
         messages.add(eventMesgStop)
 
         // Every FIT ACTIVITY file MUST contain at least one Session message
         val sessionMesg = SessionMesg()
-        sessionMesg.setMessageIndex(0)
-        sessionMesg.setTimestamp(timestamp)
-        sessionMesg.setStartTime(startTime)
-        sessionMesg.setTotalElapsedTime(sessionTotalElapsedTime.toFloat())
-        sessionMesg.setTotalTimerTime(sessionTotalElapsedTime.toFloat())
-        sessionMesg.setTotalDistance(sessionDistance)
-        sessionMesg.setSport(Sport.SWIMMING)
-        sessionMesg.setSubSport(SubSport.LAP_SWIMMING)
-        sessionMesg.setFirstLapIndex(0)
-        sessionMesg.setNumLaps(sessionNumLaps)
-        sessionMesg.setPoolLength(poolLength)
-        sessionMesg.setPoolLengthUnit(poolLengthUnit)
-        sessionMesg.setNumLengths(sessionNumLengths.toInt())
-        sessionMesg.setNumActiveLengths(sessionNumActiveLengths.toInt())
-        sessionMesg.setTotalStrokes(sessionTotalStrokes.toLong())
-        sessionMesg.setAvgStrokeDistance(sessionDistance / sessionTotalStrokes)
+        sessionMesg.messageIndex = 0
+        sessionMesg.timestamp = timestamp
+        sessionMesg.startTime = startTime
+        sessionMesg.totalElapsedTime = sessionTotalElapsedTime.toFloat()
+        sessionMesg.totalTimerTime = sessionTotalElapsedTime.toFloat()
+        sessionMesg.totalDistance = sessionDistance
+        sessionMesg.sport = Sport.SWIMMING
+        sessionMesg.subSport = SubSport.LAP_SWIMMING
+        sessionMesg.firstLapIndex = 0
+        sessionMesg.numLaps = sessionNumLaps
+        sessionMesg.poolLength = poolLength
+        sessionMesg.poolLengthUnit = poolLengthUnit
+        sessionMesg.numLengths = sessionNumLengths.toInt()
+        sessionMesg.numActiveLengths = sessionNumActiveLengths.toInt()
+        sessionMesg.totalStrokes = sessionTotalStrokes.toLong()
+        sessionMesg.avgStrokeDistance = sessionDistance / sessionTotalStrokes
         messages.add(sessionMesg)
 
         // Every FIT ACTIVITY file MUST contain EXACTLY one Activity message
         val activityMesg = ActivityMesg()
-        activityMesg.setTimestamp(timestamp)
-        activityMesg.setNumSessions(1)
+        activityMesg.timestamp = timestamp
+        activityMesg.numSessions = 1
         val timeZone = TimeZone.getTimeZone("America/Denver")
-        val timezoneOffset = ((timeZone.getRawOffset() + timeZone.getDSTSavings()) / 1000).toLong()
-        activityMesg.setLocalTimestamp(timestamp.getTimestamp() + timezoneOffset)
-        activityMesg.setTotalTimerTime(sessionTotalElapsedTime.toFloat())
+        val timezoneOffset = ((timeZone.rawOffset + timeZone.getDSTSavings()) / 1000).toLong()
+        activityMesg.localTimestamp = timestamp.timestamp + timezoneOffset
+        activityMesg.totalTimerTime = sessionTotalElapsedTime.toFloat()
 
         messages.add(activityMesg)
 
         CreateActivityFile(messages, filename, startTime)
     }
 
-    fun CreateActivityFile(messages: MutableList<Mesg?>, filename: String, startTime: DateTime) {
+    fun CreateActivityFile(messages: MutableList<Mesg>, filename: String, startTime: DateTime) {
         // The combination of file type, manufacturer id, product id, and serial number should be unique.
         // When available, a non-random serial number should be used.
         val fileType = File.ACTIVITY
@@ -379,21 +378,21 @@ object EncodeActivity {
 
         // Every FIT file MUST contain a File ID message
         val fileIdMesg = FileIdMesg()
-        fileIdMesg.setType(fileType)
-        fileIdMesg.setManufacturer(manufacturerId.toInt())
-        fileIdMesg.setProduct(productId.toInt())
-        fileIdMesg.setTimeCreated(startTime)
-        fileIdMesg.setSerialNumber(serialNumber.toLong())
+        fileIdMesg.type = fileType
+        fileIdMesg.manufacturer = manufacturerId.toInt()
+        fileIdMesg.product = productId.toInt()
+        fileIdMesg.timeCreated = startTime
+        fileIdMesg.serialNumber = serialNumber.toLong()
 
         // A Device Info message is a BEST PRACTICE for FIT ACTIVITY files
         val deviceInfoMesg = DeviceInfoMesg()
-        deviceInfoMesg.setDeviceIndex(DeviceIndex.CREATOR)
-        deviceInfoMesg.setManufacturer(Manufacturer.DEVELOPMENT)
-        deviceInfoMesg.setProduct(productId.toInt())
-        deviceInfoMesg.setProductName("FIT Cookbook") // Max 20 Chars
-        deviceInfoMesg.setSerialNumber(serialNumber.toLong())
-        deviceInfoMesg.setSoftwareVersion(softwareVersion)
-        deviceInfoMesg.setTimestamp(startTime)
+        deviceInfoMesg.deviceIndex = DeviceIndex.CREATOR
+        deviceInfoMesg.manufacturer = Manufacturer.DEVELOPMENT
+        deviceInfoMesg.product = productId.toInt()
+        deviceInfoMesg.productName = "FIT Cookbook" // Max 20 Chars
+        deviceInfoMesg.serialNumber = serialNumber.toLong()
+        deviceInfoMesg.softwareVersion = softwareVersion
+        deviceInfoMesg.timestamp = startTime
 
         // Create the output stream
         val encode: FileEncoder?
@@ -401,7 +400,7 @@ object EncodeActivity {
         try {
             encode = FileEncoder(java.io.File(filename), Fit.ProtocolVersion.V2_0)
         } catch (e: FitRuntimeException) {
-            System.err.println("Error opening file " + filename)
+            System.err.println("Error opening file $filename")
             e.printStackTrace()
             return
         }
@@ -421,7 +420,7 @@ object EncodeActivity {
             e.printStackTrace()
             return
         }
-        println("Encoded FIT Activity file " + filename)
+        println("Encoded FIT Activity file $filename")
     }
 
     val swimLengths: MutableList<MutableMap<String?, Any?>>
@@ -429,7 +428,7 @@ object EncodeActivity {
          * Creates an example pool swim data set
          * Each length contains a type, duration,
          * stroke type, and stroke count.
-         * 
+         *
          * @return a list of maps where each map is a pool length.
          */
         get() {
@@ -726,8 +725,8 @@ object EncodeActivity {
                 }
 
             val swimLengths: MutableList<MutableMap<String?, Any?>> =
-                ArrayList<MutableMap<String?, Any?>>(
-                    Arrays.asList<LinkedHashMap<String?, Any?>?>(
+                ArrayList(
+                    listOf(
                         length0,
                         length1,
                         length2,

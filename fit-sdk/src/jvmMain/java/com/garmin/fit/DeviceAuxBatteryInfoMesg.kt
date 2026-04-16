@@ -12,35 +12,35 @@ package com.garmin.fit
 class DeviceAuxBatteryInfoMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVICE_AUX_BATTERY_INFO))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var deviceIndex: Short?
         /**
          * Get device_index field
-         * 
+         *
          * @return device_index
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set device_index field
-         * 
+         *
          * @param deviceIndex The new deviceIndex value to be set
          */
         set(deviceIndex) {
@@ -51,14 +51,14 @@ class DeviceAuxBatteryInfoMesg : Mesg {
         /**
          * Get battery_voltage field
          * Units: V
-         * 
+         *
          * @return battery_voltage
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set battery_voltage field
          * Units: V
-         * 
+         *
          * @param batteryVoltage The new batteryVoltage value to be set
          */
         set(batteryVoltage) {
@@ -68,13 +68,13 @@ class DeviceAuxBatteryInfoMesg : Mesg {
     var batteryStatus: Short?
         /**
          * Get battery_status field
-         * 
+         *
          * @return battery_status
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set battery_status field
-         * 
+         *
          * @param batteryStatus The new batteryStatus value to be set
          */
         set(batteryStatus) {
@@ -84,13 +84,13 @@ class DeviceAuxBatteryInfoMesg : Mesg {
     var batteryIdentifier: Short?
         /**
          * Get battery_identifier field
-         * 
+         *
          * @return battery_identifier
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set battery_identifier field
-         * 
+         *
          * @param batteryIdentifier The new batteryIdentifier value to be set
          */
         set(batteryIdentifier) {
@@ -109,12 +109,10 @@ class DeviceAuxBatteryInfoMesg : Mesg {
         const val BatteryIdentifierFieldNum: Int = 3
 
 
-        val deviceAuxBatteryInfoMesg: Mesg
+        // device_aux_battery_info
+        val deviceAuxBatteryInfoMesg: Mesg = Mesg("device_aux_battery_info", MesgNum.DEVICE_AUX_BATTERY_INFO)
 
         init {
-            // device_aux_battery_info
-            deviceAuxBatteryInfoMesg =
-                Mesg("device_aux_battery_info", MesgNum.DEVICE_AUX_BATTERY_INFO)
             deviceAuxBatteryInfoMesg.addField(
                 Field(
                     "timestamp",

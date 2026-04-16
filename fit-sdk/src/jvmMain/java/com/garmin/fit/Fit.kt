@@ -8,43 +8,30 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-import java.lang.Byte
-import java.lang.Double
-import java.lang.Float
-import java.lang.Long
-import java.lang.Short
 import java.math.BigInteger
-import kotlin.Any
-import kotlin.Boolean
-import kotlin.ByteArray
-import kotlin.Char
-import kotlin.Int
-import kotlin.IntArray
-import kotlin.String
-import kotlin.byteArrayOf
-import kotlin.intArrayOf
 
 object Fit {
     @JvmField
     var debug: Boolean = false
 
-    val PROTOCOL_VERSION: Int =
-        ProtocolVersion.Companion.highestVersion.version
+    @JvmField
+    val PROTOCOL_VERSION: Int = ProtocolVersion.highestVersion.version
     const val PROTOCOL_VERSION_MAJOR_SHIFT: Int = 4
-    val PROTOCOL_VERSION_MAJOR_MASK: Int = (0x0F shl PROTOCOL_VERSION_MAJOR_SHIFT)
+    const val PROTOCOL_VERSION_MAJOR_MASK: Int = (0x0F shl PROTOCOL_VERSION_MAJOR_SHIFT)
     const val PROTOCOL_VERSION_MINOR_MASK: Int = 0x0F
+
     @JvmField
-    val PROTOCOL_VERSION_MAJOR: Int =
-        ProtocolVersion.Companion.highestVersion.major
+    val PROTOCOL_VERSION_MAJOR: Int = ProtocolVersion.highestVersion.major
+
     @JvmField
-    val PROTOCOL_VERSION_MINOR: Int =
-        ProtocolVersion.Companion.highestVersion.minor
+    val PROTOCOL_VERSION_MINOR: Int = ProtocolVersion.highestVersion.minor
 
     const val PROFILE_VERSION_MAJOR: Int = 21
     const val PROFILE_VERSION_MINOR: Int = 200
     const val PROFILE_TYPE: String = "Release"
     const val PROFILE_VERSION_SCALE: Int = 1000
-    val PROFILE_VERSION: Int = PROFILE_VERSION_MAJOR * PROFILE_VERSION_SCALE + PROFILE_VERSION_MINOR
+    const val PROFILE_VERSION: Int =
+        PROFILE_VERSION_MAJOR * PROFILE_VERSION_SCALE + PROFILE_VERSION_MINOR
 
     const val ANTFS_FILE_DATA_TYPE: Int = 128
 
@@ -58,7 +45,7 @@ object Fit {
     const val HDR_TYPE_DEF_BIT: Int = 0x40
     const val HDR_DEV_FIELDS_BIT: Int = 0x20
     const val HDR_TYPE_MASK: Int = 0x0F
-    val MAX_LOCAL_MESGS: Int = HDR_TYPE_MASK + 1
+    const val MAX_LOCAL_MESGS: Int = HDR_TYPE_MASK + 1
 
     const val CRC_SIZE: Int = 2
 
@@ -86,114 +73,118 @@ object Fit {
 
     const val ENUM_MAX: Short = 0xFF
     const val ENUM_MIN: Short = 0x00
-    @JvmField
-    val ENUM_INVALID: Short = Short.decode("0xFF")
+
+    const val ENUM_INVALID: Short = 0xFF
     const val BASE_TYPE_ENUM: Int = 0x00
 
-    val SINT8_MAX: Byte = Byte.Companion.MAX_VALUE
-    val SINT8_MIN: Byte = Byte.Companion.MIN_VALUE
-    @JvmField
-    val SINT8_INVALID: Byte? = Byte.decode("0x7F")
+    const val SINT8_MAX: Byte = Byte.MAX_VALUE
+    const val SINT8_MIN: Byte = Byte.MIN_VALUE
+
+    const val SINT8_INVALID: Byte = 0x7F
     const val BASE_TYPE_SINT8: Int = 0x01
 
-    const val UINT8_MAX: kotlin.Short = 0xFF
-    const val UINT8_MIN: kotlin.Short = 0x00
-    @JvmField
-    val UINT8_INVALID: kotlin.Short = Short.decode("0xFF")
+    const val UINT8_MAX: Short = 0xFF
+    const val UINT8_MIN: Short = 0x00
+
+    const val UINT8_INVALID: Short = 0xFF
     const val BASE_TYPE_UINT8: Int = 0x02
 
-    val SINT16_MAX: kotlin.Short = kotlin.Short.Companion.MAX_VALUE
-    val SINT16_MIN: kotlin.Short = kotlin.Short.Companion.MIN_VALUE
-    @JvmField
-    val SINT16_INVALID: kotlin.Short = Short.decode("0x7FFF")
+    const val SINT16_MAX: Short = Short.MAX_VALUE
+    const val SINT16_MIN: Short = Short.MIN_VALUE
+
+    const val SINT16_INVALID: Short = 0x7FFF
     const val BASE_TYPE_SINT16: Int = 0x83
 
-    val UINT16_MAX: Int = Integer.decode("0xFFFF")
-    val UINT16_MIN: Int = Integer.decode("0")
-    @JvmField
-    val UINT16_INVALID: Int = Integer.decode("0xFFFF")
+    const val UINT16_MAX: Int = 0xFFFF
+    const val UINT16_MIN: Int = 0
+
+    const val UINT16_INVALID: Int = 0xFFFF
     const val BASE_TYPE_UINT16: Int = 0x84
 
-    val SINT32_MAX: Int = Int.Companion.MAX_VALUE
-    val SINT32_MIN: Int = Int.Companion.MIN_VALUE
-    @JvmField
-    val SINT32_INVALID: Int = Integer.decode("0x7FFFFFFF")
+    const val SINT32_MAX: Int = Int.MAX_VALUE
+    const val SINT32_MIN: Int = Int.MIN_VALUE
+    const val SINT32_INVALID: Int = 0x7FFFFFFF
     const val BASE_TYPE_SINT32: Int = 0x85
 
-    val UINT32_MAX: Long = Long.decode("0xFFFFFFFF")
-    val UINT32_MIN: kotlin.Long = Long.decode("0")
-    @JvmField
-    val UINT32_INVALID: kotlin.Long = Long.decode("0xFFFFFFFF")
+    const val UINT32_MAX: Long = 0xFFFFFFFF
+    const val UINT32_MIN: Long = 0
+    const val UINT32_INVALID: Long = 0xFFFFFFFF
     const val BASE_TYPE_UINT32: Int = 0x86
 
     const val STRING_INVALID: String = ""
     const val BASE_TYPE_STRING: Int = 0x07
-    val STRING_MAX_BYTE_COUNT: Int =
+    const val STRING_MAX_BYTE_COUNT: Int =
         MAX_FIELD_SIZE - 1 // Reserve 1 byte for the null terminator that is appended to all strings during encoding
 
     @JvmField
-    val FLOAT32_INVALID: Float = Float.intBitsToFloat(-0x1)
-    val FLOAT32_MAX: kotlin.Float = kotlin.Float.Companion.MAX_VALUE
-    val FLOAT32_MIN: kotlin.Float = -kotlin.Float.Companion.MAX_VALUE
+    val FLOAT32_INVALID: Float = Float.fromBits(-0x1)
+    const val FLOAT32_MAX: Float = Float.MAX_VALUE
+    const val FLOAT32_MIN: Float = -Float.MAX_VALUE
     const val BASE_TYPE_FLOAT32: Int = 0x88
 
     @JvmField
-    val FLOAT64_INVALID: Double = Double.longBitsToDouble(-0x1L)
-    val FLOAT64_MAX: kotlin.Double = kotlin.Double.Companion.MAX_VALUE
-    val FLOAT64_MIN: kotlin.Double = -kotlin.Double.Companion.MAX_VALUE
+    val FLOAT64_INVALID: Double = Double.fromBits(-0x1L)
+    const val FLOAT64_MAX: Double = Double.MAX_VALUE
+    const val FLOAT64_MIN: Double = -Double.MAX_VALUE
     const val BASE_TYPE_FLOAT64: Int = 0x89
 
-    const val UINT8Z_MAX: kotlin.Short = 0xFF
-    const val UINT8Z_MIN: kotlin.Short = 0x00
-    @JvmField
-    val UINT8Z_INVALID: kotlin.Short = Short.decode("0x00")
+    const val UINT8Z_MAX: Short = 0xFF
+    const val UINT8Z_MIN: Short = 0x00
+
+    const val UINT8Z_INVALID: Short = 0x00
     const val BASE_TYPE_UINT8Z: Int = 0x0A
 
     const val UINT16Z_MAX: Int = 0xFFFF
     const val UINT16Z_MIN: Int = 0
-    @JvmField
-    val UINT16Z_INVALID: Int = Integer.decode("0x0000")
+
+    const val UINT16Z_INVALID: Int = 0x0000
     const val BASE_TYPE_UINT16Z: Int = 0x8B
 
-    val UINT32Z_MAX: kotlin.Long = Long.decode("0xFFFFFFFF")
-    val UINT32Z_MIN: kotlin.Long = Long.decode("0")
-    @JvmField
-    val UINT32Z_INVALID: kotlin.Long = Long.decode("0x00000000")
+    const val UINT32Z_MAX: Long = 0xFFFFFFFF
+    const val UINT32Z_MIN: Long = 0
+
+    const val UINT32Z_INVALID: Long = 0x00000000
     const val BASE_TYPE_UINT32Z: Int = 0x8C
 
-    const val BYTE_MAX: kotlin.Short = 0xFF
-    const val BYTE_MIN: kotlin.Short = 0x00
-    const val BYTE_INVALID: kotlin.Short = 0xFF
+    const val BYTE_MAX: Short = 0xFF
+    const val BYTE_MIN: Short = 0x00
+    const val BYTE_INVALID: Short = 0xFF
     const val BASE_TYPE_BYTE: Int = 0x0D
 
-    val SINT64_MAX: kotlin.Long = kotlin.Long.Companion.MAX_VALUE
-    val SINT64_MIN: kotlin.Long = kotlin.Long.Companion.MIN_VALUE
-    @JvmField
-    val SINT64_INVALID: kotlin.Long = Long.decode("0x7FFFFFFFFFFFFFFF")
+    const val SINT64_MAX: Long = Long.MAX_VALUE
+    const val SINT64_MIN: Long = Long.MIN_VALUE
+
+    const val SINT64_INVALID: Long = 0x7FFFFFFFFFFFFFFF
     const val BASE_TYPE_SINT64: Int = 0x8E
 
+    @JvmField
     val UINT64_MAX: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
+    @JvmField
     val UINT64_MIN: BigInteger = BigInteger("00000000000000000")
+
     @JvmField
     val UINT64_INVALID: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
     const val BASE_TYPE_UINT64: Int = 0x8F
 
+    @JvmField
     val UINT64Z_MAX: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
+    @JvmField
     val UINT64Z_MIN: BigInteger = BigInteger("0000000000000000")
+
     @JvmField
     val UINT64Z_INVALID: BigInteger = BigInteger("0000000000000000", 16)
     const val BASE_TYPE_UINT64Z: Int = 0x90
     const val BASE_TYPES: Int = 17
 
     @JvmField
-    val baseTypeSizes: IntArray? = intArrayOf(1, 1, 1, 2, 2, 4, 4, 1, 4, 8, 1, 2, 4, 1, 8, 8, 8)
+    val baseTypeSizes: IntArray = intArrayOf(1, 1, 1, 2, 2, 4, 4, 1, 4, 8, 1, 2, 4, 1, 8, 8, 8)
 
+    const val UTF8_BOM_BYTE_1: Byte = 0xEF.toByte()
+
+    const val UTF8_BOM_BYTE_2: Byte = 0xBB.toByte()
+
+    const val UTF8_BOM_BYTE_3: Byte = 0xBF.toByte()
     @JvmField
-    val UTF8_BOM_BYTE_1: kotlin.Byte = 0xEF.toByte()
-    @JvmField
-    val UTF8_BOM_BYTE_2: kotlin.Byte = 0xBB.toByte()
-    @JvmField
-    val UTF8_BOM_BYTE_3: kotlin.Byte = 0xBF.toByte()
     val UTF8_BOM_BYTES: ByteArray = byteArrayOf(UTF8_BOM_BYTE_1, UTF8_BOM_BYTE_2, UTF8_BOM_BYTE_3)
     const val UTF8_NUM_BOM_BYTES: Int = 3
     const val UTF8_BOM: Char = '\uFEFF'
@@ -207,72 +198,69 @@ object Fit {
     //    invalid value is returned instead.
     const val ENABLE_LEGACY_BEHAVIOUR: Boolean = true
 
-    val baseTypeInvalidMap: HashMap<Int?, Any?>? = null
+    val baseTypeInvalidMap = HashMap<Int, Any>(20)
 
     init {
-        baseTypeInvalidMap = HashMap<Int?, Any?>(20)
-        baseTypeInvalidMap.put(BASE_TYPE_ENUM, ENUM_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_SINT8, SINT8_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT8, UINT8_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_SINT16, SINT16_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT16, UINT16_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_SINT32, SINT32_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT32, UINT32_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_STRING, STRING_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_FLOAT32, FLOAT32_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_FLOAT64, FLOAT64_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT8Z, UINT8Z_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT16Z, UINT16Z_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT32Z, UINT32Z_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_BYTE, BYTE_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_SINT64, SINT64_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT64, UINT64_INVALID)
-        baseTypeInvalidMap.put(BASE_TYPE_UINT64Z, UINT64Z_INVALID)
+        baseTypeInvalidMap[BASE_TYPE_ENUM] = ENUM_INVALID
+        baseTypeInvalidMap[BASE_TYPE_SINT8] = SINT8_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT8] = UINT8_INVALID
+        baseTypeInvalidMap[BASE_TYPE_SINT16] = SINT16_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT16] = UINT16_INVALID
+        baseTypeInvalidMap[BASE_TYPE_SINT32] = SINT32_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT32] = UINT32_INVALID
+        baseTypeInvalidMap[BASE_TYPE_STRING] = STRING_INVALID
+        baseTypeInvalidMap[BASE_TYPE_FLOAT32] = FLOAT32_INVALID
+        baseTypeInvalidMap[BASE_TYPE_FLOAT64] = FLOAT64_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT8Z] = UINT8Z_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT16Z] = UINT16Z_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT32Z] = UINT32Z_INVALID
+        baseTypeInvalidMap[BASE_TYPE_BYTE] = BYTE_INVALID
+        baseTypeInvalidMap[BASE_TYPE_SINT64] = SINT64_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT64] = UINT64_INVALID
+        baseTypeInvalidMap[BASE_TYPE_UINT64Z] = UINT64Z_INVALID
     }
 
-    val baseTypeMinMap: HashMap<Int?, Any?>? = null
+    val baseTypeMinMap = HashMap<Int, Any>(20)
 
     init {
-        baseTypeMinMap = HashMap<Int?, Any?>(20)
-        baseTypeMinMap.put(BASE_TYPE_ENUM, ENUM_MIN)
-        baseTypeMinMap.put(BASE_TYPE_SINT8, SINT8_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT8, UINT8_MIN)
-        baseTypeMinMap.put(BASE_TYPE_SINT16, SINT16_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT16, UINT16_MIN)
-        baseTypeMinMap.put(BASE_TYPE_SINT32, SINT32_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT32, UINT32_MIN)
-        baseTypeMinMap.put(BASE_TYPE_FLOAT32, FLOAT32_MIN)
-        baseTypeMinMap.put(BASE_TYPE_FLOAT64, FLOAT64_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT8Z, UINT8Z_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT16Z, UINT16Z_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT32Z, UINT32Z_MIN)
-        baseTypeMinMap.put(BASE_TYPE_BYTE, BYTE_MIN)
-        baseTypeMinMap.put(BASE_TYPE_SINT64, SINT64_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT64, UINT64_MIN)
-        baseTypeMinMap.put(BASE_TYPE_UINT64Z, UINT64Z_MIN)
+        baseTypeMinMap[BASE_TYPE_ENUM] = ENUM_MIN
+        baseTypeMinMap[BASE_TYPE_SINT8] = SINT8_MIN
+        baseTypeMinMap[BASE_TYPE_UINT8] = UINT8_MIN
+        baseTypeMinMap[BASE_TYPE_SINT16] = SINT16_MIN
+        baseTypeMinMap[BASE_TYPE_UINT16] = UINT16_MIN
+        baseTypeMinMap[BASE_TYPE_SINT32] = SINT32_MIN
+        baseTypeMinMap[BASE_TYPE_UINT32] = UINT32_MIN
+        baseTypeMinMap[BASE_TYPE_FLOAT32] = FLOAT32_MIN
+        baseTypeMinMap[BASE_TYPE_FLOAT64] = FLOAT64_MIN
+        baseTypeMinMap[BASE_TYPE_UINT8Z] = UINT8Z_MIN
+        baseTypeMinMap[BASE_TYPE_UINT16Z] = UINT16Z_MIN
+        baseTypeMinMap[BASE_TYPE_UINT32Z] = UINT32Z_MIN
+        baseTypeMinMap[BASE_TYPE_BYTE] = BYTE_MIN
+        baseTypeMinMap[BASE_TYPE_SINT64] = SINT64_MIN
+        baseTypeMinMap[BASE_TYPE_UINT64] = UINT64_MIN
+        baseTypeMinMap[BASE_TYPE_UINT64Z] = UINT64Z_MIN
     }
 
-    val baseTypeMaxMap: HashMap<Int?, Any?>? = null
+    val baseTypeMaxMap = HashMap<Int, Any>(20)
 
     init {
-        baseTypeMaxMap = HashMap<Int?, Any?>(20)
-        baseTypeMaxMap.put(BASE_TYPE_ENUM, ENUM_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_SINT8, SINT8_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT8, UINT8_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_SINT16, SINT16_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT16, UINT16_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_SINT32, SINT32_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT32, UINT32_MAX)
-        //baseTypeMaxMap.put(BASE_TYPE_STRING, STRING_MAX);
-        baseTypeMaxMap.put(BASE_TYPE_FLOAT32, FLOAT32_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_FLOAT64, FLOAT64_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT8Z, UINT8Z_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT16Z, UINT16Z_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT32Z, UINT32Z_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_BYTE, BYTE_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_SINT64, SINT64_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT64, UINT64_MAX)
-        baseTypeMaxMap.put(BASE_TYPE_UINT64Z, UINT64Z_MAX)
+        baseTypeMaxMap[BASE_TYPE_ENUM] = ENUM_MAX
+        baseTypeMaxMap[BASE_TYPE_SINT8] = SINT8_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT8] = UINT8_MAX
+        baseTypeMaxMap[BASE_TYPE_SINT16] = SINT16_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT16] = UINT16_MAX
+        baseTypeMaxMap[BASE_TYPE_SINT32] = SINT32_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT32] = UINT32_MAX
+        //baseTypeMaxMap[BASE_TYPE_STRING] = STRING_MAX;
+        baseTypeMaxMap[BASE_TYPE_FLOAT32] = FLOAT32_MAX
+        baseTypeMaxMap[BASE_TYPE_FLOAT64] = FLOAT64_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT8Z] = UINT8Z_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT16Z] = UINT16Z_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT32Z] = UINT32Z_MAX
+        baseTypeMaxMap[BASE_TYPE_BYTE] = BYTE_MAX
+        baseTypeMaxMap[BASE_TYPE_SINT64] = SINT64_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT64] = UINT64_MAX
+        baseTypeMaxMap[BASE_TYPE_UINT64Z] = UINT64Z_MAX
     }
 
     enum class ProtocolVersion(val major: Int, val minor: Int) {
@@ -283,8 +271,8 @@ object Fit {
             get() = (major shl PROTOCOL_VERSION_MAJOR_SHIFT) or minor
 
         companion object {
-            val highestVersion: ProtocolVersion
-                get() = ProtocolVersion.V2_0
+            @JvmField
+            val highestVersion: ProtocolVersion = V2_0
         }
     }
 }

@@ -12,7 +12,7 @@ package com.garmin.fit
 class MonitoringHrDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MONITORING_HR_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class MonitoringHrDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Must align to logging interval, for example, time must be 00:00:00 for daily log.
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class MonitoringHrDataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Must align to logging interval, for example, time must be 00:00:00 for daily log.
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var restingHeartRate: Short?
@@ -40,7 +40,7 @@ class MonitoringHrDataMesg : Mesg {
          * Get resting_heart_rate field
          * Units: bpm
          * Comment: 7-day rolling average
-         * 
+         *
          * @return resting_heart_rate
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,7 +48,7 @@ class MonitoringHrDataMesg : Mesg {
          * Set resting_heart_rate field
          * Units: bpm
          * Comment: 7-day rolling average
-         * 
+         *
          * @param restingHeartRate The new restingHeartRate value to be set
          */
         set(restingHeartRate) {
@@ -60,7 +60,7 @@ class MonitoringHrDataMesg : Mesg {
          * Get current_day_resting_heart_rate field
          * Units: bpm
          * Comment: RHR for today only. (Feeds into 7-day average)
-         * 
+         *
          * @return current_day_resting_heart_rate
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -68,7 +68,7 @@ class MonitoringHrDataMesg : Mesg {
          * Set current_day_resting_heart_rate field
          * Units: bpm
          * Comment: RHR for today only. (Feeds into 7-day average)
-         * 
+         *
          * @param currentDayRestingHeartRate The new currentDayRestingHeartRate value to be set
          */
         set(currentDayRestingHeartRate) {
@@ -83,11 +83,10 @@ class MonitoringHrDataMesg : Mesg {
         const val CurrentDayRestingHeartRateFieldNum: Int = 1
 
 
-        val monitoringHrDataMesg: Mesg
+        // monitoring_hr_data
+        val monitoringHrDataMesg: Mesg = Mesg("monitoring_hr_data", MesgNum.MONITORING_HR_DATA)
 
         init {
-            // monitoring_hr_data
-            monitoringHrDataMesg = Mesg("monitoring_hr_data", MesgNum.MONITORING_HR_DATA)
             monitoringHrDataMesg.addField(
                 Field(
                     "timestamp",

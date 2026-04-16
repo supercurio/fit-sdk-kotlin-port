@@ -25,7 +25,7 @@ enum class WorkoutEquipment(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return WorkoutEquipment.INVALID
+            return INVALID
         }
 
         /**

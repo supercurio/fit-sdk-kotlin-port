@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface HsaRespirationDataMesgListener {
-    fun onMesg(mesg: HsaRespirationDataMesg?)
+    fun onMesg(mesg: HsaRespirationDataMesg)
 }

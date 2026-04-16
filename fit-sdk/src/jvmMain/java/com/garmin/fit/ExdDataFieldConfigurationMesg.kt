@@ -12,19 +12,19 @@ package com.garmin.fit
 class ExdDataFieldConfigurationMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.EXD_DATA_FIELD_CONFIGURATION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var screenIndex: Short?
         /**
          * Get screen_index field
-         * 
+         *
          * @return screen_index
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set screen_index field
-         * 
+         *
          * @param screenIndex The new screenIndex value to be set
          */
         set(screenIndex) {
@@ -34,13 +34,13 @@ class ExdDataFieldConfigurationMesg : Mesg {
     var conceptField: Byte?
         /**
          * Get concept_field field
-         * 
+         *
          * @return concept_field
          */
         get() = getFieldByteValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set concept_field field
-         * 
+         *
          * @param conceptField The new conceptField value to be set
          */
         set(conceptField) {
@@ -50,13 +50,13 @@ class ExdDataFieldConfigurationMesg : Mesg {
     var fieldId: Short?
         /**
          * Get field_id field
-         * 
+         *
          * @return field_id
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set field_id field
-         * 
+         *
          * @param fieldId The new fieldId value to be set
          */
         set(fieldId) {
@@ -66,13 +66,13 @@ class ExdDataFieldConfigurationMesg : Mesg {
     var conceptCount: Short?
         /**
          * Get concept_count field
-         * 
+         *
          * @return concept_count
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set concept_count field
-         * 
+         *
          * @param conceptCount The new conceptCount value to be set
          */
         set(conceptCount) {
@@ -82,19 +82,16 @@ class ExdDataFieldConfigurationMesg : Mesg {
     var displayType: ExdDisplayType?
         /**
          * Get display_type field
-         * 
+         *
          * @return display_type
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ExdDisplayType.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ExdDisplayType.getByValue(value)
         }
         /**
          * Set display_type field
-         * 
+         *
          * @param displayType The new displayType value to be set
          */
         set(displayType) {
@@ -112,7 +109,7 @@ class ExdDataFieldConfigurationMesg : Mesg {
 
     /**
      * Get title field
-     * 
+     *
      * @param index of title
      * @return title
      */
@@ -122,7 +119,7 @@ class ExdDataFieldConfigurationMesg : Mesg {
 
     /**
      * Set title field
-     * 
+     *
      * @param index of title
      * @param title The new title value to be set
      */
@@ -176,7 +173,7 @@ class ExdDataFieldConfigurationMesg : Mesg {
                     Profile.Type.BYTE
                 )
             )
-            exdDataFieldConfigurationMesg.fields.get(field_index).components.add(
+            exdDataFieldConfigurationMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -185,7 +182,7 @@ class ExdDataFieldConfigurationMesg : Mesg {
                     0.0
                 )
             ) // field_id
-            exdDataFieldConfigurationMesg.fields.get(field_index).components.add(
+            exdDataFieldConfigurationMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,

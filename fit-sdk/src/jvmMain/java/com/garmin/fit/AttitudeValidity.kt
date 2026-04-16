@@ -22,25 +22,24 @@ object AttitudeValidity {
     const val SOLUTION_COASTING: Int = 0x0400
     const val TRUE_TRACK_ANGLE: Int = 0x0800
     const val MAGNETIC_HEADING: Int = 0x1000
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(TRACK_ANGLE_HEADING_VALID, "TRACK_ANGLE_HEADING_VALID")
-        stringMap.put(PITCH_VALID, "PITCH_VALID")
-        stringMap.put(ROLL_VALID, "ROLL_VALID")
-        stringMap.put(LATERAL_BODY_ACCEL_VALID, "LATERAL_BODY_ACCEL_VALID")
-        stringMap.put(NORMAL_BODY_ACCEL_VALID, "NORMAL_BODY_ACCEL_VALID")
-        stringMap.put(TURN_RATE_VALID, "TURN_RATE_VALID")
-        stringMap.put(HW_FAIL, "HW_FAIL")
-        stringMap.put(MAG_INVALID, "MAG_INVALID")
-        stringMap.put(NO_GPS, "NO_GPS")
-        stringMap.put(GPS_INVALID, "GPS_INVALID")
-        stringMap.put(SOLUTION_COASTING, "SOLUTION_COASTING")
-        stringMap.put(TRUE_TRACK_ANGLE, "TRUE_TRACK_ANGLE")
-        stringMap.put(MAGNETIC_HEADING, "MAGNETIC_HEADING")
+        stringMap[TRACK_ANGLE_HEADING_VALID] = "TRACK_ANGLE_HEADING_VALID"
+        stringMap[PITCH_VALID] = "PITCH_VALID"
+        stringMap[ROLL_VALID] = "ROLL_VALID"
+        stringMap[LATERAL_BODY_ACCEL_VALID] = "LATERAL_BODY_ACCEL_VALID"
+        stringMap[NORMAL_BODY_ACCEL_VALID] = "NORMAL_BODY_ACCEL_VALID"
+        stringMap[TURN_RATE_VALID] = "TURN_RATE_VALID"
+        stringMap[HW_FAIL] = "HW_FAIL"
+        stringMap[MAG_INVALID] = "MAG_INVALID"
+        stringMap[NO_GPS] = "NO_GPS"
+        stringMap[GPS_INVALID] = "GPS_INVALID"
+        stringMap[SOLUTION_COASTING] = "SOLUTION_COASTING"
+        stringMap[TRUE_TRACK_ANGLE] = "TRUE_TRACK_ANGLE"
+        stringMap[MAGNETIC_HEADING] = "MAGNETIC_HEADING"
     }
 
 
@@ -49,9 +48,9 @@ object AttitudeValidity {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -62,7 +61,7 @@ object AttitudeValidity {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

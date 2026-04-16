@@ -39,7 +39,7 @@ object DecodeExample {
             //decode.incompleteStream();  // This suppresses exceptions with unexpected eof (also incorrect crc)
             val mesgBroadcaster = MesgBroadcaster(decode)
             val listener = Listener()
-            var `in`: FileInputStream?
+            var   inputStream: FileInputStream?
 
             System.out.printf(
                 "FIT Decode Example Application - Protocol %d.%d Profile %d.%d %s\n",
@@ -56,13 +56,13 @@ object DecodeExample {
             }
 
             try {
-                `in` = FileInputStream(args[0])
+                  inputStream = FileInputStream(args[0])
             } catch (e: IOException) {
                 throw RuntimeException("Error opening file " + args[0] + " [1]")
             }
 
             try {
-                if (!decode.checkFileIntegrity(`in` as InputStream)) {
+                if (!decode.checkFileIntegrity(  inputStream as InputStream)) {
                     throw RuntimeException("FIT file integrity failed.")
                 }
             } catch (e: RuntimeException) {
@@ -71,14 +71,14 @@ object DecodeExample {
                 System.err.println("Trying to continue...")
             } finally {
                 try {
-                    `in`.close()
+                      inputStream.close()
                 } catch (e: IOException) {
                     throw RuntimeException(e)
                 }
             }
 
             try {
-                `in` = FileInputStream(args[0])
+                  inputStream = FileInputStream(args[0])
             } catch (e: IOException) {
                 throw RuntimeException("Error opening file " + args[0] + " [2]")
             }
@@ -92,19 +92,19 @@ object DecodeExample {
             decode.addListener(listener as DeveloperFieldDescriptionListener)
 
             try {
-                decode.read(`in`, mesgBroadcaster, mesgBroadcaster)
+                decode.read(  inputStream, mesgBroadcaster, mesgBroadcaster)
             } catch (e: FitRuntimeException) {
                 // If a file with 0 data size in it's header  has been encountered,
                 // attempt to keep processing the file
-                if (decode.getInvalidFileDataSize()) {
+                if (decode.invalidFileDataSize) {
                     decode.nextFile()
-                    decode.read(`in`, mesgBroadcaster, mesgBroadcaster)
+                    decode.read(  inputStream, mesgBroadcaster, mesgBroadcaster)
                 } else {
                     System.err.print("Exception decoding file: ")
                     System.err.println(e.message)
 
                     try {
-                        `in`.close()
+                          inputStream.close()
                     } catch (f: IOException) {
                         throw RuntimeException(f)
                     }
@@ -114,7 +114,7 @@ object DecodeExample {
             }
 
             try {
-                `in`.close()
+                  inputStream.close()
             } catch (e: IOException) {
                 throw RuntimeException(e)
             }
@@ -131,71 +131,71 @@ object DecodeExample {
         override fun onMesg(mesg: FileIdMesg) {
             println("File ID:")
 
-            if (mesg.getType() != null) {
+            if (mesg.type != null) {
                 print("   Type: ")
-                println(mesg.getType().getValue())
+                println(mesg.type?.value)
             }
 
-            if (mesg.getManufacturer() != null) {
+            if (mesg.manufacturer != null) {
                 print("   Manufacturer: ")
-                println(mesg.getManufacturer())
+                println(mesg.manufacturer)
             }
 
-            if (mesg.getProduct() != null) {
+            if (mesg.product != null) {
                 print("   Product: ")
-                println(mesg.getProduct())
+                println(mesg.product)
             }
 
-            if (mesg.getSerialNumber() != null) {
+            if (mesg.serialNumber != null) {
                 print("   Serial Number: ")
-                println(mesg.getSerialNumber())
+                println(mesg.serialNumber)
             }
 
-            if (mesg.getNumber() != null) {
+            if (mesg.number != null) {
                 print("   Number: ")
-                println(mesg.getNumber())
+                println(mesg.number)
             }
         }
 
         override fun onMesg(mesg: UserProfileMesg) {
             println("User profile:")
 
-            if (mesg.getFriendlyName() != null) {
+            if (mesg.friendlyName != null) {
                 print("   Friendly Name: ")
-                println(mesg.getFriendlyName())
+                println(mesg.friendlyName)
             }
 
-            if (mesg.getGender() != null) {
-                if (mesg.getGender() == Gender.MALE) {
+            if (mesg.gender != null) {
+                if (mesg.gender == Gender.MALE) {
                     println("   Gender: Male")
-                } else if (mesg.getGender() == Gender.FEMALE) {
+                } else if (mesg.gender == Gender.FEMALE) {
                     println("   Gender: Female")
                 }
             }
 
-            if (mesg.getAge() != null) {
+            if (mesg.age != null) {
                 print("   Age [years]: ")
-                println(mesg.getAge())
+                println(mesg.age)
             }
 
-            if (mesg.getWeight() != null) {
+            if (mesg.weight != null) {
                 print("   Weight [kg]: ")
-                println(mesg.getWeight())
+                println(mesg.weight)
             }
         }
 
         override fun onMesg(mesg: DeviceInfoMesg) {
             println("Device info:")
 
-            if (mesg.getTimestamp() != null) {
+            if (mesg.timestamp != null) {
                 print("   Timestamp: ")
-                println(mesg.getTimestamp())
+                println(mesg.timestamp)
             }
 
-            if (mesg.getBatteryStatus() != null) {
+            if (mesg.batteryStatus != null) {
                 print("   Battery status: ")
 
-                when (mesg.getBatteryStatus()) {
+                when (mesg.batteryStatus) {
                     BatteryStatus.CRITICAL -> println("Critical")
                     BatteryStatus.GOOD -> println("Good")
                     BatteryStatus.LOW -> println("Low")
@@ -209,26 +209,26 @@ object DecodeExample {
         override fun onMesg(mesg: MonitoringMesg) {
             println("Monitoring:")
 
-            if (mesg.getTimestamp() != null) {
+            if (mesg.timestamp != null) {
                 print("   Timestamp: ")
-                println(mesg.getTimestamp())
+                println(mesg.timestamp)
             }
 
-            if (mesg.getActivityType() != null) {
+            if (mesg.activityType != null) {
                 print("   Activity Type: ")
-                println(mesg.getActivityType())
+                println(mesg.activityType)
             }
 
             // Depending on the ActivityType, there may be Steps, Strokes, or Cycles present in the file
-            if (mesg.getSteps() != null) {
+            if (mesg.steps != null) {
                 print("   Steps: ")
-                println(mesg.getSteps())
-            } else if (mesg.getStrokes() != null) {
+                println(mesg.steps)
+            } else if (mesg.strokes != null) {
                 print("   Strokes: ")
-                println(mesg.getStrokes())
-            } else if (mesg.getCycles() != null) {
+                println(mesg.strokes)
+            } else if (mesg.cycles != null) {
                 print("   Cycles: ")
-                println(mesg.getCycles())
+                println(mesg.cycles)
             }
 
             printDeveloperData(mesg)
@@ -237,25 +237,25 @@ object DecodeExample {
         override fun onMesg(mesg: RecordMesg) {
             println("Record:")
 
-            printValues(mesg, RecordMesg.Companion.HeartRateFieldNum)
-            printValues(mesg, RecordMesg.Companion.CadenceFieldNum)
-            printValues(mesg, RecordMesg.Companion.DistanceFieldNum)
-            printValues(mesg, RecordMesg.Companion.SpeedFieldNum)
+            printValues(mesg, RecordMesg.HeartRateFieldNum)
+            printValues(mesg, RecordMesg.CadenceFieldNum)
+            printValues(mesg, RecordMesg.DistanceFieldNum)
+            printValues(mesg, RecordMesg.SpeedFieldNum)
 
             printDeveloperData(mesg)
         }
 
         fun printDeveloperData(mesg: Mesg) {
-            for (field in mesg.getDeveloperFields()) {
-                if (field.getNumValues() < 1) {
+            for (field in mesg.developerFields) {
+                if (field.numValues < 1) {
                     continue
                 }
 
-                if (field.isDefined()) {
-                    print("   " + field.getName())
+                if (field.isDefined) {
+                    print("   " + field.name)
 
-                    if (field.getUnits() != null) {
-                        print(" [" + field.getUnits() + "]")
+                    if (field.units != null) {
+                        print(" [" + field.units + "]")
                     }
 
                     print(": ")
@@ -264,7 +264,7 @@ object DecodeExample {
                 }
 
                 print(field.getValue(0))
-                for (i in 1..<field.getNumValues()) {
+                for (i in 1..<field.numValues) {
                     print("," + field.getValue(i))
                 }
 
@@ -274,30 +274,26 @@ object DecodeExample {
 
         override fun onDescription(desc: DeveloperFieldDescription) {
             println("New Developer Field Description")
-            println("   App Id: " + desc.getApplicationId())
-            println("   App Version: " + desc.getApplicationVersion())
-            println("   Field Num: " + desc.getFieldDefinitionNumber())
+            println("   App Id: " + desc.applicationId)
+            println("   App Version: " + desc.applicationVersion)
+            println("   Field Num: " + desc.fieldDefinitionNumber)
         }
 
         fun printValues(mesg: Mesg, fieldNum: Int) {
             val fields = mesg.getOverrideField(fieldNum.toShort())
-            val profileField = Factory.createField(mesg.getNum(), fieldNum)
+            val profileField = Factory.createField(mesg.num, fieldNum)
             var namePrinted = false
-
-            if (profileField == null) {
-                return
-            }
 
             for (field in fields) {
                 if (!namePrinted) {
-                    println("   " + profileField.getName() + ":")
+                    println("   " + profileField.name + ":")
                     namePrinted = true
                 }
 
                 if (field is Field) {
-                    println("      native: " + field.getValue())
+                    println("      native: " + field.value)
                 } else {
-                    println("      override: " + field.getValue())
+                    println("      override: " + field?.value)
                 }
             }
         }

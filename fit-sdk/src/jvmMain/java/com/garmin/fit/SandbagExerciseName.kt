@@ -29,32 +29,31 @@ object SandbagExerciseName {
     const val SIDE_LUNGE: Int = 17
     const val SPRINT: Int = 18
     const val ZERCHER_SQUAT: Int = 19
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(AROUND_THE_WORLD, "AROUND_THE_WORLD")
-        stringMap.put(BACK_SQUAT, "BACK_SQUAT")
-        stringMap.put(BEAR_CRAWL_PULL_THROUGH, "BEAR_CRAWL_PULL_THROUGH")
-        stringMap.put(BEAR_HUG_SQUAT, "BEAR_HUG_SQUAT")
-        stringMap.put(CLEAN, "CLEAN")
-        stringMap.put(CLEAN_AND_PRESS, "CLEAN_AND_PRESS")
-        stringMap.put(CURL, "CURL")
-        stringMap.put(FRONT_CARRY, "FRONT_CARRY")
-        stringMap.put(FRONT_SQUAT, "FRONT_SQUAT")
-        stringMap.put(LUNGE, "LUNGE")
-        stringMap.put(OVERHEAD_PRESS, "OVERHEAD_PRESS")
-        stringMap.put(PLANK_PULL_THROUGH, "PLANK_PULL_THROUGH")
-        stringMap.put(ROTATIONAL_LUNGE, "ROTATIONAL_LUNGE")
-        stringMap.put(ROW, "ROW")
-        stringMap.put(RUSSIAN_TWIST, "RUSSIAN_TWIST")
-        stringMap.put(SHOULDERING, "SHOULDERING")
-        stringMap.put(SHOVELING, "SHOVELING")
-        stringMap.put(SIDE_LUNGE, "SIDE_LUNGE")
-        stringMap.put(SPRINT, "SPRINT")
-        stringMap.put(ZERCHER_SQUAT, "ZERCHER_SQUAT")
+        stringMap[AROUND_THE_WORLD] = "AROUND_THE_WORLD"
+        stringMap[BACK_SQUAT] = "BACK_SQUAT"
+        stringMap[BEAR_CRAWL_PULL_THROUGH] = "BEAR_CRAWL_PULL_THROUGH"
+        stringMap[BEAR_HUG_SQUAT] = "BEAR_HUG_SQUAT"
+        stringMap[CLEAN] = "CLEAN"
+        stringMap[CLEAN_AND_PRESS] = "CLEAN_AND_PRESS"
+        stringMap[CURL] = "CURL"
+        stringMap[FRONT_CARRY] = "FRONT_CARRY"
+        stringMap[FRONT_SQUAT] = "FRONT_SQUAT"
+        stringMap[LUNGE] = "LUNGE"
+        stringMap[OVERHEAD_PRESS] = "OVERHEAD_PRESS"
+        stringMap[PLANK_PULL_THROUGH] = "PLANK_PULL_THROUGH"
+        stringMap[ROTATIONAL_LUNGE] = "ROTATIONAL_LUNGE"
+        stringMap[ROW] = "ROW"
+        stringMap[RUSSIAN_TWIST] = "RUSSIAN_TWIST"
+        stringMap[SHOULDERING] = "SHOULDERING"
+        stringMap[SHOVELING] = "SHOVELING"
+        stringMap[SIDE_LUNGE] = "SIDE_LUNGE"
+        stringMap[SPRINT] = "SPRINT"
+        stringMap[ZERCHER_SQUAT] = "ZERCHER_SQUAT"
     }
 
 
@@ -63,9 +62,9 @@ object SandbagExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -76,7 +75,7 @@ object SandbagExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

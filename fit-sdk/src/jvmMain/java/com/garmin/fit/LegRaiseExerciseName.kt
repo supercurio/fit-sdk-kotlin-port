@@ -31,37 +31,33 @@ object LegRaiseExerciseName {
     const val WEIGHTED_HANGING_KNEE_RAISE: Int = 19
     const val LATERAL_STEPOVER: Int = 20
     const val WEIGHTED_LATERAL_STEPOVER: Int = 21
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(HANGING_KNEE_RAISE, "HANGING_KNEE_RAISE")
-        stringMap.put(HANGING_LEG_RAISE, "HANGING_LEG_RAISE")
-        stringMap.put(WEIGHTED_HANGING_LEG_RAISE, "WEIGHTED_HANGING_LEG_RAISE")
-        stringMap.put(HANGING_SINGLE_LEG_RAISE, "HANGING_SINGLE_LEG_RAISE")
-        stringMap.put(WEIGHTED_HANGING_SINGLE_LEG_RAISE, "WEIGHTED_HANGING_SINGLE_LEG_RAISE")
-        stringMap.put(KETTLEBELL_LEG_RAISES, "KETTLEBELL_LEG_RAISES")
-        stringMap.put(LEG_LOWERING_DRILL, "LEG_LOWERING_DRILL")
-        stringMap.put(WEIGHTED_LEG_LOWERING_DRILL, "WEIGHTED_LEG_LOWERING_DRILL")
-        stringMap.put(LYING_STRAIGHT_LEG_RAISE, "LYING_STRAIGHT_LEG_RAISE")
-        stringMap.put(WEIGHTED_LYING_STRAIGHT_LEG_RAISE, "WEIGHTED_LYING_STRAIGHT_LEG_RAISE")
-        stringMap.put(MEDICINE_BALL_LEG_DROPS, "MEDICINE_BALL_LEG_DROPS")
-        stringMap.put(QUADRUPED_LEG_RAISE, "QUADRUPED_LEG_RAISE")
-        stringMap.put(WEIGHTED_QUADRUPED_LEG_RAISE, "WEIGHTED_QUADRUPED_LEG_RAISE")
-        stringMap.put(REVERSE_LEG_RAISE, "REVERSE_LEG_RAISE")
-        stringMap.put(WEIGHTED_REVERSE_LEG_RAISE, "WEIGHTED_REVERSE_LEG_RAISE")
-        stringMap.put(REVERSE_LEG_RAISE_ON_SWISS_BALL, "REVERSE_LEG_RAISE_ON_SWISS_BALL")
-        stringMap.put(
-            WEIGHTED_REVERSE_LEG_RAISE_ON_SWISS_BALL,
-            "WEIGHTED_REVERSE_LEG_RAISE_ON_SWISS_BALL"
-        )
-        stringMap.put(SINGLE_LEG_LOWERING_DRILL, "SINGLE_LEG_LOWERING_DRILL")
-        stringMap.put(WEIGHTED_SINGLE_LEG_LOWERING_DRILL, "WEIGHTED_SINGLE_LEG_LOWERING_DRILL")
-        stringMap.put(WEIGHTED_HANGING_KNEE_RAISE, "WEIGHTED_HANGING_KNEE_RAISE")
-        stringMap.put(LATERAL_STEPOVER, "LATERAL_STEPOVER")
-        stringMap.put(WEIGHTED_LATERAL_STEPOVER, "WEIGHTED_LATERAL_STEPOVER")
+        stringMap[HANGING_KNEE_RAISE] = "HANGING_KNEE_RAISE"
+        stringMap[HANGING_LEG_RAISE] = "HANGING_LEG_RAISE"
+        stringMap[WEIGHTED_HANGING_LEG_RAISE] = "WEIGHTED_HANGING_LEG_RAISE"
+        stringMap[HANGING_SINGLE_LEG_RAISE] = "HANGING_SINGLE_LEG_RAISE"
+        stringMap[WEIGHTED_HANGING_SINGLE_LEG_RAISE] = "WEIGHTED_HANGING_SINGLE_LEG_RAISE"
+        stringMap[KETTLEBELL_LEG_RAISES] = "KETTLEBELL_LEG_RAISES"
+        stringMap[LEG_LOWERING_DRILL] = "LEG_LOWERING_DRILL"
+        stringMap[WEIGHTED_LEG_LOWERING_DRILL] = "WEIGHTED_LEG_LOWERING_DRILL"
+        stringMap[LYING_STRAIGHT_LEG_RAISE] = "LYING_STRAIGHT_LEG_RAISE"
+        stringMap[WEIGHTED_LYING_STRAIGHT_LEG_RAISE] = "WEIGHTED_LYING_STRAIGHT_LEG_RAISE"
+        stringMap[MEDICINE_BALL_LEG_DROPS] = "MEDICINE_BALL_LEG_DROPS"
+        stringMap[QUADRUPED_LEG_RAISE] = "QUADRUPED_LEG_RAISE"
+        stringMap[WEIGHTED_QUADRUPED_LEG_RAISE] = "WEIGHTED_QUADRUPED_LEG_RAISE"
+        stringMap[REVERSE_LEG_RAISE] = "REVERSE_LEG_RAISE"
+        stringMap[WEIGHTED_REVERSE_LEG_RAISE] = "WEIGHTED_REVERSE_LEG_RAISE"
+        stringMap[REVERSE_LEG_RAISE_ON_SWISS_BALL] = "REVERSE_LEG_RAISE_ON_SWISS_BALL"
+        stringMap[WEIGHTED_REVERSE_LEG_RAISE_ON_SWISS_BALL] = "WEIGHTED_REVERSE_LEG_RAISE_ON_SWISS_BALL"
+        stringMap[SINGLE_LEG_LOWERING_DRILL] = "SINGLE_LEG_LOWERING_DRILL"
+        stringMap[WEIGHTED_SINGLE_LEG_LOWERING_DRILL] = "WEIGHTED_SINGLE_LEG_LOWERING_DRILL"
+        stringMap[WEIGHTED_HANGING_KNEE_RAISE] = "WEIGHTED_HANGING_KNEE_RAISE"
+        stringMap[LATERAL_STEPOVER] = "LATERAL_STEPOVER"
+        stringMap[WEIGHTED_LATERAL_STEPOVER] = "WEIGHTED_LATERAL_STEPOVER"
     }
 
 
@@ -70,9 +66,9 @@ object LegRaiseExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -83,7 +79,7 @@ object LegRaiseExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

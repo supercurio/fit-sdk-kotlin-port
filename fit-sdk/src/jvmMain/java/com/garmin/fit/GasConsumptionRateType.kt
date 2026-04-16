@@ -22,7 +22,7 @@ enum class GasConsumptionRateType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return GasConsumptionRateType.INVALID
+            return INVALID
         }
 
         /**

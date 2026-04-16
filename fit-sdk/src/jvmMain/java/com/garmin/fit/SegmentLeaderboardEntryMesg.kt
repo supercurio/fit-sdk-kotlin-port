@@ -12,63 +12,58 @@ package com.garmin.fit
 class SegmentLeaderboardEntryMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_LEADERBOARD_ENTRY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
             setFieldValue(254, 0, messageIndex, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * Comment: Friendly name assigned to leader
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * Comment: Friendly name assigned to leader
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(0, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var type: SegmentLeaderboardType?
         /**
          * Get type field
          * Comment: Leader classification
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SegmentLeaderboardType.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SegmentLeaderboardType.getByValue(value)
         }
         /**
          * Set type field
          * Comment: Leader classification
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
@@ -79,14 +74,14 @@ class SegmentLeaderboardEntryMesg : Mesg {
         /**
          * Get group_primary_key field
          * Comment: Primary user ID of this leader
-         * 
+         *
          * @return group_primary_key
          */
         get() = getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set group_primary_key field
          * Comment: Primary user ID of this leader
-         * 
+         *
          * @param groupPrimaryKey The new groupPrimaryKey value to be set
          */
         set(groupPrimaryKey) {
@@ -97,14 +92,14 @@ class SegmentLeaderboardEntryMesg : Mesg {
         /**
          * Get activity_id field
          * Comment: ID of the activity associated with this leader time
-         * 
+         *
          * @return activity_id
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set activity_id field
          * Comment: ID of the activity associated with this leader time
-         * 
+         *
          * @param activityId The new activityId value to be set
          */
         set(activityId) {
@@ -116,7 +111,7 @@ class SegmentLeaderboardEntryMesg : Mesg {
          * Get segment_time field
          * Units: s
          * Comment: Segment Time (includes pauses)
-         * 
+         *
          * @return segment_time
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -124,7 +119,7 @@ class SegmentLeaderboardEntryMesg : Mesg {
          * Set segment_time field
          * Units: s
          * Comment: Segment Time (includes pauses)
-         * 
+         *
          * @param segmentTime The new segmentTime value to be set
          */
         set(segmentTime) {
@@ -135,14 +130,14 @@ class SegmentLeaderboardEntryMesg : Mesg {
         /**
          * Get activity_id_string field
          * Comment: String version of the activity_id. 21 characters long, express in decimal
-         * 
+         *
          * @return activity_id_string
          */
         get() = getFieldStringValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set activity_id_string field
          * Comment: String version of the activity_id. 21 characters long, express in decimal
-         * 
+         *
          * @param activityIdString The new activityIdString value to be set
          */
         set(activityIdString) {
@@ -165,12 +160,10 @@ class SegmentLeaderboardEntryMesg : Mesg {
         const val ActivityIdStringFieldNum: Int = 5
 
 
-        val segmentLeaderboardEntryMesg: Mesg
+        // segment_leaderboard_entry
+        val segmentLeaderboardEntryMesg: Mesg = Mesg("segment_leaderboard_entry", MesgNum.SEGMENT_LEADERBOARD_ENTRY)
 
         init {
-            // segment_leaderboard_entry
-            segmentLeaderboardEntryMesg =
-                Mesg("segment_leaderboard_entry", MesgNum.SEGMENT_LEADERBOARD_ENTRY)
             segmentLeaderboardEntryMesg.addField(
                 Field(
                     "message_index",

@@ -12,7 +12,7 @@ package com.garmin.fit
 class BarometerDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.BAROMETER_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class BarometerDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class BarometerDataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class BarometerDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,14 +48,14 @@ class BarometerDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val sampleTimeOffset: Array<Int?>?
+    val sampleTimeOffset: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSampleTimeOffset: Int
@@ -68,7 +68,7 @@ class BarometerDataMesg : Mesg {
      * Get sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the barometer sample with the corrosponding index was taken. The samples may span across seconds. Array size must match the number of samples in baro_cal
-     * 
+     *
      * @param index of sample_time_offset
      * @return sample_time_offset
      */
@@ -80,7 +80,7 @@ class BarometerDataMesg : Mesg {
      * Set sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the barometer sample with the corrosponding index was taken. The samples may span across seconds. Array size must match the number of samples in baro_cal
-     * 
+     *
      * @param index of sample_time_offset
      * @param sampleTimeOffset The new sampleTimeOffset value to be set
      */
@@ -88,7 +88,7 @@ class BarometerDataMesg : Mesg {
         setFieldValue(1, index, sampleTimeOffset, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val baroPres: Array<Long?>?
+    val baroPres: Array<Long>?
         get() = getFieldLongValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numBaroPres: Int
@@ -101,7 +101,7 @@ class BarometerDataMesg : Mesg {
      * Get baro_pres field
      * Units: Pa
      * Comment: These are the raw ADC reading. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of baro_pres
      * @return baro_pres
      */
@@ -113,7 +113,7 @@ class BarometerDataMesg : Mesg {
      * Set baro_pres field
      * Units: Pa
      * Comment: These are the raw ADC reading. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of baro_pres
      * @param baroPres The new baroPres value to be set
      */
@@ -131,11 +131,10 @@ class BarometerDataMesg : Mesg {
         const val BaroPresFieldNum: Int = 2
 
 
-        val barometerDataMesg: Mesg
+        // barometer_data
+        val barometerDataMesg: Mesg = Mesg("barometer_data", MesgNum.BAROMETER_DATA)
 
         init {
-            // barometer_data
-            barometerDataMesg = Mesg("barometer_data", MesgNum.BAROMETER_DATA)
             barometerDataMesg.addField(
                 Field(
                     "timestamp",

@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface RecordMesgListener {
-    fun onMesg(mesg: RecordMesg?)
+    fun onMesg(mesg: RecordMesg)
 }

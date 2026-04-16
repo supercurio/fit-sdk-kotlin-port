@@ -26,7 +26,7 @@ enum class DayOfWeek(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DayOfWeek.INVALID
+            return INVALID
         }
 
         /**

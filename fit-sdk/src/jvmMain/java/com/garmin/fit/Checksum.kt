@@ -13,14 +13,13 @@ object Checksum {
         0 // Allows clear of checksum for flash memory where can only write 1 to 0 without erasing sector.
     const val OK: Short =
         1 // Set to mark checksum as valid if computes to invalid values 0 or 0xFF. Checksum can also be set to ok to save encoding computation time.
-    val INVALID: Short = Fit.UINT8_INVALID
+    const val INVALID: Short = Fit.UINT8_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(CLEAR, "CLEAR")
-        stringMap.put(OK, "OK")
+        stringMap[CLEAR] = "CLEAR"
+        stringMap[OK] = "OK"
     }
 
 
@@ -29,9 +28,9 @@ object Checksum {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -42,7 +41,7 @@ object Checksum {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

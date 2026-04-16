@@ -30,45 +30,34 @@ object CalfRaiseExerciseName {
     const val STANDING_CALF_RAISE: Int = 18
     const val WEIGHTED_STANDING_CALF_RAISE: Int = 19
     const val STANDING_DUMBBELL_CALF_RAISE: Int = 20
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(_3_WAY_CALF_RAISE, "_3_WAY_CALF_RAISE")
-        stringMap.put(_3_WAY_WEIGHTED_CALF_RAISE, "_3_WAY_WEIGHTED_CALF_RAISE")
-        stringMap.put(_3_WAY_SINGLE_LEG_CALF_RAISE, "_3_WAY_SINGLE_LEG_CALF_RAISE")
-        stringMap.put(
-            _3_WAY_WEIGHTED_SINGLE_LEG_CALF_RAISE,
-            "_3_WAY_WEIGHTED_SINGLE_LEG_CALF_RAISE"
-        )
-        stringMap.put(DONKEY_CALF_RAISE, "DONKEY_CALF_RAISE")
-        stringMap.put(WEIGHTED_DONKEY_CALF_RAISE, "WEIGHTED_DONKEY_CALF_RAISE")
-        stringMap.put(SEATED_CALF_RAISE, "SEATED_CALF_RAISE")
-        stringMap.put(WEIGHTED_SEATED_CALF_RAISE, "WEIGHTED_SEATED_CALF_RAISE")
-        stringMap.put(SEATED_DUMBBELL_TOE_RAISE, "SEATED_DUMBBELL_TOE_RAISE")
-        stringMap.put(SINGLE_LEG_BENT_KNEE_CALF_RAISE, "SINGLE_LEG_BENT_KNEE_CALF_RAISE")
-        stringMap.put(
-            WEIGHTED_SINGLE_LEG_BENT_KNEE_CALF_RAISE,
+        stringMap[_3_WAY_CALF_RAISE] = "_3_WAY_CALF_RAISE"
+        stringMap[_3_WAY_WEIGHTED_CALF_RAISE] = "_3_WAY_WEIGHTED_CALF_RAISE"
+        stringMap[_3_WAY_SINGLE_LEG_CALF_RAISE] = "_3_WAY_SINGLE_LEG_CALF_RAISE"
+        stringMap[_3_WAY_WEIGHTED_SINGLE_LEG_CALF_RAISE] = "_3_WAY_WEIGHTED_SINGLE_LEG_CALF_RAISE"
+        stringMap[DONKEY_CALF_RAISE] = "DONKEY_CALF_RAISE"
+        stringMap[WEIGHTED_DONKEY_CALF_RAISE] = "WEIGHTED_DONKEY_CALF_RAISE"
+        stringMap[SEATED_CALF_RAISE] = "SEATED_CALF_RAISE"
+        stringMap[WEIGHTED_SEATED_CALF_RAISE] = "WEIGHTED_SEATED_CALF_RAISE"
+        stringMap[SEATED_DUMBBELL_TOE_RAISE] = "SEATED_DUMBBELL_TOE_RAISE"
+        stringMap[SINGLE_LEG_BENT_KNEE_CALF_RAISE] = "SINGLE_LEG_BENT_KNEE_CALF_RAISE"
+        stringMap[WEIGHTED_SINGLE_LEG_BENT_KNEE_CALF_RAISE] =
             "WEIGHTED_SINGLE_LEG_BENT_KNEE_CALF_RAISE"
-        )
-        stringMap.put(SINGLE_LEG_DECLINE_PUSH_UP, "SINGLE_LEG_DECLINE_PUSH_UP")
-        stringMap.put(SINGLE_LEG_DONKEY_CALF_RAISE, "SINGLE_LEG_DONKEY_CALF_RAISE")
-        stringMap.put(
-            WEIGHTED_SINGLE_LEG_DONKEY_CALF_RAISE,
-            "WEIGHTED_SINGLE_LEG_DONKEY_CALF_RAISE"
-        )
-        stringMap.put(SINGLE_LEG_HIP_RAISE_WITH_KNEE_HOLD, "SINGLE_LEG_HIP_RAISE_WITH_KNEE_HOLD")
-        stringMap.put(SINGLE_LEG_STANDING_CALF_RAISE, "SINGLE_LEG_STANDING_CALF_RAISE")
-        stringMap.put(
-            SINGLE_LEG_STANDING_DUMBBELL_CALF_RAISE,
+        stringMap[SINGLE_LEG_DECLINE_PUSH_UP] = "SINGLE_LEG_DECLINE_PUSH_UP"
+        stringMap[SINGLE_LEG_DONKEY_CALF_RAISE] = "SINGLE_LEG_DONKEY_CALF_RAISE"
+        stringMap[WEIGHTED_SINGLE_LEG_DONKEY_CALF_RAISE] = "WEIGHTED_SINGLE_LEG_DONKEY_CALF_RAISE"
+        stringMap[SINGLE_LEG_HIP_RAISE_WITH_KNEE_HOLD] = "SINGLE_LEG_HIP_RAISE_WITH_KNEE_HOLD"
+        stringMap[SINGLE_LEG_STANDING_CALF_RAISE] = "SINGLE_LEG_STANDING_CALF_RAISE"
+        stringMap[SINGLE_LEG_STANDING_DUMBBELL_CALF_RAISE] =
             "SINGLE_LEG_STANDING_DUMBBELL_CALF_RAISE"
-        )
-        stringMap.put(STANDING_BARBELL_CALF_RAISE, "STANDING_BARBELL_CALF_RAISE")
-        stringMap.put(STANDING_CALF_RAISE, "STANDING_CALF_RAISE")
-        stringMap.put(WEIGHTED_STANDING_CALF_RAISE, "WEIGHTED_STANDING_CALF_RAISE")
-        stringMap.put(STANDING_DUMBBELL_CALF_RAISE, "STANDING_DUMBBELL_CALF_RAISE")
+        stringMap[STANDING_BARBELL_CALF_RAISE] = "STANDING_BARBELL_CALF_RAISE"
+        stringMap[STANDING_CALF_RAISE] = "STANDING_CALF_RAISE"
+        stringMap[WEIGHTED_STANDING_CALF_RAISE] = "WEIGHTED_STANDING_CALF_RAISE"
+        stringMap[STANDING_DUMBBELL_CALF_RAISE] = "STANDING_DUMBBELL_CALF_RAISE"
     }
 
 
@@ -77,9 +66,9 @@ object CalfRaiseExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -90,7 +79,7 @@ object CalfRaiseExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

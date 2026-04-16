@@ -12,19 +12,19 @@ package com.garmin.fit
 class WorkoutSessionMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.WORKOUT_SESSION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,19 +34,16 @@ class WorkoutSessionMesg : Mesg {
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
@@ -56,19 +53,16 @@ class WorkoutSessionMesg : Mesg {
     var subSport: SubSport?
         /**
          * Get sub_sport field
-         * 
+         *
          * @return sub_sport
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SubSport.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SubSport.getByValue(value)
         }
         /**
          * Set sub_sport field
-         * 
+         *
          * @param subSport The new subSport value to be set
          */
         set(subSport) {
@@ -78,13 +72,13 @@ class WorkoutSessionMesg : Mesg {
     var numValidSteps: Int?
         /**
          * Get num_valid_steps field
-         * 
+         *
          * @return num_valid_steps
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set num_valid_steps field
-         * 
+         *
          * @param numValidSteps The new numValidSteps value to be set
          */
         set(numValidSteps) {
@@ -94,13 +88,13 @@ class WorkoutSessionMesg : Mesg {
     var firstStepIndex: Int?
         /**
          * Get first_step_index field
-         * 
+         *
          * @return first_step_index
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set first_step_index field
-         * 
+         *
          * @param firstStepIndex The new firstStepIndex value to be set
          */
         set(firstStepIndex) {
@@ -111,14 +105,14 @@ class WorkoutSessionMesg : Mesg {
         /**
          * Get pool_length field
          * Units: m
-         * 
+         *
          * @return pool_length
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set pool_length field
          * Units: m
-         * 
+         *
          * @param poolLength The new poolLength value to be set
          */
         set(poolLength) {
@@ -128,19 +122,16 @@ class WorkoutSessionMesg : Mesg {
     var poolLengthUnit: DisplayMeasure?
         /**
          * Get pool_length_unit field
-         * 
+         *
          * @return pool_length_unit
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set pool_length_unit field
-         * 
+         *
          * @param poolLengthUnit The new poolLengthUnit value to be set
          */
         set(poolLengthUnit) {
@@ -163,11 +154,10 @@ class WorkoutSessionMesg : Mesg {
         const val PoolLengthUnitFieldNum: Int = 5
 
 
-        val workoutSessionMesg: Mesg
+        // workout_session
+        val workoutSessionMesg: Mesg = Mesg("workout_session", MesgNum.WORKOUT_SESSION)
 
         init {
-            // workout_session
-            workoutSessionMesg = Mesg("workout_session", MesgNum.WORKOUT_SESSION)
             workoutSessionMesg.addField(
                 Field(
                     "message_index",

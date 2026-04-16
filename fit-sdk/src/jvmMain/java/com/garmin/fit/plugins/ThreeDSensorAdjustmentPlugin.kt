@@ -22,12 +22,12 @@ import com.garmin.fit.ThreeDSensorCalibrationMesg
  * Provides functionality to adjust uncalibrated data from 3D sensors such as gyroscopes (gyroscope_data)
  * and accelerometers (accelerometer_data) using calibration parameters from three_d_sensor_calibration
  * messages encountered.  Adjusted data is added as a new field to the existing 3d sensor data messages.
- * 
+ *
  * Requirements for correct operation:
  * - 3D sensor data
  * - At least one three_d_sensor_calibration message for each sensor type
  * - If more than one three_d_sensor_calibration message is encountered the last one is used
- * 
+ *
  */
 class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
     private val X_AXIS_OFFSET = 0
@@ -35,32 +35,32 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
     private val Z_AXIS_OFFSET = 2
     private val NUM_AXIS = 3
 
-    private inner class CalibrationParameters {
+    inner class CalibrationParameters {
         var calFactor: Long = 0
         var calDivisor: Long = 0
         var channelOffset: LongArray = LongArray(3)
         var levelShift: Long = 0
-        var rotationMatrix: Array<FloatArray?> = Array<FloatArray?>(3) { FloatArray(3) }
+        var rotationMatrix: Array<FloatArray?> = Array(3) { FloatArray(3) }
 
         fun LoadParams(calMesg: ThreeDSensorCalibrationMesg) {
-            this.calFactor = calMesg.getCalibrationFactor()
-            this.calDivisor = calMesg.getCalibrationDivisor()
-            this.levelShift = calMesg.getLevelShift()
+            this.calFactor = calMesg.calibrationFactor!!
+            this.calDivisor = calMesg.calibrationDivisor!!
+            this.levelShift = calMesg.levelShift!!
 
-            this.channelOffset[X_AXIS_OFFSET] = calMesg.getOffsetCal(X_AXIS_OFFSET).toLong()
-            this.channelOffset[Y_AXIS_OFFSET] = calMesg.getOffsetCal(Y_AXIS_OFFSET).toLong()
-            this.channelOffset[Z_AXIS_OFFSET] = calMesg.getOffsetCal(Z_AXIS_OFFSET).toLong()
+            this.channelOffset[X_AXIS_OFFSET] = calMesg.getOffsetCal(X_AXIS_OFFSET)!!.toLong()
+            this.channelOffset[Y_AXIS_OFFSET] = calMesg.getOffsetCal(Y_AXIS_OFFSET)!!.toLong()
+            this.channelOffset[Z_AXIS_OFFSET] = calMesg.getOffsetCal(Z_AXIS_OFFSET)!!.toLong()
 
             // rotationMatrix is row major
-            this.rotationMatrix[0]!![0] = calMesg.getOrientationMatrix(0)
-            this.rotationMatrix[0]!![1] = calMesg.getOrientationMatrix(1)
-            this.rotationMatrix[0]!![2] = calMesg.getOrientationMatrix(2)
-            this.rotationMatrix[1]!![0] = calMesg.getOrientationMatrix(3)
-            this.rotationMatrix[1]!![1] = calMesg.getOrientationMatrix(4)
-            this.rotationMatrix[1]!![2] = calMesg.getOrientationMatrix(5)
-            this.rotationMatrix[2]!![0] = calMesg.getOrientationMatrix(6)
-            this.rotationMatrix[2]!![1] = calMesg.getOrientationMatrix(7)
-            this.rotationMatrix[2]!![2] = calMesg.getOrientationMatrix(8)
+            this.rotationMatrix[0]!![0] = calMesg.getOrientationMatrix(0)!!
+            this.rotationMatrix[0]!![1] = calMesg.getOrientationMatrix(1)!!
+            this.rotationMatrix[0]!![2] = calMesg.getOrientationMatrix(2)!!
+            this.rotationMatrix[1]!![0] = calMesg.getOrientationMatrix(3)!!
+            this.rotationMatrix[1]!![1] = calMesg.getOrientationMatrix(4)!!
+            this.rotationMatrix[1]!![2] = calMesg.getOrientationMatrix(5)!!
+            this.rotationMatrix[2]!![0] = calMesg.getOrientationMatrix(6)!!
+            this.rotationMatrix[2]!![1] = calMesg.getOrientationMatrix(7)!!
+            this.rotationMatrix[2]!![2] = calMesg.getOrientationMatrix(8)!!
         }
     }
 
@@ -73,15 +73,15 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
 
     /**
      * Peeks messages as they are being added to the buffer
-     * 
+     *
      * @param mesg the message that has just been buffered by BufferedMesgBroadcaster
      */
     override fun onIncomingMesg(mesg: Mesg) {
-        when (mesg.getNum()) {
+        when (mesg.num) {
             MesgNum.THREE_D_SENSOR_CALIBRATION -> {
                 val calMesg = ThreeDSensorCalibrationMesg(mesg)
 
-                when (calMesg.getSensorType()) {
+                when (calMesg.sensorType) {
                     SensorType.ACCELEROMETER -> {
                         accelCalParams.LoadParams(calMesg)
                         haveAccelCal = true
@@ -108,12 +108,12 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
     /**
      * Detects 3D Sensor messages and adjusts the raw data if calibration is available.
      * New fields are added to contain the adjusted sensor data.
-     * 
+     *
      * @param mesgs the message list that is about to be broadcast to all MesgListeners.  \
      * Note: The List is 'final' but the references within the list are not, \
      * therefore editing Mesg objects within mesgs will alter the messages   \
      * that are broadcast to listeners.
-     * 
+     *
      * DO NOT add or remove any messages to mesgs
      */
     override fun onBroadcast(mesgs: MutableList<Mesg>) {
@@ -122,22 +122,22 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
         var count: Int
 
         for (mesg in mesgs) {
-            when (mesg.getNum()) {
+            when (mesg.num) {
                 MesgNum.ACCELEROMETER_DATA -> if (haveAccelCal) {
                     val accelData = AccelerometerDataMesg(mesg)
-                    count = accelData.getNumAccelX()
+                    count = accelData.numAccelX
                     var i = 0
                     while (i < count) {
                         // Extract the uncalibrated accel data from incoming message
-                        rawXYZ[X_AXIS_OFFSET] = accelData.getAccelX(i)
-                        rawXYZ[Y_AXIS_OFFSET] = accelData.getAccelY(i)
-                        rawXYZ[Z_AXIS_OFFSET] = accelData.getAccelZ(i)
+                        rawXYZ[X_AXIS_OFFSET] = accelData.getAccelX(i)!!
+                        rawXYZ[Y_AXIS_OFFSET] = accelData.getAccelY(i)!!
+                        rawXYZ[Z_AXIS_OFFSET] = accelData.getAccelZ(i)!!
                         // Apply calibration to the values
                         calibratedXYZ = adjustSensorData(rawXYZ, accelCalParams)
                         // Now update the message
                         processCalibrationFactor(
                             mesg,
-                            arrayOf<String>(
+                            arrayOf(
                                 "calibrated_accel_x",
                                 "calibrated_accel_y",
                                 "calibrated_accel_z"
@@ -151,19 +151,19 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
 
                 MesgNum.GYROSCOPE_DATA -> if (haveGyroCal) {
                     val gyroData = GyroscopeDataMesg(mesg)
-                    count = gyroData.getNumGyroX()
+                    count = gyroData.numGyroX
                     var i = 0
                     while (i < count) {
                         // Extract the uncalibrated gyro data from incoming message
-                        rawXYZ[X_AXIS_OFFSET] = gyroData.getGyroX(i)
-                        rawXYZ[Y_AXIS_OFFSET] = gyroData.getGyroY(i)
-                        rawXYZ[Z_AXIS_OFFSET] = gyroData.getGyroZ(i)
+                        rawXYZ[X_AXIS_OFFSET] = gyroData.getGyroX(i)!!
+                        rawXYZ[Y_AXIS_OFFSET] = gyroData.getGyroY(i)!!
+                        rawXYZ[Z_AXIS_OFFSET] = gyroData.getGyroZ(i)!!
                         // Apply calibration
                         calibratedXYZ = adjustSensorData(rawXYZ, gyroCalParams)
                         // Add calibrated data fields to existing message if they are not already present
                         processCalibrationFactor(
                             mesg,
-                            arrayOf<String>(
+                            arrayOf(
                                 "calibrated_gyro_x",
                                 "calibrated_gyro_y",
                                 "calibrated_gyro_z"
@@ -177,19 +177,19 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
 
                 MesgNum.MAGNETOMETER_DATA -> if (haveMagCal) {
                     val magData = MagnetometerDataMesg(mesg)
-                    count = magData.getNumMagX()
+                    count = magData.numMagX
                     var i = 0
                     while (i < count) {
                         // Extract the uncalibrated gyro data from incoming message
-                        rawXYZ[X_AXIS_OFFSET] = magData.getMagX(i)
-                        rawXYZ[Y_AXIS_OFFSET] = magData.getMagY(i)
-                        rawXYZ[Z_AXIS_OFFSET] = magData.getMagZ(i)
+                        rawXYZ[X_AXIS_OFFSET] = magData.getMagX(i)!!
+                        rawXYZ[Y_AXIS_OFFSET] = magData.getMagY(i)!!
+                        rawXYZ[Z_AXIS_OFFSET] = magData.getMagZ(i)!!
                         // Apply calibration
                         calibratedXYZ = adjustSensorData(rawXYZ, magCalParams)
                         // Add calibrated data fields to existing message if they are not already present
                         processCalibrationFactor(
                             mesg,
-                            arrayOf<String>(
+                            arrayOf(
                                 "calibrated_mag_x",
                                 "calibrated_mag_y",
                                 "calibrated_mag_z"
@@ -208,7 +208,7 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
 
     private fun processCalibrationFactor(
         mesg: Mesg,
-        fieldsXYZ: Array<String?>,
+        fieldsXYZ: Array<String>,
         calibratedXYZ: FloatArray,
         mesgName: String?
     ) {
@@ -226,9 +226,9 @@ class ThreeDSensorAdjustmentPlugin : MesgBroadcastPlugin {
         if (mesg.getField(fieldsXYZ[Z_AXIS_OFFSET]) == null) {
             mesg.addField(Factory.createField(mesgName, fieldsXYZ[Z_AXIS_OFFSET]))
         }
-        mesg.getField(fieldsXYZ[X_AXIS_OFFSET]).addValue(calibratedXYZ[X_AXIS_OFFSET])
-        mesg.getField(fieldsXYZ[Y_AXIS_OFFSET]).addValue(calibratedXYZ[Y_AXIS_OFFSET])
-        mesg.getField(fieldsXYZ[Z_AXIS_OFFSET]).addValue(calibratedXYZ[Z_AXIS_OFFSET])
+        mesg.getField(fieldsXYZ[X_AXIS_OFFSET])?.addValue(calibratedXYZ[X_AXIS_OFFSET])
+        mesg.getField(fieldsXYZ[Y_AXIS_OFFSET])?.addValue(calibratedXYZ[Y_AXIS_OFFSET])
+        mesg.getField(fieldsXYZ[Z_AXIS_OFFSET])?.addValue(calibratedXYZ[Z_AXIS_OFFSET])
     }
 
     private fun adjustSensorData(rawData: IntArray?, calParams: CalibrationParameters): FloatArray {

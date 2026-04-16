@@ -44,47 +44,46 @@ object SuspensionExerciseName {
     const val SQUAT_JUMP: Int = 32
     const val TRICEP_PRESS: Int = 33
     const val Y_FLY: Int = 34
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(CHEST_FLY, "CHEST_FLY")
-        stringMap.put(CHEST_PRESS, "CHEST_PRESS")
-        stringMap.put(CRUNCH, "CRUNCH")
-        stringMap.put(CURL, "CURL")
-        stringMap.put(DIP, "DIP")
-        stringMap.put(FACE_PULL, "FACE_PULL")
-        stringMap.put(GLUTE_BRIDGE, "GLUTE_BRIDGE")
-        stringMap.put(HAMSTRING_CURL, "HAMSTRING_CURL")
-        stringMap.put(HIP_DROP, "HIP_DROP")
-        stringMap.put(INVERTED_ROW, "INVERTED_ROW")
-        stringMap.put(KNEE_DRIVE_JUMP, "KNEE_DRIVE_JUMP")
-        stringMap.put(KNEE_TO_CHEST, "KNEE_TO_CHEST")
-        stringMap.put(LAT_PULLOVER, "LAT_PULLOVER")
-        stringMap.put(LUNGE, "LUNGE")
-        stringMap.put(MOUNTAIN_CLIMBER, "MOUNTAIN_CLIMBER")
-        stringMap.put(PENDULUM, "PENDULUM")
-        stringMap.put(PIKE, "PIKE")
-        stringMap.put(PLANK, "PLANK")
-        stringMap.put(POWER_PULL, "POWER_PULL")
-        stringMap.put(PULL_UP, "PULL_UP")
-        stringMap.put(PUSH_UP, "PUSH_UP")
-        stringMap.put(REVERSE_MOUNTAIN_CLIMBER, "REVERSE_MOUNTAIN_CLIMBER")
-        stringMap.put(REVERSE_PLANK, "REVERSE_PLANK")
-        stringMap.put(ROLLOUT, "ROLLOUT")
-        stringMap.put(ROW, "ROW")
-        stringMap.put(SIDE_LUNGE, "SIDE_LUNGE")
-        stringMap.put(SIDE_PLANK, "SIDE_PLANK")
-        stringMap.put(SINGLE_LEG_DEADLIFT, "SINGLE_LEG_DEADLIFT")
-        stringMap.put(SINGLE_LEG_SQUAT, "SINGLE_LEG_SQUAT")
-        stringMap.put(SIT_UP, "SIT_UP")
-        stringMap.put(SPLIT, "SPLIT")
-        stringMap.put(SQUAT, "SQUAT")
-        stringMap.put(SQUAT_JUMP, "SQUAT_JUMP")
-        stringMap.put(TRICEP_PRESS, "TRICEP_PRESS")
-        stringMap.put(Y_FLY, "Y_FLY")
+        stringMap[CHEST_FLY] = "CHEST_FLY"
+        stringMap[CHEST_PRESS] = "CHEST_PRESS"
+        stringMap[CRUNCH] = "CRUNCH"
+        stringMap[CURL] = "CURL"
+        stringMap[DIP] = "DIP"
+        stringMap[FACE_PULL] = "FACE_PULL"
+        stringMap[GLUTE_BRIDGE] = "GLUTE_BRIDGE"
+        stringMap[HAMSTRING_CURL] = "HAMSTRING_CURL"
+        stringMap[HIP_DROP] = "HIP_DROP"
+        stringMap[INVERTED_ROW] = "INVERTED_ROW"
+        stringMap[KNEE_DRIVE_JUMP] = "KNEE_DRIVE_JUMP"
+        stringMap[KNEE_TO_CHEST] = "KNEE_TO_CHEST"
+        stringMap[LAT_PULLOVER] = "LAT_PULLOVER"
+        stringMap[LUNGE] = "LUNGE"
+        stringMap[MOUNTAIN_CLIMBER] = "MOUNTAIN_CLIMBER"
+        stringMap[PENDULUM] = "PENDULUM"
+        stringMap[PIKE] = "PIKE"
+        stringMap[PLANK] = "PLANK"
+        stringMap[POWER_PULL] = "POWER_PULL"
+        stringMap[PULL_UP] = "PULL_UP"
+        stringMap[PUSH_UP] = "PUSH_UP"
+        stringMap[REVERSE_MOUNTAIN_CLIMBER] = "REVERSE_MOUNTAIN_CLIMBER"
+        stringMap[REVERSE_PLANK] = "REVERSE_PLANK"
+        stringMap[ROLLOUT] = "ROLLOUT"
+        stringMap[ROW] = "ROW"
+        stringMap[SIDE_LUNGE] = "SIDE_LUNGE"
+        stringMap[SIDE_PLANK] = "SIDE_PLANK"
+        stringMap[SINGLE_LEG_DEADLIFT] = "SINGLE_LEG_DEADLIFT"
+        stringMap[SINGLE_LEG_SQUAT] = "SINGLE_LEG_SQUAT"
+        stringMap[SIT_UP] = "SIT_UP"
+        stringMap[SPLIT] = "SPLIT"
+        stringMap[SQUAT] = "SQUAT"
+        stringMap[SQUAT_JUMP] = "SQUAT_JUMP"
+        stringMap[TRICEP_PRESS] = "TRICEP_PRESS"
+        stringMap[Y_FLY] = "Y_FLY"
     }
 
 
@@ -93,9 +92,9 @@ object SuspensionExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -106,7 +105,7 @@ object SuspensionExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

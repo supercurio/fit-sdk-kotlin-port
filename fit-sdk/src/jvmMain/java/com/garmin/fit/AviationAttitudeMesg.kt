@@ -12,7 +12,7 @@ package com.garmin.fit
 class AviationAttitudeMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.AVIATION_ATTITUDE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class AviationAttitudeMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Timestamp message was output
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class AviationAttitudeMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Timestamp message was output
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class AviationAttitudeMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Fractional part of timestamp, added to timestamp
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,14 +48,14 @@ class AviationAttitudeMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Fractional part of timestamp, added to timestamp
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val systemTime: Array<Long?>?
+    val systemTime: Array<Long>?
         get() = getFieldLongValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSystemTime: Int
@@ -68,7 +68,7 @@ class AviationAttitudeMesg : Mesg {
      * Get system_time field
      * Units: ms
      * Comment: System time associated with sample expressed in ms.
-     * 
+     *
      * @param index of system_time
      * @return system_time
      */
@@ -80,7 +80,7 @@ class AviationAttitudeMesg : Mesg {
      * Set system_time field
      * Units: ms
      * Comment: System time associated with sample expressed in ms.
-     * 
+     *
      * @param index of system_time
      * @param systemTime The new systemTime value to be set
      */
@@ -88,7 +88,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(1, index, systemTime, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val pitch: Array<Float?>?
+    val pitch: Array<Float>?
         get() = getFieldFloatValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numPitch: Int
@@ -101,7 +101,7 @@ class AviationAttitudeMesg : Mesg {
      * Get pitch field
      * Units: radians
      * Comment: Range -PI/2 to +PI/2
-     * 
+     *
      * @param index of pitch
      * @return pitch
      */
@@ -113,7 +113,7 @@ class AviationAttitudeMesg : Mesg {
      * Set pitch field
      * Units: radians
      * Comment: Range -PI/2 to +PI/2
-     * 
+     *
      * @param index of pitch
      * @param pitch The new pitch value to be set
      */
@@ -121,7 +121,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(2, index, pitch, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val roll: Array<Float?>?
+    val roll: Array<Float>?
         get() = getFieldFloatValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numRoll: Int
@@ -134,7 +134,7 @@ class AviationAttitudeMesg : Mesg {
      * Get roll field
      * Units: radians
      * Comment: Range -PI to +PI
-     * 
+     *
      * @param index of roll
      * @return roll
      */
@@ -146,7 +146,7 @@ class AviationAttitudeMesg : Mesg {
      * Set roll field
      * Units: radians
      * Comment: Range -PI to +PI
-     * 
+     *
      * @param index of roll
      * @param roll The new roll value to be set
      */
@@ -154,7 +154,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(3, index, roll, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelLateral: Array<Float?>?
+    val accelLateral: Array<Float>?
         get() = getFieldFloatValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelLateral: Int
@@ -167,7 +167,7 @@ class AviationAttitudeMesg : Mesg {
      * Get accel_lateral field
      * Units: m/s^2
      * Comment: Range -78.4 to +78.4 (-8 Gs to 8 Gs)
-     * 
+     *
      * @param index of accel_lateral
      * @return accel_lateral
      */
@@ -179,7 +179,7 @@ class AviationAttitudeMesg : Mesg {
      * Set accel_lateral field
      * Units: m/s^2
      * Comment: Range -78.4 to +78.4 (-8 Gs to 8 Gs)
-     * 
+     *
      * @param index of accel_lateral
      * @param accelLateral The new accelLateral value to be set
      */
@@ -187,7 +187,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(4, index, accelLateral, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelNormal: Array<Float?>?
+    val accelNormal: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelNormal: Int
@@ -200,7 +200,7 @@ class AviationAttitudeMesg : Mesg {
      * Get accel_normal field
      * Units: m/s^2
      * Comment: Range -78.4 to +78.4 (-8 Gs to 8 Gs)
-     * 
+     *
      * @param index of accel_normal
      * @return accel_normal
      */
@@ -212,7 +212,7 @@ class AviationAttitudeMesg : Mesg {
      * Set accel_normal field
      * Units: m/s^2
      * Comment: Range -78.4 to +78.4 (-8 Gs to 8 Gs)
-     * 
+     *
      * @param index of accel_normal
      * @param accelNormal The new accelNormal value to be set
      */
@@ -220,7 +220,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(5, index, accelNormal, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val turnRate: Array<Float?>?
+    val turnRate: Array<Float>?
         get() = getFieldFloatValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTurnRate: Int
@@ -233,7 +233,7 @@ class AviationAttitudeMesg : Mesg {
      * Get turn_rate field
      * Units: radians/second
      * Comment: Range -8.727 to +8.727 (-500 degs/sec to +500 degs/sec)
-     * 
+     *
      * @param index of turn_rate
      * @return turn_rate
      */
@@ -245,7 +245,7 @@ class AviationAttitudeMesg : Mesg {
      * Set turn_rate field
      * Units: radians/second
      * Comment: Range -8.727 to +8.727 (-500 degs/sec to +500 degs/sec)
-     * 
+     *
      * @param index of turn_rate
      * @param turnRate The new turnRate value to be set
      */
@@ -253,16 +253,11 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(6, index, turnRate, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val stage: Array<AttitudeStage?>
-        get() {
-            val values =
-                getFieldShortValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            val rv = arrayOfNulls<AttitudeStage>(values.size)
-            for (i in values.indices) {
-                rv[i] = AttitudeStage.Companion.getByValue(values[i])
-            }
-            return rv
-        }
+    val stage: Array<AttitudeStage>
+        get() = getFieldShortValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)?.map {
+            AttitudeStage.getByValue(it)
+        }?.toTypedArray() ?: emptyArray()
+
 
     val numStage: Int
         /**
@@ -272,21 +267,18 @@ class AviationAttitudeMesg : Mesg {
 
     /**
      * Get stage field
-     * 
+     *
      * @param index of stage
      * @return stage
      */
     fun getStage(index: Int): AttitudeStage? {
-        val value = getFieldShortValue(7, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
-        }
-        return AttitudeStage.Companion.getByValue(value)
+        val value = getFieldShortValue(7, index, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+        return AttitudeStage.getByValue(value)
     }
 
     /**
      * Set stage field
-     * 
+     *
      * @param index of stage
      * @param stage The new stage value to be set
      */
@@ -294,7 +286,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(7, index, stage.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val attitudeStageComplete: Array<Short?>
+    val attitudeStageComplete: Array<Short>?
         get() = getFieldShortValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAttitudeStageComplete: Int
@@ -307,7 +299,7 @@ class AviationAttitudeMesg : Mesg {
      * Get attitude_stage_complete field
      * Units: %
      * Comment: The percent complete of the current attitude stage. Set to 0 for attitude stages 0, 1 and 2 and to 100 for attitude stage 3 by AHRS modules that do not support it. Range - 100
-     * 
+     *
      * @param index of attitude_stage_complete
      * @return attitude_stage_complete
      */
@@ -319,7 +311,7 @@ class AviationAttitudeMesg : Mesg {
      * Set attitude_stage_complete field
      * Units: %
      * Comment: The percent complete of the current attitude stage. Set to 0 for attitude stages 0, 1 and 2 and to 100 for attitude stage 3 by AHRS modules that do not support it. Range - 100
-     * 
+     *
      * @param index of attitude_stage_complete
      * @param attitudeStageComplete The new attitudeStageComplete value to be set
      */
@@ -327,7 +319,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(8, index, attitudeStageComplete, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val track: Array<Float?>?
+    val track: Array<Float>?
         get() = getFieldFloatValues(9, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTrack: Int
@@ -340,7 +332,7 @@ class AviationAttitudeMesg : Mesg {
      * Get track field
      * Units: radians
      * Comment: Track Angle/Heading Range 0 - 2pi
-     * 
+     *
      * @param index of track
      * @return track
      */
@@ -352,7 +344,7 @@ class AviationAttitudeMesg : Mesg {
      * Set track field
      * Units: radians
      * Comment: Track Angle/Heading Range 0 - 2pi
-     * 
+     *
      * @param index of track
      * @param track The new track value to be set
      */
@@ -360,7 +352,7 @@ class AviationAttitudeMesg : Mesg {
         setFieldValue(9, index, track, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val validity: Array<Int?>?
+    val validity: Array<Int>?
         get() = getFieldIntegerValues(10, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numValidity: Int
@@ -371,7 +363,7 @@ class AviationAttitudeMesg : Mesg {
 
     /**
      * Get validity field
-     * 
+     *
      * @param index of validity
      * @return validity
      */
@@ -381,7 +373,7 @@ class AviationAttitudeMesg : Mesg {
 
     /**
      * Set validity field
-     * 
+     *
      * @param index of validity
      * @param validity The new validity value to be set
      */
@@ -415,11 +407,10 @@ class AviationAttitudeMesg : Mesg {
         const val ValidityFieldNum: Int = 10
 
 
-        val aviationAttitudeMesg: Mesg
+        // aviation_attitude
+        val aviationAttitudeMesg: Mesg = Mesg("aviation_attitude", MesgNum.AVIATION_ATTITUDE)
 
         init {
-            // aviation_attitude
-            aviationAttitudeMesg = Mesg("aviation_attitude", MesgNum.AVIATION_ATTITUDE)
             aviationAttitudeMesg.addField(
                 Field(
                     "timestamp",

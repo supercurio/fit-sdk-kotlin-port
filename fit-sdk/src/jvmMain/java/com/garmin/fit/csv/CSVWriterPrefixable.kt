@@ -18,12 +18,12 @@ import java.nio.charset.StandardCharsets
 internal class CSVWriterPrefixable(private val outputStream: ByteArrayOutputStream) : CSVWritable {
     private var writer: BufferedWriter? = null
 
-    override fun close(headers: ArrayList<String?>) {
+    override fun close(headers: ArrayList<String>) {
         try {
             if (writer != null) {
                 val headerStringBuilder = StringBuilder()
                 for (header in headers) {
-                    headerStringBuilder.append(header + ",")
+                    headerStringBuilder.append("$header,")
                 }
                 headerStringBuilder.append("\n")
 
@@ -44,14 +44,14 @@ internal class CSVWriterPrefixable(private val outputStream: ByteArrayOutputStre
         }
     }
 
-    override fun writeln(values: ArrayList<String?>, maxNumberValues: Int) {
+    override fun writeln(values: ArrayList<String>, maxNumberValues: Int) {
         try {
             if (writer == null) {
                 writer = BufferedWriter(OutputStreamWriter(outputStream, StandardCharsets.UTF_8))
             }
 
             for (value in values) {
-                writer!!.write(value + ",")
+                writer!!.write("$value,")
             }
 
             if (values.size < maxNumberValues) {

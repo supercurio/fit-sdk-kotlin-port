@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MesgWithEventListener {
-    fun onMesg(message: MesgWithEvent?)
+    fun onMesg(message: MesgWithEvent)
 }

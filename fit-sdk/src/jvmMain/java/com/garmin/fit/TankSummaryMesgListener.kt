@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface TankSummaryMesgListener {
-    fun onMesg(mesg: TankSummaryMesg?)
+    fun onMesg(mesg: TankSummaryMesg)
 }

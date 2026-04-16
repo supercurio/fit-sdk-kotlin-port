@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SessionMesgListener {
-    fun onMesg(mesg: SessionMesg?)
+    fun onMesg(mesg: SessionMesg)
 }

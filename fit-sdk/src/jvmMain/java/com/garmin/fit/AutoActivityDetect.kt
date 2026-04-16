@@ -16,19 +16,18 @@ object AutoActivityDetect {
     const val WALKING: Long = 0x00000008
     const val ELLIPTICAL: Long = 0x00000020
     const val SEDENTARY: Long = 0x00000400
-    val INVALID: Long = Fit.UINT32_INVALID
+    const val INVALID: Long = Fit.UINT32_INVALID
 
-    private val stringMap: MutableMap<Long?, String?>
+    private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap = HashMap<Long?, String?>()
-        stringMap.put(NONE, "NONE")
-        stringMap.put(RUNNING, "RUNNING")
-        stringMap.put(CYCLING, "CYCLING")
-        stringMap.put(SWIMMING, "SWIMMING")
-        stringMap.put(WALKING, "WALKING")
-        stringMap.put(ELLIPTICAL, "ELLIPTICAL")
-        stringMap.put(SEDENTARY, "SEDENTARY")
+        stringMap[NONE] = "NONE"
+        stringMap[RUNNING] = "RUNNING"
+        stringMap[CYCLING] = "CYCLING"
+        stringMap[SWIMMING] = "SWIMMING"
+        stringMap[WALKING] = "WALKING"
+        stringMap[ELLIPTICAL] = "ELLIPTICAL"
+        stringMap[SEDENTARY] = "SEDENTARY"
     }
 
 
@@ -37,9 +36,9 @@ object AutoActivityDetect {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Long?): String? {
+    fun getStringFromValue(value: Long): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -50,7 +49,7 @@ object AutoActivityDetect {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Long? {
+    fun getValueFromString(value: String): Long {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

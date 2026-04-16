@@ -52,55 +52,54 @@ object CardioExerciseName {
     const val POLE_DD_FF_UU_WHEELCHAIR: Int = 40
     const val BUTTERFLY_ARMS_WHEELCHAIR: Int = 41
     const val PUNCH: Int = 42
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BOB_AND_WEAVE_CIRCLE, "BOB_AND_WEAVE_CIRCLE")
-        stringMap.put(WEIGHTED_BOB_AND_WEAVE_CIRCLE, "WEIGHTED_BOB_AND_WEAVE_CIRCLE")
-        stringMap.put(CARDIO_CORE_CRAWL, "CARDIO_CORE_CRAWL")
-        stringMap.put(WEIGHTED_CARDIO_CORE_CRAWL, "WEIGHTED_CARDIO_CORE_CRAWL")
-        stringMap.put(DOUBLE_UNDER, "DOUBLE_UNDER")
-        stringMap.put(WEIGHTED_DOUBLE_UNDER, "WEIGHTED_DOUBLE_UNDER")
-        stringMap.put(JUMP_ROPE, "JUMP_ROPE")
-        stringMap.put(WEIGHTED_JUMP_ROPE, "WEIGHTED_JUMP_ROPE")
-        stringMap.put(JUMP_ROPE_CROSSOVER, "JUMP_ROPE_CROSSOVER")
-        stringMap.put(WEIGHTED_JUMP_ROPE_CROSSOVER, "WEIGHTED_JUMP_ROPE_CROSSOVER")
-        stringMap.put(JUMP_ROPE_JOG, "JUMP_ROPE_JOG")
-        stringMap.put(WEIGHTED_JUMP_ROPE_JOG, "WEIGHTED_JUMP_ROPE_JOG")
-        stringMap.put(JUMPING_JACKS, "JUMPING_JACKS")
-        stringMap.put(WEIGHTED_JUMPING_JACKS, "WEIGHTED_JUMPING_JACKS")
-        stringMap.put(SKI_MOGULS, "SKI_MOGULS")
-        stringMap.put(WEIGHTED_SKI_MOGULS, "WEIGHTED_SKI_MOGULS")
-        stringMap.put(SPLIT_JACKS, "SPLIT_JACKS")
-        stringMap.put(WEIGHTED_SPLIT_JACKS, "WEIGHTED_SPLIT_JACKS")
-        stringMap.put(SQUAT_JACKS, "SQUAT_JACKS")
-        stringMap.put(WEIGHTED_SQUAT_JACKS, "WEIGHTED_SQUAT_JACKS")
-        stringMap.put(TRIPLE_UNDER, "TRIPLE_UNDER")
-        stringMap.put(WEIGHTED_TRIPLE_UNDER, "WEIGHTED_TRIPLE_UNDER")
-        stringMap.put(ELLIPTICAL, "ELLIPTICAL")
-        stringMap.put(SPINNING, "SPINNING")
-        stringMap.put(POLE_PADDLE_FORWARD_WHEELCHAIR, "POLE_PADDLE_FORWARD_WHEELCHAIR")
-        stringMap.put(POLE_PADDLE_BACKWARD_WHEELCHAIR, "POLE_PADDLE_BACKWARD_WHEELCHAIR")
-        stringMap.put(POLE_HANDCYCLE_FORWARD_WHEELCHAIR, "POLE_HANDCYCLE_FORWARD_WHEELCHAIR")
-        stringMap.put(POLE_HANDCYCLE_BACKWARD_WHEELCHAIR, "POLE_HANDCYCLE_BACKWARD_WHEELCHAIR")
-        stringMap.put(POLE_RAINBOW_WHEELCHAIR, "POLE_RAINBOW_WHEELCHAIR")
-        stringMap.put(DOUBLE_PUNCH_FORWARD_WHEELCHAIR, "DOUBLE_PUNCH_FORWARD_WHEELCHAIR")
-        stringMap.put(DOUBLE_PUNCH_DOWN_WHEELCHAIR, "DOUBLE_PUNCH_DOWN_WHEELCHAIR")
-        stringMap.put(DOUBLE_PUNCH_SIDEWAYS_WHEELCHAIR, "DOUBLE_PUNCH_SIDEWAYS_WHEELCHAIR")
-        stringMap.put(DOUBLE_PUNCH_UP_WHEELCHAIR, "DOUBLE_PUNCH_UP_WHEELCHAIR")
-        stringMap.put(SIT_SKI_WHEELCHAIR, "SIT_SKI_WHEELCHAIR")
-        stringMap.put(SITTING_JACKS_WHEELCHAIR, "SITTING_JACKS_WHEELCHAIR")
-        stringMap.put(PUNCH_FORWARD_WHEELCHAIR, "PUNCH_FORWARD_WHEELCHAIR")
-        stringMap.put(PUNCH_DOWN_WHEELCHAIR, "PUNCH_DOWN_WHEELCHAIR")
-        stringMap.put(PUNCH_SIDEWAYS_WHEELCHAIR, "PUNCH_SIDEWAYS_WHEELCHAIR")
-        stringMap.put(PUNCH_UP_WHEELCHAIR, "PUNCH_UP_WHEELCHAIR")
-        stringMap.put(PUNCH_BAG_WHEELCHAIR, "PUNCH_BAG_WHEELCHAIR")
-        stringMap.put(POLE_DD_FF_UU_WHEELCHAIR, "POLE_DD_FF_UU_WHEELCHAIR")
-        stringMap.put(BUTTERFLY_ARMS_WHEELCHAIR, "BUTTERFLY_ARMS_WHEELCHAIR")
-        stringMap.put(PUNCH, "PUNCH")
+        stringMap[BOB_AND_WEAVE_CIRCLE] = "BOB_AND_WEAVE_CIRCLE"
+        stringMap[WEIGHTED_BOB_AND_WEAVE_CIRCLE] = "WEIGHTED_BOB_AND_WEAVE_CIRCLE"
+        stringMap[CARDIO_CORE_CRAWL] = "CARDIO_CORE_CRAWL"
+        stringMap[WEIGHTED_CARDIO_CORE_CRAWL] = "WEIGHTED_CARDIO_CORE_CRAWL"
+        stringMap[DOUBLE_UNDER] = "DOUBLE_UNDER"
+        stringMap[WEIGHTED_DOUBLE_UNDER] = "WEIGHTED_DOUBLE_UNDER"
+        stringMap[JUMP_ROPE] = "JUMP_ROPE"
+        stringMap[WEIGHTED_JUMP_ROPE] = "WEIGHTED_JUMP_ROPE"
+        stringMap[JUMP_ROPE_CROSSOVER] = "JUMP_ROPE_CROSSOVER"
+        stringMap[WEIGHTED_JUMP_ROPE_CROSSOVER] = "WEIGHTED_JUMP_ROPE_CROSSOVER"
+        stringMap[JUMP_ROPE_JOG] = "JUMP_ROPE_JOG"
+        stringMap[WEIGHTED_JUMP_ROPE_JOG] = "WEIGHTED_JUMP_ROPE_JOG"
+        stringMap[JUMPING_JACKS] = "JUMPING_JACKS"
+        stringMap[WEIGHTED_JUMPING_JACKS] = "WEIGHTED_JUMPING_JACKS"
+        stringMap[SKI_MOGULS] = "SKI_MOGULS"
+        stringMap[WEIGHTED_SKI_MOGULS] = "WEIGHTED_SKI_MOGULS"
+        stringMap[SPLIT_JACKS] = "SPLIT_JACKS"
+        stringMap[WEIGHTED_SPLIT_JACKS] = "WEIGHTED_SPLIT_JACKS"
+        stringMap[SQUAT_JACKS] = "SQUAT_JACKS"
+        stringMap[WEIGHTED_SQUAT_JACKS] = "WEIGHTED_SQUAT_JACKS"
+        stringMap[TRIPLE_UNDER] = "TRIPLE_UNDER"
+        stringMap[WEIGHTED_TRIPLE_UNDER] = "WEIGHTED_TRIPLE_UNDER"
+        stringMap[ELLIPTICAL] = "ELLIPTICAL"
+        stringMap[SPINNING] = "SPINNING"
+        stringMap[POLE_PADDLE_FORWARD_WHEELCHAIR] = "POLE_PADDLE_FORWARD_WHEELCHAIR"
+        stringMap[POLE_PADDLE_BACKWARD_WHEELCHAIR] = "POLE_PADDLE_BACKWARD_WHEELCHAIR"
+        stringMap[POLE_HANDCYCLE_FORWARD_WHEELCHAIR] = "POLE_HANDCYCLE_FORWARD_WHEELCHAIR"
+        stringMap[POLE_HANDCYCLE_BACKWARD_WHEELCHAIR] = "POLE_HANDCYCLE_BACKWARD_WHEELCHAIR"
+        stringMap[POLE_RAINBOW_WHEELCHAIR] = "POLE_RAINBOW_WHEELCHAIR"
+        stringMap[DOUBLE_PUNCH_FORWARD_WHEELCHAIR] = "DOUBLE_PUNCH_FORWARD_WHEELCHAIR"
+        stringMap[DOUBLE_PUNCH_DOWN_WHEELCHAIR] = "DOUBLE_PUNCH_DOWN_WHEELCHAIR"
+        stringMap[DOUBLE_PUNCH_SIDEWAYS_WHEELCHAIR] = "DOUBLE_PUNCH_SIDEWAYS_WHEELCHAIR"
+        stringMap[DOUBLE_PUNCH_UP_WHEELCHAIR] = "DOUBLE_PUNCH_UP_WHEELCHAIR"
+        stringMap[SIT_SKI_WHEELCHAIR] = "SIT_SKI_WHEELCHAIR"
+        stringMap[SITTING_JACKS_WHEELCHAIR] = "SITTING_JACKS_WHEELCHAIR"
+        stringMap[PUNCH_FORWARD_WHEELCHAIR] = "PUNCH_FORWARD_WHEELCHAIR"
+        stringMap[PUNCH_DOWN_WHEELCHAIR] = "PUNCH_DOWN_WHEELCHAIR"
+        stringMap[PUNCH_SIDEWAYS_WHEELCHAIR] = "PUNCH_SIDEWAYS_WHEELCHAIR"
+        stringMap[PUNCH_UP_WHEELCHAIR] = "PUNCH_UP_WHEELCHAIR"
+        stringMap[PUNCH_BAG_WHEELCHAIR] = "PUNCH_BAG_WHEELCHAIR"
+        stringMap[POLE_DD_FF_UU_WHEELCHAIR] = "POLE_DD_FF_UU_WHEELCHAIR"
+        stringMap[BUTTERFLY_ARMS_WHEELCHAIR] = "BUTTERFLY_ARMS_WHEELCHAIR"
+        stringMap[PUNCH] = "PUNCH"
     }
 
 
@@ -109,9 +108,9 @@ object CardioExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -122,7 +121,7 @@ object CardioExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

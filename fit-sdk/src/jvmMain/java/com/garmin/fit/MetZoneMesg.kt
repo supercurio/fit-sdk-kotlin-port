@@ -12,19 +12,19 @@ package com.garmin.fit
 class MetZoneMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MET_ZONE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,13 +34,13 @@ class MetZoneMesg : Mesg {
     var highBpm: Short?
         /**
          * Get high_bpm field
-         * 
+         *
          * @return high_bpm
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set high_bpm field
-         * 
+         *
          * @param highBpm The new highBpm value to be set
          */
         set(highBpm) {
@@ -51,14 +51,14 @@ class MetZoneMesg : Mesg {
         /**
          * Get calories field
          * Units: kcal / min
-         * 
+         *
          * @return calories
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set calories field
          * Units: kcal / min
-         * 
+         *
          * @param calories The new calories value to be set
          */
         set(calories) {
@@ -69,14 +69,14 @@ class MetZoneMesg : Mesg {
         /**
          * Get fat_calories field
          * Units: kcal / min
-         * 
+         *
          * @return fat_calories
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set fat_calories field
          * Units: kcal / min
-         * 
+         *
          * @param fatCalories The new fatCalories value to be set
          */
         set(fatCalories) {
@@ -93,11 +93,10 @@ class MetZoneMesg : Mesg {
         const val FatCaloriesFieldNum: Int = 3
 
 
-        val metZoneMesg: Mesg
+        // met_zone
+        val metZoneMesg: Mesg = Mesg("met_zone", MesgNum.MET_ZONE)
 
         init {
-            // met_zone
-            metZoneMesg = Mesg("met_zone", MesgNum.MET_ZONE)
             metZoneMesg.addField(
                 Field(
                     "message_index",

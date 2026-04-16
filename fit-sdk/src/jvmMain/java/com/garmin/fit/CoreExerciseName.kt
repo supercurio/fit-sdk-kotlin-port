@@ -103,109 +103,105 @@ object CoreExerciseName {
     const val SIDE_BEND_MID_WHEELCHAIR: Int = 94
     const val SIDE_BEND_HIGH_WHEELCHAIR: Int = 95
     const val SEATED_SIDE_BEND: Int = 96
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(ABS_JABS, "ABS_JABS")
-        stringMap.put(WEIGHTED_ABS_JABS, "WEIGHTED_ABS_JABS")
-        stringMap.put(ALTERNATING_PLATE_REACH, "ALTERNATING_PLATE_REACH")
-        stringMap.put(BARBELL_ROLLOUT, "BARBELL_ROLLOUT")
-        stringMap.put(WEIGHTED_BARBELL_ROLLOUT, "WEIGHTED_BARBELL_ROLLOUT")
-        stringMap.put(BODY_BAR_OBLIQUE_TWIST, "BODY_BAR_OBLIQUE_TWIST")
-        stringMap.put(CABLE_CORE_PRESS, "CABLE_CORE_PRESS")
-        stringMap.put(CABLE_SIDE_BEND, "CABLE_SIDE_BEND")
-        stringMap.put(SIDE_BEND, "SIDE_BEND")
-        stringMap.put(WEIGHTED_SIDE_BEND, "WEIGHTED_SIDE_BEND")
-        stringMap.put(CRESCENT_CIRCLE, "CRESCENT_CIRCLE")
-        stringMap.put(WEIGHTED_CRESCENT_CIRCLE, "WEIGHTED_CRESCENT_CIRCLE")
-        stringMap.put(CYCLING_RUSSIAN_TWIST, "CYCLING_RUSSIAN_TWIST")
-        stringMap.put(WEIGHTED_CYCLING_RUSSIAN_TWIST, "WEIGHTED_CYCLING_RUSSIAN_TWIST")
-        stringMap.put(ELEVATED_FEET_RUSSIAN_TWIST, "ELEVATED_FEET_RUSSIAN_TWIST")
-        stringMap.put(WEIGHTED_ELEVATED_FEET_RUSSIAN_TWIST, "WEIGHTED_ELEVATED_FEET_RUSSIAN_TWIST")
-        stringMap.put(HALF_TURKISH_GET_UP, "HALF_TURKISH_GET_UP")
-        stringMap.put(KETTLEBELL_WINDMILL, "KETTLEBELL_WINDMILL")
-        stringMap.put(KNEELING_AB_WHEEL, "KNEELING_AB_WHEEL")
-        stringMap.put(WEIGHTED_KNEELING_AB_WHEEL, "WEIGHTED_KNEELING_AB_WHEEL")
-        stringMap.put(MODIFIED_FRONT_LEVER, "MODIFIED_FRONT_LEVER")
-        stringMap.put(OPEN_KNEE_TUCKS, "OPEN_KNEE_TUCKS")
-        stringMap.put(WEIGHTED_OPEN_KNEE_TUCKS, "WEIGHTED_OPEN_KNEE_TUCKS")
-        stringMap.put(SIDE_ABS_LEG_LIFT, "SIDE_ABS_LEG_LIFT")
-        stringMap.put(WEIGHTED_SIDE_ABS_LEG_LIFT, "WEIGHTED_SIDE_ABS_LEG_LIFT")
-        stringMap.put(SWISS_BALL_JACKKNIFE, "SWISS_BALL_JACKKNIFE")
-        stringMap.put(WEIGHTED_SWISS_BALL_JACKKNIFE, "WEIGHTED_SWISS_BALL_JACKKNIFE")
-        stringMap.put(SWISS_BALL_PIKE, "SWISS_BALL_PIKE")
-        stringMap.put(WEIGHTED_SWISS_BALL_PIKE, "WEIGHTED_SWISS_BALL_PIKE")
-        stringMap.put(SWISS_BALL_ROLLOUT, "SWISS_BALL_ROLLOUT")
-        stringMap.put(WEIGHTED_SWISS_BALL_ROLLOUT, "WEIGHTED_SWISS_BALL_ROLLOUT")
-        stringMap.put(TRIANGLE_HIP_PRESS, "TRIANGLE_HIP_PRESS")
-        stringMap.put(WEIGHTED_TRIANGLE_HIP_PRESS, "WEIGHTED_TRIANGLE_HIP_PRESS")
-        stringMap.put(TRX_SUSPENDED_JACKKNIFE, "TRX_SUSPENDED_JACKKNIFE")
-        stringMap.put(WEIGHTED_TRX_SUSPENDED_JACKKNIFE, "WEIGHTED_TRX_SUSPENDED_JACKKNIFE")
-        stringMap.put(U_BOAT, "U_BOAT")
-        stringMap.put(WEIGHTED_U_BOAT, "WEIGHTED_U_BOAT")
-        stringMap.put(WINDMILL_SWITCHES, "WINDMILL_SWITCHES")
-        stringMap.put(WEIGHTED_WINDMILL_SWITCHES, "WEIGHTED_WINDMILL_SWITCHES")
-        stringMap.put(ALTERNATING_SLIDE_OUT, "ALTERNATING_SLIDE_OUT")
-        stringMap.put(WEIGHTED_ALTERNATING_SLIDE_OUT, "WEIGHTED_ALTERNATING_SLIDE_OUT")
-        stringMap.put(GHD_BACK_EXTENSIONS, "GHD_BACK_EXTENSIONS")
-        stringMap.put(WEIGHTED_GHD_BACK_EXTENSIONS, "WEIGHTED_GHD_BACK_EXTENSIONS")
-        stringMap.put(OVERHEAD_WALK, "OVERHEAD_WALK")
-        stringMap.put(INCHWORM, "INCHWORM")
-        stringMap.put(WEIGHTED_MODIFIED_FRONT_LEVER, "WEIGHTED_MODIFIED_FRONT_LEVER")
-        stringMap.put(RUSSIAN_TWIST, "RUSSIAN_TWIST")
-        stringMap.put(ABDOMINAL_LEG_ROTATIONS, "ABDOMINAL_LEG_ROTATIONS")
-        stringMap.put(ARM_AND_LEG_EXTENSION_ON_KNEES, "ARM_AND_LEG_EXTENSION_ON_KNEES")
-        stringMap.put(BICYCLE, "BICYCLE")
-        stringMap.put(BICEP_CURL_WITH_LEG_EXTENSION, "BICEP_CURL_WITH_LEG_EXTENSION")
-        stringMap.put(CAT_COW, "CAT_COW")
-        stringMap.put(CORKSCREW, "CORKSCREW")
-        stringMap.put(CRISS_CROSS, "CRISS_CROSS")
-        stringMap.put(CRISS_CROSS_WITH_BALL, "CRISS_CROSS_WITH_BALL")
-        stringMap.put(DOUBLE_LEG_STRETCH, "DOUBLE_LEG_STRETCH")
-        stringMap.put(KNEE_FOLDS, "KNEE_FOLDS")
-        stringMap.put(LOWER_LIFT, "LOWER_LIFT")
-        stringMap.put(NECK_PULL, "NECK_PULL")
-        stringMap.put(PELVIC_CLOCKS, "PELVIC_CLOCKS")
-        stringMap.put(ROLL_OVER, "ROLL_OVER")
-        stringMap.put(ROLL_UP, "ROLL_UP")
-        stringMap.put(ROLLING, "ROLLING")
-        stringMap.put(ROWING_1, "ROWING_1")
-        stringMap.put(ROWING_2, "ROWING_2")
-        stringMap.put(SCISSORS, "SCISSORS")
-        stringMap.put(SINGLE_LEG_CIRCLES, "SINGLE_LEG_CIRCLES")
-        stringMap.put(SINGLE_LEG_STRETCH, "SINGLE_LEG_STRETCH")
-        stringMap.put(SNAKE_TWIST_1_AND_2, "SNAKE_TWIST_1_AND_2")
-        stringMap.put(SWAN, "SWAN")
-        stringMap.put(SWIMMING, "SWIMMING")
-        stringMap.put(TEASER, "TEASER")
-        stringMap.put(THE_HUNDRED, "THE_HUNDRED")
-        stringMap.put(
-            BICEP_CURL_WITH_LEG_EXTENSION_WITH_WEIGHTS,
-            "BICEP_CURL_WITH_LEG_EXTENSION_WITH_WEIGHTS"
-        )
-        stringMap.put(HANGING_L_SIT, "HANGING_L_SIT")
-        stringMap.put(LOWER_LIFT_WITH_WEIGHTS, "LOWER_LIFT_WITH_WEIGHTS")
-        stringMap.put(RING_L_SIT, "RING_L_SIT")
-        stringMap.put(ROWING_1_WITH_WEIGHTS, "ROWING_1_WITH_WEIGHTS")
-        stringMap.put(ROWING_2_WITH_WEIGHTS, "ROWING_2_WITH_WEIGHTS")
-        stringMap.put(SCISSORS_WITH_WEIGHTS, "SCISSORS_WITH_WEIGHTS")
-        stringMap.put(SINGLE_LEG_STRETCH_WITH_WEIGHTS, "SINGLE_LEG_STRETCH_WITH_WEIGHTS")
-        stringMap.put(TOES_TO_ELBOWS, "TOES_TO_ELBOWS")
-        stringMap.put(WEIGHTED_CRISS_CROSS, "WEIGHTED_CRISS_CROSS")
-        stringMap.put(WEIGHTED_DOUBLE_LEG_STRETCH, "WEIGHTED_DOUBLE_LEG_STRETCH")
-        stringMap.put(WEIGHTED_THE_HUNDRED, "WEIGHTED_THE_HUNDRED")
-        stringMap.put(L_SIT, "L_SIT")
-        stringMap.put(TURKISH_GET_UP, "TURKISH_GET_UP")
-        stringMap.put(WEIGHTED_RING_L_SIT, "WEIGHTED_RING_L_SIT")
-        stringMap.put(WEIGHTED_HANGING_L_SIT, "WEIGHTED_HANGING_L_SIT")
-        stringMap.put(WEIGHTED_L_SIT, "WEIGHTED_L_SIT")
-        stringMap.put(SIDE_BEND_LOW_WHEELCHAIR, "SIDE_BEND_LOW_WHEELCHAIR")
-        stringMap.put(SIDE_BEND_MID_WHEELCHAIR, "SIDE_BEND_MID_WHEELCHAIR")
-        stringMap.put(SIDE_BEND_HIGH_WHEELCHAIR, "SIDE_BEND_HIGH_WHEELCHAIR")
-        stringMap.put(SEATED_SIDE_BEND, "SEATED_SIDE_BEND")
+        stringMap[ABS_JABS] = "ABS_JABS"
+        stringMap[WEIGHTED_ABS_JABS] = "WEIGHTED_ABS_JABS"
+        stringMap[ALTERNATING_PLATE_REACH] = "ALTERNATING_PLATE_REACH"
+        stringMap[BARBELL_ROLLOUT] = "BARBELL_ROLLOUT"
+        stringMap[WEIGHTED_BARBELL_ROLLOUT] = "WEIGHTED_BARBELL_ROLLOUT"
+        stringMap[BODY_BAR_OBLIQUE_TWIST] = "BODY_BAR_OBLIQUE_TWIST"
+        stringMap[CABLE_CORE_PRESS] = "CABLE_CORE_PRESS"
+        stringMap[CABLE_SIDE_BEND] = "CABLE_SIDE_BEND"
+        stringMap[SIDE_BEND] = "SIDE_BEND"
+        stringMap[WEIGHTED_SIDE_BEND] = "WEIGHTED_SIDE_BEND"
+        stringMap[CRESCENT_CIRCLE] = "CRESCENT_CIRCLE"
+        stringMap[WEIGHTED_CRESCENT_CIRCLE] = "WEIGHTED_CRESCENT_CIRCLE"
+        stringMap[CYCLING_RUSSIAN_TWIST] = "CYCLING_RUSSIAN_TWIST"
+        stringMap[WEIGHTED_CYCLING_RUSSIAN_TWIST] = "WEIGHTED_CYCLING_RUSSIAN_TWIST"
+        stringMap[ELEVATED_FEET_RUSSIAN_TWIST] = "ELEVATED_FEET_RUSSIAN_TWIST"
+        stringMap[WEIGHTED_ELEVATED_FEET_RUSSIAN_TWIST] = "WEIGHTED_ELEVATED_FEET_RUSSIAN_TWIST"
+        stringMap[HALF_TURKISH_GET_UP] = "HALF_TURKISH_GET_UP"
+        stringMap[KETTLEBELL_WINDMILL] = "KETTLEBELL_WINDMILL"
+        stringMap[KNEELING_AB_WHEEL] = "KNEELING_AB_WHEEL"
+        stringMap[WEIGHTED_KNEELING_AB_WHEEL] = "WEIGHTED_KNEELING_AB_WHEEL"
+        stringMap[MODIFIED_FRONT_LEVER] = "MODIFIED_FRONT_LEVER"
+        stringMap[OPEN_KNEE_TUCKS] = "OPEN_KNEE_TUCKS"
+        stringMap[WEIGHTED_OPEN_KNEE_TUCKS] = "WEIGHTED_OPEN_KNEE_TUCKS"
+        stringMap[SIDE_ABS_LEG_LIFT] = "SIDE_ABS_LEG_LIFT"
+        stringMap[WEIGHTED_SIDE_ABS_LEG_LIFT] = "WEIGHTED_SIDE_ABS_LEG_LIFT"
+        stringMap[SWISS_BALL_JACKKNIFE] = "SWISS_BALL_JACKKNIFE"
+        stringMap[WEIGHTED_SWISS_BALL_JACKKNIFE] = "WEIGHTED_SWISS_BALL_JACKKNIFE"
+        stringMap[SWISS_BALL_PIKE] = "SWISS_BALL_PIKE"
+        stringMap[WEIGHTED_SWISS_BALL_PIKE] = "WEIGHTED_SWISS_BALL_PIKE"
+        stringMap[SWISS_BALL_ROLLOUT] = "SWISS_BALL_ROLLOUT"
+        stringMap[WEIGHTED_SWISS_BALL_ROLLOUT] = "WEIGHTED_SWISS_BALL_ROLLOUT"
+        stringMap[TRIANGLE_HIP_PRESS] = "TRIANGLE_HIP_PRESS"
+        stringMap[WEIGHTED_TRIANGLE_HIP_PRESS] = "WEIGHTED_TRIANGLE_HIP_PRESS"
+        stringMap[TRX_SUSPENDED_JACKKNIFE] = "TRX_SUSPENDED_JACKKNIFE"
+        stringMap[WEIGHTED_TRX_SUSPENDED_JACKKNIFE] = "WEIGHTED_TRX_SUSPENDED_JACKKNIFE"
+        stringMap[U_BOAT] = "U_BOAT"
+        stringMap[WEIGHTED_U_BOAT] = "WEIGHTED_U_BOAT"
+        stringMap[WINDMILL_SWITCHES] = "WINDMILL_SWITCHES"
+        stringMap[WEIGHTED_WINDMILL_SWITCHES] = "WEIGHTED_WINDMILL_SWITCHES"
+        stringMap[ALTERNATING_SLIDE_OUT] = "ALTERNATING_SLIDE_OUT"
+        stringMap[WEIGHTED_ALTERNATING_SLIDE_OUT] = "WEIGHTED_ALTERNATING_SLIDE_OUT"
+        stringMap[GHD_BACK_EXTENSIONS] = "GHD_BACK_EXTENSIONS"
+        stringMap[WEIGHTED_GHD_BACK_EXTENSIONS] = "WEIGHTED_GHD_BACK_EXTENSIONS"
+        stringMap[OVERHEAD_WALK] = "OVERHEAD_WALK"
+        stringMap[INCHWORM] = "INCHWORM"
+        stringMap[WEIGHTED_MODIFIED_FRONT_LEVER] = "WEIGHTED_MODIFIED_FRONT_LEVER"
+        stringMap[RUSSIAN_TWIST] = "RUSSIAN_TWIST"
+        stringMap[ABDOMINAL_LEG_ROTATIONS] = "ABDOMINAL_LEG_ROTATIONS"
+        stringMap[ARM_AND_LEG_EXTENSION_ON_KNEES] = "ARM_AND_LEG_EXTENSION_ON_KNEES"
+        stringMap[BICYCLE] = "BICYCLE"
+        stringMap[BICEP_CURL_WITH_LEG_EXTENSION] = "BICEP_CURL_WITH_LEG_EXTENSION"
+        stringMap[CAT_COW] = "CAT_COW"
+        stringMap[CORKSCREW] = "CORKSCREW"
+        stringMap[CRISS_CROSS] = "CRISS_CROSS"
+        stringMap[CRISS_CROSS_WITH_BALL] = "CRISS_CROSS_WITH_BALL"
+        stringMap[DOUBLE_LEG_STRETCH] = "DOUBLE_LEG_STRETCH"
+        stringMap[KNEE_FOLDS] = "KNEE_FOLDS"
+        stringMap[LOWER_LIFT] = "LOWER_LIFT"
+        stringMap[NECK_PULL] = "NECK_PULL"
+        stringMap[PELVIC_CLOCKS] = "PELVIC_CLOCKS"
+        stringMap[ROLL_OVER] = "ROLL_OVER"
+        stringMap[ROLL_UP] = "ROLL_UP"
+        stringMap[ROLLING] = "ROLLING"
+        stringMap[ROWING_1] = "ROWING_1"
+        stringMap[ROWING_2] = "ROWING_2"
+        stringMap[SCISSORS] = "SCISSORS"
+        stringMap[SINGLE_LEG_CIRCLES] = "SINGLE_LEG_CIRCLES"
+        stringMap[SINGLE_LEG_STRETCH] = "SINGLE_LEG_STRETCH"
+        stringMap[SNAKE_TWIST_1_AND_2] = "SNAKE_TWIST_1_AND_2"
+        stringMap[SWAN] = "SWAN"
+        stringMap[SWIMMING] = "SWIMMING"
+        stringMap[TEASER] = "TEASER"
+        stringMap[THE_HUNDRED] = "THE_HUNDRED"
+        stringMap[BICEP_CURL_WITH_LEG_EXTENSION_WITH_WEIGHTS] = "BICEP_CURL_WITH_LEG_EXTENSION_WITH_WEIGHTS"
+        stringMap[HANGING_L_SIT] = "HANGING_L_SIT"
+        stringMap[LOWER_LIFT_WITH_WEIGHTS] = "LOWER_LIFT_WITH_WEIGHTS"
+        stringMap[RING_L_SIT] = "RING_L_SIT"
+        stringMap[ROWING_1_WITH_WEIGHTS] = "ROWING_1_WITH_WEIGHTS"
+        stringMap[ROWING_2_WITH_WEIGHTS] = "ROWING_2_WITH_WEIGHTS"
+        stringMap[SCISSORS_WITH_WEIGHTS] = "SCISSORS_WITH_WEIGHTS"
+        stringMap[SINGLE_LEG_STRETCH_WITH_WEIGHTS] = "SINGLE_LEG_STRETCH_WITH_WEIGHTS"
+        stringMap[TOES_TO_ELBOWS] = "TOES_TO_ELBOWS"
+        stringMap[WEIGHTED_CRISS_CROSS] = "WEIGHTED_CRISS_CROSS"
+        stringMap[WEIGHTED_DOUBLE_LEG_STRETCH] = "WEIGHTED_DOUBLE_LEG_STRETCH"
+        stringMap[WEIGHTED_THE_HUNDRED] = "WEIGHTED_THE_HUNDRED"
+        stringMap[L_SIT] = "L_SIT"
+        stringMap[TURKISH_GET_UP] = "TURKISH_GET_UP"
+        stringMap[WEIGHTED_RING_L_SIT] = "WEIGHTED_RING_L_SIT"
+        stringMap[WEIGHTED_HANGING_L_SIT] = "WEIGHTED_HANGING_L_SIT"
+        stringMap[WEIGHTED_L_SIT] = "WEIGHTED_L_SIT"
+        stringMap[SIDE_BEND_LOW_WHEELCHAIR] = "SIDE_BEND_LOW_WHEELCHAIR"
+        stringMap[SIDE_BEND_MID_WHEELCHAIR] = "SIDE_BEND_MID_WHEELCHAIR"
+        stringMap[SIDE_BEND_HIGH_WHEELCHAIR] = "SIDE_BEND_HIGH_WHEELCHAIR"
+        stringMap[SEATED_SIDE_BEND] = "SEATED_SIDE_BEND"
     }
 
 
@@ -214,9 +210,9 @@ object CoreExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -227,7 +223,7 @@ object CoreExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

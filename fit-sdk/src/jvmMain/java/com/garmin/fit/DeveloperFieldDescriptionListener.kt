@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface DeveloperFieldDescriptionListener {
-    fun onDescription(desc: DeveloperFieldDescription?)
+    fun onDescription(desc: DeveloperFieldDescription)
 }

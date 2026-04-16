@@ -12,19 +12,19 @@ package com.garmin.fit
 class SleepDisruptionSeverityPeriodMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,35 +34,32 @@ class SleepDisruptionSeverityPeriodMesg : Mesg {
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var severity: SleepDisruptionSeverity?
         /**
          * Get severity field
-         * 
+         *
          * @return severity
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SleepDisruptionSeverity.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SleepDisruptionSeverity.getByValue(value)
         }
         /**
          * Set severity field
-         * 
+         *
          * @param severity The new severity value to be set
          */
         set(severity) {
@@ -77,12 +74,11 @@ class SleepDisruptionSeverityPeriodMesg : Mesg {
         const val SeverityFieldNum: Int = 0
 
 
-        val sleepDisruptionSeverityPeriodMesg: Mesg
+        // sleep_disruption_severity_period
+        val sleepDisruptionSeverityPeriodMesg: Mesg =
+            Mesg("sleep_disruption_severity_period", MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD)
 
         init {
-            // sleep_disruption_severity_period
-            sleepDisruptionSeverityPeriodMesg =
-                Mesg("sleep_disruption_severity_period", MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD)
             sleepDisruptionSeverityPeriodMesg.addField(
                 Field(
                     "message_index",

@@ -25,7 +25,7 @@ enum class ProjectileType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ProjectileType.INVALID
+            return INVALID
         }
 
         /**

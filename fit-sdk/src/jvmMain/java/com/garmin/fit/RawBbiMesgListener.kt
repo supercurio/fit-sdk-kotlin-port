@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface RawBbiMesgListener {
-    fun onMesg(mesg: RawBbiMesg?)
+    fun onMesg(mesg: RawBbiMesg)
 }

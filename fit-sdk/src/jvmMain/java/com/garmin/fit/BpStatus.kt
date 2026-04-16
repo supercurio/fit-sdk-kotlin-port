@@ -24,7 +24,7 @@ enum class BpStatus(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return BpStatus.INVALID
+            return INVALID
         }
 
         /**

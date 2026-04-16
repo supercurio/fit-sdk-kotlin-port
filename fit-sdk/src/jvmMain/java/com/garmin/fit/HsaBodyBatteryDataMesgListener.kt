@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface HsaBodyBatteryDataMesgListener {
-    fun onMesg(mesg: HsaBodyBatteryDataMesg?)
+    fun onMesg(mesg: HsaBodyBatteryDataMesg)
 }

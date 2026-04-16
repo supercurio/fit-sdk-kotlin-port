@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SleepAssessmentMesgListener {
-    fun onMesg(mesg: SleepAssessmentMesg?)
+    fun onMesg(mesg: SleepAssessmentMesg)
 }

@@ -23,7 +23,7 @@ enum class PowerPhaseType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return PowerPhaseType.INVALID
+            return INVALID
         }
 
         /**

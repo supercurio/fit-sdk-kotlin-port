@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface AadAccelFeaturesMesgListener {
-    fun onMesg(mesg: AadAccelFeaturesMesg?)
+    fun onMesg(mesg: AadAccelFeaturesMesg)
 }

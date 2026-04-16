@@ -12,39 +12,39 @@ package com.garmin.fit
 class ClimbProMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CLIMB_PRO))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var positionLat: Int?
         /**
          * Get position_lat field
          * Units: semicircles
-         * 
+         *
          * @return position_lat
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_lat field
          * Units: semicircles
-         * 
+         *
          * @param positionLat The new positionLat value to be set
          */
         set(positionLat) {
@@ -55,14 +55,14 @@ class ClimbProMesg : Mesg {
         /**
          * Get position_long field
          * Units: semicircles
-         * 
+         *
          * @return position_long
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set position_long field
          * Units: semicircles
-         * 
+         *
          * @param positionLong The new positionLong value to be set
          */
         set(positionLong) {
@@ -72,19 +72,16 @@ class ClimbProMesg : Mesg {
     var climbProEvent: ClimbProEvent?
         /**
          * Get climb_pro_event field
-         * 
+         *
          * @return climb_pro_event
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ClimbProEvent.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ClimbProEvent.getByValue(value)
         }
         /**
          * Set climb_pro_event field
-         * 
+         *
          * @param climbProEvent The new climbProEvent value to be set
          */
         set(climbProEvent) {
@@ -94,13 +91,13 @@ class ClimbProMesg : Mesg {
     var climbNumber: Int?
         /**
          * Get climb_number field
-         * 
+         *
          * @return climb_number
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set climb_number field
-         * 
+         *
          * @param climbNumber The new climbNumber value to be set
          */
         set(climbNumber) {
@@ -110,13 +107,13 @@ class ClimbProMesg : Mesg {
     var climbCategory: Short?
         /**
          * Get climb_category field
-         * 
+         *
          * @return climb_category
          */
         get() = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set climb_category field
-         * 
+         *
          * @param climbCategory The new climbCategory value to be set
          */
         set(climbCategory) {
@@ -127,14 +124,14 @@ class ClimbProMesg : Mesg {
         /**
          * Get current_dist field
          * Units: m
-         * 
+         *
          * @return current_dist
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set current_dist field
          * Units: m
-         * 
+         *
          * @param currentDist The new currentDist value to be set
          */
         set(currentDist) {
@@ -157,11 +154,10 @@ class ClimbProMesg : Mesg {
         const val CurrentDistFieldNum: Int = 5
 
 
-        val climbProMesg: Mesg
+        // climb_pro
+        val climbProMesg: Mesg = Mesg("climb_pro", MesgNum.CLIMB_PRO)
 
         init {
-            // climb_pro
-            climbProMesg = Mesg("climb_pro", MesgNum.CLIMB_PRO)
             climbProMesg.addField(
                 Field(
                     "timestamp",

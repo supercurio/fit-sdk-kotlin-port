@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MonitoringInfoMesgListener {
-    fun onMesg(mesg: MonitoringInfoMesg?)
+    fun onMesg(mesg: MonitoringInfoMesg)
 }

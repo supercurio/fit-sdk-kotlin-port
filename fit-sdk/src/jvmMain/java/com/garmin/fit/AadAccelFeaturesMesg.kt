@@ -12,23 +12,25 @@ package com.garmin.fit
 class AadAccelFeaturesMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.AAD_ACCEL_FEATURES))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
-        get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
+        get() = timestampToDateTime(
+            getFieldLongValue(TimestampFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        )
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(TimestampFieldNum, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var time: Int?
@@ -36,7 +38,7 @@ class AadAccelFeaturesMesg : Mesg {
          * Get time field
          * Units: s
          * Comment: Time interval length in seconds
-         * 
+         *
          * @return time
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,7 +46,7 @@ class AadAccelFeaturesMesg : Mesg {
          * Set time field
          * Units: s
          * Comment: Time interval length in seconds
-         * 
+         *
          * @param time The new time value to be set
          */
         set(time) {
@@ -55,14 +57,14 @@ class AadAccelFeaturesMesg : Mesg {
         /**
          * Get energy_total field
          * Comment: Total accelerometer energy in the interval
-         * 
+         *
          * @return energy_total
          */
         get() = getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set energy_total field
          * Comment: Total accelerometer energy in the interval
-         * 
+         *
          * @param energyTotal The new energyTotal value to be set
          */
         set(energyTotal) {
@@ -73,14 +75,14 @@ class AadAccelFeaturesMesg : Mesg {
         /**
          * Get zero_cross_cnt field
          * Comment: Count of zero crossings
-         * 
+         *
          * @return zero_cross_cnt
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set zero_cross_cnt field
          * Comment: Count of zero crossings
-         * 
+         *
          * @param zeroCrossCnt The new zeroCrossCnt value to be set
          */
         set(zeroCrossCnt) {
@@ -91,14 +93,14 @@ class AadAccelFeaturesMesg : Mesg {
         /**
          * Get instance field
          * Comment: Instance ID of zero crossing algorithm
-         * 
+         *
          * @return instance
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set instance field
          * Comment: Instance ID of zero crossing algorithm
-         * 
+         *
          * @param instance The new instance value to be set
          */
         set(instance) {
@@ -110,7 +112,7 @@ class AadAccelFeaturesMesg : Mesg {
          * Get time_above_threshold field
          * Units: s
          * Comment: Total accelerometer time above threshold in the interval
-         * 
+         *
          * @return time_above_threshold
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -118,7 +120,7 @@ class AadAccelFeaturesMesg : Mesg {
          * Set time_above_threshold field
          * Units: s
          * Comment: Total accelerometer time above threshold in the interval
-         * 
+         *
          * @param timeAboveThreshold The new timeAboveThreshold value to be set
          */
         set(timeAboveThreshold) {
@@ -139,11 +141,10 @@ class AadAccelFeaturesMesg : Mesg {
         const val TimeAboveThresholdFieldNum: Int = 4
 
 
-        val aadAccelFeaturesMesg: Mesg
+        // aad_accel_features
+        val aadAccelFeaturesMesg: Mesg = Mesg("aad_accel_features", MesgNum.AAD_ACCEL_FEATURES)
 
         init {
-            // aad_accel_features
-            aadAccelFeaturesMesg = Mesg("aad_accel_features", MesgNum.AAD_ACCEL_FEATURES)
             aadAccelFeaturesMesg.addField(
                 Field(
                     "timestamp",

@@ -12,7 +12,7 @@ package com.garmin.fit
 class AccelerometerDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.ACCELEROMETER_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,19 +20,19 @@ class AccelerometerDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
-        get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
+        get() = timestampToDateTime(getFieldLongValue(TimestampFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(TimestampFieldNum, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class AccelerometerDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,14 +48,14 @@ class AccelerometerDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val sampleTimeOffset: Array<Int?>?
+    val sampleTimeOffset: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSampleTimeOffset: Int
@@ -68,7 +68,7 @@ class AccelerometerDataMesg : Mesg {
      * Get sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the accelerometer sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in accel_x and accel_y and accel_z
-     * 
+     *
      * @param index of sample_time_offset
      * @return sample_time_offset
      */
@@ -80,7 +80,7 @@ class AccelerometerDataMesg : Mesg {
      * Set sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the accelerometer sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in accel_x and accel_y and accel_z
-     * 
+     *
      * @param index of sample_time_offset
      * @param sampleTimeOffset The new sampleTimeOffset value to be set
      */
@@ -88,7 +88,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(1, index, sampleTimeOffset, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelX: Array<Int?>?
+    val accelX: Array<Int>?
         get() = getFieldIntegerValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelX: Int
@@ -101,7 +101,7 @@ class AccelerometerDataMesg : Mesg {
      * Get accel_x field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of accel_x
      * @return accel_x
      */
@@ -113,7 +113,7 @@ class AccelerometerDataMesg : Mesg {
      * Set accel_x field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of accel_x
      * @param accelX The new accelX value to be set
      */
@@ -121,7 +121,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(2, index, accelX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelY: Array<Int?>?
+    val accelY: Array<Int>?
         get() = getFieldIntegerValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelY: Int
@@ -134,7 +134,7 @@ class AccelerometerDataMesg : Mesg {
      * Get accel_y field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of accel_y
      * @return accel_y
      */
@@ -146,7 +146,7 @@ class AccelerometerDataMesg : Mesg {
      * Set accel_y field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of accel_y
      * @param accelY The new accelY value to be set
      */
@@ -154,7 +154,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(3, index, accelY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelZ: Array<Int?>?
+    val accelZ: Array<Int>?
         get() = getFieldIntegerValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelZ: Int
@@ -167,7 +167,7 @@ class AccelerometerDataMesg : Mesg {
      * Get accel_z field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of accel_z
      * @return accel_z
      */
@@ -179,7 +179,7 @@ class AccelerometerDataMesg : Mesg {
      * Set accel_z field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of accel_z
      * @param accelZ The new accelZ value to be set
      */
@@ -187,7 +187,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(4, index, accelZ, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedAccelX: Array<Float?>?
+    val calibratedAccelX: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedAccelX: Int
@@ -200,7 +200,7 @@ class AccelerometerDataMesg : Mesg {
      * Get calibrated_accel_x field
      * Units: g
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of calibrated_accel_x
      * @return calibrated_accel_x
      */
@@ -212,7 +212,7 @@ class AccelerometerDataMesg : Mesg {
      * Set calibrated_accel_x field
      * Units: g
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of calibrated_accel_x
      * @param calibratedAccelX The new calibratedAccelX value to be set
      */
@@ -220,7 +220,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(5, index, calibratedAccelX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedAccelY: Array<Float?>?
+    val calibratedAccelY: Array<Float>?
         get() = getFieldFloatValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedAccelY: Int
@@ -233,7 +233,7 @@ class AccelerometerDataMesg : Mesg {
      * Get calibrated_accel_y field
      * Units: g
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of calibrated_accel_y
      * @return calibrated_accel_y
      */
@@ -245,7 +245,7 @@ class AccelerometerDataMesg : Mesg {
      * Set calibrated_accel_y field
      * Units: g
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of calibrated_accel_y
      * @param calibratedAccelY The new calibratedAccelY value to be set
      */
@@ -253,7 +253,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(6, index, calibratedAccelY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedAccelZ: Array<Float?>?
+    val calibratedAccelZ: Array<Float>?
         get() = getFieldFloatValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedAccelZ: Int
@@ -266,7 +266,7 @@ class AccelerometerDataMesg : Mesg {
      * Get calibrated_accel_z field
      * Units: g
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of calibrated_accel_z
      * @return calibrated_accel_z
      */
@@ -278,7 +278,7 @@ class AccelerometerDataMesg : Mesg {
      * Set calibrated_accel_z field
      * Units: g
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of calibrated_accel_z
      * @param calibratedAccelZ The new calibratedAccelZ value to be set
      */
@@ -286,7 +286,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(7, index, calibratedAccelZ, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val compressedCalibratedAccelX: Array<Short?>?
+    val compressedCalibratedAccelX: Array<Short>?
         get() = getFieldShortValues(8, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCompressedCalibratedAccelX: Int
@@ -299,7 +299,7 @@ class AccelerometerDataMesg : Mesg {
      * Get compressed_calibrated_accel_x field
      * Units: mG
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of compressed_calibrated_accel_x
      * @return compressed_calibrated_accel_x
      */
@@ -311,7 +311,7 @@ class AccelerometerDataMesg : Mesg {
      * Set compressed_calibrated_accel_x field
      * Units: mG
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of compressed_calibrated_accel_x
      * @param compressedCalibratedAccelX The new compressedCalibratedAccelX value to be set
      */
@@ -319,7 +319,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(8, index, compressedCalibratedAccelX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val compressedCalibratedAccelY: Array<Short?>?
+    val compressedCalibratedAccelY: Array<Short>?
         get() = getFieldShortValues(9, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCompressedCalibratedAccelY: Int
@@ -332,7 +332,7 @@ class AccelerometerDataMesg : Mesg {
      * Get compressed_calibrated_accel_y field
      * Units: mG
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of compressed_calibrated_accel_y
      * @return compressed_calibrated_accel_y
      */
@@ -344,7 +344,7 @@ class AccelerometerDataMesg : Mesg {
      * Set compressed_calibrated_accel_y field
      * Units: mG
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of compressed_calibrated_accel_y
      * @param compressedCalibratedAccelY The new compressedCalibratedAccelY value to be set
      */
@@ -352,7 +352,7 @@ class AccelerometerDataMesg : Mesg {
         setFieldValue(9, index, compressedCalibratedAccelY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val compressedCalibratedAccelZ: Array<Short?>?
+    val compressedCalibratedAccelZ: Array<Short>?
         get() = getFieldShortValues(10, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCompressedCalibratedAccelZ: Int
@@ -365,7 +365,7 @@ class AccelerometerDataMesg : Mesg {
      * Get compressed_calibrated_accel_z field
      * Units: mG
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of compressed_calibrated_accel_z
      * @return compressed_calibrated_accel_z
      */
@@ -377,7 +377,7 @@ class AccelerometerDataMesg : Mesg {
      * Set compressed_calibrated_accel_z field
      * Units: mG
      * Comment: Calibrated accel reading
-     * 
+     *
      * @param index of compressed_calibrated_accel_z
      * @param compressedCalibratedAccelZ The new compressedCalibratedAccelZ value to be set
      */
@@ -411,11 +411,10 @@ class AccelerometerDataMesg : Mesg {
         const val CompressedCalibratedAccelZFieldNum: Int = 10
 
 
-        val accelerometerDataMesg: Mesg
+        // accelerometer_data
+        val accelerometerDataMesg: Mesg = Mesg("accelerometer_data", MesgNum.ACCELEROMETER_DATA)
 
         init {
-            // accelerometer_data
-            accelerometerDataMesg = Mesg("accelerometer_data", MesgNum.ACCELEROMETER_DATA)
             accelerometerDataMesg.addField(
                 Field(
                     "timestamp",

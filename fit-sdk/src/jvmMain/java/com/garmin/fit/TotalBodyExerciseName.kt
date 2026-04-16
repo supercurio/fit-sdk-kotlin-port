@@ -29,35 +29,31 @@ object TotalBodyExerciseName {
     const val TOTAL_BODY_BURPEE_OVER_BAR: Int = 18
     const val BURPEE_BOX_JUMP_OVER: Int = 19
     const val BURPEE_WHEELCHAIR: Int = 20
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BURPEE, "BURPEE")
-        stringMap.put(WEIGHTED_BURPEE, "WEIGHTED_BURPEE")
-        stringMap.put(BURPEE_BOX_JUMP, "BURPEE_BOX_JUMP")
-        stringMap.put(WEIGHTED_BURPEE_BOX_JUMP, "WEIGHTED_BURPEE_BOX_JUMP")
-        stringMap.put(HIGH_PULL_BURPEE, "HIGH_PULL_BURPEE")
-        stringMap.put(MAN_MAKERS, "MAN_MAKERS")
-        stringMap.put(ONE_ARM_BURPEE, "ONE_ARM_BURPEE")
-        stringMap.put(SQUAT_THRUSTS, "SQUAT_THRUSTS")
-        stringMap.put(WEIGHTED_SQUAT_THRUSTS, "WEIGHTED_SQUAT_THRUSTS")
-        stringMap.put(SQUAT_PLANK_PUSH_UP, "SQUAT_PLANK_PUSH_UP")
-        stringMap.put(WEIGHTED_SQUAT_PLANK_PUSH_UP, "WEIGHTED_SQUAT_PLANK_PUSH_UP")
-        stringMap.put(STANDING_T_ROTATION_BALANCE, "STANDING_T_ROTATION_BALANCE")
-        stringMap.put(WEIGHTED_STANDING_T_ROTATION_BALANCE, "WEIGHTED_STANDING_T_ROTATION_BALANCE")
-        stringMap.put(BARBELL_BURPEE, "BARBELL_BURPEE")
-        stringMap.put(
-            BURPEE_BOX_JUMP_OVER_YES_LITERALLY_JUMPING_OVER_THE_BOX,
-            "BURPEE_BOX_JUMP_OVER_YES_LITERALLY_JUMPING_OVER_THE_BOX"
-        )
-        stringMap.put(BURPEE_BOX_JUMP_STEP_UP_OVER, "BURPEE_BOX_JUMP_STEP_UP_OVER")
-        stringMap.put(LATERAL_BARBELL_BURPEE, "LATERAL_BARBELL_BURPEE")
-        stringMap.put(TOTAL_BODY_BURPEE_OVER_BAR, "TOTAL_BODY_BURPEE_OVER_BAR")
-        stringMap.put(BURPEE_BOX_JUMP_OVER, "BURPEE_BOX_JUMP_OVER")
-        stringMap.put(BURPEE_WHEELCHAIR, "BURPEE_WHEELCHAIR")
+        stringMap[BURPEE] = "BURPEE"
+        stringMap[WEIGHTED_BURPEE] = "WEIGHTED_BURPEE"
+        stringMap[BURPEE_BOX_JUMP] = "BURPEE_BOX_JUMP"
+        stringMap[WEIGHTED_BURPEE_BOX_JUMP] = "WEIGHTED_BURPEE_BOX_JUMP"
+        stringMap[HIGH_PULL_BURPEE] = "HIGH_PULL_BURPEE"
+        stringMap[MAN_MAKERS] = "MAN_MAKERS"
+        stringMap[ONE_ARM_BURPEE] = "ONE_ARM_BURPEE"
+        stringMap[SQUAT_THRUSTS] = "SQUAT_THRUSTS"
+        stringMap[WEIGHTED_SQUAT_THRUSTS] = "WEIGHTED_SQUAT_THRUSTS"
+        stringMap[SQUAT_PLANK_PUSH_UP] = "SQUAT_PLANK_PUSH_UP"
+        stringMap[WEIGHTED_SQUAT_PLANK_PUSH_UP] = "WEIGHTED_SQUAT_PLANK_PUSH_UP"
+        stringMap[STANDING_T_ROTATION_BALANCE] = "STANDING_T_ROTATION_BALANCE"
+        stringMap[WEIGHTED_STANDING_T_ROTATION_BALANCE] = "WEIGHTED_STANDING_T_ROTATION_BALANCE"
+        stringMap[BARBELL_BURPEE] = "BARBELL_BURPEE"
+        stringMap[BURPEE_BOX_JUMP_OVER_YES_LITERALLY_JUMPING_OVER_THE_BOX] = "BURPEE_BOX_JUMP_OVER_YES_LITERALLY_JUMPING_OVER_THE_BOX"
+        stringMap[BURPEE_BOX_JUMP_STEP_UP_OVER] = "BURPEE_BOX_JUMP_STEP_UP_OVER"
+        stringMap[LATERAL_BARBELL_BURPEE] = "LATERAL_BARBELL_BURPEE"
+        stringMap[TOTAL_BODY_BURPEE_OVER_BAR] = "TOTAL_BODY_BURPEE_OVER_BAR"
+        stringMap[BURPEE_BOX_JUMP_OVER] = "BURPEE_BOX_JUMP_OVER"
+        stringMap[BURPEE_WHEELCHAIR] = "BURPEE_WHEELCHAIR"
     }
 
 
@@ -66,9 +62,9 @@ object TotalBodyExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -79,7 +75,7 @@ object TotalBodyExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

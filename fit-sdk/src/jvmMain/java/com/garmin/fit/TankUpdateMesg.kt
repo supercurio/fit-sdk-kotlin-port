@@ -12,37 +12,37 @@ package com.garmin.fit
 class TankUpdateMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TANK_UPDATE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var sensor: Long?
         /**
          * Get sensor field
-         * 
+         *
          * @return sensor
          */
         get() = getFieldLongValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sensor field
-         * 
+         *
          * @param sensor The new sensor value to be set
          */
         set(sensor) {
@@ -53,14 +53,14 @@ class TankUpdateMesg : Mesg {
         /**
          * Get pressure field
          * Units: bar
-         * 
+         *
          * @return pressure
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set pressure field
          * Units: bar
-         * 
+         *
          * @param pressure The new pressure value to be set
          */
         set(pressure) {
@@ -75,11 +75,10 @@ class TankUpdateMesg : Mesg {
         const val PressureFieldNum: Int = 1
 
 
-        val tankUpdateMesg: Mesg
+        // tank_update
+        val tankUpdateMesg: Mesg = Mesg("tank_update", MesgNum.TANK_UPDATE)
 
         init {
-            // tank_update
-            tankUpdateMesg = Mesg("tank_update", MesgNum.TANK_UPDATE)
             tankUpdateMesg.addField(
                 Field(
                     "timestamp",

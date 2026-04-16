@@ -487,487 +487,486 @@ object GarminProduct {
     const val CONNECTIQ_SIMULATOR: Int = 65531
     const val ANDROID_ANTPLUS_PLUGIN: Int = 65532
     const val CONNECT: Int = 65534 // Garmin Connect website
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(HRM1, "HRM1")
-        stringMap.put(AXH01, "AXH01")
-        stringMap.put(AXB01, "AXB01")
-        stringMap.put(AXB02, "AXB02")
-        stringMap.put(HRM2SS, "HRM2SS")
-        stringMap.put(DSI_ALF02, "DSI_ALF02")
-        stringMap.put(HRM3SS, "HRM3SS")
-        stringMap.put(HRM_RUN_SINGLE_BYTE_PRODUCT_ID, "HRM_RUN_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(BSM, "BSM")
-        stringMap.put(BCM, "BCM")
-        stringMap.put(AXS01, "AXS01")
-        stringMap.put(HRM_TRI_SINGLE_BYTE_PRODUCT_ID, "HRM_TRI_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(HRM4_RUN_SINGLE_BYTE_PRODUCT_ID, "HRM4_RUN_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(FR225_SINGLE_BYTE_PRODUCT_ID, "FR225_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(GEN3_BSM_SINGLE_BYTE_PRODUCT_ID, "GEN3_BSM_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(GEN3_BCM_SINGLE_BYTE_PRODUCT_ID, "GEN3_BCM_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(HRM_FIT_SINGLE_BYTE_PRODUCT_ID, "HRM_FIT_SINGLE_BYTE_PRODUCT_ID")
-        stringMap.put(OHR, "OHR")
-        stringMap.put(FR301_CHINA, "FR301_CHINA")
-        stringMap.put(FR301_JAPAN, "FR301_JAPAN")
-        stringMap.put(FR301_KOREA, "FR301_KOREA")
-        stringMap.put(FR301_TAIWAN, "FR301_TAIWAN")
-        stringMap.put(FR405, "FR405")
-        stringMap.put(FR50, "FR50")
-        stringMap.put(FR405_JAPAN, "FR405_JAPAN")
-        stringMap.put(FR60, "FR60")
-        stringMap.put(DSI_ALF01, "DSI_ALF01")
-        stringMap.put(FR310XT, "FR310XT")
-        stringMap.put(EDGE500, "EDGE500")
-        stringMap.put(FR110, "FR110")
-        stringMap.put(EDGE800, "EDGE800")
-        stringMap.put(EDGE500_TAIWAN, "EDGE500_TAIWAN")
-        stringMap.put(EDGE500_JAPAN, "EDGE500_JAPAN")
-        stringMap.put(CHIRP, "CHIRP")
-        stringMap.put(FR110_JAPAN, "FR110_JAPAN")
-        stringMap.put(EDGE200, "EDGE200")
-        stringMap.put(FR910XT, "FR910XT")
-        stringMap.put(EDGE800_TAIWAN, "EDGE800_TAIWAN")
-        stringMap.put(EDGE800_JAPAN, "EDGE800_JAPAN")
-        stringMap.put(ALF04, "ALF04")
-        stringMap.put(FR610, "FR610")
-        stringMap.put(FR210_JAPAN, "FR210_JAPAN")
-        stringMap.put(VECTOR_SS, "VECTOR_SS")
-        stringMap.put(VECTOR_CP, "VECTOR_CP")
-        stringMap.put(EDGE800_CHINA, "EDGE800_CHINA")
-        stringMap.put(EDGE500_CHINA, "EDGE500_CHINA")
-        stringMap.put(APPROACH_G10, "APPROACH_G10")
-        stringMap.put(FR610_JAPAN, "FR610_JAPAN")
-        stringMap.put(EDGE500_KOREA, "EDGE500_KOREA")
-        stringMap.put(FR70, "FR70")
-        stringMap.put(FR310XT_4T, "FR310XT_4T")
-        stringMap.put(AMX, "AMX")
-        stringMap.put(FR10, "FR10")
-        stringMap.put(EDGE800_KOREA, "EDGE800_KOREA")
-        stringMap.put(SWIM, "SWIM")
-        stringMap.put(FR910XT_CHINA, "FR910XT_CHINA")
-        stringMap.put(FENIX, "FENIX")
-        stringMap.put(EDGE200_TAIWAN, "EDGE200_TAIWAN")
-        stringMap.put(EDGE510, "EDGE510")
-        stringMap.put(EDGE810, "EDGE810")
-        stringMap.put(TEMPE, "TEMPE")
-        stringMap.put(FR910XT_JAPAN, "FR910XT_JAPAN")
-        stringMap.put(FR620, "FR620")
-        stringMap.put(FR220, "FR220")
-        stringMap.put(FR910XT_KOREA, "FR910XT_KOREA")
-        stringMap.put(FR10_JAPAN, "FR10_JAPAN")
-        stringMap.put(EDGE810_JAPAN, "EDGE810_JAPAN")
-        stringMap.put(VIRB_ELITE, "VIRB_ELITE")
-        stringMap.put(EDGE_TOURING, "EDGE_TOURING")
-        stringMap.put(EDGE510_JAPAN, "EDGE510_JAPAN")
-        stringMap.put(HRM_TRI, "HRM_TRI")
-        stringMap.put(HRM_RUN, "HRM_RUN")
-        stringMap.put(FR920XT, "FR920XT")
-        stringMap.put(EDGE510_ASIA, "EDGE510_ASIA")
-        stringMap.put(EDGE810_CHINA, "EDGE810_CHINA")
-        stringMap.put(EDGE810_TAIWAN, "EDGE810_TAIWAN")
-        stringMap.put(EDGE1000, "EDGE1000")
-        stringMap.put(VIVO_FIT, "VIVO_FIT")
-        stringMap.put(VIRB_REMOTE, "VIRB_REMOTE")
-        stringMap.put(VIVO_KI, "VIVO_KI")
-        stringMap.put(FR15, "FR15")
-        stringMap.put(VIVO_ACTIVE, "VIVO_ACTIVE")
-        stringMap.put(EDGE510_KOREA, "EDGE510_KOREA")
-        stringMap.put(FR620_JAPAN, "FR620_JAPAN")
-        stringMap.put(FR620_CHINA, "FR620_CHINA")
-        stringMap.put(FR220_JAPAN, "FR220_JAPAN")
-        stringMap.put(FR220_CHINA, "FR220_CHINA")
-        stringMap.put(APPROACH_S6, "APPROACH_S6")
-        stringMap.put(VIVO_SMART, "VIVO_SMART")
-        stringMap.put(FENIX2, "FENIX2")
-        stringMap.put(EPIX, "EPIX")
-        stringMap.put(FENIX3, "FENIX3")
-        stringMap.put(EDGE1000_TAIWAN, "EDGE1000_TAIWAN")
-        stringMap.put(EDGE1000_JAPAN, "EDGE1000_JAPAN")
-        stringMap.put(FR15_JAPAN, "FR15_JAPAN")
-        stringMap.put(EDGE520, "EDGE520")
-        stringMap.put(EDGE1000_CHINA, "EDGE1000_CHINA")
-        stringMap.put(FR620_RUSSIA, "FR620_RUSSIA")
-        stringMap.put(FR220_RUSSIA, "FR220_RUSSIA")
-        stringMap.put(VECTOR_S, "VECTOR_S")
-        stringMap.put(EDGE1000_KOREA, "EDGE1000_KOREA")
-        stringMap.put(FR920XT_TAIWAN, "FR920XT_TAIWAN")
-        stringMap.put(FR920XT_CHINA, "FR920XT_CHINA")
-        stringMap.put(FR920XT_JAPAN, "FR920XT_JAPAN")
-        stringMap.put(VIRBX, "VIRBX")
-        stringMap.put(VIVO_SMART_APAC, "VIVO_SMART_APAC")
-        stringMap.put(ETREX_TOUCH, "ETREX_TOUCH")
-        stringMap.put(EDGE25, "EDGE25")
-        stringMap.put(FR25, "FR25")
-        stringMap.put(VIVO_FIT2, "VIVO_FIT2")
-        stringMap.put(FR225, "FR225")
-        stringMap.put(FR630, "FR630")
-        stringMap.put(FR230, "FR230")
-        stringMap.put(FR735XT, "FR735XT")
-        stringMap.put(VIVO_ACTIVE_APAC, "VIVO_ACTIVE_APAC")
-        stringMap.put(VECTOR_2, "VECTOR_2")
-        stringMap.put(VECTOR_2S, "VECTOR_2S")
-        stringMap.put(VIRBXE, "VIRBXE")
-        stringMap.put(FR620_TAIWAN, "FR620_TAIWAN")
-        stringMap.put(FR220_TAIWAN, "FR220_TAIWAN")
-        stringMap.put(TRUSWING, "TRUSWING")
-        stringMap.put(D2AIRVENU, "D2AIRVENU")
-        stringMap.put(FENIX3_CHINA, "FENIX3_CHINA")
-        stringMap.put(FENIX3_TWN, "FENIX3_TWN")
-        stringMap.put(VARIA_HEADLIGHT, "VARIA_HEADLIGHT")
-        stringMap.put(VARIA_TAILLIGHT_OLD, "VARIA_TAILLIGHT_OLD")
-        stringMap.put(EDGE_EXPLORE_1000, "EDGE_EXPLORE_1000")
-        stringMap.put(FR225_ASIA, "FR225_ASIA")
-        stringMap.put(VARIA_RADAR_TAILLIGHT, "VARIA_RADAR_TAILLIGHT")
-        stringMap.put(VARIA_RADAR_DISPLAY, "VARIA_RADAR_DISPLAY")
-        stringMap.put(EDGE20, "EDGE20")
-        stringMap.put(EDGE520_ASIA, "EDGE520_ASIA")
-        stringMap.put(EDGE520_JAPAN, "EDGE520_JAPAN")
-        stringMap.put(D2_BRAVO, "D2_BRAVO")
-        stringMap.put(APPROACH_S20, "APPROACH_S20")
-        stringMap.put(VIVO_SMART2, "VIVO_SMART2")
-        stringMap.put(EDGE1000_THAI, "EDGE1000_THAI")
-        stringMap.put(VARIA_REMOTE, "VARIA_REMOTE")
-        stringMap.put(EDGE25_ASIA, "EDGE25_ASIA")
-        stringMap.put(EDGE25_JPN, "EDGE25_JPN")
-        stringMap.put(EDGE20_ASIA, "EDGE20_ASIA")
-        stringMap.put(APPROACH_X40, "APPROACH_X40")
-        stringMap.put(FENIX3_JAPAN, "FENIX3_JAPAN")
-        stringMap.put(VIVO_SMART_EMEA, "VIVO_SMART_EMEA")
-        stringMap.put(FR630_ASIA, "FR630_ASIA")
-        stringMap.put(FR630_JPN, "FR630_JPN")
-        stringMap.put(FR230_JPN, "FR230_JPN")
-        stringMap.put(HRM4_RUN, "HRM4_RUN")
-        stringMap.put(EPIX_JAPAN, "EPIX_JAPAN")
-        stringMap.put(VIVO_ACTIVE_HR, "VIVO_ACTIVE_HR")
-        stringMap.put(VIVO_SMART_GPS_HR, "VIVO_SMART_GPS_HR")
-        stringMap.put(VIVO_SMART_HR, "VIVO_SMART_HR")
-        stringMap.put(VIVO_SMART_HR_ASIA, "VIVO_SMART_HR_ASIA")
-        stringMap.put(VIVO_SMART_GPS_HR_ASIA, "VIVO_SMART_GPS_HR_ASIA")
-        stringMap.put(VIVO_MOVE, "VIVO_MOVE")
-        stringMap.put(VARIA_TAILLIGHT, "VARIA_TAILLIGHT")
-        stringMap.put(FR235_ASIA, "FR235_ASIA")
-        stringMap.put(FR235_JAPAN, "FR235_JAPAN")
-        stringMap.put(VARIA_VISION, "VARIA_VISION")
-        stringMap.put(VIVO_FIT3, "VIVO_FIT3")
-        stringMap.put(FENIX3_KOREA, "FENIX3_KOREA")
-        stringMap.put(FENIX3_SEA, "FENIX3_SEA")
-        stringMap.put(FENIX3_HR, "FENIX3_HR")
-        stringMap.put(VIRB_ULTRA_30, "VIRB_ULTRA_30")
-        stringMap.put(INDEX_SMART_SCALE, "INDEX_SMART_SCALE")
-        stringMap.put(FR235, "FR235")
-        stringMap.put(FENIX3_CHRONOS, "FENIX3_CHRONOS")
-        stringMap.put(OREGON7XX, "OREGON7XX")
-        stringMap.put(RINO7XX, "RINO7XX")
-        stringMap.put(EPIX_KOREA, "EPIX_KOREA")
-        stringMap.put(FENIX3_HR_CHN, "FENIX3_HR_CHN")
-        stringMap.put(FENIX3_HR_TWN, "FENIX3_HR_TWN")
-        stringMap.put(FENIX3_HR_JPN, "FENIX3_HR_JPN")
-        stringMap.put(FENIX3_HR_SEA, "FENIX3_HR_SEA")
-        stringMap.put(FENIX3_HR_KOR, "FENIX3_HR_KOR")
-        stringMap.put(NAUTIX, "NAUTIX")
-        stringMap.put(VIVO_ACTIVE_HR_APAC, "VIVO_ACTIVE_HR_APAC")
-        stringMap.put(FR35, "FR35")
-        stringMap.put(OREGON7XX_WW, "OREGON7XX_WW")
-        stringMap.put(EDGE_820, "EDGE_820")
-        stringMap.put(EDGE_EXPLORE_820, "EDGE_EXPLORE_820")
-        stringMap.put(FR735XT_APAC, "FR735XT_APAC")
-        stringMap.put(FR735XT_JAPAN, "FR735XT_JAPAN")
-        stringMap.put(FENIX5S, "FENIX5S")
-        stringMap.put(D2_BRAVO_TITANIUM, "D2_BRAVO_TITANIUM")
-        stringMap.put(VARIA_UT800, "VARIA_UT800")
-        stringMap.put(RUNNING_DYNAMICS_POD, "RUNNING_DYNAMICS_POD")
-        stringMap.put(EDGE_820_CHINA, "EDGE_820_CHINA")
-        stringMap.put(EDGE_820_JAPAN, "EDGE_820_JAPAN")
-        stringMap.put(FENIX5X, "FENIX5X")
-        stringMap.put(VIVO_FIT_JR, "VIVO_FIT_JR")
-        stringMap.put(VIVO_SMART3, "VIVO_SMART3")
-        stringMap.put(VIVO_SPORT, "VIVO_SPORT")
-        stringMap.put(EDGE_820_TAIWAN, "EDGE_820_TAIWAN")
-        stringMap.put(EDGE_820_KOREA, "EDGE_820_KOREA")
-        stringMap.put(EDGE_820_SEA, "EDGE_820_SEA")
-        stringMap.put(FR35_HEBREW, "FR35_HEBREW")
-        stringMap.put(APPROACH_S60, "APPROACH_S60")
-        stringMap.put(FR35_APAC, "FR35_APAC")
-        stringMap.put(FR35_JAPAN, "FR35_JAPAN")
-        stringMap.put(FENIX3_CHRONOS_ASIA, "FENIX3_CHRONOS_ASIA")
-        stringMap.put(VIRB_360, "VIRB_360")
-        stringMap.put(FR935, "FR935")
-        stringMap.put(FENIX5, "FENIX5")
-        stringMap.put(VIVOACTIVE3, "VIVOACTIVE3")
-        stringMap.put(FR235_CHINA_NFC, "FR235_CHINA_NFC")
-        stringMap.put(FORETREX_601_701, "FORETREX_601_701")
-        stringMap.put(VIVO_MOVE_HR, "VIVO_MOVE_HR")
-        stringMap.put(EDGE_1030, "EDGE_1030")
-        stringMap.put(FR35_SEA, "FR35_SEA")
-        stringMap.put(VECTOR_3, "VECTOR_3")
-        stringMap.put(FENIX5_ASIA, "FENIX5_ASIA")
-        stringMap.put(FENIX5S_ASIA, "FENIX5S_ASIA")
-        stringMap.put(FENIX5X_ASIA, "FENIX5X_ASIA")
-        stringMap.put(APPROACH_Z80, "APPROACH_Z80")
-        stringMap.put(FR35_KOREA, "FR35_KOREA")
-        stringMap.put(D2CHARLIE, "D2CHARLIE")
-        stringMap.put(VIVO_SMART3_APAC, "VIVO_SMART3_APAC")
-        stringMap.put(VIVO_SPORT_APAC, "VIVO_SPORT_APAC")
-        stringMap.put(FR935_ASIA, "FR935_ASIA")
-        stringMap.put(DESCENT, "DESCENT")
-        stringMap.put(VIVO_FIT4, "VIVO_FIT4")
-        stringMap.put(FR645, "FR645")
-        stringMap.put(FR645M, "FR645M")
-        stringMap.put(FR30, "FR30")
-        stringMap.put(FENIX5S_PLUS, "FENIX5S_PLUS")
-        stringMap.put(EDGE_130, "EDGE_130")
-        stringMap.put(EDGE_1030_ASIA, "EDGE_1030_ASIA")
-        stringMap.put(VIVOSMART_4, "VIVOSMART_4")
-        stringMap.put(VIVO_MOVE_HR_ASIA, "VIVO_MOVE_HR_ASIA")
-        stringMap.put(APPROACH_X10, "APPROACH_X10")
-        stringMap.put(FR30_ASIA, "FR30_ASIA")
-        stringMap.put(VIVOACTIVE3M_W, "VIVOACTIVE3M_W")
-        stringMap.put(FR645_ASIA, "FR645_ASIA")
-        stringMap.put(FR645M_ASIA, "FR645M_ASIA")
-        stringMap.put(EDGE_EXPLORE, "EDGE_EXPLORE")
-        stringMap.put(GPSMAP66, "GPSMAP66")
-        stringMap.put(APPROACH_S10, "APPROACH_S10")
-        stringMap.put(VIVOACTIVE3M_L, "VIVOACTIVE3M_L")
-        stringMap.put(FR245, "FR245")
-        stringMap.put(FR245_MUSIC, "FR245_MUSIC")
-        stringMap.put(APPROACH_G80, "APPROACH_G80")
-        stringMap.put(EDGE_130_ASIA, "EDGE_130_ASIA")
-        stringMap.put(EDGE_1030_BONTRAGER, "EDGE_1030_BONTRAGER")
-        stringMap.put(FENIX5_PLUS, "FENIX5_PLUS")
-        stringMap.put(FENIX5X_PLUS, "FENIX5X_PLUS")
-        stringMap.put(EDGE_520_PLUS, "EDGE_520_PLUS")
-        stringMap.put(FR945, "FR945")
-        stringMap.put(EDGE_530, "EDGE_530")
-        stringMap.put(EDGE_830, "EDGE_830")
-        stringMap.put(INSTINCT_ESPORTS, "INSTINCT_ESPORTS")
-        stringMap.put(FENIX5S_PLUS_APAC, "FENIX5S_PLUS_APAC")
-        stringMap.put(FENIX5X_PLUS_APAC, "FENIX5X_PLUS_APAC")
-        stringMap.put(EDGE_520_PLUS_APAC, "EDGE_520_PLUS_APAC")
-        stringMap.put(DESCENT_T1, "DESCENT_T1")
-        stringMap.put(FR235L_ASIA, "FR235L_ASIA")
-        stringMap.put(FR245_ASIA, "FR245_ASIA")
-        stringMap.put(VIVO_ACTIVE3M_APAC, "VIVO_ACTIVE3M_APAC")
-        stringMap.put(GEN3_BSM, "GEN3_BSM")
-        stringMap.put(GEN3_BCM, "GEN3_BCM")
-        stringMap.put(VIVO_SMART4_ASIA, "VIVO_SMART4_ASIA")
-        stringMap.put(VIVOACTIVE4_SMALL, "VIVOACTIVE4_SMALL")
-        stringMap.put(VIVOACTIVE4_LARGE, "VIVOACTIVE4_LARGE")
-        stringMap.put(VENU, "VENU")
-        stringMap.put(MARQ_DRIVER, "MARQ_DRIVER")
-        stringMap.put(MARQ_AVIATOR, "MARQ_AVIATOR")
-        stringMap.put(MARQ_CAPTAIN, "MARQ_CAPTAIN")
-        stringMap.put(MARQ_COMMANDER, "MARQ_COMMANDER")
-        stringMap.put(MARQ_EXPEDITION, "MARQ_EXPEDITION")
-        stringMap.put(MARQ_ATHLETE, "MARQ_ATHLETE")
-        stringMap.put(DESCENT_MK2, "DESCENT_MK2")
-        stringMap.put(FR45, "FR45")
-        stringMap.put(GPSMAP66I, "GPSMAP66I")
-        stringMap.put(FENIX6S_SPORT, "FENIX6S_SPORT")
-        stringMap.put(FENIX6S, "FENIX6S")
-        stringMap.put(FENIX6_SPORT, "FENIX6_SPORT")
-        stringMap.put(FENIX6, "FENIX6")
-        stringMap.put(FENIX6X, "FENIX6X")
-        stringMap.put(HRM_DUAL, "HRM_DUAL")
-        stringMap.put(HRM_PRO, "HRM_PRO")
-        stringMap.put(VIVO_MOVE3_PREMIUM, "VIVO_MOVE3_PREMIUM")
-        stringMap.put(APPROACH_S40, "APPROACH_S40")
-        stringMap.put(FR245M_ASIA, "FR245M_ASIA")
-        stringMap.put(EDGE_530_APAC, "EDGE_530_APAC")
-        stringMap.put(EDGE_830_APAC, "EDGE_830_APAC")
-        stringMap.put(VIVO_MOVE3, "VIVO_MOVE3")
-        stringMap.put(VIVO_ACTIVE4_SMALL_ASIA, "VIVO_ACTIVE4_SMALL_ASIA")
-        stringMap.put(VIVO_ACTIVE4_LARGE_ASIA, "VIVO_ACTIVE4_LARGE_ASIA")
-        stringMap.put(VIVO_ACTIVE4_OLED_ASIA, "VIVO_ACTIVE4_OLED_ASIA")
-        stringMap.put(SWIM2, "SWIM2")
-        stringMap.put(MARQ_DRIVER_ASIA, "MARQ_DRIVER_ASIA")
-        stringMap.put(MARQ_AVIATOR_ASIA, "MARQ_AVIATOR_ASIA")
-        stringMap.put(VIVO_MOVE3_ASIA, "VIVO_MOVE3_ASIA")
-        stringMap.put(FR945_ASIA, "FR945_ASIA")
-        stringMap.put(VIVO_ACTIVE3T_CHN, "VIVO_ACTIVE3T_CHN")
-        stringMap.put(MARQ_CAPTAIN_ASIA, "MARQ_CAPTAIN_ASIA")
-        stringMap.put(MARQ_COMMANDER_ASIA, "MARQ_COMMANDER_ASIA")
-        stringMap.put(MARQ_EXPEDITION_ASIA, "MARQ_EXPEDITION_ASIA")
-        stringMap.put(MARQ_ATHLETE_ASIA, "MARQ_ATHLETE_ASIA")
-        stringMap.put(INDEX_SMART_SCALE_2, "INDEX_SMART_SCALE_2")
-        stringMap.put(INSTINCT_SOLAR, "INSTINCT_SOLAR")
-        stringMap.put(FR45_ASIA, "FR45_ASIA")
-        stringMap.put(VIVOACTIVE3_DAIMLER, "VIVOACTIVE3_DAIMLER")
-        stringMap.put(LEGACY_REY, "LEGACY_REY")
-        stringMap.put(LEGACY_DARTH_VADER, "LEGACY_DARTH_VADER")
-        stringMap.put(LEGACY_CAPTAIN_MARVEL, "LEGACY_CAPTAIN_MARVEL")
-        stringMap.put(LEGACY_FIRST_AVENGER, "LEGACY_FIRST_AVENGER")
-        stringMap.put(FENIX6S_SPORT_ASIA, "FENIX6S_SPORT_ASIA")
-        stringMap.put(FENIX6S_ASIA, "FENIX6S_ASIA")
-        stringMap.put(FENIX6_SPORT_ASIA, "FENIX6_SPORT_ASIA")
-        stringMap.put(FENIX6_ASIA, "FENIX6_ASIA")
-        stringMap.put(FENIX6X_ASIA, "FENIX6X_ASIA")
-        stringMap.put(LEGACY_CAPTAIN_MARVEL_ASIA, "LEGACY_CAPTAIN_MARVEL_ASIA")
-        stringMap.put(LEGACY_FIRST_AVENGER_ASIA, "LEGACY_FIRST_AVENGER_ASIA")
-        stringMap.put(LEGACY_REY_ASIA, "LEGACY_REY_ASIA")
-        stringMap.put(LEGACY_DARTH_VADER_ASIA, "LEGACY_DARTH_VADER_ASIA")
-        stringMap.put(DESCENT_MK2S, "DESCENT_MK2S")
-        stringMap.put(EDGE_130_PLUS, "EDGE_130_PLUS")
-        stringMap.put(EDGE_1030_PLUS, "EDGE_1030_PLUS")
-        stringMap.put(RALLY_200, "RALLY_200")
-        stringMap.put(FR745, "FR745")
-        stringMap.put(VENUSQ_MUSIC, "VENUSQ_MUSIC")
-        stringMap.put(VENUSQ_MUSIC_V2, "VENUSQ_MUSIC_V2")
-        stringMap.put(VENUSQ, "VENUSQ")
-        stringMap.put(LILY, "LILY")
-        stringMap.put(MARQ_ADVENTURER, "MARQ_ADVENTURER")
-        stringMap.put(ENDURO, "ENDURO")
-        stringMap.put(SWIM2_APAC, "SWIM2_APAC")
-        stringMap.put(MARQ_ADVENTURER_ASIA, "MARQ_ADVENTURER_ASIA")
-        stringMap.put(FR945_LTE, "FR945_LTE")
-        stringMap.put(DESCENT_MK2_ASIA, "DESCENT_MK2_ASIA")
-        stringMap.put(VENU2, "VENU2")
-        stringMap.put(VENU2S, "VENU2S")
-        stringMap.put(VENU_DAIMLER_ASIA, "VENU_DAIMLER_ASIA")
-        stringMap.put(MARQ_GOLFER, "MARQ_GOLFER")
-        stringMap.put(VENU_DAIMLER, "VENU_DAIMLER")
-        stringMap.put(FR745_ASIA, "FR745_ASIA")
-        stringMap.put(VARIA_RCT715, "VARIA_RCT715")
-        stringMap.put(LILY_ASIA, "LILY_ASIA")
-        stringMap.put(EDGE_1030_PLUS_ASIA, "EDGE_1030_PLUS_ASIA")
-        stringMap.put(EDGE_130_PLUS_ASIA, "EDGE_130_PLUS_ASIA")
-        stringMap.put(APPROACH_S12, "APPROACH_S12")
-        stringMap.put(ENDURO_ASIA, "ENDURO_ASIA")
-        stringMap.put(VENUSQ_ASIA, "VENUSQ_ASIA")
-        stringMap.put(EDGE_1040, "EDGE_1040")
-        stringMap.put(MARQ_GOLFER_ASIA, "MARQ_GOLFER_ASIA")
-        stringMap.put(VENU2_PLUS, "VENU2_PLUS")
-        stringMap.put(GNSS, "GNSS")
-        stringMap.put(FR55, "FR55")
-        stringMap.put(INSTINCT_2, "INSTINCT_2")
-        stringMap.put(INSTINCT_2S, "INSTINCT_2S")
-        stringMap.put(FENIX7S, "FENIX7S")
-        stringMap.put(FENIX7, "FENIX7")
-        stringMap.put(FENIX7X, "FENIX7X")
-        stringMap.put(FENIX7S_APAC, "FENIX7S_APAC")
-        stringMap.put(FENIX7_APAC, "FENIX7_APAC")
-        stringMap.put(FENIX7X_APAC, "FENIX7X_APAC")
-        stringMap.put(APPROACH_G12, "APPROACH_G12")
-        stringMap.put(DESCENT_MK2S_ASIA, "DESCENT_MK2S_ASIA")
-        stringMap.put(APPROACH_S42, "APPROACH_S42")
-        stringMap.put(EPIX_GEN2, "EPIX_GEN2")
-        stringMap.put(EPIX_GEN2_APAC, "EPIX_GEN2_APAC")
-        stringMap.put(VENU2S_ASIA, "VENU2S_ASIA")
-        stringMap.put(VENU2_ASIA, "VENU2_ASIA")
-        stringMap.put(FR945_LTE_ASIA, "FR945_LTE_ASIA")
-        stringMap.put(VIVO_MOVE_SPORT, "VIVO_MOVE_SPORT")
-        stringMap.put(VIVOMOVE_TREND, "VIVOMOVE_TREND")
-        stringMap.put(APPROACH_S12_ASIA, "APPROACH_S12_ASIA")
-        stringMap.put(FR255_MUSIC, "FR255_MUSIC")
-        stringMap.put(FR255_SMALL_MUSIC, "FR255_SMALL_MUSIC")
-        stringMap.put(FR255, "FR255")
-        stringMap.put(FR255_SMALL, "FR255_SMALL")
-        stringMap.put(APPROACH_G12_ASIA, "APPROACH_G12_ASIA")
-        stringMap.put(APPROACH_S42_ASIA, "APPROACH_S42_ASIA")
-        stringMap.put(DESCENT_G1, "DESCENT_G1")
-        stringMap.put(VENU2_PLUS_ASIA, "VENU2_PLUS_ASIA")
-        stringMap.put(FR955, "FR955")
-        stringMap.put(FR55_ASIA, "FR55_ASIA")
-        stringMap.put(EDGE_540, "EDGE_540")
-        stringMap.put(EDGE_840, "EDGE_840")
-        stringMap.put(VIVOSMART_5, "VIVOSMART_5")
-        stringMap.put(INSTINCT_2_ASIA, "INSTINCT_2_ASIA")
-        stringMap.put(MARQ_GEN2, "MARQ_GEN2")
-        stringMap.put(VENUSQ2, "VENUSQ2")
-        stringMap.put(VENUSQ2MUSIC, "VENUSQ2MUSIC")
-        stringMap.put(MARQ_GEN2_AVIATOR, "MARQ_GEN2_AVIATOR")
-        stringMap.put(D2_AIR_X10, "D2_AIR_X10")
-        stringMap.put(HRM_PRO_PLUS, "HRM_PRO_PLUS")
-        stringMap.put(DESCENT_G1_ASIA, "DESCENT_G1_ASIA")
-        stringMap.put(TACTIX7, "TACTIX7")
-        stringMap.put(INSTINCT_CROSSOVER, "INSTINCT_CROSSOVER")
-        stringMap.put(EDGE_EXPLORE2, "EDGE_EXPLORE2")
-        stringMap.put(DESCENT_MK3, "DESCENT_MK3")
-        stringMap.put(DESCENT_MK3I, "DESCENT_MK3I")
-        stringMap.put(APPROACH_S70, "APPROACH_S70")
-        stringMap.put(FR265_LARGE, "FR265_LARGE")
-        stringMap.put(FR265_SMALL, "FR265_SMALL")
-        stringMap.put(VENU3, "VENU3")
-        stringMap.put(VENU3S, "VENU3S")
-        stringMap.put(TACX_NEO_SMART, "TACX_NEO_SMART")
-        stringMap.put(TACX_NEO2_SMART, "TACX_NEO2_SMART")
-        stringMap.put(TACX_NEO2_T_SMART, "TACX_NEO2_T_SMART")
-        stringMap.put(TACX_NEO_SMART_BIKE, "TACX_NEO_SMART_BIKE")
-        stringMap.put(TACX_SATORI_SMART, "TACX_SATORI_SMART")
-        stringMap.put(TACX_FLOW_SMART, "TACX_FLOW_SMART")
-        stringMap.put(TACX_VORTEX_SMART, "TACX_VORTEX_SMART")
-        stringMap.put(TACX_BUSHIDO_SMART, "TACX_BUSHIDO_SMART")
-        stringMap.put(TACX_GENIUS_SMART, "TACX_GENIUS_SMART")
-        stringMap.put(TACX_FLUX_FLUX_S_SMART, "TACX_FLUX_FLUX_S_SMART")
-        stringMap.put(TACX_FLUX2_SMART, "TACX_FLUX2_SMART")
-        stringMap.put(TACX_MAGNUM, "TACX_MAGNUM")
-        stringMap.put(EDGE_1040_ASIA, "EDGE_1040_ASIA")
-        stringMap.put(EPIX_GEN2_PRO_42, "EPIX_GEN2_PRO_42")
-        stringMap.put(EPIX_GEN2_PRO_47, "EPIX_GEN2_PRO_47")
-        stringMap.put(EPIX_GEN2_PRO_51, "EPIX_GEN2_PRO_51")
-        stringMap.put(FR965, "FR965")
-        stringMap.put(ENDURO2, "ENDURO2")
-        stringMap.put(FENIX7S_PRO_SOLAR, "FENIX7S_PRO_SOLAR")
-        stringMap.put(FENIX7_PRO_SOLAR, "FENIX7_PRO_SOLAR")
-        stringMap.put(FENIX7X_PRO_SOLAR, "FENIX7X_PRO_SOLAR")
-        stringMap.put(LILY2, "LILY2")
-        stringMap.put(INSTINCT_2X, "INSTINCT_2X")
-        stringMap.put(VIVOACTIVE5, "VIVOACTIVE5")
-        stringMap.put(FR165, "FR165")
-        stringMap.put(FR165_MUSIC, "FR165_MUSIC")
-        stringMap.put(EDGE_1050, "EDGE_1050")
-        stringMap.put(DESCENT_T2, "DESCENT_T2")
-        stringMap.put(HRM_FIT, "HRM_FIT")
-        stringMap.put(MARQ_GEN2_COMMANDER, "MARQ_GEN2_COMMANDER")
-        stringMap.put(LILY_ATHLETE, "LILY_ATHLETE")
-        stringMap.put(RALLY_X10, "RALLY_X10")
-        stringMap.put(FENIX8_SOLAR, "FENIX8_SOLAR")
-        stringMap.put(FENIX8_SOLAR_LARGE, "FENIX8_SOLAR_LARGE")
-        stringMap.put(FENIX8_SMALL, "FENIX8_SMALL")
-        stringMap.put(FENIX8, "FENIX8")
-        stringMap.put(D2_MACH1_PRO, "D2_MACH1_PRO")
-        stringMap.put(ENDURO3, "ENDURO3")
-        stringMap.put(INSTINCTE_40MM, "INSTINCTE_40MM")
-        stringMap.put(INSTINCTE_45MM, "INSTINCTE_45MM")
-        stringMap.put(INSTINCT3_SOLAR_45MM, "INSTINCT3_SOLAR_45MM")
-        stringMap.put(INSTINCT3_AMOLED_45MM, "INSTINCT3_AMOLED_45MM")
-        stringMap.put(INSTINCT3_AMOLED_50MM, "INSTINCT3_AMOLED_50MM")
-        stringMap.put(DESCENT_G2, "DESCENT_G2")
-        stringMap.put(VENU_X1, "VENU_X1")
-        stringMap.put(HRM_200, "HRM_200")
-        stringMap.put(VIVOACTIVE6, "VIVOACTIVE6")
-        stringMap.put(FENIX8_PRO, "FENIX8_PRO")
-        stringMap.put(EDGE_550, "EDGE_550")
-        stringMap.put(EDGE_850, "EDGE_850")
-        stringMap.put(VENU4, "VENU4")
-        stringMap.put(VENU4S, "VENU4S")
-        stringMap.put(APPROACHS44, "APPROACHS44")
-        stringMap.put(EDGE_MTB, "EDGE_MTB")
-        stringMap.put(APPROACHS50, "APPROACHS50")
-        stringMap.put(FENIX_E, "FENIX_E")
-        stringMap.put(BOUNCE2, "BOUNCE2")
-        stringMap.put(INSTINCT3_SOLAR_50MM, "INSTINCT3_SOLAR_50MM")
-        stringMap.put(TACTIX8_AMOLED, "TACTIX8_AMOLED")
-        stringMap.put(TACTIX8_SOLAR, "TACTIX8_SOLAR")
-        stringMap.put(APPROACH_J1, "APPROACH_J1")
-        stringMap.put(D2_MACH2, "D2_MACH2")
-        stringMap.put(INSTINCT_CROSSOVER_AMOLED, "INSTINCT_CROSSOVER_AMOLED")
-        stringMap.put(D2_AIR_X15, "D2_AIR_X15")
-        stringMap.put(SDM4, "SDM4")
-        stringMap.put(EDGE_REMOTE, "EDGE_REMOTE")
-        stringMap.put(TACX_TRAINING_APP_WIN, "TACX_TRAINING_APP_WIN")
-        stringMap.put(TACX_TRAINING_APP_MAC, "TACX_TRAINING_APP_MAC")
-        stringMap.put(TACX_TRAINING_APP_MAC_CATALYST, "TACX_TRAINING_APP_MAC_CATALYST")
-        stringMap.put(TRAINING_CENTER, "TRAINING_CENTER")
-        stringMap.put(TACX_TRAINING_APP_ANDROID, "TACX_TRAINING_APP_ANDROID")
-        stringMap.put(TACX_TRAINING_APP_IOS, "TACX_TRAINING_APP_IOS")
-        stringMap.put(TACX_TRAINING_APP_LEGACY, "TACX_TRAINING_APP_LEGACY")
-        stringMap.put(CONNECTIQ_SIMULATOR, "CONNECTIQ_SIMULATOR")
-        stringMap.put(ANDROID_ANTPLUS_PLUGIN, "ANDROID_ANTPLUS_PLUGIN")
-        stringMap.put(CONNECT, "CONNECT")
+        stringMap[HRM1] = "HRM1"
+        stringMap[AXH01] = "AXH01"
+        stringMap[AXB01] = "AXB01"
+        stringMap[AXB02] = "AXB02"
+        stringMap[HRM2SS] = "HRM2SS"
+        stringMap[DSI_ALF02] = "DSI_ALF02"
+        stringMap[HRM3SS] = "HRM3SS"
+        stringMap[HRM_RUN_SINGLE_BYTE_PRODUCT_ID] = "HRM_RUN_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[BSM] = "BSM"
+        stringMap[BCM] = "BCM"
+        stringMap[AXS01] = "AXS01"
+        stringMap[HRM_TRI_SINGLE_BYTE_PRODUCT_ID] = "HRM_TRI_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[HRM4_RUN_SINGLE_BYTE_PRODUCT_ID] = "HRM4_RUN_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[FR225_SINGLE_BYTE_PRODUCT_ID] = "FR225_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[GEN3_BSM_SINGLE_BYTE_PRODUCT_ID] = "GEN3_BSM_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[GEN3_BCM_SINGLE_BYTE_PRODUCT_ID] = "GEN3_BCM_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[HRM_FIT_SINGLE_BYTE_PRODUCT_ID] = "HRM_FIT_SINGLE_BYTE_PRODUCT_ID"
+        stringMap[OHR] = "OHR"
+        stringMap[FR301_CHINA] = "FR301_CHINA"
+        stringMap[FR301_JAPAN] = "FR301_JAPAN"
+        stringMap[FR301_KOREA] = "FR301_KOREA"
+        stringMap[FR301_TAIWAN] = "FR301_TAIWAN"
+        stringMap[FR405] = "FR405"
+        stringMap[FR50] = "FR50"
+        stringMap[FR405_JAPAN] = "FR405_JAPAN"
+        stringMap[FR60] = "FR60"
+        stringMap[DSI_ALF01] = "DSI_ALF01"
+        stringMap[FR310XT] = "FR310XT"
+        stringMap[EDGE500] = "EDGE500"
+        stringMap[FR110] = "FR110"
+        stringMap[EDGE800] = "EDGE800"
+        stringMap[EDGE500_TAIWAN] = "EDGE500_TAIWAN"
+        stringMap[EDGE500_JAPAN] = "EDGE500_JAPAN"
+        stringMap[CHIRP] = "CHIRP"
+        stringMap[FR110_JAPAN] = "FR110_JAPAN"
+        stringMap[EDGE200] = "EDGE200"
+        stringMap[FR910XT] = "FR910XT"
+        stringMap[EDGE800_TAIWAN] = "EDGE800_TAIWAN"
+        stringMap[EDGE800_JAPAN] = "EDGE800_JAPAN"
+        stringMap[ALF04] = "ALF04"
+        stringMap[FR610] = "FR610"
+        stringMap[FR210_JAPAN] = "FR210_JAPAN"
+        stringMap[VECTOR_SS] = "VECTOR_SS"
+        stringMap[VECTOR_CP] = "VECTOR_CP"
+        stringMap[EDGE800_CHINA] = "EDGE800_CHINA"
+        stringMap[EDGE500_CHINA] = "EDGE500_CHINA"
+        stringMap[APPROACH_G10] = "APPROACH_G10"
+        stringMap[FR610_JAPAN] = "FR610_JAPAN"
+        stringMap[EDGE500_KOREA] = "EDGE500_KOREA"
+        stringMap[FR70] = "FR70"
+        stringMap[FR310XT_4T] = "FR310XT_4T"
+        stringMap[AMX] = "AMX"
+        stringMap[FR10] = "FR10"
+        stringMap[EDGE800_KOREA] = "EDGE800_KOREA"
+        stringMap[SWIM] = "SWIM"
+        stringMap[FR910XT_CHINA] = "FR910XT_CHINA"
+        stringMap[FENIX] = "FENIX"
+        stringMap[EDGE200_TAIWAN] = "EDGE200_TAIWAN"
+        stringMap[EDGE510] = "EDGE510"
+        stringMap[EDGE810] = "EDGE810"
+        stringMap[TEMPE] = "TEMPE"
+        stringMap[FR910XT_JAPAN] = "FR910XT_JAPAN"
+        stringMap[FR620] = "FR620"
+        stringMap[FR220] = "FR220"
+        stringMap[FR910XT_KOREA] = "FR910XT_KOREA"
+        stringMap[FR10_JAPAN] = "FR10_JAPAN"
+        stringMap[EDGE810_JAPAN] = "EDGE810_JAPAN"
+        stringMap[VIRB_ELITE] = "VIRB_ELITE"
+        stringMap[EDGE_TOURING] = "EDGE_TOURING"
+        stringMap[EDGE510_JAPAN] = "EDGE510_JAPAN"
+        stringMap[HRM_TRI] = "HRM_TRI"
+        stringMap[HRM_RUN] = "HRM_RUN"
+        stringMap[FR920XT] = "FR920XT"
+        stringMap[EDGE510_ASIA] = "EDGE510_ASIA"
+        stringMap[EDGE810_CHINA] = "EDGE810_CHINA"
+        stringMap[EDGE810_TAIWAN] = "EDGE810_TAIWAN"
+        stringMap[EDGE1000] = "EDGE1000"
+        stringMap[VIVO_FIT] = "VIVO_FIT"
+        stringMap[VIRB_REMOTE] = "VIRB_REMOTE"
+        stringMap[VIVO_KI] = "VIVO_KI"
+        stringMap[FR15] = "FR15"
+        stringMap[VIVO_ACTIVE] = "VIVO_ACTIVE"
+        stringMap[EDGE510_KOREA] = "EDGE510_KOREA"
+        stringMap[FR620_JAPAN] = "FR620_JAPAN"
+        stringMap[FR620_CHINA] = "FR620_CHINA"
+        stringMap[FR220_JAPAN] = "FR220_JAPAN"
+        stringMap[FR220_CHINA] = "FR220_CHINA"
+        stringMap[APPROACH_S6] = "APPROACH_S6"
+        stringMap[VIVO_SMART] = "VIVO_SMART"
+        stringMap[FENIX2] = "FENIX2"
+        stringMap[EPIX] = "EPIX"
+        stringMap[FENIX3] = "FENIX3"
+        stringMap[EDGE1000_TAIWAN] = "EDGE1000_TAIWAN"
+        stringMap[EDGE1000_JAPAN] = "EDGE1000_JAPAN"
+        stringMap[FR15_JAPAN] = "FR15_JAPAN"
+        stringMap[EDGE520] = "EDGE520"
+        stringMap[EDGE1000_CHINA] = "EDGE1000_CHINA"
+        stringMap[FR620_RUSSIA] = "FR620_RUSSIA"
+        stringMap[FR220_RUSSIA] = "FR220_RUSSIA"
+        stringMap[VECTOR_S] = "VECTOR_S"
+        stringMap[EDGE1000_KOREA] = "EDGE1000_KOREA"
+        stringMap[FR920XT_TAIWAN] = "FR920XT_TAIWAN"
+        stringMap[FR920XT_CHINA] = "FR920XT_CHINA"
+        stringMap[FR920XT_JAPAN] = "FR920XT_JAPAN"
+        stringMap[VIRBX] = "VIRBX"
+        stringMap[VIVO_SMART_APAC] = "VIVO_SMART_APAC"
+        stringMap[ETREX_TOUCH] = "ETREX_TOUCH"
+        stringMap[EDGE25] = "EDGE25"
+        stringMap[FR25] = "FR25"
+        stringMap[VIVO_FIT2] = "VIVO_FIT2"
+        stringMap[FR225] = "FR225"
+        stringMap[FR630] = "FR630"
+        stringMap[FR230] = "FR230"
+        stringMap[FR735XT] = "FR735XT"
+        stringMap[VIVO_ACTIVE_APAC] = "VIVO_ACTIVE_APAC"
+        stringMap[VECTOR_2] = "VECTOR_2"
+        stringMap[VECTOR_2S] = "VECTOR_2S"
+        stringMap[VIRBXE] = "VIRBXE"
+        stringMap[FR620_TAIWAN] = "FR620_TAIWAN"
+        stringMap[FR220_TAIWAN] = "FR220_TAIWAN"
+        stringMap[TRUSWING] = "TRUSWING"
+        stringMap[D2AIRVENU] = "D2AIRVENU"
+        stringMap[FENIX3_CHINA] = "FENIX3_CHINA"
+        stringMap[FENIX3_TWN] = "FENIX3_TWN"
+        stringMap[VARIA_HEADLIGHT] = "VARIA_HEADLIGHT"
+        stringMap[VARIA_TAILLIGHT_OLD] = "VARIA_TAILLIGHT_OLD"
+        stringMap[EDGE_EXPLORE_1000] = "EDGE_EXPLORE_1000"
+        stringMap[FR225_ASIA] = "FR225_ASIA"
+        stringMap[VARIA_RADAR_TAILLIGHT] = "VARIA_RADAR_TAILLIGHT"
+        stringMap[VARIA_RADAR_DISPLAY] = "VARIA_RADAR_DISPLAY"
+        stringMap[EDGE20] = "EDGE20"
+        stringMap[EDGE520_ASIA] = "EDGE520_ASIA"
+        stringMap[EDGE520_JAPAN] = "EDGE520_JAPAN"
+        stringMap[D2_BRAVO] = "D2_BRAVO"
+        stringMap[APPROACH_S20] = "APPROACH_S20"
+        stringMap[VIVO_SMART2] = "VIVO_SMART2"
+        stringMap[EDGE1000_THAI] = "EDGE1000_THAI"
+        stringMap[VARIA_REMOTE] = "VARIA_REMOTE"
+        stringMap[EDGE25_ASIA] = "EDGE25_ASIA"
+        stringMap[EDGE25_JPN] = "EDGE25_JPN"
+        stringMap[EDGE20_ASIA] = "EDGE20_ASIA"
+        stringMap[APPROACH_X40] = "APPROACH_X40"
+        stringMap[FENIX3_JAPAN] = "FENIX3_JAPAN"
+        stringMap[VIVO_SMART_EMEA] = "VIVO_SMART_EMEA"
+        stringMap[FR630_ASIA] = "FR630_ASIA"
+        stringMap[FR630_JPN] = "FR630_JPN"
+        stringMap[FR230_JPN] = "FR230_JPN"
+        stringMap[HRM4_RUN] = "HRM4_RUN"
+        stringMap[EPIX_JAPAN] = "EPIX_JAPAN"
+        stringMap[VIVO_ACTIVE_HR] = "VIVO_ACTIVE_HR"
+        stringMap[VIVO_SMART_GPS_HR] = "VIVO_SMART_GPS_HR"
+        stringMap[VIVO_SMART_HR] = "VIVO_SMART_HR"
+        stringMap[VIVO_SMART_HR_ASIA] = "VIVO_SMART_HR_ASIA"
+        stringMap[VIVO_SMART_GPS_HR_ASIA] = "VIVO_SMART_GPS_HR_ASIA"
+        stringMap[VIVO_MOVE] = "VIVO_MOVE"
+        stringMap[VARIA_TAILLIGHT] = "VARIA_TAILLIGHT"
+        stringMap[FR235_ASIA] = "FR235_ASIA"
+        stringMap[FR235_JAPAN] = "FR235_JAPAN"
+        stringMap[VARIA_VISION] = "VARIA_VISION"
+        stringMap[VIVO_FIT3] = "VIVO_FIT3"
+        stringMap[FENIX3_KOREA] = "FENIX3_KOREA"
+        stringMap[FENIX3_SEA] = "FENIX3_SEA"
+        stringMap[FENIX3_HR] = "FENIX3_HR"
+        stringMap[VIRB_ULTRA_30] = "VIRB_ULTRA_30"
+        stringMap[INDEX_SMART_SCALE] = "INDEX_SMART_SCALE"
+        stringMap[FR235] = "FR235"
+        stringMap[FENIX3_CHRONOS] = "FENIX3_CHRONOS"
+        stringMap[OREGON7XX] = "OREGON7XX"
+        stringMap[RINO7XX] = "RINO7XX"
+        stringMap[EPIX_KOREA] = "EPIX_KOREA"
+        stringMap[FENIX3_HR_CHN] = "FENIX3_HR_CHN"
+        stringMap[FENIX3_HR_TWN] = "FENIX3_HR_TWN"
+        stringMap[FENIX3_HR_JPN] = "FENIX3_HR_JPN"
+        stringMap[FENIX3_HR_SEA] = "FENIX3_HR_SEA"
+        stringMap[FENIX3_HR_KOR] = "FENIX3_HR_KOR"
+        stringMap[NAUTIX] = "NAUTIX"
+        stringMap[VIVO_ACTIVE_HR_APAC] = "VIVO_ACTIVE_HR_APAC"
+        stringMap[FR35] = "FR35"
+        stringMap[OREGON7XX_WW] = "OREGON7XX_WW"
+        stringMap[EDGE_820] = "EDGE_820"
+        stringMap[EDGE_EXPLORE_820] = "EDGE_EXPLORE_820"
+        stringMap[FR735XT_APAC] = "FR735XT_APAC"
+        stringMap[FR735XT_JAPAN] = "FR735XT_JAPAN"
+        stringMap[FENIX5S] = "FENIX5S"
+        stringMap[D2_BRAVO_TITANIUM] = "D2_BRAVO_TITANIUM"
+        stringMap[VARIA_UT800] = "VARIA_UT800"
+        stringMap[RUNNING_DYNAMICS_POD] = "RUNNING_DYNAMICS_POD"
+        stringMap[EDGE_820_CHINA] = "EDGE_820_CHINA"
+        stringMap[EDGE_820_JAPAN] = "EDGE_820_JAPAN"
+        stringMap[FENIX5X] = "FENIX5X"
+        stringMap[VIVO_FIT_JR] = "VIVO_FIT_JR"
+        stringMap[VIVO_SMART3] = "VIVO_SMART3"
+        stringMap[VIVO_SPORT] = "VIVO_SPORT"
+        stringMap[EDGE_820_TAIWAN] = "EDGE_820_TAIWAN"
+        stringMap[EDGE_820_KOREA] = "EDGE_820_KOREA"
+        stringMap[EDGE_820_SEA] = "EDGE_820_SEA"
+        stringMap[FR35_HEBREW] = "FR35_HEBREW"
+        stringMap[APPROACH_S60] = "APPROACH_S60"
+        stringMap[FR35_APAC] = "FR35_APAC"
+        stringMap[FR35_JAPAN] = "FR35_JAPAN"
+        stringMap[FENIX3_CHRONOS_ASIA] = "FENIX3_CHRONOS_ASIA"
+        stringMap[VIRB_360] = "VIRB_360"
+        stringMap[FR935] = "FR935"
+        stringMap[FENIX5] = "FENIX5"
+        stringMap[VIVOACTIVE3] = "VIVOACTIVE3"
+        stringMap[FR235_CHINA_NFC] = "FR235_CHINA_NFC"
+        stringMap[FORETREX_601_701] = "FORETREX_601_701"
+        stringMap[VIVO_MOVE_HR] = "VIVO_MOVE_HR"
+        stringMap[EDGE_1030] = "EDGE_1030"
+        stringMap[FR35_SEA] = "FR35_SEA"
+        stringMap[VECTOR_3] = "VECTOR_3"
+        stringMap[FENIX5_ASIA] = "FENIX5_ASIA"
+        stringMap[FENIX5S_ASIA] = "FENIX5S_ASIA"
+        stringMap[FENIX5X_ASIA] = "FENIX5X_ASIA"
+        stringMap[APPROACH_Z80] = "APPROACH_Z80"
+        stringMap[FR35_KOREA] = "FR35_KOREA"
+        stringMap[D2CHARLIE] = "D2CHARLIE"
+        stringMap[VIVO_SMART3_APAC] = "VIVO_SMART3_APAC"
+        stringMap[VIVO_SPORT_APAC] = "VIVO_SPORT_APAC"
+        stringMap[FR935_ASIA] = "FR935_ASIA"
+        stringMap[DESCENT] = "DESCENT"
+        stringMap[VIVO_FIT4] = "VIVO_FIT4"
+        stringMap[FR645] = "FR645"
+        stringMap[FR645M] = "FR645M"
+        stringMap[FR30] = "FR30"
+        stringMap[FENIX5S_PLUS] = "FENIX5S_PLUS"
+        stringMap[EDGE_130] = "EDGE_130"
+        stringMap[EDGE_1030_ASIA] = "EDGE_1030_ASIA"
+        stringMap[VIVOSMART_4] = "VIVOSMART_4"
+        stringMap[VIVO_MOVE_HR_ASIA] = "VIVO_MOVE_HR_ASIA"
+        stringMap[APPROACH_X10] = "APPROACH_X10"
+        stringMap[FR30_ASIA] = "FR30_ASIA"
+        stringMap[VIVOACTIVE3M_W] = "VIVOACTIVE3M_W"
+        stringMap[FR645_ASIA] = "FR645_ASIA"
+        stringMap[FR645M_ASIA] = "FR645M_ASIA"
+        stringMap[EDGE_EXPLORE] = "EDGE_EXPLORE"
+        stringMap[GPSMAP66] = "GPSMAP66"
+        stringMap[APPROACH_S10] = "APPROACH_S10"
+        stringMap[VIVOACTIVE3M_L] = "VIVOACTIVE3M_L"
+        stringMap[FR245] = "FR245"
+        stringMap[FR245_MUSIC] = "FR245_MUSIC"
+        stringMap[APPROACH_G80] = "APPROACH_G80"
+        stringMap[EDGE_130_ASIA] = "EDGE_130_ASIA"
+        stringMap[EDGE_1030_BONTRAGER] = "EDGE_1030_BONTRAGER"
+        stringMap[FENIX5_PLUS] = "FENIX5_PLUS"
+        stringMap[FENIX5X_PLUS] = "FENIX5X_PLUS"
+        stringMap[EDGE_520_PLUS] = "EDGE_520_PLUS"
+        stringMap[FR945] = "FR945"
+        stringMap[EDGE_530] = "EDGE_530"
+        stringMap[EDGE_830] = "EDGE_830"
+        stringMap[INSTINCT_ESPORTS] = "INSTINCT_ESPORTS"
+        stringMap[FENIX5S_PLUS_APAC] = "FENIX5S_PLUS_APAC"
+        stringMap[FENIX5X_PLUS_APAC] = "FENIX5X_PLUS_APAC"
+        stringMap[EDGE_520_PLUS_APAC] = "EDGE_520_PLUS_APAC"
+        stringMap[DESCENT_T1] = "DESCENT_T1"
+        stringMap[FR235L_ASIA] = "FR235L_ASIA"
+        stringMap[FR245_ASIA] = "FR245_ASIA"
+        stringMap[VIVO_ACTIVE3M_APAC] = "VIVO_ACTIVE3M_APAC"
+        stringMap[GEN3_BSM] = "GEN3_BSM"
+        stringMap[GEN3_BCM] = "GEN3_BCM"
+        stringMap[VIVO_SMART4_ASIA] = "VIVO_SMART4_ASIA"
+        stringMap[VIVOACTIVE4_SMALL] = "VIVOACTIVE4_SMALL"
+        stringMap[VIVOACTIVE4_LARGE] = "VIVOACTIVE4_LARGE"
+        stringMap[VENU] = "VENU"
+        stringMap[MARQ_DRIVER] = "MARQ_DRIVER"
+        stringMap[MARQ_AVIATOR] = "MARQ_AVIATOR"
+        stringMap[MARQ_CAPTAIN] = "MARQ_CAPTAIN"
+        stringMap[MARQ_COMMANDER] = "MARQ_COMMANDER"
+        stringMap[MARQ_EXPEDITION] = "MARQ_EXPEDITION"
+        stringMap[MARQ_ATHLETE] = "MARQ_ATHLETE"
+        stringMap[DESCENT_MK2] = "DESCENT_MK2"
+        stringMap[FR45] = "FR45"
+        stringMap[GPSMAP66I] = "GPSMAP66I"
+        stringMap[FENIX6S_SPORT] = "FENIX6S_SPORT"
+        stringMap[FENIX6S] = "FENIX6S"
+        stringMap[FENIX6_SPORT] = "FENIX6_SPORT"
+        stringMap[FENIX6] = "FENIX6"
+        stringMap[FENIX6X] = "FENIX6X"
+        stringMap[HRM_DUAL] = "HRM_DUAL"
+        stringMap[HRM_PRO] = "HRM_PRO"
+        stringMap[VIVO_MOVE3_PREMIUM] = "VIVO_MOVE3_PREMIUM"
+        stringMap[APPROACH_S40] = "APPROACH_S40"
+        stringMap[FR245M_ASIA] = "FR245M_ASIA"
+        stringMap[EDGE_530_APAC] = "EDGE_530_APAC"
+        stringMap[EDGE_830_APAC] = "EDGE_830_APAC"
+        stringMap[VIVO_MOVE3] = "VIVO_MOVE3"
+        stringMap[VIVO_ACTIVE4_SMALL_ASIA] = "VIVO_ACTIVE4_SMALL_ASIA"
+        stringMap[VIVO_ACTIVE4_LARGE_ASIA] = "VIVO_ACTIVE4_LARGE_ASIA"
+        stringMap[VIVO_ACTIVE4_OLED_ASIA] = "VIVO_ACTIVE4_OLED_ASIA"
+        stringMap[SWIM2] = "SWIM2"
+        stringMap[MARQ_DRIVER_ASIA] = "MARQ_DRIVER_ASIA"
+        stringMap[MARQ_AVIATOR_ASIA] = "MARQ_AVIATOR_ASIA"
+        stringMap[VIVO_MOVE3_ASIA] = "VIVO_MOVE3_ASIA"
+        stringMap[FR945_ASIA] = "FR945_ASIA"
+        stringMap[VIVO_ACTIVE3T_CHN] = "VIVO_ACTIVE3T_CHN"
+        stringMap[MARQ_CAPTAIN_ASIA] = "MARQ_CAPTAIN_ASIA"
+        stringMap[MARQ_COMMANDER_ASIA] = "MARQ_COMMANDER_ASIA"
+        stringMap[MARQ_EXPEDITION_ASIA] = "MARQ_EXPEDITION_ASIA"
+        stringMap[MARQ_ATHLETE_ASIA] = "MARQ_ATHLETE_ASIA"
+        stringMap[INDEX_SMART_SCALE_2] = "INDEX_SMART_SCALE_2"
+        stringMap[INSTINCT_SOLAR] = "INSTINCT_SOLAR"
+        stringMap[FR45_ASIA] = "FR45_ASIA"
+        stringMap[VIVOACTIVE3_DAIMLER] = "VIVOACTIVE3_DAIMLER"
+        stringMap[LEGACY_REY] = "LEGACY_REY"
+        stringMap[LEGACY_DARTH_VADER] = "LEGACY_DARTH_VADER"
+        stringMap[LEGACY_CAPTAIN_MARVEL] = "LEGACY_CAPTAIN_MARVEL"
+        stringMap[LEGACY_FIRST_AVENGER] = "LEGACY_FIRST_AVENGER"
+        stringMap[FENIX6S_SPORT_ASIA] = "FENIX6S_SPORT_ASIA"
+        stringMap[FENIX6S_ASIA] = "FENIX6S_ASIA"
+        stringMap[FENIX6_SPORT_ASIA] = "FENIX6_SPORT_ASIA"
+        stringMap[FENIX6_ASIA] = "FENIX6_ASIA"
+        stringMap[FENIX6X_ASIA] = "FENIX6X_ASIA"
+        stringMap[LEGACY_CAPTAIN_MARVEL_ASIA] = "LEGACY_CAPTAIN_MARVEL_ASIA"
+        stringMap[LEGACY_FIRST_AVENGER_ASIA] = "LEGACY_FIRST_AVENGER_ASIA"
+        stringMap[LEGACY_REY_ASIA] = "LEGACY_REY_ASIA"
+        stringMap[LEGACY_DARTH_VADER_ASIA] = "LEGACY_DARTH_VADER_ASIA"
+        stringMap[DESCENT_MK2S] = "DESCENT_MK2S"
+        stringMap[EDGE_130_PLUS] = "EDGE_130_PLUS"
+        stringMap[EDGE_1030_PLUS] = "EDGE_1030_PLUS"
+        stringMap[RALLY_200] = "RALLY_200"
+        stringMap[FR745] = "FR745"
+        stringMap[VENUSQ_MUSIC] = "VENUSQ_MUSIC"
+        stringMap[VENUSQ_MUSIC_V2] = "VENUSQ_MUSIC_V2"
+        stringMap[VENUSQ] = "VENUSQ"
+        stringMap[LILY] = "LILY"
+        stringMap[MARQ_ADVENTURER] = "MARQ_ADVENTURER"
+        stringMap[ENDURO] = "ENDURO"
+        stringMap[SWIM2_APAC] = "SWIM2_APAC"
+        stringMap[MARQ_ADVENTURER_ASIA] = "MARQ_ADVENTURER_ASIA"
+        stringMap[FR945_LTE] = "FR945_LTE"
+        stringMap[DESCENT_MK2_ASIA] = "DESCENT_MK2_ASIA"
+        stringMap[VENU2] = "VENU2"
+        stringMap[VENU2S] = "VENU2S"
+        stringMap[VENU_DAIMLER_ASIA] = "VENU_DAIMLER_ASIA"
+        stringMap[MARQ_GOLFER] = "MARQ_GOLFER"
+        stringMap[VENU_DAIMLER] = "VENU_DAIMLER"
+        stringMap[FR745_ASIA] = "FR745_ASIA"
+        stringMap[VARIA_RCT715] = "VARIA_RCT715"
+        stringMap[LILY_ASIA] = "LILY_ASIA"
+        stringMap[EDGE_1030_PLUS_ASIA] = "EDGE_1030_PLUS_ASIA"
+        stringMap[EDGE_130_PLUS_ASIA] = "EDGE_130_PLUS_ASIA"
+        stringMap[APPROACH_S12] = "APPROACH_S12"
+        stringMap[ENDURO_ASIA] = "ENDURO_ASIA"
+        stringMap[VENUSQ_ASIA] = "VENUSQ_ASIA"
+        stringMap[EDGE_1040] = "EDGE_1040"
+        stringMap[MARQ_GOLFER_ASIA] = "MARQ_GOLFER_ASIA"
+        stringMap[VENU2_PLUS] = "VENU2_PLUS"
+        stringMap[GNSS] = "GNSS"
+        stringMap[FR55] = "FR55"
+        stringMap[INSTINCT_2] = "INSTINCT_2"
+        stringMap[INSTINCT_2S] = "INSTINCT_2S"
+        stringMap[FENIX7S] = "FENIX7S"
+        stringMap[FENIX7] = "FENIX7"
+        stringMap[FENIX7X] = "FENIX7X"
+        stringMap[FENIX7S_APAC] = "FENIX7S_APAC"
+        stringMap[FENIX7_APAC] = "FENIX7_APAC"
+        stringMap[FENIX7X_APAC] = "FENIX7X_APAC"
+        stringMap[APPROACH_G12] = "APPROACH_G12"
+        stringMap[DESCENT_MK2S_ASIA] = "DESCENT_MK2S_ASIA"
+        stringMap[APPROACH_S42] = "APPROACH_S42"
+        stringMap[EPIX_GEN2] = "EPIX_GEN2"
+        stringMap[EPIX_GEN2_APAC] = "EPIX_GEN2_APAC"
+        stringMap[VENU2S_ASIA] = "VENU2S_ASIA"
+        stringMap[VENU2_ASIA] = "VENU2_ASIA"
+        stringMap[FR945_LTE_ASIA] = "FR945_LTE_ASIA"
+        stringMap[VIVO_MOVE_SPORT] = "VIVO_MOVE_SPORT"
+        stringMap[VIVOMOVE_TREND] = "VIVOMOVE_TREND"
+        stringMap[APPROACH_S12_ASIA] = "APPROACH_S12_ASIA"
+        stringMap[FR255_MUSIC] = "FR255_MUSIC"
+        stringMap[FR255_SMALL_MUSIC] = "FR255_SMALL_MUSIC"
+        stringMap[FR255] = "FR255"
+        stringMap[FR255_SMALL] = "FR255_SMALL"
+        stringMap[APPROACH_G12_ASIA] = "APPROACH_G12_ASIA"
+        stringMap[APPROACH_S42_ASIA] = "APPROACH_S42_ASIA"
+        stringMap[DESCENT_G1] = "DESCENT_G1"
+        stringMap[VENU2_PLUS_ASIA] = "VENU2_PLUS_ASIA"
+        stringMap[FR955] = "FR955"
+        stringMap[FR55_ASIA] = "FR55_ASIA"
+        stringMap[EDGE_540] = "EDGE_540"
+        stringMap[EDGE_840] = "EDGE_840"
+        stringMap[VIVOSMART_5] = "VIVOSMART_5"
+        stringMap[INSTINCT_2_ASIA] = "INSTINCT_2_ASIA"
+        stringMap[MARQ_GEN2] = "MARQ_GEN2"
+        stringMap[VENUSQ2] = "VENUSQ2"
+        stringMap[VENUSQ2MUSIC] = "VENUSQ2MUSIC"
+        stringMap[MARQ_GEN2_AVIATOR] = "MARQ_GEN2_AVIATOR"
+        stringMap[D2_AIR_X10] = "D2_AIR_X10"
+        stringMap[HRM_PRO_PLUS] = "HRM_PRO_PLUS"
+        stringMap[DESCENT_G1_ASIA] = "DESCENT_G1_ASIA"
+        stringMap[TACTIX7] = "TACTIX7"
+        stringMap[INSTINCT_CROSSOVER] = "INSTINCT_CROSSOVER"
+        stringMap[EDGE_EXPLORE2] = "EDGE_EXPLORE2"
+        stringMap[DESCENT_MK3] = "DESCENT_MK3"
+        stringMap[DESCENT_MK3I] = "DESCENT_MK3I"
+        stringMap[APPROACH_S70] = "APPROACH_S70"
+        stringMap[FR265_LARGE] = "FR265_LARGE"
+        stringMap[FR265_SMALL] = "FR265_SMALL"
+        stringMap[VENU3] = "VENU3"
+        stringMap[VENU3S] = "VENU3S"
+        stringMap[TACX_NEO_SMART] = "TACX_NEO_SMART"
+        stringMap[TACX_NEO2_SMART] = "TACX_NEO2_SMART"
+        stringMap[TACX_NEO2_T_SMART] = "TACX_NEO2_T_SMART"
+        stringMap[TACX_NEO_SMART_BIKE] = "TACX_NEO_SMART_BIKE"
+        stringMap[TACX_SATORI_SMART] = "TACX_SATORI_SMART"
+        stringMap[TACX_FLOW_SMART] = "TACX_FLOW_SMART"
+        stringMap[TACX_VORTEX_SMART] = "TACX_VORTEX_SMART"
+        stringMap[TACX_BUSHIDO_SMART] = "TACX_BUSHIDO_SMART"
+        stringMap[TACX_GENIUS_SMART] = "TACX_GENIUS_SMART"
+        stringMap[TACX_FLUX_FLUX_S_SMART] = "TACX_FLUX_FLUX_S_SMART"
+        stringMap[TACX_FLUX2_SMART] = "TACX_FLUX2_SMART"
+        stringMap[TACX_MAGNUM] = "TACX_MAGNUM"
+        stringMap[EDGE_1040_ASIA] = "EDGE_1040_ASIA"
+        stringMap[EPIX_GEN2_PRO_42] = "EPIX_GEN2_PRO_42"
+        stringMap[EPIX_GEN2_PRO_47] = "EPIX_GEN2_PRO_47"
+        stringMap[EPIX_GEN2_PRO_51] = "EPIX_GEN2_PRO_51"
+        stringMap[FR965] = "FR965"
+        stringMap[ENDURO2] = "ENDURO2"
+        stringMap[FENIX7S_PRO_SOLAR] = "FENIX7S_PRO_SOLAR"
+        stringMap[FENIX7_PRO_SOLAR] = "FENIX7_PRO_SOLAR"
+        stringMap[FENIX7X_PRO_SOLAR] = "FENIX7X_PRO_SOLAR"
+        stringMap[LILY2] = "LILY2"
+        stringMap[INSTINCT_2X] = "INSTINCT_2X"
+        stringMap[VIVOACTIVE5] = "VIVOACTIVE5"
+        stringMap[FR165] = "FR165"
+        stringMap[FR165_MUSIC] = "FR165_MUSIC"
+        stringMap[EDGE_1050] = "EDGE_1050"
+        stringMap[DESCENT_T2] = "DESCENT_T2"
+        stringMap[HRM_FIT] = "HRM_FIT"
+        stringMap[MARQ_GEN2_COMMANDER] = "MARQ_GEN2_COMMANDER"
+        stringMap[LILY_ATHLETE] = "LILY_ATHLETE"
+        stringMap[RALLY_X10] = "RALLY_X10"
+        stringMap[FENIX8_SOLAR] = "FENIX8_SOLAR"
+        stringMap[FENIX8_SOLAR_LARGE] = "FENIX8_SOLAR_LARGE"
+        stringMap[FENIX8_SMALL] = "FENIX8_SMALL"
+        stringMap[FENIX8] = "FENIX8"
+        stringMap[D2_MACH1_PRO] = "D2_MACH1_PRO"
+        stringMap[ENDURO3] = "ENDURO3"
+        stringMap[INSTINCTE_40MM] = "INSTINCTE_40MM"
+        stringMap[INSTINCTE_45MM] = "INSTINCTE_45MM"
+        stringMap[INSTINCT3_SOLAR_45MM] = "INSTINCT3_SOLAR_45MM"
+        stringMap[INSTINCT3_AMOLED_45MM] = "INSTINCT3_AMOLED_45MM"
+        stringMap[INSTINCT3_AMOLED_50MM] = "INSTINCT3_AMOLED_50MM"
+        stringMap[DESCENT_G2] = "DESCENT_G2"
+        stringMap[VENU_X1] = "VENU_X1"
+        stringMap[HRM_200] = "HRM_200"
+        stringMap[VIVOACTIVE6] = "VIVOACTIVE6"
+        stringMap[FENIX8_PRO] = "FENIX8_PRO"
+        stringMap[EDGE_550] = "EDGE_550"
+        stringMap[EDGE_850] = "EDGE_850"
+        stringMap[VENU4] = "VENU4"
+        stringMap[VENU4S] = "VENU4S"
+        stringMap[APPROACHS44] = "APPROACHS44"
+        stringMap[EDGE_MTB] = "EDGE_MTB"
+        stringMap[APPROACHS50] = "APPROACHS50"
+        stringMap[FENIX_E] = "FENIX_E"
+        stringMap[BOUNCE2] = "BOUNCE2"
+        stringMap[INSTINCT3_SOLAR_50MM] = "INSTINCT3_SOLAR_50MM"
+        stringMap[TACTIX8_AMOLED] = "TACTIX8_AMOLED"
+        stringMap[TACTIX8_SOLAR] = "TACTIX8_SOLAR"
+        stringMap[APPROACH_J1] = "APPROACH_J1"
+        stringMap[D2_MACH2] = "D2_MACH2"
+        stringMap[INSTINCT_CROSSOVER_AMOLED] = "INSTINCT_CROSSOVER_AMOLED"
+        stringMap[D2_AIR_X15] = "D2_AIR_X15"
+        stringMap[SDM4] = "SDM4"
+        stringMap[EDGE_REMOTE] = "EDGE_REMOTE"
+        stringMap[TACX_TRAINING_APP_WIN] = "TACX_TRAINING_APP_WIN"
+        stringMap[TACX_TRAINING_APP_MAC] = "TACX_TRAINING_APP_MAC"
+        stringMap[TACX_TRAINING_APP_MAC_CATALYST] = "TACX_TRAINING_APP_MAC_CATALYST"
+        stringMap[TRAINING_CENTER] = "TRAINING_CENTER"
+        stringMap[TACX_TRAINING_APP_ANDROID] = "TACX_TRAINING_APP_ANDROID"
+        stringMap[TACX_TRAINING_APP_IOS] = "TACX_TRAINING_APP_IOS"
+        stringMap[TACX_TRAINING_APP_LEGACY] = "TACX_TRAINING_APP_LEGACY"
+        stringMap[CONNECTIQ_SIMULATOR] = "CONNECTIQ_SIMULATOR"
+        stringMap[ANDROID_ANTPLUS_PLUGIN] = "ANDROID_ANTPLUS_PLUGIN"
+        stringMap[CONNECT] = "CONNECT"
     }
 
 
@@ -976,9 +975,9 @@ object GarminProduct {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -989,7 +988,7 @@ object GarminProduct {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

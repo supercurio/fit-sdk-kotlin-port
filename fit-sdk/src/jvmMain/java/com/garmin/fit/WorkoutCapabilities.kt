@@ -26,24 +26,23 @@ object WorkoutCapabilities {
     const val PROTECTED: Long = 0x00004000
     val INVALID: Long = Fit.UINT32Z_INVALID
 
-    private val stringMap: MutableMap<Long?, String?>
+    private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap = HashMap<Long?, String?>()
-        stringMap.put(INTERVAL, "INTERVAL")
-        stringMap.put(CUSTOM, "CUSTOM")
-        stringMap.put(FITNESS_EQUIPMENT, "FITNESS_EQUIPMENT")
-        stringMap.put(FIRSTBEAT, "FIRSTBEAT")
-        stringMap.put(NEW_LEAF, "NEW_LEAF")
-        stringMap.put(TCX, "TCX")
-        stringMap.put(SPEED, "SPEED")
-        stringMap.put(HEART_RATE, "HEART_RATE")
-        stringMap.put(DISTANCE, "DISTANCE")
-        stringMap.put(CADENCE, "CADENCE")
-        stringMap.put(POWER, "POWER")
-        stringMap.put(GRADE, "GRADE")
-        stringMap.put(RESISTANCE, "RESISTANCE")
-        stringMap.put(PROTECTED, "PROTECTED")
+        stringMap[INTERVAL] = "INTERVAL"
+        stringMap[CUSTOM] = "CUSTOM"
+        stringMap[FITNESS_EQUIPMENT] = "FITNESS_EQUIPMENT"
+        stringMap[FIRSTBEAT] = "FIRSTBEAT"
+        stringMap[NEW_LEAF] = "NEW_LEAF"
+        stringMap[TCX] = "TCX"
+        stringMap[SPEED] = "SPEED"
+        stringMap[HEART_RATE] = "HEART_RATE"
+        stringMap[DISTANCE] = "DISTANCE"
+        stringMap[CADENCE] = "CADENCE"
+        stringMap[POWER] = "POWER"
+        stringMap[GRADE] = "GRADE"
+        stringMap[RESISTANCE] = "RESISTANCE"
+        stringMap[PROTECTED] = "PROTECTED"
     }
 
 
@@ -52,9 +51,9 @@ object WorkoutCapabilities {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Long?): String? {
+    fun getStringFromValue(value: Long): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -65,7 +64,7 @@ object WorkoutCapabilities {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Long? {
+    fun getValueFromString(value: String): Long {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

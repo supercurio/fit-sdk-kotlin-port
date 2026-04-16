@@ -21,7 +21,7 @@ enum class DiveBacklightMode(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return DiveBacklightMode.INVALID
+            return INVALID
         }
 
         /**

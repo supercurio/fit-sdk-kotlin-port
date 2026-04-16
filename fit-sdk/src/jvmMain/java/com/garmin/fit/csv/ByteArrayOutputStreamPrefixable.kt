@@ -13,5 +13,5 @@ import java.io.IOException
 
 internal interface ByteArrayOutputStreamPrefixable {
     @Throws(IOException::class)
-    fun setPrefixStream(stream: ByteArrayOutputStream?)
+    fun setPrefixStream(stream: ByteArrayOutputStream)
 }

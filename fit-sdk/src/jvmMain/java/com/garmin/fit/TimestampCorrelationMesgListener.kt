@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface TimestampCorrelationMesgListener {
-    fun onMesg(mesg: TimestampCorrelationMesg?)
+    fun onMesg(mesg: TimestampCorrelationMesg)
 }

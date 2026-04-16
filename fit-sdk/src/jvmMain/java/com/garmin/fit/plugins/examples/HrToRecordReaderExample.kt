@@ -23,96 +23,93 @@ import java.io.IOException
 /**
  * Example demonstrating usage of BufferedMesgBroadcaster and
  * HrToRecordMesgBroadcaster plugin.
- * 
- * 
+ *
+ *
  * The example outputs all
  * record message and HR messages to a CSV file with the record
  * messages to match the HR data if their times align
- * 
+ *
  */
 class HrToRecordReaderExample : RecordMesgListener, HrMesgListener {
-    private var mesgWriter: MesgCSVWriter? = null
+    internal var mesgWriter: MesgCSVWriter? = null
 
     override fun onMesg(mesg: RecordMesg) {
-        mesgWriter!!.onMesg(mesg)
+        mesgWriter?.onMesg(mesg)
     }
 
     override fun onMesg(mesg: HrMesg) {
-        mesgWriter!!.onMesg(mesg)
+        mesgWriter?.onMesg(mesg)
+    }
+}
+
+fun main(args: Array<String>) {
+    System.out.printf(
+        "FIT Hr Record Reader Example Application - Protocol %d.%d Profile %d.%d %s\n",
+        Fit.PROTOCOL_VERSION_MAJOR,
+        Fit.PROTOCOL_VERSION_MINOR,
+        Fit.PROFILE_VERSION_MAJOR,
+        Fit.PROFILE_VERSION_MINOR,
+        Fit.PROFILE_TYPE
+    )
+
+    var fileInputStream: FileInputStream?
+
+    val example = HrToRecordReaderExample()
+    val decode = Decode()
+    val mesgBroadcaster = BufferedMesgBroadcaster(decode)
+
+    if (args.size != 1) {
+        println("Usage: java -jar FitHrRecordReaderExample.jar <input file>.fit")
+        return
     }
 
-    companion object {
-        @JvmStatic
-        fun main(args: Array<String>) {
-            System.out.printf(
-                "FIT Hr Record Reader Example Application - Protocol %d.%d Profile %d.%d %s\n",
-                Fit.PROTOCOL_VERSION_MAJOR,
-                Fit.PROTOCOL_VERSION_MINOR,
-                Fit.PROFILE_VERSION_MAJOR,
-                Fit.PROFILE_VERSION_MINOR,
-                Fit.PROFILE_TYPE
-            )
+    try {
+        fileInputStream = FileInputStream(args[0])
+    } catch (e: IOException) {
+        throw RuntimeException("Error opening file " + args[0])
+    }
 
-            var `in`: FileInputStream?
-
-            val example = HrToRecordReaderExample()
-            val decode = Decode()
-            val mesgBroadcaster = BufferedMesgBroadcaster(decode)
-
-            if (args.size != 1) {
-                println("Usage: java -jar FitHrRecordReaderExample.jar <input file>.fit")
-                return
-            }
-
-            try {
-                `in` = FileInputStream(args[0])
-            } catch (e: IOException) {
-                throw RuntimeException("Error opening file " + args[0])
-            }
-
-            try {
-                if (!decode.checkFileIntegrity(`in`)) {
-                    throw RuntimeException("FIT file integrity failed.")
-                }
-            } catch (e: RuntimeException) {
-                System.err.print("Exception Checking File Integrity: ")
-                System.err.println(e.message)
-            } finally {
-                try {
-                    `in`.close()
-                } catch (e: IOException) {
-                    throw RuntimeException(e)
-                }
-            }
-            try {
-                `in` = FileInputStream(args[0])
-            } catch (e: IOException) {
-                throw RuntimeException("Error opening file " + args[0] + " [2]")
-            }
-
-            val outputFile = args[0] + "-HrRecordExampleProcessed.csv"
-            mesgBroadcaster.addListener(example as RecordMesgListener)
-            mesgBroadcaster.addListener(example as HrMesgListener)
-
-            try {
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                example.mesgWriter = MesgCSVWriter(byteArrayOutputStream)
-
-                // Create plugin and register with mesgBroadcaster
-                val plugin: MesgBroadcastPlugin = HrToRecordMesgBroadcastPlugin()
-                mesgBroadcaster.registerMesgBroadcastPlugin(plugin)
-
-                mesgBroadcaster.run(`in`) // Run decoder
-                mesgBroadcaster.broadcast() // End of file so flush pending data.
-                example.mesgWriter!!.close()
-
-                StreamHelpers.writeByteStreamToFile(byteArrayOutputStream, outputFile, true)
-            } catch (e: Exception) {
-                System.err.print("Exception decoding file: ")
-                System.err.println(e.message)
-            }
-
-            println("Decoded Record and Hr data from " + args[0] + " to " + outputFile)
+    try {
+        if (!decode.checkFileIntegrity(fileInputStream)) {
+            throw RuntimeException("FIT file integrity failed.")
+        }
+    } catch (e: RuntimeException) {
+        System.err.print("Exception Checking File Integrity: ")
+        System.err.println(e.message)
+    } finally {
+        try {
+            fileInputStream.close()
+        } catch (e: IOException) {
+            throw RuntimeException(e)
         }
     }
+    try {
+        fileInputStream = FileInputStream(args[0])
+    } catch (e: IOException) {
+        throw RuntimeException("Error opening file " + args[0] + " [2]")
+    }
+
+    val outputFile = args[0] + "-HrRecordExampleProcessed.csv"
+    mesgBroadcaster.addListener(example as RecordMesgListener)
+    mesgBroadcaster.addListener(example as HrMesgListener)
+
+    try {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        example.mesgWriter = MesgCSVWriter(byteArrayOutputStream)
+
+        // Create plugin and register with mesgBroadcaster
+        val plugin: MesgBroadcastPlugin = HrToRecordMesgBroadcastPlugin()
+        mesgBroadcaster.registerMesgBroadcastPlugin(plugin)
+
+        mesgBroadcaster.run(fileInputStream) // Run decoder
+        mesgBroadcaster.broadcast() // End of file so flush pending data.
+        example.mesgWriter!!.close()
+
+        StreamHelpers.writeByteStreamToFile(byteArrayOutputStream, outputFile, true)
+    } catch (e: Exception) {
+        System.err.print("Exception decoding file: ")
+        System.err.println(e.message)
+    }
+
+    println("Decoded Record and Hr data from " + args[0] + " to " + outputFile)
 }

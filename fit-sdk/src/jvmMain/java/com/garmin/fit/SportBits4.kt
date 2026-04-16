@@ -17,20 +17,19 @@ object SportBits4 {
     const val STAND_UP_PADDLEBOARDING: Short = 0x20
     const val SURFING: Short = 0x40
     const val WAKEBOARDING: Short = 0x80
-    val INVALID: Short = Fit.UINT8Z_INVALID
+    const val INVALID: Short = Fit.UINT8Z_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(SAILING, "SAILING")
-        stringMap.put(ICE_SKATING, "ICE_SKATING")
-        stringMap.put(SKY_DIVING, "SKY_DIVING")
-        stringMap.put(SNOWSHOEING, "SNOWSHOEING")
-        stringMap.put(SNOWMOBILING, "SNOWMOBILING")
-        stringMap.put(STAND_UP_PADDLEBOARDING, "STAND_UP_PADDLEBOARDING")
-        stringMap.put(SURFING, "SURFING")
-        stringMap.put(WAKEBOARDING, "WAKEBOARDING")
+        stringMap[SAILING] = "SAILING"
+        stringMap[ICE_SKATING] = "ICE_SKATING"
+        stringMap[SKY_DIVING] = "SKY_DIVING"
+        stringMap[SNOWSHOEING] = "SNOWSHOEING"
+        stringMap[SNOWMOBILING] = "SNOWMOBILING"
+        stringMap[STAND_UP_PADDLEBOARDING] = "STAND_UP_PADDLEBOARDING"
+        stringMap[SURFING] = "SURFING"
+        stringMap[WAKEBOARDING] = "WAKEBOARDING"
     }
 
 
@@ -39,9 +38,9 @@ object SportBits4 {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -52,7 +51,7 @@ object SportBits4 {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

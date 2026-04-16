@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface ScheduleMesgListener {
-    fun onMesg(mesg: ScheduleMesg?)
+    fun onMesg(mesg: ScheduleMesg)
 }

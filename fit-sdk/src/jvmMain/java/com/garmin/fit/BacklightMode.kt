@@ -26,7 +26,7 @@ enum class BacklightMode(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return BacklightMode.INVALID
+            return INVALID
         }
 
         /**

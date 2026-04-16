@@ -21,7 +21,7 @@ enum class CcrSetpointSwitchMode(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return CcrSetpointSwitchMode.INVALID
+            return INVALID
         }
 
         /**

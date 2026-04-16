@@ -14,25 +14,22 @@ import com.garmin.fit.Profile.SubFields
 class FileIdMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.FILE_ID))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var type: File?
         /**
          * Get type field
-         * 
+         *
          * @return type
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return File.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return File.getByValue(value)
         }
         /**
          * Set type field
-         * 
+         *
          * @param type The new type value to be set
          */
         set(type) {
@@ -42,13 +39,13 @@ class FileIdMesg : Mesg {
     var manufacturer: Int?
         /**
          * Get manufacturer field
-         * 
+         *
          * @return manufacturer
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer field
-         * 
+         *
          * @param manufacturer The new manufacturer value to be set
          */
         set(manufacturer) {
@@ -58,13 +55,13 @@ class FileIdMesg : Mesg {
     var product: Int?
         /**
          * Get product field
-         * 
+         *
          * @return product
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product field
-         * 
+         *
          * @param product The new product value to be set
          */
         set(product) {
@@ -74,13 +71,13 @@ class FileIdMesg : Mesg {
     var faveroProduct: Int?
         /**
          * Get favero_product field
-         * 
+         *
          * @return favero_product
          */
         get() = getFieldIntegerValue(2, 0, SubFields.FILE_ID_MESG_PRODUCT_FIELD_FAVERO_PRODUCT)
         /**
          * Set favero_product field
-         * 
+         *
          * @param faveroProduct The new faveroProduct value to be set
          */
         set(faveroProduct) {
@@ -90,13 +87,13 @@ class FileIdMesg : Mesg {
     var garminProduct: Int?
         /**
          * Get garmin_product field
-         * 
+         *
          * @return garmin_product
          */
         get() = getFieldIntegerValue(2, 0, SubFields.FILE_ID_MESG_PRODUCT_FIELD_GARMIN_PRODUCT)
         /**
          * Set garmin_product field
-         * 
+         *
          * @param garminProduct The new garminProduct value to be set
          */
         set(garminProduct) {
@@ -106,13 +103,13 @@ class FileIdMesg : Mesg {
     var serialNumber: Long?
         /**
          * Get serial_number field
-         * 
+         *
          * @return serial_number
          */
         get() = getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set serial_number field
-         * 
+         *
          * @param serialNumber The new serialNumber value to be set
          */
         set(serialNumber) {
@@ -123,32 +120,32 @@ class FileIdMesg : Mesg {
         /**
          * Get time_created field
          * Comment: Only set for files that are can be created/erased.
-         * 
+         *
          * @return time_created
          */
         get() = timestampToDateTime(getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set time_created field
          * Comment: Only set for files that are can be created/erased.
-         * 
+         *
          * @param timeCreated The new timeCreated value to be set
          */
         set(timeCreated) {
-            setFieldValue(4, 0, timeCreated!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(4, 0, timeCreated?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var number: Int?
         /**
          * Get number field
          * Comment: Only set for files that are not created/erased.
-         * 
+         *
          * @return number
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set number field
          * Comment: Only set for files that are not created/erased.
-         * 
+         *
          * @param number The new number value to be set
          */
         set(number) {
@@ -159,14 +156,14 @@ class FileIdMesg : Mesg {
         /**
          * Get product_name field
          * Comment: Optional free form string to indicate the devices name or model
-         * 
+         *
          * @return product_name
          */
         get() = getFieldStringValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set product_name field
          * Comment: Optional free form string to indicate the devices name or model
-         * 
+         *
          * @param productName The new productName value to be set
          */
         set(productName) {
@@ -235,7 +232,7 @@ class FileIdMesg : Mesg {
                 )
             )
             subfield_index = 0
-            fileIdMesg.fields.get(field_index).subFields.add(
+            fileIdMesg.fields[field_index].subFields.add(
                 SubField(
                     "favero_product",
                     132,
@@ -244,9 +241,9 @@ class FileIdMesg : Mesg {
                     ""
                 )
             )
-            fileIdMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 263)
+            fileIdMesg.fields[field_index].subFields[subfield_index].addMap(1, 263)
             subfield_index++
-            fileIdMesg.fields.get(field_index).subFields.add(
+            fileIdMesg.fields[field_index].subFields.add(
                 SubField(
                     "garmin_product",
                     132,
@@ -255,10 +252,10 @@ class FileIdMesg : Mesg {
                     ""
                 )
             )
-            fileIdMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 1)
-            fileIdMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 15)
-            fileIdMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 13)
-            fileIdMesg.fields.get(field_index).subFields.get(subfield_index).addMap(1, 89)
+            fileIdMesg.fields[field_index].subFields[subfield_index].addMap(1, 1)
+            fileIdMesg.fields[field_index].subFields[subfield_index].addMap(1, 15)
+            fileIdMesg.fields[field_index].subFields[subfield_index].addMap(1, 13)
+            fileIdMesg.fields[field_index].subFields[subfield_index].addMap(1, 89)
             subfield_index++
             field_index++
             fileIdMesg.addField(

@@ -13,1432 +13,1341 @@ import java.io.InputStream
 
 open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode = Decode()) :
     MesgListener, MesgDefinitionListener, MesgSource {
-    private val mesgWithEventBroadcaster: MesgWithEventBroadcaster
-    private val bufferedRecordMesgBroadcaster: BufferedRecordMesgBroadcaster
-    private val mesgListeners: MutableList<MesgListener>
-    private val mesgDefinitionListeners: MutableList<MesgDefinitionListener>
+    private val mesgWithEventBroadcaster: MesgWithEventBroadcaster = MesgWithEventBroadcaster()
+    private val bufferedRecordMesgBroadcaster: BufferedRecordMesgBroadcaster =
+        BufferedRecordMesgBroadcaster()
+    private val mesgListeners: MutableList<MesgListener> = mutableListOf()
+    private val mesgDefinitionListeners: MutableList<MesgDefinitionListener> = mutableListOf()
 
-    private val fileIdMesgListeners: MutableList<FileIdMesgListener>
+    private val fileIdMesgListeners: MutableList<FileIdMesgListener> = mutableListOf()
 
-    private val fileCreatorMesgListeners: MutableList<FileCreatorMesgListener>
+    private val fileCreatorMesgListeners: MutableList<FileCreatorMesgListener> = mutableListOf()
 
-    private val timestampCorrelationMesgListeners: MutableList<TimestampCorrelationMesgListener>
+    private val timestampCorrelationMesgListeners: MutableList<TimestampCorrelationMesgListener> =
+        mutableListOf()
 
-    private val softwareMesgListeners: MutableList<SoftwareMesgListener>
+    private val softwareMesgListeners: MutableList<SoftwareMesgListener> = mutableListOf()
 
-    private val slaveDeviceMesgListeners: MutableList<SlaveDeviceMesgListener>
+    private val slaveDeviceMesgListeners: MutableList<SlaveDeviceMesgListener> = mutableListOf()
 
-    private val capabilitiesMesgListeners: MutableList<CapabilitiesMesgListener>
+    private val capabilitiesMesgListeners: MutableList<CapabilitiesMesgListener> = mutableListOf()
 
-    private val fileCapabilitiesMesgListeners: MutableList<FileCapabilitiesMesgListener>
+    private val fileCapabilitiesMesgListeners: MutableList<FileCapabilitiesMesgListener> =
+        mutableListOf()
 
-    private val mesgCapabilitiesMesgListeners: MutableList<MesgCapabilitiesMesgListener>
+    private val mesgCapabilitiesMesgListeners: MutableList<MesgCapabilitiesMesgListener> =
+        mutableListOf()
 
-    private val fieldCapabilitiesMesgListeners: MutableList<FieldCapabilitiesMesgListener>
+    private val fieldCapabilitiesMesgListeners: MutableList<FieldCapabilitiesMesgListener> =
+        mutableListOf()
 
-    private val deviceSettingsMesgListeners: MutableList<DeviceSettingsMesgListener>
+    private val deviceSettingsMesgListeners: MutableList<DeviceSettingsMesgListener> =
+        ArrayList<DeviceSettingsMesgListener>()
 
-    private val userProfileMesgListeners: MutableList<UserProfileMesgListener>
+    private val userProfileMesgListeners: MutableList<UserProfileMesgListener> =
+        ArrayList<UserProfileMesgListener>()
 
-    private val hrmProfileMesgListeners: MutableList<HrmProfileMesgListener>
+    private val hrmProfileMesgListeners: MutableList<HrmProfileMesgListener> = mutableListOf()
 
-    private val sdmProfileMesgListeners: MutableList<SdmProfileMesgListener>
+    private val sdmProfileMesgListeners: MutableList<SdmProfileMesgListener> = mutableListOf()
 
-    private val bikeProfileMesgListeners: MutableList<BikeProfileMesgListener>
+    private val bikeProfileMesgListeners: MutableList<BikeProfileMesgListener> = mutableListOf()
 
-    private val connectivityMesgListeners: MutableList<ConnectivityMesgListener>
+    private val connectivityMesgListeners: MutableList<ConnectivityMesgListener> = mutableListOf()
 
-    private val watchfaceSettingsMesgListeners: MutableList<WatchfaceSettingsMesgListener>
+    private val watchfaceSettingsMesgListeners: MutableList<WatchfaceSettingsMesgListener> =
+        mutableListOf()
 
-    private val ohrSettingsMesgListeners: MutableList<OhrSettingsMesgListener>
+    private val ohrSettingsMesgListeners: MutableList<OhrSettingsMesgListener> = mutableListOf()
 
-    private val timeInZoneMesgListeners: MutableList<TimeInZoneMesgListener>
+    private val timeInZoneMesgListeners: MutableList<TimeInZoneMesgListener> = mutableListOf()
 
-    private val zonesTargetMesgListeners: MutableList<ZonesTargetMesgListener>
+    private val zonesTargetMesgListeners: MutableList<ZonesTargetMesgListener> = mutableListOf()
 
-    private val sportMesgListeners: MutableList<SportMesgListener>
+    private val sportMesgListeners: MutableList<SportMesgListener> = mutableListOf()
 
-    private val hrZoneMesgListeners: MutableList<HrZoneMesgListener>
+    private val hrZoneMesgListeners: MutableList<HrZoneMesgListener> = mutableListOf()
 
-    private val speedZoneMesgListeners: MutableList<SpeedZoneMesgListener>
+    private val speedZoneMesgListeners: MutableList<SpeedZoneMesgListener> = mutableListOf()
 
-    private val cadenceZoneMesgListeners: MutableList<CadenceZoneMesgListener>
+    private val cadenceZoneMesgListeners: MutableList<CadenceZoneMesgListener> = mutableListOf()
 
-    private val powerZoneMesgListeners: MutableList<PowerZoneMesgListener>
+    private val powerZoneMesgListeners: MutableList<PowerZoneMesgListener> = mutableListOf()
 
-    private val metZoneMesgListeners: MutableList<MetZoneMesgListener>
+    private val metZoneMesgListeners: MutableList<MetZoneMesgListener> = mutableListOf()
 
-    private val trainingSettingsMesgListeners: MutableList<TrainingSettingsMesgListener>
+    private val trainingSettingsMesgListeners: MutableList<TrainingSettingsMesgListener> =
+        mutableListOf()
 
-    private val diveSettingsMesgListeners: MutableList<DiveSettingsMesgListener>
+    private val diveSettingsMesgListeners: MutableList<DiveSettingsMesgListener> = mutableListOf()
 
-    private val diveAlarmMesgListeners: MutableList<DiveAlarmMesgListener>
+    private val diveAlarmMesgListeners: MutableList<DiveAlarmMesgListener> = mutableListOf()
 
-    private val diveApneaAlarmMesgListeners: MutableList<DiveApneaAlarmMesgListener>
+    private val diveApneaAlarmMesgListeners: MutableList<DiveApneaAlarmMesgListener> =
+        mutableListOf()
 
-    private val diveGasMesgListeners: MutableList<DiveGasMesgListener>
+    private val diveGasMesgListeners: MutableList<DiveGasMesgListener> = mutableListOf()
 
-    private val goalMesgListeners: MutableList<GoalMesgListener>
+    private val goalMesgListeners: MutableList<GoalMesgListener> = mutableListOf()
 
-    private val activityMesgListeners: MutableList<ActivityMesgListener>
+    private val activityMesgListeners: MutableList<ActivityMesgListener> = mutableListOf()
 
-    private val sessionMesgListeners: MutableList<SessionMesgListener>
+    private val sessionMesgListeners: MutableList<SessionMesgListener> = mutableListOf()
 
-    private val lapMesgListeners: MutableList<LapMesgListener>
+    private val lapMesgListeners: MutableList<LapMesgListener> = mutableListOf()
 
-    private val lengthMesgListeners: MutableList<LengthMesgListener>
+    private val lengthMesgListeners: MutableList<LengthMesgListener> = mutableListOf()
 
-    private val recordMesgListeners: MutableList<RecordMesgListener>
+    private val recordMesgListeners: MutableList<RecordMesgListener> = mutableListOf()
 
-    private val eventMesgListeners: MutableList<EventMesgListener>
+    private val eventMesgListeners: MutableList<EventMesgListener> = mutableListOf()
 
-    private val deviceInfoMesgListeners: MutableList<DeviceInfoMesgListener>
+    private val deviceInfoMesgListeners: MutableList<DeviceInfoMesgListener> = mutableListOf()
 
-    private val deviceAuxBatteryInfoMesgListeners: MutableList<DeviceAuxBatteryInfoMesgListener>
+    private val deviceAuxBatteryInfoMesgListeners: MutableList<DeviceAuxBatteryInfoMesgListener> =
+        mutableListOf()
 
-    private val trainingFileMesgListeners: MutableList<TrainingFileMesgListener>
+    private val trainingFileMesgListeners: MutableList<TrainingFileMesgListener> = mutableListOf()
 
-    private val weatherConditionsMesgListeners: MutableList<WeatherConditionsMesgListener>
+    private val weatherConditionsMesgListeners: MutableList<WeatherConditionsMesgListener> =
+        mutableListOf()
 
-    private val weatherAlertMesgListeners: MutableList<WeatherAlertMesgListener>
+    private val weatherAlertMesgListeners: MutableList<WeatherAlertMesgListener> = mutableListOf()
 
-    private val gpsMetadataMesgListeners: MutableList<GpsMetadataMesgListener>
+    private val gpsMetadataMesgListeners: MutableList<GpsMetadataMesgListener> = mutableListOf()
 
-    private val cameraEventMesgListeners: MutableList<CameraEventMesgListener>
+    private val cameraEventMesgListeners: MutableList<CameraEventMesgListener> = mutableListOf()
 
-    private val gyroscopeDataMesgListeners: MutableList<GyroscopeDataMesgListener>
+    private val gyroscopeDataMesgListeners: MutableList<GyroscopeDataMesgListener> = mutableListOf()
 
-    private val accelerometerDataMesgListeners: MutableList<AccelerometerDataMesgListener>
+    private val accelerometerDataMesgListeners: MutableList<AccelerometerDataMesgListener> =
+        mutableListOf()
 
-    private val magnetometerDataMesgListeners: MutableList<MagnetometerDataMesgListener>
+    private val magnetometerDataMesgListeners: MutableList<MagnetometerDataMesgListener> =
+        mutableListOf()
 
-    private val barometerDataMesgListeners: MutableList<BarometerDataMesgListener>
+    private val barometerDataMesgListeners: MutableList<BarometerDataMesgListener> = mutableListOf()
 
-    private val threeDSensorCalibrationMesgListeners: MutableList<ThreeDSensorCalibrationMesgListener>
+    private val threeDSensorCalibrationMesgListeners: MutableList<ThreeDSensorCalibrationMesgListener> =
+        mutableListOf()
 
-    private val oneDSensorCalibrationMesgListeners: MutableList<OneDSensorCalibrationMesgListener>
+    private val oneDSensorCalibrationMesgListeners: MutableList<OneDSensorCalibrationMesgListener> =
+        mutableListOf()
 
-    private val videoFrameMesgListeners: MutableList<VideoFrameMesgListener>
+    private val videoFrameMesgListeners: MutableList<VideoFrameMesgListener> = mutableListOf()
 
-    private val obdiiDataMesgListeners: MutableList<ObdiiDataMesgListener>
+    private val obdiiDataMesgListeners: MutableList<ObdiiDataMesgListener> = mutableListOf()
 
-    private val nmeaSentenceMesgListeners: MutableList<NmeaSentenceMesgListener>
+    private val nmeaSentenceMesgListeners: MutableList<NmeaSentenceMesgListener> = mutableListOf()
 
-    private val aviationAttitudeMesgListeners: MutableList<AviationAttitudeMesgListener>
+    private val aviationAttitudeMesgListeners: MutableList<AviationAttitudeMesgListener> =
+        mutableListOf()
 
-    private val videoMesgListeners: MutableList<VideoMesgListener>
+    private val videoMesgListeners: MutableList<VideoMesgListener> = mutableListOf()
 
-    private val videoTitleMesgListeners: MutableList<VideoTitleMesgListener>
+    private val videoTitleMesgListeners: MutableList<VideoTitleMesgListener> = mutableListOf()
 
-    private val videoDescriptionMesgListeners: MutableList<VideoDescriptionMesgListener>
+    private val videoDescriptionMesgListeners: MutableList<VideoDescriptionMesgListener> =
+        mutableListOf()
 
-    private val videoClipMesgListeners: MutableList<VideoClipMesgListener>
+    private val videoClipMesgListeners: MutableList<VideoClipMesgListener> = mutableListOf()
 
-    private val setMesgListeners: MutableList<SetMesgListener>
+    private val setMesgListeners: MutableList<SetMesgListener> = mutableListOf()
 
-    private val jumpMesgListeners: MutableList<JumpMesgListener>
+    private val jumpMesgListeners: MutableList<JumpMesgListener> = mutableListOf()
 
-    private val splitMesgListeners: MutableList<SplitMesgListener>
+    private val splitMesgListeners: MutableList<SplitMesgListener> = mutableListOf()
 
-    private val splitSummaryMesgListeners: MutableList<SplitSummaryMesgListener>
+    private val splitSummaryMesgListeners: MutableList<SplitSummaryMesgListener> = mutableListOf()
 
-    private val climbProMesgListeners: MutableList<ClimbProMesgListener>
+    private val climbProMesgListeners: MutableList<ClimbProMesgListener> = mutableListOf()
 
-    private val fieldDescriptionMesgListeners: MutableList<FieldDescriptionMesgListener>
+    private val fieldDescriptionMesgListeners: MutableList<FieldDescriptionMesgListener> =
+        mutableListOf()
 
-    private val developerDataIdMesgListeners: MutableList<DeveloperDataIdMesgListener>
+    private val developerDataIdMesgListeners: MutableList<DeveloperDataIdMesgListener> =
+        mutableListOf()
 
-    private val courseMesgListeners: MutableList<CourseMesgListener>
+    private val courseMesgListeners: MutableList<CourseMesgListener> = mutableListOf()
 
-    private val coursePointMesgListeners: MutableList<CoursePointMesgListener>
+    private val coursePointMesgListeners: MutableList<CoursePointMesgListener> = mutableListOf()
 
-    private val segmentIdMesgListeners: MutableList<SegmentIdMesgListener>
+    private val segmentIdMesgListeners: MutableList<SegmentIdMesgListener> = mutableListOf()
 
-    private val segmentLeaderboardEntryMesgListeners: MutableList<SegmentLeaderboardEntryMesgListener>
+    private val segmentLeaderboardEntryMesgListeners: MutableList<SegmentLeaderboardEntryMesgListener> =
+        mutableListOf()
 
-    private val segmentPointMesgListeners: MutableList<SegmentPointMesgListener>
+    private val segmentPointMesgListeners: MutableList<SegmentPointMesgListener> = mutableListOf()
 
-    private val segmentLapMesgListeners: MutableList<SegmentLapMesgListener>
+    private val segmentLapMesgListeners: MutableList<SegmentLapMesgListener> = mutableListOf()
 
-    private val segmentFileMesgListeners: MutableList<SegmentFileMesgListener>
+    private val segmentFileMesgListeners: MutableList<SegmentFileMesgListener> = mutableListOf()
 
-    private val workoutMesgListeners: MutableList<WorkoutMesgListener>
+    private val workoutMesgListeners: MutableList<WorkoutMesgListener> = mutableListOf()
 
-    private val workoutSessionMesgListeners: MutableList<WorkoutSessionMesgListener>
+    private val workoutSessionMesgListeners: MutableList<WorkoutSessionMesgListener> =
+        mutableListOf()
 
-    private val workoutStepMesgListeners: MutableList<WorkoutStepMesgListener>
+    private val workoutStepMesgListeners: MutableList<WorkoutStepMesgListener> = mutableListOf()
 
-    private val exerciseTitleMesgListeners: MutableList<ExerciseTitleMesgListener>
+    private val exerciseTitleMesgListeners: MutableList<ExerciseTitleMesgListener> = mutableListOf()
 
-    private val scheduleMesgListeners: MutableList<ScheduleMesgListener>
+    private val scheduleMesgListeners: MutableList<ScheduleMesgListener> = mutableListOf()
 
-    private val totalsMesgListeners: MutableList<TotalsMesgListener>
+    private val totalsMesgListeners: MutableList<TotalsMesgListener> = mutableListOf()
 
-    private val weightScaleMesgListeners: MutableList<WeightScaleMesgListener>
+    private val weightScaleMesgListeners: MutableList<WeightScaleMesgListener> = mutableListOf()
 
-    private val bloodPressureMesgListeners: MutableList<BloodPressureMesgListener>
+    private val bloodPressureMesgListeners: MutableList<BloodPressureMesgListener> = mutableListOf()
 
-    private val monitoringInfoMesgListeners: MutableList<MonitoringInfoMesgListener>
+    private val monitoringInfoMesgListeners: MutableList<MonitoringInfoMesgListener> =
+        mutableListOf()
 
-    private val monitoringMesgListeners: MutableList<MonitoringMesgListener>
+    private val monitoringMesgListeners: MutableList<MonitoringMesgListener> = mutableListOf()
 
-    private val monitoringHrDataMesgListeners: MutableList<MonitoringHrDataMesgListener>
+    private val monitoringHrDataMesgListeners: MutableList<MonitoringHrDataMesgListener> =
+        mutableListOf()
 
-    private val spo2DataMesgListeners: MutableList<Spo2DataMesgListener>
+    private val spo2DataMesgListeners: MutableList<Spo2DataMesgListener> = mutableListOf()
 
-    private val hrMesgListeners: MutableList<HrMesgListener>
+    private val hrMesgListeners: MutableList<HrMesgListener> = mutableListOf()
 
-    private val stressLevelMesgListeners: MutableList<StressLevelMesgListener>
+    private val stressLevelMesgListeners: MutableList<StressLevelMesgListener> = mutableListOf()
 
-    private val maxMetDataMesgListeners: MutableList<MaxMetDataMesgListener>
+    private val maxMetDataMesgListeners: MutableList<MaxMetDataMesgListener> = mutableListOf()
 
-    private val hsaBodyBatteryDataMesgListeners: MutableList<HsaBodyBatteryDataMesgListener>
+    private val hsaBodyBatteryDataMesgListeners: MutableList<HsaBodyBatteryDataMesgListener> =
+        mutableListOf()
 
-    private val hsaEventMesgListeners: MutableList<HsaEventMesgListener>
+    private val hsaEventMesgListeners: MutableList<HsaEventMesgListener> = mutableListOf()
 
-    private val hsaAccelerometerDataMesgListeners: MutableList<HsaAccelerometerDataMesgListener>
+    private val hsaAccelerometerDataMesgListeners: MutableList<HsaAccelerometerDataMesgListener> =
+        mutableListOf()
 
-    private val hsaGyroscopeDataMesgListeners: MutableList<HsaGyroscopeDataMesgListener>
+    private val hsaGyroscopeDataMesgListeners: MutableList<HsaGyroscopeDataMesgListener> =
+        mutableListOf()
 
-    private val hsaStepDataMesgListeners: MutableList<HsaStepDataMesgListener>
+    private val hsaStepDataMesgListeners: MutableList<HsaStepDataMesgListener> = mutableListOf()
 
-    private val hsaSpo2DataMesgListeners: MutableList<HsaSpo2DataMesgListener>
+    private val hsaSpo2DataMesgListeners: MutableList<HsaSpo2DataMesgListener> = mutableListOf()
 
-    private val hsaStressDataMesgListeners: MutableList<HsaStressDataMesgListener>
+    private val hsaStressDataMesgListeners: MutableList<HsaStressDataMesgListener> = mutableListOf()
 
-    private val hsaRespirationDataMesgListeners: MutableList<HsaRespirationDataMesgListener>
+    private val hsaRespirationDataMesgListeners: MutableList<HsaRespirationDataMesgListener> =
+        mutableListOf()
 
-    private val hsaHeartRateDataMesgListeners: MutableList<HsaHeartRateDataMesgListener>
+    private val hsaHeartRateDataMesgListeners: MutableList<HsaHeartRateDataMesgListener> =
+        mutableListOf()
 
-    private val hsaConfigurationDataMesgListeners: MutableList<HsaConfigurationDataMesgListener>
+    private val hsaConfigurationDataMesgListeners: MutableList<HsaConfigurationDataMesgListener> =
+        mutableListOf()
 
-    private val hsaWristTemperatureDataMesgListeners: MutableList<HsaWristTemperatureDataMesgListener>
+    private val hsaWristTemperatureDataMesgListeners: MutableList<HsaWristTemperatureDataMesgListener> =
+        mutableListOf()
 
-    private val memoGlobMesgListeners: MutableList<MemoGlobMesgListener>
+    private val memoGlobMesgListeners: MutableList<MemoGlobMesgListener> = mutableListOf()
 
-    private val sleepLevelMesgListeners: MutableList<SleepLevelMesgListener>
+    private val sleepLevelMesgListeners: MutableList<SleepLevelMesgListener> = mutableListOf()
 
-    private val antChannelIdMesgListeners: MutableList<AntChannelIdMesgListener>
+    private val antChannelIdMesgListeners: MutableList<AntChannelIdMesgListener> = mutableListOf()
 
-    private val antRxMesgListeners: MutableList<AntRxMesgListener>
+    private val antRxMesgListeners: MutableList<AntRxMesgListener> = mutableListOf()
 
-    private val antTxMesgListeners: MutableList<AntTxMesgListener>
+    private val antTxMesgListeners: MutableList<AntTxMesgListener> = mutableListOf()
 
-    private val exdScreenConfigurationMesgListeners: MutableList<ExdScreenConfigurationMesgListener>
+    private val exdScreenConfigurationMesgListeners: MutableList<ExdScreenConfigurationMesgListener> =
+        mutableListOf()
 
-    private val exdDataFieldConfigurationMesgListeners: MutableList<ExdDataFieldConfigurationMesgListener>
+    private val exdDataFieldConfigurationMesgListeners: MutableList<ExdDataFieldConfigurationMesgListener> =
+        mutableListOf()
 
-    private val exdDataConceptConfigurationMesgListeners: MutableList<ExdDataConceptConfigurationMesgListener>
+    private val exdDataConceptConfigurationMesgListeners: MutableList<ExdDataConceptConfigurationMesgListener> =
+        mutableListOf()
 
-    private val diveSummaryMesgListeners: MutableList<DiveSummaryMesgListener>
+    private val diveSummaryMesgListeners: MutableList<DiveSummaryMesgListener> = mutableListOf()
 
-    private val aadAccelFeaturesMesgListeners: MutableList<AadAccelFeaturesMesgListener>
+    private val aadAccelFeaturesMesgListeners: MutableList<AadAccelFeaturesMesgListener> =
+        mutableListOf()
 
-    private val hrvMesgListeners: MutableList<HrvMesgListener>
+    private val hrvMesgListeners: MutableList<HrvMesgListener> = mutableListOf()
 
-    private val beatIntervalsMesgListeners: MutableList<BeatIntervalsMesgListener>
+    private val beatIntervalsMesgListeners: MutableList<BeatIntervalsMesgListener> = mutableListOf()
 
-    private val hrvStatusSummaryMesgListeners: MutableList<HrvStatusSummaryMesgListener>
+    private val hrvStatusSummaryMesgListeners: MutableList<HrvStatusSummaryMesgListener> =
+        mutableListOf()
 
-    private val hrvValueMesgListeners: MutableList<HrvValueMesgListener>
+    private val hrvValueMesgListeners: MutableList<HrvValueMesgListener> = mutableListOf()
 
-    private val rawBbiMesgListeners: MutableList<RawBbiMesgListener>
+    private val rawBbiMesgListeners: MutableList<RawBbiMesgListener> = mutableListOf()
 
-    private val respirationRateMesgListeners: MutableList<RespirationRateMesgListener>
+    private val respirationRateMesgListeners: MutableList<RespirationRateMesgListener> =
+        mutableListOf()
 
-    private val chronoShotSessionMesgListeners: MutableList<ChronoShotSessionMesgListener>
+    private val chronoShotSessionMesgListeners: MutableList<ChronoShotSessionMesgListener> =
+        mutableListOf()
 
-    private val chronoShotDataMesgListeners: MutableList<ChronoShotDataMesgListener>
+    private val chronoShotDataMesgListeners: MutableList<ChronoShotDataMesgListener> =
+        mutableListOf()
 
-    private val tankUpdateMesgListeners: MutableList<TankUpdateMesgListener>
+    private val tankUpdateMesgListeners: MutableList<TankUpdateMesgListener> = mutableListOf()
 
-    private val tankSummaryMesgListeners: MutableList<TankSummaryMesgListener>
+    private val tankSummaryMesgListeners: MutableList<TankSummaryMesgListener> = mutableListOf()
 
-    private val sleepAssessmentMesgListeners: MutableList<SleepAssessmentMesgListener>
+    private val sleepAssessmentMesgListeners: MutableList<SleepAssessmentMesgListener> =
+        mutableListOf()
 
-    private val sleepDisruptionSeverityPeriodMesgListeners: MutableList<SleepDisruptionSeverityPeriodMesgListener>
+    private val sleepDisruptionSeverityPeriodMesgListeners: MutableList<SleepDisruptionSeverityPeriodMesgListener> =
+        mutableListOf()
 
-    private val sleepDisruptionOvernightSeverityMesgListeners: MutableList<SleepDisruptionOvernightSeverityMesgListener>
+    private val sleepDisruptionOvernightSeverityMesgListeners: MutableList<SleepDisruptionOvernightSeverityMesgListener> =
+        mutableListOf()
 
-    private val napEventMesgListeners: MutableList<NapEventMesgListener>
+    private val napEventMesgListeners: MutableList<NapEventMesgListener> = mutableListOf()
 
-    private val skinTempOvernightMesgListeners: MutableList<SkinTempOvernightMesgListener>
+    private val skinTempOvernightMesgListeners: MutableList<SkinTempOvernightMesgListener> =
+        mutableListOf()
 
-    private val padMesgListeners: MutableList<PadMesgListener>
-
-    init {
-        mesgWithEventBroadcaster = MesgWithEventBroadcaster()
-        bufferedRecordMesgBroadcaster = BufferedRecordMesgBroadcaster()
-        mesgListeners = ArrayList<MesgListener>()
-        mesgDefinitionListeners = ArrayList<MesgDefinitionListener>()
-        fileIdMesgListeners = ArrayList<FileIdMesgListener>()
-        fileCreatorMesgListeners = ArrayList<FileCreatorMesgListener>()
-        timestampCorrelationMesgListeners = ArrayList<TimestampCorrelationMesgListener>()
-        softwareMesgListeners = ArrayList<SoftwareMesgListener>()
-        slaveDeviceMesgListeners = ArrayList<SlaveDeviceMesgListener>()
-        capabilitiesMesgListeners = ArrayList<CapabilitiesMesgListener>()
-        fileCapabilitiesMesgListeners = ArrayList<FileCapabilitiesMesgListener>()
-        mesgCapabilitiesMesgListeners = ArrayList<MesgCapabilitiesMesgListener>()
-        fieldCapabilitiesMesgListeners = ArrayList<FieldCapabilitiesMesgListener>()
-        deviceSettingsMesgListeners = ArrayList<DeviceSettingsMesgListener>()
-        userProfileMesgListeners = ArrayList<UserProfileMesgListener>()
-        hrmProfileMesgListeners = ArrayList<HrmProfileMesgListener>()
-        sdmProfileMesgListeners = ArrayList<SdmProfileMesgListener>()
-        bikeProfileMesgListeners = ArrayList<BikeProfileMesgListener>()
-        connectivityMesgListeners = ArrayList<ConnectivityMesgListener>()
-        watchfaceSettingsMesgListeners = ArrayList<WatchfaceSettingsMesgListener>()
-        ohrSettingsMesgListeners = ArrayList<OhrSettingsMesgListener>()
-        timeInZoneMesgListeners = ArrayList<TimeInZoneMesgListener>()
-        zonesTargetMesgListeners = ArrayList<ZonesTargetMesgListener>()
-        sportMesgListeners = ArrayList<SportMesgListener>()
-        hrZoneMesgListeners = ArrayList<HrZoneMesgListener>()
-        speedZoneMesgListeners = ArrayList<SpeedZoneMesgListener>()
-        cadenceZoneMesgListeners = ArrayList<CadenceZoneMesgListener>()
-        powerZoneMesgListeners = ArrayList<PowerZoneMesgListener>()
-        metZoneMesgListeners = ArrayList<MetZoneMesgListener>()
-        trainingSettingsMesgListeners = ArrayList<TrainingSettingsMesgListener>()
-        diveSettingsMesgListeners = ArrayList<DiveSettingsMesgListener>()
-        diveAlarmMesgListeners = ArrayList<DiveAlarmMesgListener>()
-        diveApneaAlarmMesgListeners = ArrayList<DiveApneaAlarmMesgListener>()
-        diveGasMesgListeners = ArrayList<DiveGasMesgListener>()
-        goalMesgListeners = ArrayList<GoalMesgListener>()
-        activityMesgListeners = ArrayList<ActivityMesgListener>()
-        sessionMesgListeners = ArrayList<SessionMesgListener>()
-        lapMesgListeners = ArrayList<LapMesgListener>()
-        lengthMesgListeners = ArrayList<LengthMesgListener>()
-        recordMesgListeners = ArrayList<RecordMesgListener>()
-        eventMesgListeners = ArrayList<EventMesgListener>()
-        deviceInfoMesgListeners = ArrayList<DeviceInfoMesgListener>()
-        deviceAuxBatteryInfoMesgListeners = ArrayList<DeviceAuxBatteryInfoMesgListener>()
-        trainingFileMesgListeners = ArrayList<TrainingFileMesgListener>()
-        weatherConditionsMesgListeners = ArrayList<WeatherConditionsMesgListener>()
-        weatherAlertMesgListeners = ArrayList<WeatherAlertMesgListener>()
-        gpsMetadataMesgListeners = ArrayList<GpsMetadataMesgListener>()
-        cameraEventMesgListeners = ArrayList<CameraEventMesgListener>()
-        gyroscopeDataMesgListeners = ArrayList<GyroscopeDataMesgListener>()
-        accelerometerDataMesgListeners = ArrayList<AccelerometerDataMesgListener>()
-        magnetometerDataMesgListeners = ArrayList<MagnetometerDataMesgListener>()
-        barometerDataMesgListeners = ArrayList<BarometerDataMesgListener>()
-        threeDSensorCalibrationMesgListeners = ArrayList<ThreeDSensorCalibrationMesgListener>()
-        oneDSensorCalibrationMesgListeners = ArrayList<OneDSensorCalibrationMesgListener>()
-        videoFrameMesgListeners = ArrayList<VideoFrameMesgListener>()
-        obdiiDataMesgListeners = ArrayList<ObdiiDataMesgListener>()
-        nmeaSentenceMesgListeners = ArrayList<NmeaSentenceMesgListener>()
-        aviationAttitudeMesgListeners = ArrayList<AviationAttitudeMesgListener>()
-        videoMesgListeners = ArrayList<VideoMesgListener>()
-        videoTitleMesgListeners = ArrayList<VideoTitleMesgListener>()
-        videoDescriptionMesgListeners = ArrayList<VideoDescriptionMesgListener>()
-        videoClipMesgListeners = ArrayList<VideoClipMesgListener>()
-        setMesgListeners = ArrayList<SetMesgListener>()
-        jumpMesgListeners = ArrayList<JumpMesgListener>()
-        splitMesgListeners = ArrayList<SplitMesgListener>()
-        splitSummaryMesgListeners = ArrayList<SplitSummaryMesgListener>()
-        climbProMesgListeners = ArrayList<ClimbProMesgListener>()
-        fieldDescriptionMesgListeners = ArrayList<FieldDescriptionMesgListener>()
-        developerDataIdMesgListeners = ArrayList<DeveloperDataIdMesgListener>()
-        courseMesgListeners = ArrayList<CourseMesgListener>()
-        coursePointMesgListeners = ArrayList<CoursePointMesgListener>()
-        segmentIdMesgListeners = ArrayList<SegmentIdMesgListener>()
-        segmentLeaderboardEntryMesgListeners = ArrayList<SegmentLeaderboardEntryMesgListener>()
-        segmentPointMesgListeners = ArrayList<SegmentPointMesgListener>()
-        segmentLapMesgListeners = ArrayList<SegmentLapMesgListener>()
-        segmentFileMesgListeners = ArrayList<SegmentFileMesgListener>()
-        workoutMesgListeners = ArrayList<WorkoutMesgListener>()
-        workoutSessionMesgListeners = ArrayList<WorkoutSessionMesgListener>()
-        workoutStepMesgListeners = ArrayList<WorkoutStepMesgListener>()
-        exerciseTitleMesgListeners = ArrayList<ExerciseTitleMesgListener>()
-        scheduleMesgListeners = ArrayList<ScheduleMesgListener>()
-        totalsMesgListeners = ArrayList<TotalsMesgListener>()
-        weightScaleMesgListeners = ArrayList<WeightScaleMesgListener>()
-        bloodPressureMesgListeners = ArrayList<BloodPressureMesgListener>()
-        monitoringInfoMesgListeners = ArrayList<MonitoringInfoMesgListener>()
-        monitoringMesgListeners = ArrayList<MonitoringMesgListener>()
-        monitoringHrDataMesgListeners = ArrayList<MonitoringHrDataMesgListener>()
-        spo2DataMesgListeners = ArrayList<Spo2DataMesgListener>()
-        hrMesgListeners = ArrayList<HrMesgListener>()
-        stressLevelMesgListeners = ArrayList<StressLevelMesgListener>()
-        maxMetDataMesgListeners = ArrayList<MaxMetDataMesgListener>()
-        hsaBodyBatteryDataMesgListeners = ArrayList<HsaBodyBatteryDataMesgListener>()
-        hsaEventMesgListeners = ArrayList<HsaEventMesgListener>()
-        hsaAccelerometerDataMesgListeners = ArrayList<HsaAccelerometerDataMesgListener>()
-        hsaGyroscopeDataMesgListeners = ArrayList<HsaGyroscopeDataMesgListener>()
-        hsaStepDataMesgListeners = ArrayList<HsaStepDataMesgListener>()
-        hsaSpo2DataMesgListeners = ArrayList<HsaSpo2DataMesgListener>()
-        hsaStressDataMesgListeners = ArrayList<HsaStressDataMesgListener>()
-        hsaRespirationDataMesgListeners = ArrayList<HsaRespirationDataMesgListener>()
-        hsaHeartRateDataMesgListeners = ArrayList<HsaHeartRateDataMesgListener>()
-        hsaConfigurationDataMesgListeners = ArrayList<HsaConfigurationDataMesgListener>()
-        hsaWristTemperatureDataMesgListeners = ArrayList<HsaWristTemperatureDataMesgListener>()
-        memoGlobMesgListeners = ArrayList<MemoGlobMesgListener>()
-        sleepLevelMesgListeners = ArrayList<SleepLevelMesgListener>()
-        antChannelIdMesgListeners = ArrayList<AntChannelIdMesgListener>()
-        antRxMesgListeners = ArrayList<AntRxMesgListener>()
-        antTxMesgListeners = ArrayList<AntTxMesgListener>()
-        exdScreenConfigurationMesgListeners = ArrayList<ExdScreenConfigurationMesgListener>()
-        exdDataFieldConfigurationMesgListeners = ArrayList<ExdDataFieldConfigurationMesgListener>()
-        exdDataConceptConfigurationMesgListeners =
-            ArrayList<ExdDataConceptConfigurationMesgListener>()
-        diveSummaryMesgListeners = ArrayList<DiveSummaryMesgListener>()
-        aadAccelFeaturesMesgListeners = ArrayList<AadAccelFeaturesMesgListener>()
-        hrvMesgListeners = ArrayList<HrvMesgListener>()
-        beatIntervalsMesgListeners = ArrayList<BeatIntervalsMesgListener>()
-        hrvStatusSummaryMesgListeners = ArrayList<HrvStatusSummaryMesgListener>()
-        hrvValueMesgListeners = ArrayList<HrvValueMesgListener>()
-        rawBbiMesgListeners = ArrayList<RawBbiMesgListener>()
-        respirationRateMesgListeners = ArrayList<RespirationRateMesgListener>()
-        chronoShotSessionMesgListeners = ArrayList<ChronoShotSessionMesgListener>()
-        chronoShotDataMesgListeners = ArrayList<ChronoShotDataMesgListener>()
-        tankUpdateMesgListeners = ArrayList<TankUpdateMesgListener>()
-        tankSummaryMesgListeners = ArrayList<TankSummaryMesgListener>()
-        sleepAssessmentMesgListeners = ArrayList<SleepAssessmentMesgListener>()
-        sleepDisruptionSeverityPeriodMesgListeners =
-            ArrayList<SleepDisruptionSeverityPeriodMesgListener>()
-        sleepDisruptionOvernightSeverityMesgListeners =
-            ArrayList<SleepDisruptionOvernightSeverityMesgListener>()
-        napEventMesgListeners = ArrayList<NapEventMesgListener>()
-        skinTempOvernightMesgListeners = ArrayList<SkinTempOvernightMesgListener>()
-        padMesgListeners = ArrayList<PadMesgListener>()
-    }
+    private val padMesgListeners: MutableList<PadMesgListener> = mutableListOf()
 
     fun setSystemTimeOffset(offset: Long) {
         decode.setSystemTimeOffset(offset)
     }
 
-    fun run(`in`: InputStream?) {
+    fun run(inputStream: InputStream) {
         try {
-            while (decode.bytesAvailable(`in`)) { // Try to read a file while more data is available.
-                decode.read(`in`, this) // Run decoder.
+            while (decode.bytesAvailable(inputStream)) { // Try to read a file while more data is available.
+                decode.read(inputStream, this) // Run decoder.
                 decode.nextFile() // Initialize to read next file (if any).
             }
         } catch (e: IOException) {
         }
     }
 
-    override fun addListener(mesgListener: MesgListener?) {
-        mesgListeners.add(mesgListener!!)
+    override fun addListener(mesgListener: MesgListener) {
+        mesgListeners.add(mesgListener)
     }
 
-    fun removeListener(mesgListener: MesgListener?) {
+    fun removeListener(mesgListener: MesgListener) {
         mesgListeners.remove(mesgListener)
     }
 
-    fun addListener(mesgListener: MesgDefinitionListener?) {
-        mesgDefinitionListeners.add(mesgListener!!)
+    fun addListener(mesgListener: MesgDefinitionListener) {
+        mesgDefinitionListeners.add(mesgListener)
     }
 
-    fun removeListener(mesgListener: MesgDefinitionListener?) {
+    fun removeListener(mesgListener: MesgDefinitionListener) {
         mesgDefinitionListeners.remove(mesgListener)
     }
 
-    fun addListener(mesgListener: MesgWithEventListener?) {
+    fun addListener(mesgListener: MesgWithEventListener) {
         mesgWithEventBroadcaster.addListener(mesgListener)
     }
 
-    fun removeListener(mesgListener: MesgWithEventListener?) {
+    fun removeListener(mesgListener: MesgWithEventListener) {
         mesgWithEventBroadcaster.removeListener(mesgListener)
     }
 
-    fun addListener(bufferedRecordMesgListener: BufferedRecordMesgListener?) {
+    fun addListener(bufferedRecordMesgListener: BufferedRecordMesgListener) {
         bufferedRecordMesgBroadcaster.addListener(bufferedRecordMesgListener)
     }
 
-    fun removeListener(bufferedRecordMesgListener: BufferedRecordMesgListener?) {
+    fun removeListener(bufferedRecordMesgListener: BufferedRecordMesgListener) {
         bufferedRecordMesgBroadcaster.removeListener(bufferedRecordMesgListener)
     }
 
-    fun addListener(fileIdMesgListener: FileIdMesgListener?) {
-        fileIdMesgListeners.add(fileIdMesgListener!!)
+    fun addListener(fileIdMesgListener: FileIdMesgListener) {
+        fileIdMesgListeners.add(fileIdMesgListener)
     }
 
-    fun removeListener(fileIdMesgListener: FileIdMesgListener?) {
+    fun removeListener(fileIdMesgListener: FileIdMesgListener) {
         fileIdMesgListeners.remove(fileIdMesgListener)
     }
 
-    fun addListener(fileCreatorMesgListener: FileCreatorMesgListener?) {
-        fileCreatorMesgListeners.add(fileCreatorMesgListener!!)
+    fun addListener(fileCreatorMesgListener: FileCreatorMesgListener) {
+        fileCreatorMesgListeners.add(fileCreatorMesgListener)
     }
 
-    fun removeListener(fileCreatorMesgListener: FileCreatorMesgListener?) {
+    fun removeListener(fileCreatorMesgListener: FileCreatorMesgListener) {
         fileCreatorMesgListeners.remove(fileCreatorMesgListener)
     }
 
-    fun addListener(timestampCorrelationMesgListener: TimestampCorrelationMesgListener?) {
-        timestampCorrelationMesgListeners.add(timestampCorrelationMesgListener!!)
+    fun addListener(timestampCorrelationMesgListener: TimestampCorrelationMesgListener) {
+        timestampCorrelationMesgListeners.add(timestampCorrelationMesgListener)
     }
 
-    fun removeListener(timestampCorrelationMesgListener: TimestampCorrelationMesgListener?) {
+    fun removeListener(timestampCorrelationMesgListener: TimestampCorrelationMesgListener) {
         timestampCorrelationMesgListeners.remove(timestampCorrelationMesgListener)
     }
 
-    fun addListener(softwareMesgListener: SoftwareMesgListener?) {
-        softwareMesgListeners.add(softwareMesgListener!!)
+    fun addListener(softwareMesgListener: SoftwareMesgListener) {
+        softwareMesgListeners.add(softwareMesgListener)
     }
 
-    fun removeListener(softwareMesgListener: SoftwareMesgListener?) {
+    fun removeListener(softwareMesgListener: SoftwareMesgListener) {
         softwareMesgListeners.remove(softwareMesgListener)
     }
 
-    fun addListener(slaveDeviceMesgListener: SlaveDeviceMesgListener?) {
-        slaveDeviceMesgListeners.add(slaveDeviceMesgListener!!)
+    fun addListener(slaveDeviceMesgListener: SlaveDeviceMesgListener) {
+        slaveDeviceMesgListeners.add(slaveDeviceMesgListener)
     }
 
-    fun removeListener(slaveDeviceMesgListener: SlaveDeviceMesgListener?) {
+    fun removeListener(slaveDeviceMesgListener: SlaveDeviceMesgListener) {
         slaveDeviceMesgListeners.remove(slaveDeviceMesgListener)
     }
 
-    fun addListener(capabilitiesMesgListener: CapabilitiesMesgListener?) {
-        capabilitiesMesgListeners.add(capabilitiesMesgListener!!)
+    fun addListener(capabilitiesMesgListener: CapabilitiesMesgListener) {
+        capabilitiesMesgListeners.add(capabilitiesMesgListener)
     }
 
-    fun removeListener(capabilitiesMesgListener: CapabilitiesMesgListener?) {
+    fun removeListener(capabilitiesMesgListener: CapabilitiesMesgListener) {
         capabilitiesMesgListeners.remove(capabilitiesMesgListener)
     }
 
-    fun addListener(fileCapabilitiesMesgListener: FileCapabilitiesMesgListener?) {
-        fileCapabilitiesMesgListeners.add(fileCapabilitiesMesgListener!!)
+    fun addListener(fileCapabilitiesMesgListener: FileCapabilitiesMesgListener) {
+        fileCapabilitiesMesgListeners.add(fileCapabilitiesMesgListener)
     }
 
-    fun removeListener(fileCapabilitiesMesgListener: FileCapabilitiesMesgListener?) {
+    fun removeListener(fileCapabilitiesMesgListener: FileCapabilitiesMesgListener) {
         fileCapabilitiesMesgListeners.remove(fileCapabilitiesMesgListener)
     }
 
-    fun addListener(mesgCapabilitiesMesgListener: MesgCapabilitiesMesgListener?) {
-        mesgCapabilitiesMesgListeners.add(mesgCapabilitiesMesgListener!!)
+    fun addListener(mesgCapabilitiesMesgListener: MesgCapabilitiesMesgListener) {
+        mesgCapabilitiesMesgListeners.add(mesgCapabilitiesMesgListener)
     }
 
-    fun removeListener(mesgCapabilitiesMesgListener: MesgCapabilitiesMesgListener?) {
+    fun removeListener(mesgCapabilitiesMesgListener: MesgCapabilitiesMesgListener) {
         mesgCapabilitiesMesgListeners.remove(mesgCapabilitiesMesgListener)
     }
 
-    fun addListener(fieldCapabilitiesMesgListener: FieldCapabilitiesMesgListener?) {
-        fieldCapabilitiesMesgListeners.add(fieldCapabilitiesMesgListener!!)
+    fun addListener(fieldCapabilitiesMesgListener: FieldCapabilitiesMesgListener) {
+        fieldCapabilitiesMesgListeners.add(fieldCapabilitiesMesgListener)
     }
 
-    fun removeListener(fieldCapabilitiesMesgListener: FieldCapabilitiesMesgListener?) {
+    fun removeListener(fieldCapabilitiesMesgListener: FieldCapabilitiesMesgListener) {
         fieldCapabilitiesMesgListeners.remove(fieldCapabilitiesMesgListener)
     }
 
-    fun addListener(deviceSettingsMesgListener: DeviceSettingsMesgListener?) {
-        deviceSettingsMesgListeners.add(deviceSettingsMesgListener!!)
+    fun addListener(deviceSettingsMesgListener: DeviceSettingsMesgListener) {
+        deviceSettingsMesgListeners.add(deviceSettingsMesgListener)
     }
 
-    fun removeListener(deviceSettingsMesgListener: DeviceSettingsMesgListener?) {
+    fun removeListener(deviceSettingsMesgListener: DeviceSettingsMesgListener) {
         deviceSettingsMesgListeners.remove(deviceSettingsMesgListener)
     }
 
-    fun addListener(userProfileMesgListener: UserProfileMesgListener?) {
-        userProfileMesgListeners.add(userProfileMesgListener!!)
+    fun addListener(userProfileMesgListener: UserProfileMesgListener) {
+        userProfileMesgListeners.add(userProfileMesgListener)
     }
 
-    fun removeListener(userProfileMesgListener: UserProfileMesgListener?) {
+    fun removeListener(userProfileMesgListener: UserProfileMesgListener) {
         userProfileMesgListeners.remove(userProfileMesgListener)
     }
 
-    fun addListener(hrmProfileMesgListener: HrmProfileMesgListener?) {
-        hrmProfileMesgListeners.add(hrmProfileMesgListener!!)
+    fun addListener(hrmProfileMesgListener: HrmProfileMesgListener) {
+        hrmProfileMesgListeners.add(hrmProfileMesgListener)
     }
 
-    fun removeListener(hrmProfileMesgListener: HrmProfileMesgListener?) {
+    fun removeListener(hrmProfileMesgListener: HrmProfileMesgListener) {
         hrmProfileMesgListeners.remove(hrmProfileMesgListener)
     }
 
-    fun addListener(sdmProfileMesgListener: SdmProfileMesgListener?) {
-        sdmProfileMesgListeners.add(sdmProfileMesgListener!!)
+    fun addListener(sdmProfileMesgListener: SdmProfileMesgListener) {
+        sdmProfileMesgListeners.add(sdmProfileMesgListener)
     }
 
-    fun removeListener(sdmProfileMesgListener: SdmProfileMesgListener?) {
+    fun removeListener(sdmProfileMesgListener: SdmProfileMesgListener) {
         sdmProfileMesgListeners.remove(sdmProfileMesgListener)
     }
 
-    fun addListener(bikeProfileMesgListener: BikeProfileMesgListener?) {
-        bikeProfileMesgListeners.add(bikeProfileMesgListener!!)
+    fun addListener(bikeProfileMesgListener: BikeProfileMesgListener) {
+        bikeProfileMesgListeners.add(bikeProfileMesgListener)
     }
 
-    fun removeListener(bikeProfileMesgListener: BikeProfileMesgListener?) {
+    fun removeListener(bikeProfileMesgListener: BikeProfileMesgListener) {
         bikeProfileMesgListeners.remove(bikeProfileMesgListener)
     }
 
-    fun addListener(connectivityMesgListener: ConnectivityMesgListener?) {
-        connectivityMesgListeners.add(connectivityMesgListener!!)
+    fun addListener(connectivityMesgListener: ConnectivityMesgListener) {
+        connectivityMesgListeners.add(connectivityMesgListener)
     }
 
-    fun removeListener(connectivityMesgListener: ConnectivityMesgListener?) {
+    fun removeListener(connectivityMesgListener: ConnectivityMesgListener) {
         connectivityMesgListeners.remove(connectivityMesgListener)
     }
 
-    fun addListener(watchfaceSettingsMesgListener: WatchfaceSettingsMesgListener?) {
-        watchfaceSettingsMesgListeners.add(watchfaceSettingsMesgListener!!)
+    fun addListener(watchfaceSettingsMesgListener: WatchfaceSettingsMesgListener) {
+        watchfaceSettingsMesgListeners.add(watchfaceSettingsMesgListener)
     }
 
-    fun removeListener(watchfaceSettingsMesgListener: WatchfaceSettingsMesgListener?) {
+    fun removeListener(watchfaceSettingsMesgListener: WatchfaceSettingsMesgListener) {
         watchfaceSettingsMesgListeners.remove(watchfaceSettingsMesgListener)
     }
 
-    fun addListener(ohrSettingsMesgListener: OhrSettingsMesgListener?) {
-        ohrSettingsMesgListeners.add(ohrSettingsMesgListener!!)
+    fun addListener(ohrSettingsMesgListener: OhrSettingsMesgListener) {
+        ohrSettingsMesgListeners.add(ohrSettingsMesgListener)
     }
 
-    fun removeListener(ohrSettingsMesgListener: OhrSettingsMesgListener?) {
+    fun removeListener(ohrSettingsMesgListener: OhrSettingsMesgListener) {
         ohrSettingsMesgListeners.remove(ohrSettingsMesgListener)
     }
 
-    fun addListener(timeInZoneMesgListener: TimeInZoneMesgListener?) {
-        timeInZoneMesgListeners.add(timeInZoneMesgListener!!)
+    fun addListener(timeInZoneMesgListener: TimeInZoneMesgListener) {
+        timeInZoneMesgListeners.add(timeInZoneMesgListener)
     }
 
-    fun removeListener(timeInZoneMesgListener: TimeInZoneMesgListener?) {
+    fun removeListener(timeInZoneMesgListener: TimeInZoneMesgListener) {
         timeInZoneMesgListeners.remove(timeInZoneMesgListener)
     }
 
-    fun addListener(zonesTargetMesgListener: ZonesTargetMesgListener?) {
-        zonesTargetMesgListeners.add(zonesTargetMesgListener!!)
+    fun addListener(zonesTargetMesgListener: ZonesTargetMesgListener) {
+        zonesTargetMesgListeners.add(zonesTargetMesgListener)
     }
 
-    fun removeListener(zonesTargetMesgListener: ZonesTargetMesgListener?) {
+    fun removeListener(zonesTargetMesgListener: ZonesTargetMesgListener) {
         zonesTargetMesgListeners.remove(zonesTargetMesgListener)
     }
 
-    fun addListener(sportMesgListener: SportMesgListener?) {
-        sportMesgListeners.add(sportMesgListener!!)
+    fun addListener(sportMesgListener: SportMesgListener) {
+        sportMesgListeners.add(sportMesgListener)
     }
 
-    fun removeListener(sportMesgListener: SportMesgListener?) {
+    fun removeListener(sportMesgListener: SportMesgListener) {
         sportMesgListeners.remove(sportMesgListener)
     }
 
-    fun addListener(hrZoneMesgListener: HrZoneMesgListener?) {
-        hrZoneMesgListeners.add(hrZoneMesgListener!!)
+    fun addListener(hrZoneMesgListener: HrZoneMesgListener) {
+        hrZoneMesgListeners.add(hrZoneMesgListener)
     }
 
-    fun removeListener(hrZoneMesgListener: HrZoneMesgListener?) {
+    fun removeListener(hrZoneMesgListener: HrZoneMesgListener) {
         hrZoneMesgListeners.remove(hrZoneMesgListener)
     }
 
-    fun addListener(speedZoneMesgListener: SpeedZoneMesgListener?) {
-        speedZoneMesgListeners.add(speedZoneMesgListener!!)
+    fun addListener(speedZoneMesgListener: SpeedZoneMesgListener) {
+        speedZoneMesgListeners.add(speedZoneMesgListener)
     }
 
-    fun removeListener(speedZoneMesgListener: SpeedZoneMesgListener?) {
+    fun removeListener(speedZoneMesgListener: SpeedZoneMesgListener) {
         speedZoneMesgListeners.remove(speedZoneMesgListener)
     }
 
-    fun addListener(cadenceZoneMesgListener: CadenceZoneMesgListener?) {
-        cadenceZoneMesgListeners.add(cadenceZoneMesgListener!!)
+    fun addListener(cadenceZoneMesgListener: CadenceZoneMesgListener) {
+        cadenceZoneMesgListeners.add(cadenceZoneMesgListener)
     }
 
-    fun removeListener(cadenceZoneMesgListener: CadenceZoneMesgListener?) {
+    fun removeListener(cadenceZoneMesgListener: CadenceZoneMesgListener) {
         cadenceZoneMesgListeners.remove(cadenceZoneMesgListener)
     }
 
-    fun addListener(powerZoneMesgListener: PowerZoneMesgListener?) {
-        powerZoneMesgListeners.add(powerZoneMesgListener!!)
+    fun addListener(powerZoneMesgListener: PowerZoneMesgListener) {
+        powerZoneMesgListeners.add(powerZoneMesgListener)
     }
 
-    fun removeListener(powerZoneMesgListener: PowerZoneMesgListener?) {
+    fun removeListener(powerZoneMesgListener: PowerZoneMesgListener) {
         powerZoneMesgListeners.remove(powerZoneMesgListener)
     }
 
-    fun addListener(metZoneMesgListener: MetZoneMesgListener?) {
-        metZoneMesgListeners.add(metZoneMesgListener!!)
+    fun addListener(metZoneMesgListener: MetZoneMesgListener) {
+        metZoneMesgListeners.add(metZoneMesgListener)
     }
 
-    fun removeListener(metZoneMesgListener: MetZoneMesgListener?) {
+    fun removeListener(metZoneMesgListener: MetZoneMesgListener) {
         metZoneMesgListeners.remove(metZoneMesgListener)
     }
 
-    fun addListener(trainingSettingsMesgListener: TrainingSettingsMesgListener?) {
-        trainingSettingsMesgListeners.add(trainingSettingsMesgListener!!)
+    fun addListener(trainingSettingsMesgListener: TrainingSettingsMesgListener) {
+        trainingSettingsMesgListeners.add(trainingSettingsMesgListener)
     }
 
-    fun removeListener(trainingSettingsMesgListener: TrainingSettingsMesgListener?) {
+    fun removeListener(trainingSettingsMesgListener: TrainingSettingsMesgListener) {
         trainingSettingsMesgListeners.remove(trainingSettingsMesgListener)
     }
 
-    fun addListener(diveSettingsMesgListener: DiveSettingsMesgListener?) {
-        diveSettingsMesgListeners.add(diveSettingsMesgListener!!)
+    fun addListener(diveSettingsMesgListener: DiveSettingsMesgListener) {
+        diveSettingsMesgListeners.add(diveSettingsMesgListener)
     }
 
-    fun removeListener(diveSettingsMesgListener: DiveSettingsMesgListener?) {
+    fun removeListener(diveSettingsMesgListener: DiveSettingsMesgListener) {
         diveSettingsMesgListeners.remove(diveSettingsMesgListener)
     }
 
-    fun addListener(diveAlarmMesgListener: DiveAlarmMesgListener?) {
-        diveAlarmMesgListeners.add(diveAlarmMesgListener!!)
+    fun addListener(diveAlarmMesgListener: DiveAlarmMesgListener) {
+        diveAlarmMesgListeners.add(diveAlarmMesgListener)
     }
 
-    fun removeListener(diveAlarmMesgListener: DiveAlarmMesgListener?) {
+    fun removeListener(diveAlarmMesgListener: DiveAlarmMesgListener) {
         diveAlarmMesgListeners.remove(diveAlarmMesgListener)
     }
 
-    fun addListener(diveApneaAlarmMesgListener: DiveApneaAlarmMesgListener?) {
-        diveApneaAlarmMesgListeners.add(diveApneaAlarmMesgListener!!)
+    fun addListener(diveApneaAlarmMesgListener: DiveApneaAlarmMesgListener) {
+        diveApneaAlarmMesgListeners.add(diveApneaAlarmMesgListener)
     }
 
-    fun removeListener(diveApneaAlarmMesgListener: DiveApneaAlarmMesgListener?) {
+    fun removeListener(diveApneaAlarmMesgListener: DiveApneaAlarmMesgListener) {
         diveApneaAlarmMesgListeners.remove(diveApneaAlarmMesgListener)
     }
 
-    fun addListener(diveGasMesgListener: DiveGasMesgListener?) {
-        diveGasMesgListeners.add(diveGasMesgListener!!)
+    fun addListener(diveGasMesgListener: DiveGasMesgListener) {
+        diveGasMesgListeners.add(diveGasMesgListener)
     }
 
-    fun removeListener(diveGasMesgListener: DiveGasMesgListener?) {
+    fun removeListener(diveGasMesgListener: DiveGasMesgListener) {
         diveGasMesgListeners.remove(diveGasMesgListener)
     }
 
-    fun addListener(goalMesgListener: GoalMesgListener?) {
-        goalMesgListeners.add(goalMesgListener!!)
+    fun addListener(goalMesgListener: GoalMesgListener) {
+        goalMesgListeners.add(goalMesgListener)
     }
 
-    fun removeListener(goalMesgListener: GoalMesgListener?) {
+    fun removeListener(goalMesgListener: GoalMesgListener) {
         goalMesgListeners.remove(goalMesgListener)
     }
 
-    fun addListener(activityMesgListener: ActivityMesgListener?) {
-        activityMesgListeners.add(activityMesgListener!!)
+    fun addListener(activityMesgListener: ActivityMesgListener) {
+        activityMesgListeners.add(activityMesgListener)
     }
 
-    fun removeListener(activityMesgListener: ActivityMesgListener?) {
+    fun removeListener(activityMesgListener: ActivityMesgListener) {
         activityMesgListeners.remove(activityMesgListener)
     }
 
-    fun addListener(sessionMesgListener: SessionMesgListener?) {
-        sessionMesgListeners.add(sessionMesgListener!!)
+    fun addListener(sessionMesgListener: SessionMesgListener) {
+        sessionMesgListeners.add(sessionMesgListener)
     }
 
-    fun removeListener(sessionMesgListener: SessionMesgListener?) {
+    fun removeListener(sessionMesgListener: SessionMesgListener) {
         sessionMesgListeners.remove(sessionMesgListener)
     }
 
-    fun addListener(lapMesgListener: LapMesgListener?) {
-        lapMesgListeners.add(lapMesgListener!!)
+    fun addListener(lapMesgListener: LapMesgListener) {
+        lapMesgListeners.add(lapMesgListener)
     }
 
-    fun removeListener(lapMesgListener: LapMesgListener?) {
+    fun removeListener(lapMesgListener: LapMesgListener) {
         lapMesgListeners.remove(lapMesgListener)
     }
 
-    fun addListener(lengthMesgListener: LengthMesgListener?) {
-        lengthMesgListeners.add(lengthMesgListener!!)
+    fun addListener(lengthMesgListener: LengthMesgListener) {
+        lengthMesgListeners.add(lengthMesgListener)
     }
 
-    fun removeListener(lengthMesgListener: LengthMesgListener?) {
+    fun removeListener(lengthMesgListener: LengthMesgListener) {
         lengthMesgListeners.remove(lengthMesgListener)
     }
 
-    fun addListener(recordMesgListener: RecordMesgListener?) {
-        recordMesgListeners.add(recordMesgListener!!)
+    fun addListener(recordMesgListener: RecordMesgListener) {
+        recordMesgListeners.add(recordMesgListener)
     }
 
-    fun removeListener(recordMesgListener: RecordMesgListener?) {
+    fun removeListener(recordMesgListener: RecordMesgListener) {
         recordMesgListeners.remove(recordMesgListener)
     }
 
-    fun addListener(eventMesgListener: EventMesgListener?) {
-        eventMesgListeners.add(eventMesgListener!!)
+    fun addListener(eventMesgListener: EventMesgListener) {
+        eventMesgListeners.add(eventMesgListener)
     }
 
-    fun removeListener(eventMesgListener: EventMesgListener?) {
+    fun removeListener(eventMesgListener: EventMesgListener) {
         eventMesgListeners.remove(eventMesgListener)
     }
 
-    fun addListener(deviceInfoMesgListener: DeviceInfoMesgListener?) {
-        deviceInfoMesgListeners.add(deviceInfoMesgListener!!)
+    fun addListener(deviceInfoMesgListener: DeviceInfoMesgListener) {
+        deviceInfoMesgListeners.add(deviceInfoMesgListener)
     }
 
-    fun removeListener(deviceInfoMesgListener: DeviceInfoMesgListener?) {
+    fun removeListener(deviceInfoMesgListener: DeviceInfoMesgListener) {
         deviceInfoMesgListeners.remove(deviceInfoMesgListener)
     }
 
-    fun addListener(deviceAuxBatteryInfoMesgListener: DeviceAuxBatteryInfoMesgListener?) {
-        deviceAuxBatteryInfoMesgListeners.add(deviceAuxBatteryInfoMesgListener!!)
+    fun addListener(deviceAuxBatteryInfoMesgListener: DeviceAuxBatteryInfoMesgListener) {
+        deviceAuxBatteryInfoMesgListeners.add(deviceAuxBatteryInfoMesgListener)
     }
 
-    fun removeListener(deviceAuxBatteryInfoMesgListener: DeviceAuxBatteryInfoMesgListener?) {
+    fun removeListener(deviceAuxBatteryInfoMesgListener: DeviceAuxBatteryInfoMesgListener) {
         deviceAuxBatteryInfoMesgListeners.remove(deviceAuxBatteryInfoMesgListener)
     }
 
-    fun addListener(trainingFileMesgListener: TrainingFileMesgListener?) {
-        trainingFileMesgListeners.add(trainingFileMesgListener!!)
+    fun addListener(trainingFileMesgListener: TrainingFileMesgListener) {
+        trainingFileMesgListeners.add(trainingFileMesgListener)
     }
 
-    fun removeListener(trainingFileMesgListener: TrainingFileMesgListener?) {
+    fun removeListener(trainingFileMesgListener: TrainingFileMesgListener) {
         trainingFileMesgListeners.remove(trainingFileMesgListener)
     }
 
-    fun addListener(weatherConditionsMesgListener: WeatherConditionsMesgListener?) {
-        weatherConditionsMesgListeners.add(weatherConditionsMesgListener!!)
+    fun addListener(weatherConditionsMesgListener: WeatherConditionsMesgListener) {
+        weatherConditionsMesgListeners.add(weatherConditionsMesgListener)
     }
 
-    fun removeListener(weatherConditionsMesgListener: WeatherConditionsMesgListener?) {
+    fun removeListener(weatherConditionsMesgListener: WeatherConditionsMesgListener) {
         weatherConditionsMesgListeners.remove(weatherConditionsMesgListener)
     }
 
-    fun addListener(weatherAlertMesgListener: WeatherAlertMesgListener?) {
-        weatherAlertMesgListeners.add(weatherAlertMesgListener!!)
+    fun addListener(weatherAlertMesgListener: WeatherAlertMesgListener) {
+        weatherAlertMesgListeners.add(weatherAlertMesgListener)
     }
 
-    fun removeListener(weatherAlertMesgListener: WeatherAlertMesgListener?) {
+    fun removeListener(weatherAlertMesgListener: WeatherAlertMesgListener) {
         weatherAlertMesgListeners.remove(weatherAlertMesgListener)
     }
 
-    fun addListener(gpsMetadataMesgListener: GpsMetadataMesgListener?) {
-        gpsMetadataMesgListeners.add(gpsMetadataMesgListener!!)
+    fun addListener(gpsMetadataMesgListener: GpsMetadataMesgListener) {
+        gpsMetadataMesgListeners.add(gpsMetadataMesgListener)
     }
 
-    fun removeListener(gpsMetadataMesgListener: GpsMetadataMesgListener?) {
+    fun removeListener(gpsMetadataMesgListener: GpsMetadataMesgListener) {
         gpsMetadataMesgListeners.remove(gpsMetadataMesgListener)
     }
 
-    fun addListener(cameraEventMesgListener: CameraEventMesgListener?) {
-        cameraEventMesgListeners.add(cameraEventMesgListener!!)
+    fun addListener(cameraEventMesgListener: CameraEventMesgListener) {
+        cameraEventMesgListeners.add(cameraEventMesgListener)
     }
 
-    fun removeListener(cameraEventMesgListener: CameraEventMesgListener?) {
+    fun removeListener(cameraEventMesgListener: CameraEventMesgListener) {
         cameraEventMesgListeners.remove(cameraEventMesgListener)
     }
 
-    fun addListener(gyroscopeDataMesgListener: GyroscopeDataMesgListener?) {
-        gyroscopeDataMesgListeners.add(gyroscopeDataMesgListener!!)
+    fun addListener(gyroscopeDataMesgListener: GyroscopeDataMesgListener) {
+        gyroscopeDataMesgListeners.add(gyroscopeDataMesgListener)
     }
 
-    fun removeListener(gyroscopeDataMesgListener: GyroscopeDataMesgListener?) {
+    fun removeListener(gyroscopeDataMesgListener: GyroscopeDataMesgListener) {
         gyroscopeDataMesgListeners.remove(gyroscopeDataMesgListener)
     }
 
-    fun addListener(accelerometerDataMesgListener: AccelerometerDataMesgListener?) {
-        accelerometerDataMesgListeners.add(accelerometerDataMesgListener!!)
+    fun addListener(accelerometerDataMesgListener: AccelerometerDataMesgListener) {
+        accelerometerDataMesgListeners.add(accelerometerDataMesgListener)
     }
 
-    fun removeListener(accelerometerDataMesgListener: AccelerometerDataMesgListener?) {
+    fun removeListener(accelerometerDataMesgListener: AccelerometerDataMesgListener) {
         accelerometerDataMesgListeners.remove(accelerometerDataMesgListener)
     }
 
-    fun addListener(magnetometerDataMesgListener: MagnetometerDataMesgListener?) {
-        magnetometerDataMesgListeners.add(magnetometerDataMesgListener!!)
+    fun addListener(magnetometerDataMesgListener: MagnetometerDataMesgListener) {
+        magnetometerDataMesgListeners.add(magnetometerDataMesgListener)
     }
 
-    fun removeListener(magnetometerDataMesgListener: MagnetometerDataMesgListener?) {
+    fun removeListener(magnetometerDataMesgListener: MagnetometerDataMesgListener) {
         magnetometerDataMesgListeners.remove(magnetometerDataMesgListener)
     }
 
-    fun addListener(barometerDataMesgListener: BarometerDataMesgListener?) {
-        barometerDataMesgListeners.add(barometerDataMesgListener!!)
+    fun addListener(barometerDataMesgListener: BarometerDataMesgListener) {
+        barometerDataMesgListeners.add(barometerDataMesgListener)
     }
 
-    fun removeListener(barometerDataMesgListener: BarometerDataMesgListener?) {
+    fun removeListener(barometerDataMesgListener: BarometerDataMesgListener) {
         barometerDataMesgListeners.remove(barometerDataMesgListener)
     }
 
-    fun addListener(threeDSensorCalibrationMesgListener: ThreeDSensorCalibrationMesgListener?) {
-        threeDSensorCalibrationMesgListeners.add(threeDSensorCalibrationMesgListener!!)
+    fun addListener(threeDSensorCalibrationMesgListener: ThreeDSensorCalibrationMesgListener) {
+        threeDSensorCalibrationMesgListeners.add(threeDSensorCalibrationMesgListener)
     }
 
-    fun removeListener(threeDSensorCalibrationMesgListener: ThreeDSensorCalibrationMesgListener?) {
+    fun removeListener(threeDSensorCalibrationMesgListener: ThreeDSensorCalibrationMesgListener) {
         threeDSensorCalibrationMesgListeners.remove(threeDSensorCalibrationMesgListener)
     }
 
-    fun addListener(oneDSensorCalibrationMesgListener: OneDSensorCalibrationMesgListener?) {
-        oneDSensorCalibrationMesgListeners.add(oneDSensorCalibrationMesgListener!!)
+    fun addListener(oneDSensorCalibrationMesgListener: OneDSensorCalibrationMesgListener) {
+        oneDSensorCalibrationMesgListeners.add(oneDSensorCalibrationMesgListener)
     }
 
-    fun removeListener(oneDSensorCalibrationMesgListener: OneDSensorCalibrationMesgListener?) {
+    fun removeListener(oneDSensorCalibrationMesgListener: OneDSensorCalibrationMesgListener) {
         oneDSensorCalibrationMesgListeners.remove(oneDSensorCalibrationMesgListener)
     }
 
-    fun addListener(videoFrameMesgListener: VideoFrameMesgListener?) {
-        videoFrameMesgListeners.add(videoFrameMesgListener!!)
+    fun addListener(videoFrameMesgListener: VideoFrameMesgListener) {
+        videoFrameMesgListeners.add(videoFrameMesgListener)
     }
 
-    fun removeListener(videoFrameMesgListener: VideoFrameMesgListener?) {
+    fun removeListener(videoFrameMesgListener: VideoFrameMesgListener) {
         videoFrameMesgListeners.remove(videoFrameMesgListener)
     }
 
-    fun addListener(obdiiDataMesgListener: ObdiiDataMesgListener?) {
-        obdiiDataMesgListeners.add(obdiiDataMesgListener!!)
+    fun addListener(obdiiDataMesgListener: ObdiiDataMesgListener) {
+        obdiiDataMesgListeners.add(obdiiDataMesgListener)
     }
 
-    fun removeListener(obdiiDataMesgListener: ObdiiDataMesgListener?) {
+    fun removeListener(obdiiDataMesgListener: ObdiiDataMesgListener) {
         obdiiDataMesgListeners.remove(obdiiDataMesgListener)
     }
 
-    fun addListener(nmeaSentenceMesgListener: NmeaSentenceMesgListener?) {
-        nmeaSentenceMesgListeners.add(nmeaSentenceMesgListener!!)
+    fun addListener(nmeaSentenceMesgListener: NmeaSentenceMesgListener) {
+        nmeaSentenceMesgListeners.add(nmeaSentenceMesgListener)
     }
 
-    fun removeListener(nmeaSentenceMesgListener: NmeaSentenceMesgListener?) {
+    fun removeListener(nmeaSentenceMesgListener: NmeaSentenceMesgListener) {
         nmeaSentenceMesgListeners.remove(nmeaSentenceMesgListener)
     }
 
-    fun addListener(aviationAttitudeMesgListener: AviationAttitudeMesgListener?) {
-        aviationAttitudeMesgListeners.add(aviationAttitudeMesgListener!!)
+    fun addListener(aviationAttitudeMesgListener: AviationAttitudeMesgListener) {
+        aviationAttitudeMesgListeners.add(aviationAttitudeMesgListener)
     }
 
-    fun removeListener(aviationAttitudeMesgListener: AviationAttitudeMesgListener?) {
+    fun removeListener(aviationAttitudeMesgListener: AviationAttitudeMesgListener) {
         aviationAttitudeMesgListeners.remove(aviationAttitudeMesgListener)
     }
 
-    fun addListener(videoMesgListener: VideoMesgListener?) {
-        videoMesgListeners.add(videoMesgListener!!)
+    fun addListener(videoMesgListener: VideoMesgListener) {
+        videoMesgListeners.add(videoMesgListener)
     }
 
-    fun removeListener(videoMesgListener: VideoMesgListener?) {
+    fun removeListener(videoMesgListener: VideoMesgListener) {
         videoMesgListeners.remove(videoMesgListener)
     }
 
-    fun addListener(videoTitleMesgListener: VideoTitleMesgListener?) {
-        videoTitleMesgListeners.add(videoTitleMesgListener!!)
+    fun addListener(videoTitleMesgListener: VideoTitleMesgListener) {
+        videoTitleMesgListeners.add(videoTitleMesgListener)
     }
 
-    fun removeListener(videoTitleMesgListener: VideoTitleMesgListener?) {
+    fun removeListener(videoTitleMesgListener: VideoTitleMesgListener) {
         videoTitleMesgListeners.remove(videoTitleMesgListener)
     }
 
-    fun addListener(videoDescriptionMesgListener: VideoDescriptionMesgListener?) {
-        videoDescriptionMesgListeners.add(videoDescriptionMesgListener!!)
+    fun addListener(videoDescriptionMesgListener: VideoDescriptionMesgListener) {
+        videoDescriptionMesgListeners.add(videoDescriptionMesgListener)
     }
 
-    fun removeListener(videoDescriptionMesgListener: VideoDescriptionMesgListener?) {
+    fun removeListener(videoDescriptionMesgListener: VideoDescriptionMesgListener) {
         videoDescriptionMesgListeners.remove(videoDescriptionMesgListener)
     }
 
-    fun addListener(videoClipMesgListener: VideoClipMesgListener?) {
-        videoClipMesgListeners.add(videoClipMesgListener!!)
+    fun addListener(videoClipMesgListener: VideoClipMesgListener) {
+        videoClipMesgListeners.add(videoClipMesgListener)
     }
 
-    fun removeListener(videoClipMesgListener: VideoClipMesgListener?) {
+    fun removeListener(videoClipMesgListener: VideoClipMesgListener) {
         videoClipMesgListeners.remove(videoClipMesgListener)
     }
 
-    fun addListener(setMesgListener: SetMesgListener?) {
-        setMesgListeners.add(setMesgListener!!)
+    fun addListener(setMesgListener: SetMesgListener) {
+        setMesgListeners.add(setMesgListener)
     }
 
-    fun removeListener(setMesgListener: SetMesgListener?) {
+    fun removeListener(setMesgListener: SetMesgListener) {
         setMesgListeners.remove(setMesgListener)
     }
 
-    fun addListener(jumpMesgListener: JumpMesgListener?) {
-        jumpMesgListeners.add(jumpMesgListener!!)
+    fun addListener(jumpMesgListener: JumpMesgListener) {
+        jumpMesgListeners.add(jumpMesgListener)
     }
 
-    fun removeListener(jumpMesgListener: JumpMesgListener?) {
+    fun removeListener(jumpMesgListener: JumpMesgListener) {
         jumpMesgListeners.remove(jumpMesgListener)
     }
 
-    fun addListener(splitMesgListener: SplitMesgListener?) {
-        splitMesgListeners.add(splitMesgListener!!)
+    fun addListener(splitMesgListener: SplitMesgListener) {
+        splitMesgListeners.add(splitMesgListener)
     }
 
-    fun removeListener(splitMesgListener: SplitMesgListener?) {
+    fun removeListener(splitMesgListener: SplitMesgListener) {
         splitMesgListeners.remove(splitMesgListener)
     }
 
-    fun addListener(splitSummaryMesgListener: SplitSummaryMesgListener?) {
-        splitSummaryMesgListeners.add(splitSummaryMesgListener!!)
+    fun addListener(splitSummaryMesgListener: SplitSummaryMesgListener) {
+        splitSummaryMesgListeners.add(splitSummaryMesgListener)
     }
 
-    fun removeListener(splitSummaryMesgListener: SplitSummaryMesgListener?) {
+    fun removeListener(splitSummaryMesgListener: SplitSummaryMesgListener) {
         splitSummaryMesgListeners.remove(splitSummaryMesgListener)
     }
 
-    fun addListener(climbProMesgListener: ClimbProMesgListener?) {
-        climbProMesgListeners.add(climbProMesgListener!!)
+    fun addListener(climbProMesgListener: ClimbProMesgListener) {
+        climbProMesgListeners.add(climbProMesgListener)
     }
 
-    fun removeListener(climbProMesgListener: ClimbProMesgListener?) {
+    fun removeListener(climbProMesgListener: ClimbProMesgListener) {
         climbProMesgListeners.remove(climbProMesgListener)
     }
 
-    fun addListener(fieldDescriptionMesgListener: FieldDescriptionMesgListener?) {
-        fieldDescriptionMesgListeners.add(fieldDescriptionMesgListener!!)
+    fun addListener(fieldDescriptionMesgListener: FieldDescriptionMesgListener) {
+        fieldDescriptionMesgListeners.add(fieldDescriptionMesgListener)
     }
 
-    fun removeListener(fieldDescriptionMesgListener: FieldDescriptionMesgListener?) {
+    fun removeListener(fieldDescriptionMesgListener: FieldDescriptionMesgListener) {
         fieldDescriptionMesgListeners.remove(fieldDescriptionMesgListener)
     }
 
-    fun addListener(developerDataIdMesgListener: DeveloperDataIdMesgListener?) {
-        developerDataIdMesgListeners.add(developerDataIdMesgListener!!)
+    fun addListener(developerDataIdMesgListener: DeveloperDataIdMesgListener) {
+        developerDataIdMesgListeners.add(developerDataIdMesgListener)
     }
 
-    fun removeListener(developerDataIdMesgListener: DeveloperDataIdMesgListener?) {
+    fun removeListener(developerDataIdMesgListener: DeveloperDataIdMesgListener) {
         developerDataIdMesgListeners.remove(developerDataIdMesgListener)
     }
 
-    fun addListener(courseMesgListener: CourseMesgListener?) {
-        courseMesgListeners.add(courseMesgListener!!)
+    fun addListener(courseMesgListener: CourseMesgListener) {
+        courseMesgListeners.add(courseMesgListener)
     }
 
-    fun removeListener(courseMesgListener: CourseMesgListener?) {
+    fun removeListener(courseMesgListener: CourseMesgListener) {
         courseMesgListeners.remove(courseMesgListener)
     }
 
-    fun addListener(coursePointMesgListener: CoursePointMesgListener?) {
-        coursePointMesgListeners.add(coursePointMesgListener!!)
+    fun addListener(coursePointMesgListener: CoursePointMesgListener) {
+        coursePointMesgListeners.add(coursePointMesgListener)
     }
 
-    fun removeListener(coursePointMesgListener: CoursePointMesgListener?) {
+    fun removeListener(coursePointMesgListener: CoursePointMesgListener) {
         coursePointMesgListeners.remove(coursePointMesgListener)
     }
 
-    fun addListener(segmentIdMesgListener: SegmentIdMesgListener?) {
-        segmentIdMesgListeners.add(segmentIdMesgListener!!)
+    fun addListener(segmentIdMesgListener: SegmentIdMesgListener) {
+        segmentIdMesgListeners.add(segmentIdMesgListener)
     }
 
-    fun removeListener(segmentIdMesgListener: SegmentIdMesgListener?) {
+    fun removeListener(segmentIdMesgListener: SegmentIdMesgListener) {
         segmentIdMesgListeners.remove(segmentIdMesgListener)
     }
 
-    fun addListener(segmentLeaderboardEntryMesgListener: SegmentLeaderboardEntryMesgListener?) {
-        segmentLeaderboardEntryMesgListeners.add(segmentLeaderboardEntryMesgListener!!)
+    fun addListener(segmentLeaderboardEntryMesgListener: SegmentLeaderboardEntryMesgListener) {
+        segmentLeaderboardEntryMesgListeners.add(segmentLeaderboardEntryMesgListener)
     }
 
-    fun removeListener(segmentLeaderboardEntryMesgListener: SegmentLeaderboardEntryMesgListener?) {
+    fun removeListener(segmentLeaderboardEntryMesgListener: SegmentLeaderboardEntryMesgListener) {
         segmentLeaderboardEntryMesgListeners.remove(segmentLeaderboardEntryMesgListener)
     }
 
-    fun addListener(segmentPointMesgListener: SegmentPointMesgListener?) {
-        segmentPointMesgListeners.add(segmentPointMesgListener!!)
+    fun addListener(segmentPointMesgListener: SegmentPointMesgListener) {
+        segmentPointMesgListeners.add(segmentPointMesgListener)
     }
 
-    fun removeListener(segmentPointMesgListener: SegmentPointMesgListener?) {
+    fun removeListener(segmentPointMesgListener: SegmentPointMesgListener) {
         segmentPointMesgListeners.remove(segmentPointMesgListener)
     }
 
-    fun addListener(segmentLapMesgListener: SegmentLapMesgListener?) {
-        segmentLapMesgListeners.add(segmentLapMesgListener!!)
+    fun addListener(segmentLapMesgListener: SegmentLapMesgListener) {
+        segmentLapMesgListeners.add(segmentLapMesgListener)
     }
 
-    fun removeListener(segmentLapMesgListener: SegmentLapMesgListener?) {
+    fun removeListener(segmentLapMesgListener: SegmentLapMesgListener) {
         segmentLapMesgListeners.remove(segmentLapMesgListener)
     }
 
-    fun addListener(segmentFileMesgListener: SegmentFileMesgListener?) {
-        segmentFileMesgListeners.add(segmentFileMesgListener!!)
+    fun addListener(segmentFileMesgListener: SegmentFileMesgListener) {
+        segmentFileMesgListeners.add(segmentFileMesgListener)
     }
 
-    fun removeListener(segmentFileMesgListener: SegmentFileMesgListener?) {
+    fun removeListener(segmentFileMesgListener: SegmentFileMesgListener) {
         segmentFileMesgListeners.remove(segmentFileMesgListener)
     }
 
-    fun addListener(workoutMesgListener: WorkoutMesgListener?) {
-        workoutMesgListeners.add(workoutMesgListener!!)
+    fun addListener(workoutMesgListener: WorkoutMesgListener) {
+        workoutMesgListeners.add(workoutMesgListener)
     }
 
-    fun removeListener(workoutMesgListener: WorkoutMesgListener?) {
+    fun removeListener(workoutMesgListener: WorkoutMesgListener) {
         workoutMesgListeners.remove(workoutMesgListener)
     }
 
-    fun addListener(workoutSessionMesgListener: WorkoutSessionMesgListener?) {
-        workoutSessionMesgListeners.add(workoutSessionMesgListener!!)
+    fun addListener(workoutSessionMesgListener: WorkoutSessionMesgListener) {
+        workoutSessionMesgListeners.add(workoutSessionMesgListener)
     }
 
-    fun removeListener(workoutSessionMesgListener: WorkoutSessionMesgListener?) {
+    fun removeListener(workoutSessionMesgListener: WorkoutSessionMesgListener) {
         workoutSessionMesgListeners.remove(workoutSessionMesgListener)
     }
 
-    fun addListener(workoutStepMesgListener: WorkoutStepMesgListener?) {
-        workoutStepMesgListeners.add(workoutStepMesgListener!!)
+    fun addListener(workoutStepMesgListener: WorkoutStepMesgListener) {
+        workoutStepMesgListeners.add(workoutStepMesgListener)
     }
 
-    fun removeListener(workoutStepMesgListener: WorkoutStepMesgListener?) {
+    fun removeListener(workoutStepMesgListener: WorkoutStepMesgListener) {
         workoutStepMesgListeners.remove(workoutStepMesgListener)
     }
 
-    fun addListener(exerciseTitleMesgListener: ExerciseTitleMesgListener?) {
-        exerciseTitleMesgListeners.add(exerciseTitleMesgListener!!)
+    fun addListener(exerciseTitleMesgListener: ExerciseTitleMesgListener) {
+        exerciseTitleMesgListeners.add(exerciseTitleMesgListener)
     }
 
-    fun removeListener(exerciseTitleMesgListener: ExerciseTitleMesgListener?) {
+    fun removeListener(exerciseTitleMesgListener: ExerciseTitleMesgListener) {
         exerciseTitleMesgListeners.remove(exerciseTitleMesgListener)
     }
 
-    fun addListener(scheduleMesgListener: ScheduleMesgListener?) {
-        scheduleMesgListeners.add(scheduleMesgListener!!)
+    fun addListener(scheduleMesgListener: ScheduleMesgListener) {
+        scheduleMesgListeners.add(scheduleMesgListener)
     }
 
-    fun removeListener(scheduleMesgListener: ScheduleMesgListener?) {
+    fun removeListener(scheduleMesgListener: ScheduleMesgListener) {
         scheduleMesgListeners.remove(scheduleMesgListener)
     }
 
-    fun addListener(totalsMesgListener: TotalsMesgListener?) {
-        totalsMesgListeners.add(totalsMesgListener!!)
+    fun addListener(totalsMesgListener: TotalsMesgListener) {
+        totalsMesgListeners.add(totalsMesgListener)
     }
 
-    fun removeListener(totalsMesgListener: TotalsMesgListener?) {
+    fun removeListener(totalsMesgListener: TotalsMesgListener) {
         totalsMesgListeners.remove(totalsMesgListener)
     }
 
-    fun addListener(weightScaleMesgListener: WeightScaleMesgListener?) {
-        weightScaleMesgListeners.add(weightScaleMesgListener!!)
+    fun addListener(weightScaleMesgListener: WeightScaleMesgListener) {
+        weightScaleMesgListeners.add(weightScaleMesgListener)
     }
 
-    fun removeListener(weightScaleMesgListener: WeightScaleMesgListener?) {
+    fun removeListener(weightScaleMesgListener: WeightScaleMesgListener) {
         weightScaleMesgListeners.remove(weightScaleMesgListener)
     }
 
-    fun addListener(bloodPressureMesgListener: BloodPressureMesgListener?) {
-        bloodPressureMesgListeners.add(bloodPressureMesgListener!!)
+    fun addListener(bloodPressureMesgListener: BloodPressureMesgListener) {
+        bloodPressureMesgListeners.add(bloodPressureMesgListener)
     }
 
-    fun removeListener(bloodPressureMesgListener: BloodPressureMesgListener?) {
+    fun removeListener(bloodPressureMesgListener: BloodPressureMesgListener) {
         bloodPressureMesgListeners.remove(bloodPressureMesgListener)
     }
 
-    fun addListener(monitoringInfoMesgListener: MonitoringInfoMesgListener?) {
-        monitoringInfoMesgListeners.add(monitoringInfoMesgListener!!)
+    fun addListener(monitoringInfoMesgListener: MonitoringInfoMesgListener) {
+        monitoringInfoMesgListeners.add(monitoringInfoMesgListener)
     }
 
-    fun removeListener(monitoringInfoMesgListener: MonitoringInfoMesgListener?) {
+    fun removeListener(monitoringInfoMesgListener: MonitoringInfoMesgListener) {
         monitoringInfoMesgListeners.remove(monitoringInfoMesgListener)
     }
 
-    fun addListener(monitoringMesgListener: MonitoringMesgListener?) {
-        monitoringMesgListeners.add(monitoringMesgListener!!)
+    fun addListener(monitoringMesgListener: MonitoringMesgListener) {
+        monitoringMesgListeners.add(monitoringMesgListener)
     }
 
-    fun removeListener(monitoringMesgListener: MonitoringMesgListener?) {
+    fun removeListener(monitoringMesgListener: MonitoringMesgListener) {
         monitoringMesgListeners.remove(monitoringMesgListener)
     }
 
-    fun addListener(monitoringHrDataMesgListener: MonitoringHrDataMesgListener?) {
-        monitoringHrDataMesgListeners.add(monitoringHrDataMesgListener!!)
+    fun addListener(monitoringHrDataMesgListener: MonitoringHrDataMesgListener) {
+        monitoringHrDataMesgListeners.add(monitoringHrDataMesgListener)
     }
 
-    fun removeListener(monitoringHrDataMesgListener: MonitoringHrDataMesgListener?) {
+    fun removeListener(monitoringHrDataMesgListener: MonitoringHrDataMesgListener) {
         monitoringHrDataMesgListeners.remove(monitoringHrDataMesgListener)
     }
 
-    fun addListener(spo2DataMesgListener: Spo2DataMesgListener?) {
-        spo2DataMesgListeners.add(spo2DataMesgListener!!)
+    fun addListener(spo2DataMesgListener: Spo2DataMesgListener) {
+        spo2DataMesgListeners.add(spo2DataMesgListener)
     }
 
-    fun removeListener(spo2DataMesgListener: Spo2DataMesgListener?) {
+    fun removeListener(spo2DataMesgListener: Spo2DataMesgListener) {
         spo2DataMesgListeners.remove(spo2DataMesgListener)
     }
 
-    fun addListener(hrMesgListener: HrMesgListener?) {
-        hrMesgListeners.add(hrMesgListener!!)
+    fun addListener(hrMesgListener: HrMesgListener) {
+        hrMesgListeners.add(hrMesgListener)
     }
 
-    fun removeListener(hrMesgListener: HrMesgListener?) {
+    fun removeListener(hrMesgListener: HrMesgListener) {
         hrMesgListeners.remove(hrMesgListener)
     }
 
-    fun addListener(stressLevelMesgListener: StressLevelMesgListener?) {
-        stressLevelMesgListeners.add(stressLevelMesgListener!!)
+    fun addListener(stressLevelMesgListener: StressLevelMesgListener) {
+        stressLevelMesgListeners.add(stressLevelMesgListener)
     }
 
-    fun removeListener(stressLevelMesgListener: StressLevelMesgListener?) {
+    fun removeListener(stressLevelMesgListener: StressLevelMesgListener) {
         stressLevelMesgListeners.remove(stressLevelMesgListener)
     }
 
-    fun addListener(maxMetDataMesgListener: MaxMetDataMesgListener?) {
-        maxMetDataMesgListeners.add(maxMetDataMesgListener!!)
+    fun addListener(maxMetDataMesgListener: MaxMetDataMesgListener) {
+        maxMetDataMesgListeners.add(maxMetDataMesgListener)
     }
 
-    fun removeListener(maxMetDataMesgListener: MaxMetDataMesgListener?) {
+    fun removeListener(maxMetDataMesgListener: MaxMetDataMesgListener) {
         maxMetDataMesgListeners.remove(maxMetDataMesgListener)
     }
 
-    fun addListener(hsaBodyBatteryDataMesgListener: HsaBodyBatteryDataMesgListener?) {
-        hsaBodyBatteryDataMesgListeners.add(hsaBodyBatteryDataMesgListener!!)
+    fun addListener(hsaBodyBatteryDataMesgListener: HsaBodyBatteryDataMesgListener) {
+        hsaBodyBatteryDataMesgListeners.add(hsaBodyBatteryDataMesgListener)
     }
 
-    fun removeListener(hsaBodyBatteryDataMesgListener: HsaBodyBatteryDataMesgListener?) {
+    fun removeListener(hsaBodyBatteryDataMesgListener: HsaBodyBatteryDataMesgListener) {
         hsaBodyBatteryDataMesgListeners.remove(hsaBodyBatteryDataMesgListener)
     }
 
-    fun addListener(hsaEventMesgListener: HsaEventMesgListener?) {
-        hsaEventMesgListeners.add(hsaEventMesgListener!!)
+    fun addListener(hsaEventMesgListener: HsaEventMesgListener) {
+        hsaEventMesgListeners.add(hsaEventMesgListener)
     }
 
-    fun removeListener(hsaEventMesgListener: HsaEventMesgListener?) {
+    fun removeListener(hsaEventMesgListener: HsaEventMesgListener) {
         hsaEventMesgListeners.remove(hsaEventMesgListener)
     }
 
-    fun addListener(hsaAccelerometerDataMesgListener: HsaAccelerometerDataMesgListener?) {
-        hsaAccelerometerDataMesgListeners.add(hsaAccelerometerDataMesgListener!!)
+    fun addListener(hsaAccelerometerDataMesgListener: HsaAccelerometerDataMesgListener) {
+        hsaAccelerometerDataMesgListeners.add(hsaAccelerometerDataMesgListener)
     }
 
-    fun removeListener(hsaAccelerometerDataMesgListener: HsaAccelerometerDataMesgListener?) {
+    fun removeListener(hsaAccelerometerDataMesgListener: HsaAccelerometerDataMesgListener) {
         hsaAccelerometerDataMesgListeners.remove(hsaAccelerometerDataMesgListener)
     }
 
-    fun addListener(hsaGyroscopeDataMesgListener: HsaGyroscopeDataMesgListener?) {
-        hsaGyroscopeDataMesgListeners.add(hsaGyroscopeDataMesgListener!!)
+    fun addListener(hsaGyroscopeDataMesgListener: HsaGyroscopeDataMesgListener) {
+        hsaGyroscopeDataMesgListeners.add(hsaGyroscopeDataMesgListener)
     }
 
-    fun removeListener(hsaGyroscopeDataMesgListener: HsaGyroscopeDataMesgListener?) {
+    fun removeListener(hsaGyroscopeDataMesgListener: HsaGyroscopeDataMesgListener) {
         hsaGyroscopeDataMesgListeners.remove(hsaGyroscopeDataMesgListener)
     }
 
-    fun addListener(hsaStepDataMesgListener: HsaStepDataMesgListener?) {
-        hsaStepDataMesgListeners.add(hsaStepDataMesgListener!!)
+    fun addListener(hsaStepDataMesgListener: HsaStepDataMesgListener) {
+        hsaStepDataMesgListeners.add(hsaStepDataMesgListener)
     }
 
-    fun removeListener(hsaStepDataMesgListener: HsaStepDataMesgListener?) {
+    fun removeListener(hsaStepDataMesgListener: HsaStepDataMesgListener) {
         hsaStepDataMesgListeners.remove(hsaStepDataMesgListener)
     }
 
-    fun addListener(hsaSpo2DataMesgListener: HsaSpo2DataMesgListener?) {
-        hsaSpo2DataMesgListeners.add(hsaSpo2DataMesgListener!!)
+    fun addListener(hsaSpo2DataMesgListener: HsaSpo2DataMesgListener) {
+        hsaSpo2DataMesgListeners.add(hsaSpo2DataMesgListener)
     }
 
-    fun removeListener(hsaSpo2DataMesgListener: HsaSpo2DataMesgListener?) {
+    fun removeListener(hsaSpo2DataMesgListener: HsaSpo2DataMesgListener) {
         hsaSpo2DataMesgListeners.remove(hsaSpo2DataMesgListener)
     }
 
-    fun addListener(hsaStressDataMesgListener: HsaStressDataMesgListener?) {
-        hsaStressDataMesgListeners.add(hsaStressDataMesgListener!!)
+    fun addListener(hsaStressDataMesgListener: HsaStressDataMesgListener) {
+        hsaStressDataMesgListeners.add(hsaStressDataMesgListener)
     }
 
-    fun removeListener(hsaStressDataMesgListener: HsaStressDataMesgListener?) {
+    fun removeListener(hsaStressDataMesgListener: HsaStressDataMesgListener) {
         hsaStressDataMesgListeners.remove(hsaStressDataMesgListener)
     }
 
-    fun addListener(hsaRespirationDataMesgListener: HsaRespirationDataMesgListener?) {
-        hsaRespirationDataMesgListeners.add(hsaRespirationDataMesgListener!!)
+    fun addListener(hsaRespirationDataMesgListener: HsaRespirationDataMesgListener) {
+        hsaRespirationDataMesgListeners.add(hsaRespirationDataMesgListener)
     }
 
-    fun removeListener(hsaRespirationDataMesgListener: HsaRespirationDataMesgListener?) {
+    fun removeListener(hsaRespirationDataMesgListener: HsaRespirationDataMesgListener) {
         hsaRespirationDataMesgListeners.remove(hsaRespirationDataMesgListener)
     }
 
-    fun addListener(hsaHeartRateDataMesgListener: HsaHeartRateDataMesgListener?) {
-        hsaHeartRateDataMesgListeners.add(hsaHeartRateDataMesgListener!!)
+    fun addListener(hsaHeartRateDataMesgListener: HsaHeartRateDataMesgListener) {
+        hsaHeartRateDataMesgListeners.add(hsaHeartRateDataMesgListener)
     }
 
-    fun removeListener(hsaHeartRateDataMesgListener: HsaHeartRateDataMesgListener?) {
+    fun removeListener(hsaHeartRateDataMesgListener: HsaHeartRateDataMesgListener) {
         hsaHeartRateDataMesgListeners.remove(hsaHeartRateDataMesgListener)
     }
 
-    fun addListener(hsaConfigurationDataMesgListener: HsaConfigurationDataMesgListener?) {
-        hsaConfigurationDataMesgListeners.add(hsaConfigurationDataMesgListener!!)
+    fun addListener(hsaConfigurationDataMesgListener: HsaConfigurationDataMesgListener) {
+        hsaConfigurationDataMesgListeners.add(hsaConfigurationDataMesgListener)
     }
 
-    fun removeListener(hsaConfigurationDataMesgListener: HsaConfigurationDataMesgListener?) {
+    fun removeListener(hsaConfigurationDataMesgListener: HsaConfigurationDataMesgListener) {
         hsaConfigurationDataMesgListeners.remove(hsaConfigurationDataMesgListener)
     }
 
-    fun addListener(hsaWristTemperatureDataMesgListener: HsaWristTemperatureDataMesgListener?) {
-        hsaWristTemperatureDataMesgListeners.add(hsaWristTemperatureDataMesgListener!!)
+    fun addListener(hsaWristTemperatureDataMesgListener: HsaWristTemperatureDataMesgListener) {
+        hsaWristTemperatureDataMesgListeners.add(hsaWristTemperatureDataMesgListener)
     }
 
-    fun removeListener(hsaWristTemperatureDataMesgListener: HsaWristTemperatureDataMesgListener?) {
+    fun removeListener(hsaWristTemperatureDataMesgListener: HsaWristTemperatureDataMesgListener) {
         hsaWristTemperatureDataMesgListeners.remove(hsaWristTemperatureDataMesgListener)
     }
 
-    fun addListener(memoGlobMesgListener: MemoGlobMesgListener?) {
-        memoGlobMesgListeners.add(memoGlobMesgListener!!)
+    fun addListener(memoGlobMesgListener: MemoGlobMesgListener) {
+        memoGlobMesgListeners.add(memoGlobMesgListener)
     }
 
-    fun removeListener(memoGlobMesgListener: MemoGlobMesgListener?) {
+    fun removeListener(memoGlobMesgListener: MemoGlobMesgListener) {
         memoGlobMesgListeners.remove(memoGlobMesgListener)
     }
 
-    fun addListener(sleepLevelMesgListener: SleepLevelMesgListener?) {
-        sleepLevelMesgListeners.add(sleepLevelMesgListener!!)
+    fun addListener(sleepLevelMesgListener: SleepLevelMesgListener) {
+        sleepLevelMesgListeners.add(sleepLevelMesgListener)
     }
 
-    fun removeListener(sleepLevelMesgListener: SleepLevelMesgListener?) {
+    fun removeListener(sleepLevelMesgListener: SleepLevelMesgListener) {
         sleepLevelMesgListeners.remove(sleepLevelMesgListener)
     }
 
-    fun addListener(antChannelIdMesgListener: AntChannelIdMesgListener?) {
-        antChannelIdMesgListeners.add(antChannelIdMesgListener!!)
+    fun addListener(antChannelIdMesgListener: AntChannelIdMesgListener) {
+        antChannelIdMesgListeners.add(antChannelIdMesgListener)
     }
 
-    fun removeListener(antChannelIdMesgListener: AntChannelIdMesgListener?) {
+    fun removeListener(antChannelIdMesgListener: AntChannelIdMesgListener) {
         antChannelIdMesgListeners.remove(antChannelIdMesgListener)
     }
 
-    fun addListener(antRxMesgListener: AntRxMesgListener?) {
-        antRxMesgListeners.add(antRxMesgListener!!)
+    fun addListener(antRxMesgListener: AntRxMesgListener) {
+        antRxMesgListeners.add(antRxMesgListener)
     }
 
-    fun removeListener(antRxMesgListener: AntRxMesgListener?) {
+    fun removeListener(antRxMesgListener: AntRxMesgListener) {
         antRxMesgListeners.remove(antRxMesgListener)
     }
 
-    fun addListener(antTxMesgListener: AntTxMesgListener?) {
-        antTxMesgListeners.add(antTxMesgListener!!)
+    fun addListener(antTxMesgListener: AntTxMesgListener) {
+        antTxMesgListeners.add(antTxMesgListener)
     }
 
-    fun removeListener(antTxMesgListener: AntTxMesgListener?) {
+    fun removeListener(antTxMesgListener: AntTxMesgListener) {
         antTxMesgListeners.remove(antTxMesgListener)
     }
 
-    fun addListener(exdScreenConfigurationMesgListener: ExdScreenConfigurationMesgListener?) {
-        exdScreenConfigurationMesgListeners.add(exdScreenConfigurationMesgListener!!)
+    fun addListener(exdScreenConfigurationMesgListener: ExdScreenConfigurationMesgListener) {
+        exdScreenConfigurationMesgListeners.add(exdScreenConfigurationMesgListener)
     }
 
-    fun removeListener(exdScreenConfigurationMesgListener: ExdScreenConfigurationMesgListener?) {
+    fun removeListener(exdScreenConfigurationMesgListener: ExdScreenConfigurationMesgListener) {
         exdScreenConfigurationMesgListeners.remove(exdScreenConfigurationMesgListener)
     }
 
-    fun addListener(exdDataFieldConfigurationMesgListener: ExdDataFieldConfigurationMesgListener?) {
-        exdDataFieldConfigurationMesgListeners.add(exdDataFieldConfigurationMesgListener!!)
+    fun addListener(exdDataFieldConfigurationMesgListener: ExdDataFieldConfigurationMesgListener) {
+        exdDataFieldConfigurationMesgListeners.add(exdDataFieldConfigurationMesgListener)
     }
 
-    fun removeListener(exdDataFieldConfigurationMesgListener: ExdDataFieldConfigurationMesgListener?) {
+    fun removeListener(exdDataFieldConfigurationMesgListener: ExdDataFieldConfigurationMesgListener) {
         exdDataFieldConfigurationMesgListeners.remove(exdDataFieldConfigurationMesgListener)
     }
 
-    fun addListener(exdDataConceptConfigurationMesgListener: ExdDataConceptConfigurationMesgListener?) {
-        exdDataConceptConfigurationMesgListeners.add(exdDataConceptConfigurationMesgListener!!)
+    fun addListener(exdDataConceptConfigurationMesgListener: ExdDataConceptConfigurationMesgListener) {
+        exdDataConceptConfigurationMesgListeners.add(exdDataConceptConfigurationMesgListener)
     }
 
-    fun removeListener(exdDataConceptConfigurationMesgListener: ExdDataConceptConfigurationMesgListener?) {
+    fun removeListener(exdDataConceptConfigurationMesgListener: ExdDataConceptConfigurationMesgListener) {
         exdDataConceptConfigurationMesgListeners.remove(exdDataConceptConfigurationMesgListener)
     }
 
-    fun addListener(diveSummaryMesgListener: DiveSummaryMesgListener?) {
-        diveSummaryMesgListeners.add(diveSummaryMesgListener!!)
+    fun addListener(diveSummaryMesgListener: DiveSummaryMesgListener) {
+        diveSummaryMesgListeners.add(diveSummaryMesgListener)
     }
 
-    fun removeListener(diveSummaryMesgListener: DiveSummaryMesgListener?) {
+    fun removeListener(diveSummaryMesgListener: DiveSummaryMesgListener) {
         diveSummaryMesgListeners.remove(diveSummaryMesgListener)
     }
 
-    fun addListener(aadAccelFeaturesMesgListener: AadAccelFeaturesMesgListener?) {
-        aadAccelFeaturesMesgListeners.add(aadAccelFeaturesMesgListener!!)
+    fun addListener(aadAccelFeaturesMesgListener: AadAccelFeaturesMesgListener) {
+        aadAccelFeaturesMesgListeners.add(aadAccelFeaturesMesgListener)
     }
 
-    fun removeListener(aadAccelFeaturesMesgListener: AadAccelFeaturesMesgListener?) {
+    fun removeListener(aadAccelFeaturesMesgListener: AadAccelFeaturesMesgListener) {
         aadAccelFeaturesMesgListeners.remove(aadAccelFeaturesMesgListener)
     }
 
-    fun addListener(hrvMesgListener: HrvMesgListener?) {
-        hrvMesgListeners.add(hrvMesgListener!!)
+    fun addListener(hrvMesgListener: HrvMesgListener) {
+        hrvMesgListeners.add(hrvMesgListener)
     }
 
-    fun removeListener(hrvMesgListener: HrvMesgListener?) {
+    fun removeListener(hrvMesgListener: HrvMesgListener) {
         hrvMesgListeners.remove(hrvMesgListener)
     }
 
-    fun addListener(beatIntervalsMesgListener: BeatIntervalsMesgListener?) {
-        beatIntervalsMesgListeners.add(beatIntervalsMesgListener!!)
+    fun addListener(beatIntervalsMesgListener: BeatIntervalsMesgListener) {
+        beatIntervalsMesgListeners.add(beatIntervalsMesgListener)
     }
 
-    fun removeListener(beatIntervalsMesgListener: BeatIntervalsMesgListener?) {
+    fun removeListener(beatIntervalsMesgListener: BeatIntervalsMesgListener) {
         beatIntervalsMesgListeners.remove(beatIntervalsMesgListener)
     }
 
-    fun addListener(hrvStatusSummaryMesgListener: HrvStatusSummaryMesgListener?) {
-        hrvStatusSummaryMesgListeners.add(hrvStatusSummaryMesgListener!!)
+    fun addListener(hrvStatusSummaryMesgListener: HrvStatusSummaryMesgListener) {
+        hrvStatusSummaryMesgListeners.add(hrvStatusSummaryMesgListener)
     }
 
-    fun removeListener(hrvStatusSummaryMesgListener: HrvStatusSummaryMesgListener?) {
+    fun removeListener(hrvStatusSummaryMesgListener: HrvStatusSummaryMesgListener) {
         hrvStatusSummaryMesgListeners.remove(hrvStatusSummaryMesgListener)
     }
 
-    fun addListener(hrvValueMesgListener: HrvValueMesgListener?) {
-        hrvValueMesgListeners.add(hrvValueMesgListener!!)
+    fun addListener(hrvValueMesgListener: HrvValueMesgListener) {
+        hrvValueMesgListeners.add(hrvValueMesgListener)
     }
 
-    fun removeListener(hrvValueMesgListener: HrvValueMesgListener?) {
+    fun removeListener(hrvValueMesgListener: HrvValueMesgListener) {
         hrvValueMesgListeners.remove(hrvValueMesgListener)
     }
 
-    fun addListener(rawBbiMesgListener: RawBbiMesgListener?) {
-        rawBbiMesgListeners.add(rawBbiMesgListener!!)
+    fun addListener(rawBbiMesgListener: RawBbiMesgListener) {
+        rawBbiMesgListeners.add(rawBbiMesgListener)
     }
 
-    fun removeListener(rawBbiMesgListener: RawBbiMesgListener?) {
+    fun removeListener(rawBbiMesgListener: RawBbiMesgListener) {
         rawBbiMesgListeners.remove(rawBbiMesgListener)
     }
 
-    fun addListener(respirationRateMesgListener: RespirationRateMesgListener?) {
-        respirationRateMesgListeners.add(respirationRateMesgListener!!)
+    fun addListener(respirationRateMesgListener: RespirationRateMesgListener) {
+        respirationRateMesgListeners.add(respirationRateMesgListener)
     }
 
-    fun removeListener(respirationRateMesgListener: RespirationRateMesgListener?) {
+    fun removeListener(respirationRateMesgListener: RespirationRateMesgListener) {
         respirationRateMesgListeners.remove(respirationRateMesgListener)
     }
 
-    fun addListener(chronoShotSessionMesgListener: ChronoShotSessionMesgListener?) {
-        chronoShotSessionMesgListeners.add(chronoShotSessionMesgListener!!)
+    fun addListener(chronoShotSessionMesgListener: ChronoShotSessionMesgListener) {
+        chronoShotSessionMesgListeners.add(chronoShotSessionMesgListener)
     }
 
-    fun removeListener(chronoShotSessionMesgListener: ChronoShotSessionMesgListener?) {
+    fun removeListener(chronoShotSessionMesgListener: ChronoShotSessionMesgListener) {
         chronoShotSessionMesgListeners.remove(chronoShotSessionMesgListener)
     }
 
-    fun addListener(chronoShotDataMesgListener: ChronoShotDataMesgListener?) {
-        chronoShotDataMesgListeners.add(chronoShotDataMesgListener!!)
+    fun addListener(chronoShotDataMesgListener: ChronoShotDataMesgListener) {
+        chronoShotDataMesgListeners.add(chronoShotDataMesgListener)
     }
 
-    fun removeListener(chronoShotDataMesgListener: ChronoShotDataMesgListener?) {
+    fun removeListener(chronoShotDataMesgListener: ChronoShotDataMesgListener) {
         chronoShotDataMesgListeners.remove(chronoShotDataMesgListener)
     }
 
-    fun addListener(tankUpdateMesgListener: TankUpdateMesgListener?) {
-        tankUpdateMesgListeners.add(tankUpdateMesgListener!!)
+    fun addListener(tankUpdateMesgListener: TankUpdateMesgListener) {
+        tankUpdateMesgListeners.add(tankUpdateMesgListener)
     }
 
-    fun removeListener(tankUpdateMesgListener: TankUpdateMesgListener?) {
+    fun removeListener(tankUpdateMesgListener: TankUpdateMesgListener) {
         tankUpdateMesgListeners.remove(tankUpdateMesgListener)
     }
 
-    fun addListener(tankSummaryMesgListener: TankSummaryMesgListener?) {
-        tankSummaryMesgListeners.add(tankSummaryMesgListener!!)
+    fun addListener(tankSummaryMesgListener: TankSummaryMesgListener) {
+        tankSummaryMesgListeners.add(tankSummaryMesgListener)
     }
 
-    fun removeListener(tankSummaryMesgListener: TankSummaryMesgListener?) {
+    fun removeListener(tankSummaryMesgListener: TankSummaryMesgListener) {
         tankSummaryMesgListeners.remove(tankSummaryMesgListener)
     }
 
-    fun addListener(sleepAssessmentMesgListener: SleepAssessmentMesgListener?) {
-        sleepAssessmentMesgListeners.add(sleepAssessmentMesgListener!!)
+    fun addListener(sleepAssessmentMesgListener: SleepAssessmentMesgListener) {
+        sleepAssessmentMesgListeners.add(sleepAssessmentMesgListener)
     }
 
-    fun removeListener(sleepAssessmentMesgListener: SleepAssessmentMesgListener?) {
+    fun removeListener(sleepAssessmentMesgListener: SleepAssessmentMesgListener) {
         sleepAssessmentMesgListeners.remove(sleepAssessmentMesgListener)
     }
 
-    fun addListener(sleepDisruptionSeverityPeriodMesgListener: SleepDisruptionSeverityPeriodMesgListener?) {
-        sleepDisruptionSeverityPeriodMesgListeners.add(sleepDisruptionSeverityPeriodMesgListener!!)
+    fun addListener(sleepDisruptionSeverityPeriodMesgListener: SleepDisruptionSeverityPeriodMesgListener) {
+        sleepDisruptionSeverityPeriodMesgListeners.add(sleepDisruptionSeverityPeriodMesgListener)
     }
 
-    fun removeListener(sleepDisruptionSeverityPeriodMesgListener: SleepDisruptionSeverityPeriodMesgListener?) {
+    fun removeListener(sleepDisruptionSeverityPeriodMesgListener: SleepDisruptionSeverityPeriodMesgListener) {
         sleepDisruptionSeverityPeriodMesgListeners.remove(sleepDisruptionSeverityPeriodMesgListener)
     }
 
-    fun addListener(sleepDisruptionOvernightSeverityMesgListener: SleepDisruptionOvernightSeverityMesgListener?) {
+    fun addListener(sleepDisruptionOvernightSeverityMesgListener: SleepDisruptionOvernightSeverityMesgListener) {
         sleepDisruptionOvernightSeverityMesgListeners.add(
-            sleepDisruptionOvernightSeverityMesgListener!!
+            sleepDisruptionOvernightSeverityMesgListener
         )
     }
 
-    fun removeListener(sleepDisruptionOvernightSeverityMesgListener: SleepDisruptionOvernightSeverityMesgListener?) {
+    fun removeListener(sleepDisruptionOvernightSeverityMesgListener: SleepDisruptionOvernightSeverityMesgListener) {
         sleepDisruptionOvernightSeverityMesgListeners.remove(
             sleepDisruptionOvernightSeverityMesgListener
         )
     }
 
-    fun addListener(napEventMesgListener: NapEventMesgListener?) {
-        napEventMesgListeners.add(napEventMesgListener!!)
+    fun addListener(napEventMesgListener: NapEventMesgListener) {
+        napEventMesgListeners.add(napEventMesgListener)
     }
 
-    fun removeListener(napEventMesgListener: NapEventMesgListener?) {
+    fun removeListener(napEventMesgListener: NapEventMesgListener) {
         napEventMesgListeners.remove(napEventMesgListener)
     }
 
-    fun addListener(skinTempOvernightMesgListener: SkinTempOvernightMesgListener?) {
-        skinTempOvernightMesgListeners.add(skinTempOvernightMesgListener!!)
+    fun addListener(skinTempOvernightMesgListener: SkinTempOvernightMesgListener) {
+        skinTempOvernightMesgListeners.add(skinTempOvernightMesgListener)
     }
 
-    fun removeListener(skinTempOvernightMesgListener: SkinTempOvernightMesgListener?) {
+    fun removeListener(skinTempOvernightMesgListener: SkinTempOvernightMesgListener) {
         skinTempOvernightMesgListeners.remove(skinTempOvernightMesgListener)
     }
 
-    fun addListener(padMesgListener: PadMesgListener?) {
-        padMesgListeners.add(padMesgListener!!)
+    fun addListener(padMesgListener: PadMesgListener) {
+        padMesgListeners.add(padMesgListener)
     }
 
-    fun removeListener(padMesgListener: PadMesgListener?) {
+    fun removeListener(padMesgListener: PadMesgListener) {
         padMesgListeners.remove(padMesgListener)
     }
 
@@ -1448,10 +1357,10 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             mesgListener.onMesg(mesg)
         }
 
-        when (mesg.getNum()) {
+        when (mesg.num) {
             MesgNum.FILE_ID -> {
-                if (fileIdMesgListeners.size == 0) {
-                    break
+                if (fileIdMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val fileIdMesg = FileIdMesg(mesg)
@@ -1461,8 +1370,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.FILE_CREATOR -> {
-                if (fileCreatorMesgListeners.size == 0) {
-                    break
+                if (fileCreatorMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val fileCreatorMesg = FileCreatorMesg(mesg)
@@ -1472,8 +1381,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TIMESTAMP_CORRELATION -> {
-                if (timestampCorrelationMesgListeners.size == 0) {
-                    break
+                if (timestampCorrelationMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val timestampCorrelationMesg = TimestampCorrelationMesg(mesg)
@@ -1483,8 +1392,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SOFTWARE -> {
-                if (softwareMesgListeners.size == 0) {
-                    break
+                if (softwareMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val softwareMesg = SoftwareMesg(mesg)
@@ -1494,8 +1403,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SLAVE_DEVICE -> {
-                if (slaveDeviceMesgListeners.size == 0) {
-                    break
+                if (slaveDeviceMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val slaveDeviceMesg = SlaveDeviceMesg(mesg)
@@ -1505,8 +1414,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CAPABILITIES -> {
-                if (capabilitiesMesgListeners.size == 0) {
-                    break
+                if (capabilitiesMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val capabilitiesMesg = CapabilitiesMesg(mesg)
@@ -1516,8 +1425,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.FILE_CAPABILITIES -> {
-                if (fileCapabilitiesMesgListeners.size == 0) {
-                    break
+                if (fileCapabilitiesMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val fileCapabilitiesMesg = FileCapabilitiesMesg(mesg)
@@ -1527,8 +1436,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MESG_CAPABILITIES -> {
-                if (mesgCapabilitiesMesgListeners.size == 0) {
-                    break
+                if (mesgCapabilitiesMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val mesgCapabilitiesMesg = MesgCapabilitiesMesg(mesg)
@@ -1538,8 +1447,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.FIELD_CAPABILITIES -> {
-                if (fieldCapabilitiesMesgListeners.size == 0) {
-                    break
+                if (fieldCapabilitiesMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val fieldCapabilitiesMesg = FieldCapabilitiesMesg(mesg)
@@ -1549,8 +1458,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DEVICE_SETTINGS -> {
-                if (deviceSettingsMesgListeners.size == 0) {
-                    break
+                if (deviceSettingsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val deviceSettingsMesg = DeviceSettingsMesg(mesg)
@@ -1560,8 +1469,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.USER_PROFILE -> {
-                if (userProfileMesgListeners.size == 0) {
-                    break
+                if (userProfileMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val userProfileMesg = UserProfileMesg(mesg)
@@ -1571,8 +1480,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HRM_PROFILE -> {
-                if (hrmProfileMesgListeners.size == 0) {
-                    break
+                if (hrmProfileMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hrmProfileMesg = HrmProfileMesg(mesg)
@@ -1582,8 +1491,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SDM_PROFILE -> {
-                if (sdmProfileMesgListeners.size == 0) {
-                    break
+                if (sdmProfileMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sdmProfileMesg = SdmProfileMesg(mesg)
@@ -1593,8 +1502,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.BIKE_PROFILE -> {
-                if (bikeProfileMesgListeners.size == 0) {
-                    break
+                if (bikeProfileMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val bikeProfileMesg = BikeProfileMesg(mesg)
@@ -1604,8 +1513,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CONNECTIVITY -> {
-                if (connectivityMesgListeners.size == 0) {
-                    break
+                if (connectivityMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val connectivityMesg = ConnectivityMesg(mesg)
@@ -1615,8 +1524,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WATCHFACE_SETTINGS -> {
-                if (watchfaceSettingsMesgListeners.size == 0) {
-                    break
+                if (watchfaceSettingsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val watchfaceSettingsMesg = WatchfaceSettingsMesg(mesg)
@@ -1626,8 +1535,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.OHR_SETTINGS -> {
-                if (ohrSettingsMesgListeners.size == 0) {
-                    break
+                if (ohrSettingsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val ohrSettingsMesg = OhrSettingsMesg(mesg)
@@ -1637,8 +1546,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TIME_IN_ZONE -> {
-                if (timeInZoneMesgListeners.size == 0) {
-                    break
+                if (timeInZoneMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val timeInZoneMesg = TimeInZoneMesg(mesg)
@@ -1648,8 +1557,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ZONES_TARGET -> {
-                if (zonesTargetMesgListeners.size == 0) {
-                    break
+                if (zonesTargetMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val zonesTargetMesg = ZonesTargetMesg(mesg)
@@ -1659,8 +1568,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SPORT -> {
-                if (sportMesgListeners.size == 0) {
-                    break
+                if (sportMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sportMesg = SportMesg(mesg)
@@ -1670,8 +1579,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HR_ZONE -> {
-                if (hrZoneMesgListeners.size == 0) {
-                    break
+                if (hrZoneMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hrZoneMesg = HrZoneMesg(mesg)
@@ -1681,8 +1590,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SPEED_ZONE -> {
-                if (speedZoneMesgListeners.size == 0) {
-                    break
+                if (speedZoneMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val speedZoneMesg = SpeedZoneMesg(mesg)
@@ -1692,8 +1601,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CADENCE_ZONE -> {
-                if (cadenceZoneMesgListeners.size == 0) {
-                    break
+                if (cadenceZoneMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val cadenceZoneMesg = CadenceZoneMesg(mesg)
@@ -1703,8 +1612,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.POWER_ZONE -> {
-                if (powerZoneMesgListeners.size == 0) {
-                    break
+                if (powerZoneMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val powerZoneMesg = PowerZoneMesg(mesg)
@@ -1714,8 +1623,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MET_ZONE -> {
-                if (metZoneMesgListeners.size == 0) {
-                    break
+                if (metZoneMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val metZoneMesg = MetZoneMesg(mesg)
@@ -1725,8 +1634,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TRAINING_SETTINGS -> {
-                if (trainingSettingsMesgListeners.size == 0) {
-                    break
+                if (trainingSettingsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val trainingSettingsMesg = TrainingSettingsMesg(mesg)
@@ -1736,8 +1645,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DIVE_SETTINGS -> {
-                if (diveSettingsMesgListeners.size == 0) {
-                    break
+                if (diveSettingsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val diveSettingsMesg = DiveSettingsMesg(mesg)
@@ -1747,8 +1656,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DIVE_ALARM -> {
-                if (diveAlarmMesgListeners.size == 0) {
-                    break
+                if (diveAlarmMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val diveAlarmMesg = DiveAlarmMesg(mesg)
@@ -1758,8 +1667,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DIVE_APNEA_ALARM -> {
-                if (diveApneaAlarmMesgListeners.size == 0) {
-                    break
+                if (diveApneaAlarmMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val diveApneaAlarmMesg = DiveApneaAlarmMesg(mesg)
@@ -1769,8 +1678,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DIVE_GAS -> {
-                if (diveGasMesgListeners.size == 0) {
-                    break
+                if (diveGasMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val diveGasMesg = DiveGasMesg(mesg)
@@ -1780,8 +1689,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.GOAL -> {
-                if (goalMesgListeners.size == 0) {
-                    break
+                if (goalMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val goalMesg = GoalMesg(mesg)
@@ -1791,8 +1700,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ACTIVITY -> {
-                if (activityMesgListeners.size == 0) {
-                    break
+                if (activityMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val activityMesg = ActivityMesg(mesg)
@@ -1803,8 +1712,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SESSION -> {
-                if (sessionMesgListeners.size == 0) {
-                    break
+                if (sessionMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sessionMesg = SessionMesg(mesg)
@@ -1815,8 +1724,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.LAP -> {
-                if (lapMesgListeners.size == 0) {
-                    break
+                if (lapMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val lapMesg = LapMesg(mesg)
@@ -1827,8 +1736,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.LENGTH -> {
-                if (lengthMesgListeners.size == 0) {
-                    break
+                if (lengthMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val lengthMesg = LengthMesg(mesg)
@@ -1839,8 +1748,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.RECORD -> {
-                if (recordMesgListeners.size == 0) {
-                    break
+                if (recordMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val recordMesg = RecordMesg(mesg)
@@ -1851,8 +1760,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.EVENT -> {
-                if (eventMesgListeners.size == 0) {
-                    break
+                if (eventMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val eventMesg = EventMesg(mesg)
@@ -1863,8 +1772,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DEVICE_INFO -> {
-                if (deviceInfoMesgListeners.size == 0) {
-                    break
+                if (deviceInfoMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val deviceInfoMesg = DeviceInfoMesg(mesg)
@@ -1874,8 +1783,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DEVICE_AUX_BATTERY_INFO -> {
-                if (deviceAuxBatteryInfoMesgListeners.size == 0) {
-                    break
+                if (deviceAuxBatteryInfoMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val deviceAuxBatteryInfoMesg = DeviceAuxBatteryInfoMesg(mesg)
@@ -1885,8 +1794,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TRAINING_FILE -> {
-                if (trainingFileMesgListeners.size == 0) {
-                    break
+                if (trainingFileMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val trainingFileMesg = TrainingFileMesg(mesg)
@@ -1896,8 +1805,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WEATHER_CONDITIONS -> {
-                if (weatherConditionsMesgListeners.size == 0) {
-                    break
+                if (weatherConditionsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val weatherConditionsMesg = WeatherConditionsMesg(mesg)
@@ -1907,8 +1816,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WEATHER_ALERT -> {
-                if (weatherAlertMesgListeners.size == 0) {
-                    break
+                if (weatherAlertMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val weatherAlertMesg = WeatherAlertMesg(mesg)
@@ -1918,8 +1827,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.GPS_METADATA -> {
-                if (gpsMetadataMesgListeners.size == 0) {
-                    break
+                if (gpsMetadataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val gpsMetadataMesg = GpsMetadataMesg(mesg)
@@ -1929,8 +1838,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CAMERA_EVENT -> {
-                if (cameraEventMesgListeners.size == 0) {
-                    break
+                if (cameraEventMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val cameraEventMesg = CameraEventMesg(mesg)
@@ -1940,8 +1849,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.GYROSCOPE_DATA -> {
-                if (gyroscopeDataMesgListeners.size == 0) {
-                    break
+                if (gyroscopeDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val gyroscopeDataMesg = GyroscopeDataMesg(mesg)
@@ -1951,8 +1860,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ACCELEROMETER_DATA -> {
-                if (accelerometerDataMesgListeners.size == 0) {
-                    break
+                if (accelerometerDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val accelerometerDataMesg = AccelerometerDataMesg(mesg)
@@ -1962,8 +1871,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MAGNETOMETER_DATA -> {
-                if (magnetometerDataMesgListeners.size == 0) {
-                    break
+                if (magnetometerDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val magnetometerDataMesg = MagnetometerDataMesg(mesg)
@@ -1973,8 +1882,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.BAROMETER_DATA -> {
-                if (barometerDataMesgListeners.size == 0) {
-                    break
+                if (barometerDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val barometerDataMesg = BarometerDataMesg(mesg)
@@ -1984,8 +1893,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.THREE_D_SENSOR_CALIBRATION -> {
-                if (threeDSensorCalibrationMesgListeners.size == 0) {
-                    break
+                if (threeDSensorCalibrationMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val threeDSensorCalibrationMesg = ThreeDSensorCalibrationMesg(mesg)
@@ -1995,8 +1904,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ONE_D_SENSOR_CALIBRATION -> {
-                if (oneDSensorCalibrationMesgListeners.size == 0) {
-                    break
+                if (oneDSensorCalibrationMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val oneDSensorCalibrationMesg = OneDSensorCalibrationMesg(mesg)
@@ -2006,8 +1915,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.VIDEO_FRAME -> {
-                if (videoFrameMesgListeners.size == 0) {
-                    break
+                if (videoFrameMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val videoFrameMesg = VideoFrameMesg(mesg)
@@ -2017,8 +1926,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.OBDII_DATA -> {
-                if (obdiiDataMesgListeners.size == 0) {
-                    break
+                if (obdiiDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val obdiiDataMesg = ObdiiDataMesg(mesg)
@@ -2028,8 +1937,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.NMEA_SENTENCE -> {
-                if (nmeaSentenceMesgListeners.size == 0) {
-                    break
+                if (nmeaSentenceMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val nmeaSentenceMesg = NmeaSentenceMesg(mesg)
@@ -2039,8 +1948,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.AVIATION_ATTITUDE -> {
-                if (aviationAttitudeMesgListeners.size == 0) {
-                    break
+                if (aviationAttitudeMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val aviationAttitudeMesg = AviationAttitudeMesg(mesg)
@@ -2050,8 +1959,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.VIDEO -> {
-                if (videoMesgListeners.size == 0) {
-                    break
+                if (videoMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val videoMesg = VideoMesg(mesg)
@@ -2061,8 +1970,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.VIDEO_TITLE -> {
-                if (videoTitleMesgListeners.size == 0) {
-                    break
+                if (videoTitleMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val videoTitleMesg = VideoTitleMesg(mesg)
@@ -2072,8 +1981,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.VIDEO_DESCRIPTION -> {
-                if (videoDescriptionMesgListeners.size == 0) {
-                    break
+                if (videoDescriptionMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val videoDescriptionMesg = VideoDescriptionMesg(mesg)
@@ -2083,8 +1992,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.VIDEO_CLIP -> {
-                if (videoClipMesgListeners.size == 0) {
-                    break
+                if (videoClipMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val videoClipMesg = VideoClipMesg(mesg)
@@ -2094,8 +2003,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SET -> {
-                if (setMesgListeners.size == 0) {
-                    break
+                if (setMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val setMesg = SetMesg(mesg)
@@ -2105,8 +2014,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.JUMP -> {
-                if (jumpMesgListeners.size == 0) {
-                    break
+                if (jumpMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val jumpMesg = JumpMesg(mesg)
@@ -2116,8 +2025,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SPLIT -> {
-                if (splitMesgListeners.size == 0) {
-                    break
+                if (splitMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val splitMesg = SplitMesg(mesg)
@@ -2127,8 +2036,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SPLIT_SUMMARY -> {
-                if (splitSummaryMesgListeners.size == 0) {
-                    break
+                if (splitSummaryMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val splitSummaryMesg = SplitSummaryMesg(mesg)
@@ -2138,8 +2047,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CLIMB_PRO -> {
-                if (climbProMesgListeners.size == 0) {
-                    break
+                if (climbProMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val climbProMesg = ClimbProMesg(mesg)
@@ -2149,8 +2058,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.FIELD_DESCRIPTION -> {
-                if (fieldDescriptionMesgListeners.size == 0) {
-                    break
+                if (fieldDescriptionMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val fieldDescriptionMesg = FieldDescriptionMesg(mesg)
@@ -2160,8 +2069,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DEVELOPER_DATA_ID -> {
-                if (developerDataIdMesgListeners.size == 0) {
-                    break
+                if (developerDataIdMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val developerDataIdMesg = DeveloperDataIdMesg(mesg)
@@ -2171,8 +2080,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.COURSE -> {
-                if (courseMesgListeners.size == 0) {
-                    break
+                if (courseMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val courseMesg = CourseMesg(mesg)
@@ -2182,8 +2091,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.COURSE_POINT -> {
-                if (coursePointMesgListeners.size == 0) {
-                    break
+                if (coursePointMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val coursePointMesg = CoursePointMesg(mesg)
@@ -2193,8 +2102,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SEGMENT_ID -> {
-                if (segmentIdMesgListeners.size == 0) {
-                    break
+                if (segmentIdMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val segmentIdMesg = SegmentIdMesg(mesg)
@@ -2204,8 +2113,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SEGMENT_LEADERBOARD_ENTRY -> {
-                if (segmentLeaderboardEntryMesgListeners.size == 0) {
-                    break
+                if (segmentLeaderboardEntryMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val segmentLeaderboardEntryMesg = SegmentLeaderboardEntryMesg(mesg)
@@ -2215,8 +2124,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SEGMENT_POINT -> {
-                if (segmentPointMesgListeners.size == 0) {
-                    break
+                if (segmentPointMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val segmentPointMesg = SegmentPointMesg(mesg)
@@ -2226,8 +2135,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SEGMENT_LAP -> {
-                if (segmentLapMesgListeners.size == 0) {
-                    break
+                if (segmentLapMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val segmentLapMesg = SegmentLapMesg(mesg)
@@ -2238,8 +2147,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SEGMENT_FILE -> {
-                if (segmentFileMesgListeners.size == 0) {
-                    break
+                if (segmentFileMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val segmentFileMesg = SegmentFileMesg(mesg)
@@ -2249,8 +2158,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WORKOUT -> {
-                if (workoutMesgListeners.size == 0) {
-                    break
+                if (workoutMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val workoutMesg = WorkoutMesg(mesg)
@@ -2260,8 +2169,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WORKOUT_SESSION -> {
-                if (workoutSessionMesgListeners.size == 0) {
-                    break
+                if (workoutSessionMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val workoutSessionMesg = WorkoutSessionMesg(mesg)
@@ -2271,8 +2180,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WORKOUT_STEP -> {
-                if (workoutStepMesgListeners.size == 0) {
-                    break
+                if (workoutStepMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val workoutStepMesg = WorkoutStepMesg(mesg)
@@ -2282,8 +2191,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.EXERCISE_TITLE -> {
-                if (exerciseTitleMesgListeners.size == 0) {
-                    break
+                if (exerciseTitleMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val exerciseTitleMesg = ExerciseTitleMesg(mesg)
@@ -2293,8 +2202,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SCHEDULE -> {
-                if (scheduleMesgListeners.size == 0) {
-                    break
+                if (scheduleMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val scheduleMesg = ScheduleMesg(mesg)
@@ -2304,8 +2213,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TOTALS -> {
-                if (totalsMesgListeners.size == 0) {
-                    break
+                if (totalsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val totalsMesg = TotalsMesg(mesg)
@@ -2315,8 +2224,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.WEIGHT_SCALE -> {
-                if (weightScaleMesgListeners.size == 0) {
-                    break
+                if (weightScaleMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val weightScaleMesg = WeightScaleMesg(mesg)
@@ -2326,8 +2235,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.BLOOD_PRESSURE -> {
-                if (bloodPressureMesgListeners.size == 0) {
-                    break
+                if (bloodPressureMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val bloodPressureMesg = BloodPressureMesg(mesg)
@@ -2337,8 +2246,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MONITORING_INFO -> {
-                if (monitoringInfoMesgListeners.size == 0) {
-                    break
+                if (monitoringInfoMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val monitoringInfoMesg = MonitoringInfoMesg(mesg)
@@ -2348,8 +2257,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MONITORING -> {
-                if (monitoringMesgListeners.size == 0) {
-                    break
+                if (monitoringMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val monitoringMesg = MonitoringMesg(mesg)
@@ -2359,8 +2268,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MONITORING_HR_DATA -> {
-                if (monitoringHrDataMesgListeners.size == 0) {
-                    break
+                if (monitoringHrDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val monitoringHrDataMesg = MonitoringHrDataMesg(mesg)
@@ -2370,8 +2279,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SPO2_DATA -> {
-                if (spo2DataMesgListeners.size == 0) {
-                    break
+                if (spo2DataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val spo2DataMesg = Spo2DataMesg(mesg)
@@ -2381,8 +2290,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HR -> {
-                if (hrMesgListeners.size == 0) {
-                    break
+                if (hrMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hrMesg = HrMesg(mesg)
@@ -2392,8 +2301,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.STRESS_LEVEL -> {
-                if (stressLevelMesgListeners.size == 0) {
-                    break
+                if (stressLevelMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val stressLevelMesg = StressLevelMesg(mesg)
@@ -2403,8 +2312,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MAX_MET_DATA -> {
-                if (maxMetDataMesgListeners.size == 0) {
-                    break
+                if (maxMetDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val maxMetDataMesg = MaxMetDataMesg(mesg)
@@ -2414,8 +2323,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_BODY_BATTERY_DATA -> {
-                if (hsaBodyBatteryDataMesgListeners.size == 0) {
-                    break
+                if (hsaBodyBatteryDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaBodyBatteryDataMesg = HsaBodyBatteryDataMesg(mesg)
@@ -2425,8 +2334,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_EVENT -> {
-                if (hsaEventMesgListeners.size == 0) {
-                    break
+                if (hsaEventMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaEventMesg = HsaEventMesg(mesg)
@@ -2436,8 +2345,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_ACCELEROMETER_DATA -> {
-                if (hsaAccelerometerDataMesgListeners.size == 0) {
-                    break
+                if (hsaAccelerometerDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaAccelerometerDataMesg = HsaAccelerometerDataMesg(mesg)
@@ -2447,8 +2356,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_GYROSCOPE_DATA -> {
-                if (hsaGyroscopeDataMesgListeners.size == 0) {
-                    break
+                if (hsaGyroscopeDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaGyroscopeDataMesg = HsaGyroscopeDataMesg(mesg)
@@ -2458,8 +2367,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_STEP_DATA -> {
-                if (hsaStepDataMesgListeners.size == 0) {
-                    break
+                if (hsaStepDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaStepDataMesg = HsaStepDataMesg(mesg)
@@ -2469,8 +2378,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_SPO2_DATA -> {
-                if (hsaSpo2DataMesgListeners.size == 0) {
-                    break
+                if (hsaSpo2DataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaSpo2DataMesg = HsaSpo2DataMesg(mesg)
@@ -2480,8 +2389,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_STRESS_DATA -> {
-                if (hsaStressDataMesgListeners.size == 0) {
-                    break
+                if (hsaStressDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaStressDataMesg = HsaStressDataMesg(mesg)
@@ -2491,8 +2400,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_RESPIRATION_DATA -> {
-                if (hsaRespirationDataMesgListeners.size == 0) {
-                    break
+                if (hsaRespirationDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaRespirationDataMesg = HsaRespirationDataMesg(mesg)
@@ -2502,8 +2411,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_HEART_RATE_DATA -> {
-                if (hsaHeartRateDataMesgListeners.size == 0) {
-                    break
+                if (hsaHeartRateDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaHeartRateDataMesg = HsaHeartRateDataMesg(mesg)
@@ -2513,8 +2422,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_CONFIGURATION_DATA -> {
-                if (hsaConfigurationDataMesgListeners.size == 0) {
-                    break
+                if (hsaConfigurationDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaConfigurationDataMesg = HsaConfigurationDataMesg(mesg)
@@ -2524,8 +2433,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HSA_WRIST_TEMPERATURE_DATA -> {
-                if (hsaWristTemperatureDataMesgListeners.size == 0) {
-                    break
+                if (hsaWristTemperatureDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hsaWristTemperatureDataMesg = HsaWristTemperatureDataMesg(mesg)
@@ -2535,8 +2444,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.MEMO_GLOB -> {
-                if (memoGlobMesgListeners.size == 0) {
-                    break
+                if (memoGlobMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val memoGlobMesg = MemoGlobMesg(mesg)
@@ -2546,8 +2455,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SLEEP_LEVEL -> {
-                if (sleepLevelMesgListeners.size == 0) {
-                    break
+                if (sleepLevelMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sleepLevelMesg = SleepLevelMesg(mesg)
@@ -2557,8 +2466,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ANT_CHANNEL_ID -> {
-                if (antChannelIdMesgListeners.size == 0) {
-                    break
+                if (antChannelIdMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val antChannelIdMesg = AntChannelIdMesg(mesg)
@@ -2568,8 +2477,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ANT_RX -> {
-                if (antRxMesgListeners.size == 0) {
-                    break
+                if (antRxMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val antRxMesg = AntRxMesg(mesg)
@@ -2579,8 +2488,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.ANT_TX -> {
-                if (antTxMesgListeners.size == 0) {
-                    break
+                if (antTxMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val antTxMesg = AntTxMesg(mesg)
@@ -2590,8 +2499,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.EXD_SCREEN_CONFIGURATION -> {
-                if (exdScreenConfigurationMesgListeners.size == 0) {
-                    break
+                if (exdScreenConfigurationMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val exdScreenConfigurationMesg = ExdScreenConfigurationMesg(mesg)
@@ -2601,8 +2510,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.EXD_DATA_FIELD_CONFIGURATION -> {
-                if (exdDataFieldConfigurationMesgListeners.size == 0) {
-                    break
+                if (exdDataFieldConfigurationMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val exdDataFieldConfigurationMesg = ExdDataFieldConfigurationMesg(mesg)
@@ -2612,8 +2521,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.EXD_DATA_CONCEPT_CONFIGURATION -> {
-                if (exdDataConceptConfigurationMesgListeners.size == 0) {
-                    break
+                if (exdDataConceptConfigurationMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val exdDataConceptConfigurationMesg = ExdDataConceptConfigurationMesg(mesg)
@@ -2623,8 +2532,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.DIVE_SUMMARY -> {
-                if (diveSummaryMesgListeners.size == 0) {
-                    break
+                if (diveSummaryMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val diveSummaryMesg = DiveSummaryMesg(mesg)
@@ -2634,8 +2543,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.AAD_ACCEL_FEATURES -> {
-                if (aadAccelFeaturesMesgListeners.size == 0) {
-                    break
+                if (aadAccelFeaturesMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val aadAccelFeaturesMesg = AadAccelFeaturesMesg(mesg)
@@ -2645,8 +2554,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HRV -> {
-                if (hrvMesgListeners.size == 0) {
-                    break
+                if (hrvMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hrvMesg = HrvMesg(mesg)
@@ -2656,8 +2565,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.BEAT_INTERVALS -> {
-                if (beatIntervalsMesgListeners.size == 0) {
-                    break
+                if (beatIntervalsMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val beatIntervalsMesg = BeatIntervalsMesg(mesg)
@@ -2667,8 +2576,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HRV_STATUS_SUMMARY -> {
-                if (hrvStatusSummaryMesgListeners.size == 0) {
-                    break
+                if (hrvStatusSummaryMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hrvStatusSummaryMesg = HrvStatusSummaryMesg(mesg)
@@ -2678,8 +2587,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.HRV_VALUE -> {
-                if (hrvValueMesgListeners.size == 0) {
-                    break
+                if (hrvValueMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val hrvValueMesg = HrvValueMesg(mesg)
@@ -2689,8 +2598,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.RAW_BBI -> {
-                if (rawBbiMesgListeners.size == 0) {
-                    break
+                if (rawBbiMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val rawBbiMesg = RawBbiMesg(mesg)
@@ -2700,8 +2609,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.RESPIRATION_RATE -> {
-                if (respirationRateMesgListeners.size == 0) {
-                    break
+                if (respirationRateMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val respirationRateMesg = RespirationRateMesg(mesg)
@@ -2711,8 +2620,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CHRONO_SHOT_SESSION -> {
-                if (chronoShotSessionMesgListeners.size == 0) {
-                    break
+                if (chronoShotSessionMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val chronoShotSessionMesg = ChronoShotSessionMesg(mesg)
@@ -2722,8 +2631,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.CHRONO_SHOT_DATA -> {
-                if (chronoShotDataMesgListeners.size == 0) {
-                    break
+                if (chronoShotDataMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val chronoShotDataMesg = ChronoShotDataMesg(mesg)
@@ -2733,8 +2642,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TANK_UPDATE -> {
-                if (tankUpdateMesgListeners.size == 0) {
-                    break
+                if (tankUpdateMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val tankUpdateMesg = TankUpdateMesg(mesg)
@@ -2744,8 +2653,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.TANK_SUMMARY -> {
-                if (tankSummaryMesgListeners.size == 0) {
-                    break
+                if (tankSummaryMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val tankSummaryMesg = TankSummaryMesg(mesg)
@@ -2755,8 +2664,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SLEEP_ASSESSMENT -> {
-                if (sleepAssessmentMesgListeners.size == 0) {
-                    break
+                if (sleepAssessmentMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sleepAssessmentMesg = SleepAssessmentMesg(mesg)
@@ -2766,8 +2675,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD -> {
-                if (sleepDisruptionSeverityPeriodMesgListeners.size == 0) {
-                    break
+                if (sleepDisruptionSeverityPeriodMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sleepDisruptionSeverityPeriodMesg = SleepDisruptionSeverityPeriodMesg(mesg)
@@ -2777,8 +2686,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SLEEP_DISRUPTION_OVERNIGHT_SEVERITY -> {
-                if (sleepDisruptionOvernightSeverityMesgListeners.size == 0) {
-                    break
+                if (sleepDisruptionOvernightSeverityMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val sleepDisruptionOvernightSeverityMesg =
@@ -2789,8 +2698,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.NAP_EVENT -> {
-                if (napEventMesgListeners.size == 0) {
-                    break
+                if (napEventMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val napEventMesg = NapEventMesg(mesg)
@@ -2800,8 +2709,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.SKIN_TEMP_OVERNIGHT -> {
-                if (skinTempOvernightMesgListeners.size == 0) {
-                    break
+                if (skinTempOvernightMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val skinTempOvernightMesg = SkinTempOvernightMesg(mesg)
@@ -2811,8 +2720,8 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
             }
 
             MesgNum.PAD -> {
-                if (padMesgListeners.size == 0) {
-                    break
+                if (padMesgListeners.isEmpty()) {
+                    return
                 }
 
                 val padMesg = PadMesg(mesg)
@@ -2825,7 +2734,7 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
         }
     }
 
-    override fun onMesgDefinition(mesgDefn: MesgDefinition?) {
+    override fun onMesgDefinition(mesgDefn: MesgDefinition) {
         for (mesgDefinitionListener in mesgDefinitionListeners) {
             mesgDefinitionListener.onMesgDefinition(mesgDefn)
         }

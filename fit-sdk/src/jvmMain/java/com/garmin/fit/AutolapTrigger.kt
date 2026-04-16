@@ -27,7 +27,7 @@ enum class AutolapTrigger(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return AutolapTrigger.INVALID
+            return INVALID
         }
 
         /**

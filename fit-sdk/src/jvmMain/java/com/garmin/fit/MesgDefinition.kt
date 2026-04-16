@@ -12,7 +12,6 @@ import java.io.IOException
 import java.io.OutputStream
 
 class MesgDefinition {
-    @JvmField
     var num: Int
     var localNum: Int
     var arch: Int
@@ -71,7 +70,7 @@ class MesgDefinition {
             var rv = 0
 
             for (devField in developerFields) {
-                rv += devField.getSize()
+                rv += devField.size
             }
 
             return rv
@@ -125,11 +124,7 @@ class MesgDefinition {
         }
 
         for (fieldDef in mesgDef.fields) {
-            val supportedFieldDef = getField(fieldDef.num)
-
-            if (supportedFieldDef == null) {
-                return false
-            }
+            val supportedFieldDef = getField(fieldDef.num) ?: return false
 
             if (fieldDef.size > supportedFieldDef.size) {
                 return false
@@ -139,15 +134,12 @@ class MesgDefinition {
         // Check to make sure that all field developer fields are defined
         for (fieldDef in mesgDef.developerFields) {
             val supportedDef =
-                getDeveloperField(fieldDef.getDeveloperDataIndex(), fieldDef.getNum().toInt())
+                getDeveloperField(fieldDef.developerDataIndex, fieldDef.num.toInt()) ?: return false
 
             // There is a Field Definition that we don't have a description for
-            if (supportedDef == null) {
-                return false
-            }
 
             // The definition is a larger size that we dont support
-            if (fieldDef.getSize() > supportedDef.getSize()) {
+            if (fieldDef.size > supportedDef.size) {
                 return false
             }
         }
@@ -157,8 +149,8 @@ class MesgDefinition {
 
     private fun getDeveloperField(developerIndex: Short, num: Int): DeveloperFieldDefinition? {
         for (field in developerFields) {
-            if ((field.getNum()
-                    .toInt() == num) && (field.getDeveloperDataIndex() == developerIndex)
+            if ((field.num
+                    .toInt() == num) && (field.developerDataIndex == developerIndex)
             ) {
                 return field
             }
@@ -191,7 +183,7 @@ class MesgDefinition {
         }
 
         for (i in fields.indices) {
-            if (fields.get(i) != other.fields.get(i)) {
+            if (fields[i] != other.fields[i]) {
                 return false
             }
         }

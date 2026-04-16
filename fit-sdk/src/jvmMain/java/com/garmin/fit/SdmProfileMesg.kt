@@ -12,19 +12,19 @@ package com.garmin.fit
 class SdmProfileMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SDM_PROFILE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,19 +34,16 @@ class SdmProfileMesg : Mesg {
     var enabled: Bool?
         /**
          * Get enabled field
-         * 
+         *
          * @return enabled
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set enabled field
-         * 
+         *
          * @param enabled The new enabled value to be set
          */
         set(enabled) {
@@ -56,13 +53,13 @@ class SdmProfileMesg : Mesg {
     var sdmAntId: Int?
         /**
          * Get sdm_ant_id field
-         * 
+         *
          * @return sdm_ant_id
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sdm_ant_id field
-         * 
+         *
          * @param sdmAntId The new sdmAntId value to be set
          */
         set(sdmAntId) {
@@ -73,14 +70,14 @@ class SdmProfileMesg : Mesg {
         /**
          * Get sdm_cal_factor field
          * Units: %
-         * 
+         *
          * @return sdm_cal_factor
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sdm_cal_factor field
          * Units: %
-         * 
+         *
          * @param sdmCalFactor The new sdmCalFactor value to be set
          */
         set(sdmCalFactor) {
@@ -91,14 +88,14 @@ class SdmProfileMesg : Mesg {
         /**
          * Get odometer field
          * Units: m
-         * 
+         *
          * @return odometer
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set odometer field
          * Units: m
-         * 
+         *
          * @param odometer The new odometer value to be set
          */
         set(odometer) {
@@ -109,20 +106,17 @@ class SdmProfileMesg : Mesg {
         /**
          * Get speed_source field
          * Comment: Use footpod for speed source instead of GPS
-         * 
+         *
          * @return speed_source
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set speed_source field
          * Comment: Use footpod for speed source instead of GPS
-         * 
+         *
          * @param speedSource The new speedSource value to be set
          */
         set(speedSource) {
@@ -132,13 +126,13 @@ class SdmProfileMesg : Mesg {
     var sdmAntIdTransType: Short?
         /**
          * Get sdm_ant_id_trans_type field
-         * 
+         *
          * @return sdm_ant_id_trans_type
          */
         get() = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sdm_ant_id_trans_type field
-         * 
+         *
          * @param sdmAntIdTransType The new sdmAntIdTransType value to be set
          */
         set(sdmAntIdTransType) {
@@ -149,14 +143,14 @@ class SdmProfileMesg : Mesg {
         /**
          * Get odometer_rollover field
          * Comment: Rollover counter that can be used to extend the odometer
-         * 
+         *
          * @return odometer_rollover
          */
         get() = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set odometer_rollover field
          * Comment: Rollover counter that can be used to extend the odometer
-         * 
+         *
          * @param odometerRollover The new odometerRollover value to be set
          */
         set(odometerRollover) {
@@ -181,11 +175,10 @@ class SdmProfileMesg : Mesg {
         const val OdometerRolloverFieldNum: Int = 7
 
 
-        val sdmProfileMesg: Mesg
+        // sdm_profile
+        val sdmProfileMesg: Mesg = Mesg("sdm_profile", MesgNum.SDM_PROFILE)
 
         init {
-            // sdm_profile
-            sdmProfileMesg = Mesg("sdm_profile", MesgNum.SDM_PROFILE)
             sdmProfileMesg.addField(
                 Field(
                     "message_index",

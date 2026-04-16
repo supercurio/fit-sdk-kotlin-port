@@ -12,39 +12,39 @@ package com.garmin.fit
 class AntTxMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.ANT_TX))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var fractionalTimestamp: Float?
         /**
          * Get fractional_timestamp field
          * Units: s
-         * 
+         *
          * @return fractional_timestamp
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set fractional_timestamp field
          * Units: s
-         * 
+         *
          * @param fractionalTimestamp The new fractionalTimestamp value to be set
          */
         set(fractionalTimestamp) {
@@ -54,20 +54,20 @@ class AntTxMesg : Mesg {
     var mesgId: Byte?
         /**
          * Get mesg_id field
-         * 
+         *
          * @return mesg_id
          */
         get() = getFieldByteValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set mesg_id field
-         * 
+         *
          * @param mesgId The new mesgId value to be set
          */
         set(mesgId) {
             setFieldValue(1, 0, mesgId, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val mesgData: Array<Byte?>?
+    val mesgData: Array<Byte>?
         get() = getFieldByteValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMesgData: Int
@@ -78,7 +78,7 @@ class AntTxMesg : Mesg {
 
     /**
      * Get mesg_data field
-     * 
+     *
      * @param index of mesg_data
      * @return mesg_data
      */
@@ -88,7 +88,7 @@ class AntTxMesg : Mesg {
 
     /**
      * Set mesg_data field
-     * 
+     *
      * @param index of mesg_data
      * @param mesgData The new mesgData value to be set
      */
@@ -99,20 +99,20 @@ class AntTxMesg : Mesg {
     var channelNumber: Short?
         /**
          * Get channel_number field
-         * 
+         *
          * @return channel_number
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set channel_number field
-         * 
+         *
          * @param channelNumber The new channelNumber value to be set
          */
         set(channelNumber) {
             setFieldValue(3, 0, channelNumber, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val data: Array<Byte?>?
+    val data: Array<Byte>?
         get() = getFieldByteValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numData: Int
@@ -123,7 +123,7 @@ class AntTxMesg : Mesg {
 
     /**
      * Get data field
-     * 
+     *
      * @param index of data
      * @return data
      */
@@ -133,7 +133,7 @@ class AntTxMesg : Mesg {
 
     /**
      * Set data field
-     * 
+     *
      * @param index of data
      * @param data The new data value to be set
      */
@@ -212,7 +212,7 @@ class AntTxMesg : Mesg {
                     Profile.Type.BYTE
                 )
             )
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,
@@ -221,7 +221,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // channel_number
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -230,7 +230,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -239,7 +239,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -248,7 +248,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -257,7 +257,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -266,7 +266,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -275,7 +275,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,
@@ -284,7 +284,7 @@ class AntTxMesg : Mesg {
                     0.0
                 )
             ) // data
-            antTxMesg.fields.get(field_index).components.add(
+            antTxMesg.fields[field_index].components.add(
                 FieldComponent(
                     4,
                     false,

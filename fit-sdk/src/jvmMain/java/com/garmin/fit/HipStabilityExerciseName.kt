@@ -44,50 +44,46 @@ object HipStabilityExerciseName {
     const val SUPINE_HIP_INTERNAL_ROTATION: Int = 32
     const val WEIGHTED_SUPINE_HIP_INTERNAL_ROTATION: Int = 33
     const val LYING_ABDUCTION_STRETCH: Int = 34
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BAND_SIDE_LYING_LEG_RAISE, "BAND_SIDE_LYING_LEG_RAISE")
-        stringMap.put(DEAD_BUG, "DEAD_BUG")
-        stringMap.put(WEIGHTED_DEAD_BUG, "WEIGHTED_DEAD_BUG")
-        stringMap.put(EXTERNAL_HIP_RAISE, "EXTERNAL_HIP_RAISE")
-        stringMap.put(WEIGHTED_EXTERNAL_HIP_RAISE, "WEIGHTED_EXTERNAL_HIP_RAISE")
-        stringMap.put(FIRE_HYDRANT_KICKS, "FIRE_HYDRANT_KICKS")
-        stringMap.put(WEIGHTED_FIRE_HYDRANT_KICKS, "WEIGHTED_FIRE_HYDRANT_KICKS")
-        stringMap.put(HIP_CIRCLES, "HIP_CIRCLES")
-        stringMap.put(WEIGHTED_HIP_CIRCLES, "WEIGHTED_HIP_CIRCLES")
-        stringMap.put(INNER_THIGH_LIFT, "INNER_THIGH_LIFT")
-        stringMap.put(WEIGHTED_INNER_THIGH_LIFT, "WEIGHTED_INNER_THIGH_LIFT")
-        stringMap.put(LATERAL_WALKS_WITH_BAND_AT_ANKLES, "LATERAL_WALKS_WITH_BAND_AT_ANKLES")
-        stringMap.put(PRETZEL_SIDE_KICK, "PRETZEL_SIDE_KICK")
-        stringMap.put(WEIGHTED_PRETZEL_SIDE_KICK, "WEIGHTED_PRETZEL_SIDE_KICK")
-        stringMap.put(PRONE_HIP_INTERNAL_ROTATION, "PRONE_HIP_INTERNAL_ROTATION")
-        stringMap.put(WEIGHTED_PRONE_HIP_INTERNAL_ROTATION, "WEIGHTED_PRONE_HIP_INTERNAL_ROTATION")
-        stringMap.put(QUADRUPED, "QUADRUPED")
-        stringMap.put(QUADRUPED_HIP_EXTENSION, "QUADRUPED_HIP_EXTENSION")
-        stringMap.put(WEIGHTED_QUADRUPED_HIP_EXTENSION, "WEIGHTED_QUADRUPED_HIP_EXTENSION")
-        stringMap.put(QUADRUPED_WITH_LEG_LIFT, "QUADRUPED_WITH_LEG_LIFT")
-        stringMap.put(WEIGHTED_QUADRUPED_WITH_LEG_LIFT, "WEIGHTED_QUADRUPED_WITH_LEG_LIFT")
-        stringMap.put(SIDE_LYING_LEG_RAISE, "SIDE_LYING_LEG_RAISE")
-        stringMap.put(WEIGHTED_SIDE_LYING_LEG_RAISE, "WEIGHTED_SIDE_LYING_LEG_RAISE")
-        stringMap.put(SLIDING_HIP_ADDUCTION, "SLIDING_HIP_ADDUCTION")
-        stringMap.put(WEIGHTED_SLIDING_HIP_ADDUCTION, "WEIGHTED_SLIDING_HIP_ADDUCTION")
-        stringMap.put(STANDING_ADDUCTION, "STANDING_ADDUCTION")
-        stringMap.put(WEIGHTED_STANDING_ADDUCTION, "WEIGHTED_STANDING_ADDUCTION")
-        stringMap.put(STANDING_CABLE_HIP_ABDUCTION, "STANDING_CABLE_HIP_ABDUCTION")
-        stringMap.put(STANDING_HIP_ABDUCTION, "STANDING_HIP_ABDUCTION")
-        stringMap.put(WEIGHTED_STANDING_HIP_ABDUCTION, "WEIGHTED_STANDING_HIP_ABDUCTION")
-        stringMap.put(STANDING_REAR_LEG_RAISE, "STANDING_REAR_LEG_RAISE")
-        stringMap.put(WEIGHTED_STANDING_REAR_LEG_RAISE, "WEIGHTED_STANDING_REAR_LEG_RAISE")
-        stringMap.put(SUPINE_HIP_INTERNAL_ROTATION, "SUPINE_HIP_INTERNAL_ROTATION")
-        stringMap.put(
-            WEIGHTED_SUPINE_HIP_INTERNAL_ROTATION,
-            "WEIGHTED_SUPINE_HIP_INTERNAL_ROTATION"
-        )
-        stringMap.put(LYING_ABDUCTION_STRETCH, "LYING_ABDUCTION_STRETCH")
+        stringMap[BAND_SIDE_LYING_LEG_RAISE] = "BAND_SIDE_LYING_LEG_RAISE"
+        stringMap[DEAD_BUG] = "DEAD_BUG"
+        stringMap[WEIGHTED_DEAD_BUG] = "WEIGHTED_DEAD_BUG"
+        stringMap[EXTERNAL_HIP_RAISE] = "EXTERNAL_HIP_RAISE"
+        stringMap[WEIGHTED_EXTERNAL_HIP_RAISE] = "WEIGHTED_EXTERNAL_HIP_RAISE"
+        stringMap[FIRE_HYDRANT_KICKS] = "FIRE_HYDRANT_KICKS"
+        stringMap[WEIGHTED_FIRE_HYDRANT_KICKS] = "WEIGHTED_FIRE_HYDRANT_KICKS"
+        stringMap[HIP_CIRCLES] = "HIP_CIRCLES"
+        stringMap[WEIGHTED_HIP_CIRCLES] = "WEIGHTED_HIP_CIRCLES"
+        stringMap[INNER_THIGH_LIFT] = "INNER_THIGH_LIFT"
+        stringMap[WEIGHTED_INNER_THIGH_LIFT] = "WEIGHTED_INNER_THIGH_LIFT"
+        stringMap[LATERAL_WALKS_WITH_BAND_AT_ANKLES] = "LATERAL_WALKS_WITH_BAND_AT_ANKLES"
+        stringMap[PRETZEL_SIDE_KICK] = "PRETZEL_SIDE_KICK"
+        stringMap[WEIGHTED_PRETZEL_SIDE_KICK] = "WEIGHTED_PRETZEL_SIDE_KICK"
+        stringMap[PRONE_HIP_INTERNAL_ROTATION] = "PRONE_HIP_INTERNAL_ROTATION"
+        stringMap[WEIGHTED_PRONE_HIP_INTERNAL_ROTATION] = "WEIGHTED_PRONE_HIP_INTERNAL_ROTATION"
+        stringMap[QUADRUPED] = "QUADRUPED"
+        stringMap[QUADRUPED_HIP_EXTENSION] = "QUADRUPED_HIP_EXTENSION"
+        stringMap[WEIGHTED_QUADRUPED_HIP_EXTENSION] = "WEIGHTED_QUADRUPED_HIP_EXTENSION"
+        stringMap[QUADRUPED_WITH_LEG_LIFT] = "QUADRUPED_WITH_LEG_LIFT"
+        stringMap[WEIGHTED_QUADRUPED_WITH_LEG_LIFT] = "WEIGHTED_QUADRUPED_WITH_LEG_LIFT"
+        stringMap[SIDE_LYING_LEG_RAISE] = "SIDE_LYING_LEG_RAISE"
+        stringMap[WEIGHTED_SIDE_LYING_LEG_RAISE] = "WEIGHTED_SIDE_LYING_LEG_RAISE"
+        stringMap[SLIDING_HIP_ADDUCTION] = "SLIDING_HIP_ADDUCTION"
+        stringMap[WEIGHTED_SLIDING_HIP_ADDUCTION] = "WEIGHTED_SLIDING_HIP_ADDUCTION"
+        stringMap[STANDING_ADDUCTION] = "STANDING_ADDUCTION"
+        stringMap[WEIGHTED_STANDING_ADDUCTION] = "WEIGHTED_STANDING_ADDUCTION"
+        stringMap[STANDING_CABLE_HIP_ABDUCTION] = "STANDING_CABLE_HIP_ABDUCTION"
+        stringMap[STANDING_HIP_ABDUCTION] = "STANDING_HIP_ABDUCTION"
+        stringMap[WEIGHTED_STANDING_HIP_ABDUCTION] = "WEIGHTED_STANDING_HIP_ABDUCTION"
+        stringMap[STANDING_REAR_LEG_RAISE] = "STANDING_REAR_LEG_RAISE"
+        stringMap[WEIGHTED_STANDING_REAR_LEG_RAISE] = "WEIGHTED_STANDING_REAR_LEG_RAISE"
+        stringMap[SUPINE_HIP_INTERNAL_ROTATION] = "SUPINE_HIP_INTERNAL_ROTATION"
+        stringMap[WEIGHTED_SUPINE_HIP_INTERNAL_ROTATION] = "WEIGHTED_SUPINE_HIP_INTERNAL_ROTATION"
+        stringMap[LYING_ABDUCTION_STRETCH] = "LYING_ABDUCTION_STRETCH"
     }
 
 
@@ -96,9 +92,9 @@ object HipStabilityExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -109,7 +105,7 @@ object HipStabilityExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

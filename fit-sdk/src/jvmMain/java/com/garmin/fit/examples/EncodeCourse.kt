@@ -21,7 +21,6 @@ import com.garmin.fit.Manufacturer
 import com.garmin.fit.RecordMesg
 import com.garmin.fit.Sport
 import java.io.File
-import java.util.Arrays
 
 object EncodeCourse {
     const val PRODUCTID: Int = 0
@@ -36,7 +35,7 @@ object EncodeCourse {
             try {
                 encode = FileEncoder(File(filename), Fit.ProtocolVersion.V2_0)
             } catch (e: FitRuntimeException) {
-                System.err.println("Error opening file " + filename)
+                System.err.println("Error opening file $filename")
                 e.printStackTrace()
                 return
             }
@@ -46,85 +45,85 @@ object EncodeCourse {
                 coursePoints
 
             // Reference points for the course
-            val firstRecord = courseData.get(0)
-            val lastRecord = courseData.get(courseData.size - 1)
-            val halfwayRecord: MutableMap<String?, Any?>? = courseData.get(courseData.size / 2)
-            val startTimestamp = firstRecord.get("timestamp") as Int
-            val endTimestamp = lastRecord.get("timestamp") as Int
+            val firstRecord = courseData[0]
+            val lastRecord = courseData[courseData.size - 1]
+            val halfwayRecord = courseData[courseData.size / 2]
+            val startTimestamp = firstRecord["timestamp"] as Int
+            val endTimestamp = lastRecord["timestamp"] as Int
             val startDateTime = DateTime(startTimestamp.toLong())
             val endDateTime = DateTime(endTimestamp.toLong())
 
             // Every FIT file MUST contain a 'File ID' message as the first message
             val fileIdMesg = FileIdMesg()
-            fileIdMesg.setType(com.garmin.fit.File.COURSE)
-            fileIdMesg.setManufacturer(Manufacturer.DEVELOPMENT)
-            fileIdMesg.setProduct(PRODUCTID)
-            fileIdMesg.setTimeCreated(startDateTime)
-            fileIdMesg.setSerialNumber(12345L)
+            fileIdMesg.type = com.garmin.fit.File.COURSE
+            fileIdMesg.manufacturer = Manufacturer.DEVELOPMENT
+            fileIdMesg.product = PRODUCTID
+            fileIdMesg.timeCreated = startDateTime
+            fileIdMesg.serialNumber = 12345L
             encode.write(fileIdMesg)
 
             // Every FIT COURSE file MUST contain a Course message
             val courseMesg = CourseMesg()
-            courseMesg.setName("Garmin Field Day")
-            courseMesg.setSport(Sport.CYCLING)
+            courseMesg.name = "Garmin Field Day"
+            courseMesg.sport = Sport.CYCLING
             encode.write(courseMesg)
 
             // Every FIT COURSE file MUST contain a Lap message
             val lapMesg = LapMesg()
-            lapMesg.setStartTime(startDateTime)
-            lapMesg.setTimestamp(startDateTime)
-            lapMesg.setTotalElapsedTime(endTimestamp.toFloat() - startTimestamp)
-            lapMesg.setTotalTimerTime(endTimestamp.toFloat() - startTimestamp)
-            lapMesg.setStartPositionLat(firstRecord.get("position_lat") as Int)
-            lapMesg.setStartPositionLong(firstRecord.get("position_long") as Int)
-            lapMesg.setEndPositionLat(lastRecord.get("position_lat") as Int)
-            lapMesg.setEndPositionLong(lastRecord.get("position_long") as Int)
-            lapMesg.setTotalDistance(lastRecord.get("distance") as Float)
+            lapMesg.startTime = startDateTime
+            lapMesg.timestamp = startDateTime
+            lapMesg.totalElapsedTime = endTimestamp.toFloat() - startTimestamp
+            lapMesg.totalTimerTime = endTimestamp.toFloat() - startTimestamp
+            lapMesg.startPositionLat = firstRecord["position_lat"] as Int
+            lapMesg.startPositionLong = firstRecord["position_long"] as Int
+            lapMesg.endPositionLat = lastRecord["position_lat"] as Int
+            lapMesg.endPositionLong = lastRecord["position_long"] as Int
+            lapMesg.totalDistance = lastRecord["distance"] as Float
             encode.write(lapMesg)
 
             // Timer Events are REQUIRED for FIT COURSE files
             val eventMesgStart = EventMesg()
-            eventMesgStart.setTimestamp(startDateTime)
-            eventMesgStart.setEvent(Event.TIMER)
-            eventMesgStart.setEventType(EventType.START)
+            eventMesgStart.timestamp = startDateTime
+            eventMesgStart.event = Event.TIMER
+            eventMesgStart.eventType = EventType.START
             encode.write(eventMesgStart)
 
             // Every FIT COURSE file MUST contain Record messages
             for (record in courseData) {
-                val timestamp = record.get("timestamp") as Int
-                val latitude = record.get("position_lat") as Int
-                val longitude = record.get("position_long") as Int
-                val distance = record.get("distance") as Float
-                val speed = record.get("speed") as Float
-                val altitude = record.get("altitude") as Float
+                val timestamp = record["timestamp"] as Int
+                val latitude = record["position_lat"] as Int
+                val longitude = record["position_long"] as Int
+                val distance = record["distance"] as Float
+                val speed = record["speed"] as Float
+                val altitude = record["altitude"] as Float
 
                 val recordMesg = RecordMesg()
-                recordMesg.setTimestamp(DateTime(timestamp.toLong()))
-                recordMesg.setPositionLat(latitude)
-                recordMesg.setPositionLong(longitude)
-                recordMesg.setDistance(distance)
-                recordMesg.setSpeed(speed)
-                recordMesg.setAltitude(altitude)
+                recordMesg.timestamp = DateTime(timestamp.toLong())
+                recordMesg.positionLat = latitude
+                recordMesg.positionLong = longitude
+                recordMesg.distance = distance
+                recordMesg.speed = speed
+                recordMesg.altitude = altitude
                 encode.write(recordMesg)
 
                 // Add a Course Point at the halfway point of the route
                 if (record === halfwayRecord) {
                     val coursePointMesg = CoursePointMesg()
-                    coursePointMesg.setTimestamp(DateTime(timestamp.toLong()))
-                    coursePointMesg.setName("Halfway")
-                    coursePointMesg.setType(CoursePoint.GENERIC)
-                    coursePointMesg.setPositionLat(latitude)
-                    coursePointMesg.setPositionLong(longitude)
-                    coursePointMesg.setDistance(distance)
+                    coursePointMesg.timestamp = DateTime(timestamp.toLong())
+                    coursePointMesg.name = "Halfway"
+                    coursePointMesg.type = CoursePoint.GENERIC
+                    coursePointMesg.positionLat = latitude
+                    coursePointMesg.positionLong = longitude
+                    coursePointMesg.distance = distance
                     encode.write(coursePointMesg)
                 }
             }
 
             // Timer Events are REQUIRED for FIT COURSE files
             val eventMesgStop = EventMesg()
-            eventMesgStop.setTimestamp(endDateTime)
-            eventMesgStop.setEvent(Event.TIMER)
-            eventMesgStop.setEventType(EventType.STOP_ALL)
+            eventMesgStop.timestamp = endDateTime
+            eventMesgStop.event = Event.TIMER
+            eventMesgStop.eventType = EventType.STOP_ALL
             encode.write(eventMesgStop)
 
             // Close the output stream
@@ -136,7 +135,7 @@ object EncodeCourse {
                 return
             }
 
-            println("Encoded FIT Course File " + filename)
+            println("Encoded FIT Course File $filename")
         } catch (e: Exception) {
             println("Exception encoding course: " + e.message)
             e.printStackTrace()
@@ -148,7 +147,7 @@ object EncodeCourse {
          * Creates a list of example course points
          * Each course point contains a timestamp, latitude position,
          * longitude position, altitude, distance, and speed
-         * 
+         *
          * @return a list of maps where each map is a course point.
          */
         get() {
@@ -297,8 +296,8 @@ object EncodeCourse {
                 }
 
             val courseData: MutableList<MutableMap<String?, Any?>> =
-                ArrayList<MutableMap<String?, Any?>>(
-                    Arrays.asList<LinkedHashMap<String?, Any?>?>(
+                ArrayList(
+                    listOf(
                         point0, point1, point2,
                         point3, point4, point5,
                         point6, point7, point8,

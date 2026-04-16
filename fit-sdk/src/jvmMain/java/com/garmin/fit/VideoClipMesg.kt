@@ -12,19 +12,19 @@ package com.garmin.fit
 class VideoClipMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.VIDEO_CLIP))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var clipNumber: Int?
         /**
          * Get clip_number field
-         * 
+         *
          * @return clip_number
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set clip_number field
-         * 
+         *
          * @param clipNumber The new clipNumber value to be set
          */
         set(clipNumber) {
@@ -34,29 +34,29 @@ class VideoClipMesg : Mesg {
     var startTimestamp: DateTime?
         /**
          * Get start_timestamp field
-         * 
+         *
          * @return start_timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set start_timestamp field
-         * 
+         *
          * @param startTimestamp The new startTimestamp value to be set
          */
         set(startTimestamp) {
-            setFieldValue(1, 0, startTimestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(1, 0, startTimestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var startTimestampMs: Int?
         /**
          * Get start_timestamp_ms field
-         * 
+         *
          * @return start_timestamp_ms
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set start_timestamp_ms field
-         * 
+         *
          * @param startTimestampMs The new startTimestampMs value to be set
          */
         set(startTimestampMs) {
@@ -66,29 +66,29 @@ class VideoClipMesg : Mesg {
     var endTimestamp: DateTime?
         /**
          * Get end_timestamp field
-         * 
+         *
          * @return end_timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set end_timestamp field
-         * 
+         *
          * @param endTimestamp The new endTimestamp value to be set
          */
         set(endTimestamp) {
-            setFieldValue(3, 0, endTimestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(3, 0, endTimestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var endTimestampMs: Int?
         /**
          * Get end_timestamp_ms field
-         * 
+         *
          * @return end_timestamp_ms
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set end_timestamp_ms field
-         * 
+         *
          * @param endTimestampMs The new endTimestampMs value to be set
          */
         set(endTimestampMs) {
@@ -100,7 +100,7 @@ class VideoClipMesg : Mesg {
          * Get clip_start field
          * Units: ms
          * Comment: Start of clip in video time
-         * 
+         *
          * @return clip_start
          */
         get() = getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -108,7 +108,7 @@ class VideoClipMesg : Mesg {
          * Set clip_start field
          * Units: ms
          * Comment: Start of clip in video time
-         * 
+         *
          * @param clipStart The new clipStart value to be set
          */
         set(clipStart) {
@@ -120,7 +120,7 @@ class VideoClipMesg : Mesg {
          * Get clip_end field
          * Units: ms
          * Comment: End of clip in video time
-         * 
+         *
          * @return clip_end
          */
         get() = getFieldLongValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -128,7 +128,7 @@ class VideoClipMesg : Mesg {
          * Set clip_end field
          * Units: ms
          * Comment: End of clip in video time
-         * 
+         *
          * @param clipEnd The new clipEnd value to be set
          */
         set(clipEnd) {
@@ -151,11 +151,10 @@ class VideoClipMesg : Mesg {
         const val ClipEndFieldNum: Int = 7
 
 
-        val videoClipMesg: Mesg
+        // video_clip
+        val videoClipMesg: Mesg = Mesg("video_clip", MesgNum.VIDEO_CLIP)
 
         init {
-            // video_clip
-            videoClipMesg = Mesg("video_clip", MesgNum.VIDEO_CLIP)
             videoClipMesg.addField(
                 Field(
                     "clip_number",

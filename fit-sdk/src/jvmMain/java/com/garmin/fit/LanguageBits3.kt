@@ -17,20 +17,19 @@ object LanguageBits3 {
     const val TAIWANESE: Short = 0x20
     const val THAI: Short = 0x40
     const val HEBREW: Short = 0x80
-    val INVALID: Short = Fit.UINT8Z_INVALID
+    const val INVALID: Short = Fit.UINT8Z_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(BULGARIAN, "BULGARIAN")
-        stringMap.put(ROMANIAN, "ROMANIAN")
-        stringMap.put(CHINESE, "CHINESE")
-        stringMap.put(JAPANESE, "JAPANESE")
-        stringMap.put(KOREAN, "KOREAN")
-        stringMap.put(TAIWANESE, "TAIWANESE")
-        stringMap.put(THAI, "THAI")
-        stringMap.put(HEBREW, "HEBREW")
+        stringMap[BULGARIAN] = "BULGARIAN"
+        stringMap[ROMANIAN] = "ROMANIAN"
+        stringMap[CHINESE] = "CHINESE"
+        stringMap[JAPANESE] = "JAPANESE"
+        stringMap[KOREAN] = "KOREAN"
+        stringMap[TAIWANESE] = "TAIWANESE"
+        stringMap[THAI] = "THAI"
+        stringMap[HEBREW] = "HEBREW"
     }
 
 
@@ -39,9 +38,9 @@ object LanguageBits3 {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -52,7 +51,7 @@ object LanguageBits3 {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

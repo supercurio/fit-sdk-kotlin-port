@@ -16,19 +16,18 @@ object RunExerciseName {
     const val RUN_OR_WALK: Int = 4
     const val SPEED_WALK: Int = 5
     const val WARM_UP: Int = 6
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = HashMap<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(RUN, "RUN")
-        stringMap.put(WALK, "WALK")
-        stringMap.put(JOG, "JOG")
-        stringMap.put(SPRINT, "SPRINT")
-        stringMap.put(RUN_OR_WALK, "RUN_OR_WALK")
-        stringMap.put(SPEED_WALK, "SPEED_WALK")
-        stringMap.put(WARM_UP, "WARM_UP")
+        stringMap[RUN] = "RUN"
+        stringMap[WALK] = "WALK"
+        stringMap[JOG] = "JOG"
+        stringMap[SPRINT] = "SPRINT"
+        stringMap[RUN_OR_WALK] = "RUN_OR_WALK"
+        stringMap[SPEED_WALK] = "SPEED_WALK"
+        stringMap[WARM_UP] = "WARM_UP"
     }
 
 
@@ -37,9 +36,9 @@ object RunExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -50,7 +49,7 @@ object RunExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

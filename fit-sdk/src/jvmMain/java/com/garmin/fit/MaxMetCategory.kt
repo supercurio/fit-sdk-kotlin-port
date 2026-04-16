@@ -21,7 +21,7 @@ enum class MaxMetCategory(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return MaxMetCategory.INVALID
+            return INVALID
         }
 
         /**

@@ -19,7 +19,7 @@ import java.io.InputStream
 object StreamHelpers {
     /**
      * Creates a java.io.ByteArrayInputStream from a file.
-     * 
+     *
      * @param fileName the name of the file
      * @return a java.io.ByteArrayInputStream containing the contents of the file
      * @throws IOException if an error occurs while creating a ByteArrayInputStream
@@ -27,14 +27,13 @@ object StreamHelpers {
     @JvmStatic
     @Throws(IOException::class)
     fun byteStreamFromFile(fileName: String): ByteArrayInputStream? {
-        var byteArrayInputStream: ByteArrayInputStream?
         val inputStream = FileInputStream(fileName)
         return byteStreamFromInputStream(inputStream)
     }
 
     /**
      * Creates a java.io.ByteArrayInputStream from a java.io.InputStream.
-     * 
+     *
      * @param inputStream the InputStream to be converted
      * @return a ByteArrayInputStream containing the contents of the file
      * @throws IOException if an error occurs while creating a ByteArrayInputStream
@@ -59,7 +58,7 @@ object StreamHelpers {
 
     /**
      * Creates a file and write the contents of a java.io.ByteArrayOutputStream to the file.
-     * 
+     *
      * @param csvStream the ByteArrayOutputStream to be written to the file.
      * @param outputFileName the name of the file to be created.
      * @param writeUTF8ByteOrderMark true if the UTF-8 byte order mark should be written to the file; false if not

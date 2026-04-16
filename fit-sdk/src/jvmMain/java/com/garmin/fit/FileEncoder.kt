@@ -16,13 +16,13 @@ import java.util.zip.CheckedOutputStream
 
 /**
  * Encodes message objects into a FIT binary file.
- * 
+ *
  */
 class FileEncoder : MesgListener, MesgDefinitionListener {
     private var file: File? = null
     private var out: CheckedOutputStream? = null
     private var crc16: CRC16? = null
-    private val lastMesgDefinition: Array<MesgDefinition?>? =
+    private val lastMesgDefinition: Array<MesgDefinition?> =
         arrayOfNulls<MesgDefinition>(Fit.MAX_LOCAL_MESGS)
     private var version: Fit.ProtocolVersion? = null
     private var validator: ProtocolValidator? = null
@@ -32,7 +32,7 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
     /**
      * Constructs a new File Encoder for specified file. Forces
      * ProtocolVersion.V1_0
-     * 
+     *
      * @param file
      * File to write
      */
@@ -40,14 +40,14 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
         """Encoder now supports encoding files of differing protocol
       versions, use {@link #FileEncoder(File, Fit.ProtocolVersion)} to ensure
       the encoder is validating your files correctly
-     
+
       """
     )
     constructor(file: File) : this(file, Fit.ProtocolVersion.V1_0)
 
     /**
      * Constructs a new File Encoder for specified file
-     * 
+     *
      * @param file
      * File to write
      * @param version
@@ -61,7 +61,7 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
 
     /**
      * Opens file for writing. If the file already exists it will be overwritten.
-     * 
+     *
      * @param file
      * file to write
      */
@@ -101,7 +101,7 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
 
             val header = byteArrayOf(
                 Fit.FILE_HDR_SIZE.toByte(),
-                version!!.getVersion().toByte(),
+                version!!.version.toByte(),
                 (Fit.PROFILE_VERSION and 0xFF).toByte(),
                 (Fit.PROFILE_VERSION shr 8).toByte(),
                 (dataSize and 0xFFL).toByte(),
@@ -116,7 +116,7 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
 
             raf.write(header)
             crc.update(header, 0, header.size)
-            crcValue = crc.getValue()
+            crcValue = crc.value
 
             raf.write((crcValue and 0xFFL).toByte().toInt())
             raf.write(((crcValue shr 8) and 0xFFL).toByte().toInt())
@@ -142,7 +142,7 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
 
     /**
      * Writes a message definition to the file.
-     * 
+     *
      * @param mesgDefinition
      * message definition object to write
      */
@@ -155,14 +155,14 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
             throw FitRuntimeException("Incompatible Protocol Features")
         }
 
-        mesgDefinition.write(out)
-        lastMesgDefinition!![mesgDefinition.localNum] = mesgDefinition
+        mesgDefinition.write(out!!)
+        lastMesgDefinition[mesgDefinition.localNum] = mesgDefinition
     }
 
     /**
      * Writes a message to the file.
      * Automatically writes message definition if required.
-     * 
+     *
      * @param mesg
      * message object to write
      */
@@ -175,19 +175,19 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
             throw FitRuntimeException("Incompatible Protocol Features")
         }
 
-        if ((lastMesgDefinition!![mesg.localNum] == null) || !lastMesgDefinition[mesg.localNum]!!.supports(
+        if ((lastMesgDefinition[mesg.localNum] == null) || !lastMesgDefinition[mesg.localNum]!!.supports(
                 mesg
             )
         ) {
             write(MesgDefinition(mesg))
         }
 
-        mesg.write(out, lastMesgDefinition[mesg.localNum])
+        mesg.write(out!!, lastMesgDefinition[mesg.localNum])
     }
 
     /**
      * Writes a list of messages to the file.
-     * 
+     *
      * @param mesgs
      * list message objects to write
      */
@@ -210,7 +210,7 @@ class FileEncoder : MesgListener, MesgDefinitionListener {
             writeFileHeader()
 
             // Write the CRC.
-            val crc = out!!.getChecksum().getValue()
+            val crc = out!!.checksum.value
             out!!.write((crc and 0xFFL).toInt())
             out!!.write(((crc shr 8) and 0xFFL).toInt())
 

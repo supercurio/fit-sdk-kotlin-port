@@ -63,65 +63,64 @@ object ExerciseCategory {
     const val RUN_INDOOR: Int = 52
     const val BIKE_OUTDOOR: Int = 53
     const val UNKNOWN: Int = 65534
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BENCH_PRESS, "BENCH_PRESS")
-        stringMap.put(CALF_RAISE, "CALF_RAISE")
-        stringMap.put(CARDIO, "CARDIO")
-        stringMap.put(CARRY, "CARRY")
-        stringMap.put(CHOP, "CHOP")
-        stringMap.put(CORE, "CORE")
-        stringMap.put(CRUNCH, "CRUNCH")
-        stringMap.put(CURL, "CURL")
-        stringMap.put(DEADLIFT, "DEADLIFT")
-        stringMap.put(FLYE, "FLYE")
-        stringMap.put(HIP_RAISE, "HIP_RAISE")
-        stringMap.put(HIP_STABILITY, "HIP_STABILITY")
-        stringMap.put(HIP_SWING, "HIP_SWING")
-        stringMap.put(HYPEREXTENSION, "HYPEREXTENSION")
-        stringMap.put(LATERAL_RAISE, "LATERAL_RAISE")
-        stringMap.put(LEG_CURL, "LEG_CURL")
-        stringMap.put(LEG_RAISE, "LEG_RAISE")
-        stringMap.put(LUNGE, "LUNGE")
-        stringMap.put(OLYMPIC_LIFT, "OLYMPIC_LIFT")
-        stringMap.put(PLANK, "PLANK")
-        stringMap.put(PLYO, "PLYO")
-        stringMap.put(PULL_UP, "PULL_UP")
-        stringMap.put(PUSH_UP, "PUSH_UP")
-        stringMap.put(ROW, "ROW")
-        stringMap.put(SHOULDER_PRESS, "SHOULDER_PRESS")
-        stringMap.put(SHOULDER_STABILITY, "SHOULDER_STABILITY")
-        stringMap.put(SHRUG, "SHRUG")
-        stringMap.put(SIT_UP, "SIT_UP")
-        stringMap.put(SQUAT, "SQUAT")
-        stringMap.put(TOTAL_BODY, "TOTAL_BODY")
-        stringMap.put(TRICEPS_EXTENSION, "TRICEPS_EXTENSION")
-        stringMap.put(WARM_UP, "WARM_UP")
-        stringMap.put(RUN, "RUN")
-        stringMap.put(BIKE, "BIKE")
-        stringMap.put(CARDIO_SENSORS, "CARDIO_SENSORS")
-        stringMap.put(MOVE, "MOVE")
-        stringMap.put(POSE, "POSE")
-        stringMap.put(BANDED_EXERCISES, "BANDED_EXERCISES")
-        stringMap.put(BATTLE_ROPE, "BATTLE_ROPE")
-        stringMap.put(ELLIPTICAL, "ELLIPTICAL")
-        stringMap.put(FLOOR_CLIMB, "FLOOR_CLIMB")
-        stringMap.put(INDOOR_BIKE, "INDOOR_BIKE")
-        stringMap.put(INDOOR_ROW, "INDOOR_ROW")
-        stringMap.put(LADDER, "LADDER")
-        stringMap.put(SANDBAG, "SANDBAG")
-        stringMap.put(SLED, "SLED")
-        stringMap.put(SLEDGE_HAMMER, "SLEDGE_HAMMER")
-        stringMap.put(STAIR_STEPPER, "STAIR_STEPPER")
-        stringMap.put(SUSPENSION, "SUSPENSION")
-        stringMap.put(TIRE, "TIRE")
-        stringMap.put(RUN_INDOOR, "RUN_INDOOR")
-        stringMap.put(BIKE_OUTDOOR, "BIKE_OUTDOOR")
-        stringMap.put(UNKNOWN, "UNKNOWN")
+        stringMap[BENCH_PRESS] = "BENCH_PRESS"
+        stringMap[CALF_RAISE] = "CALF_RAISE"
+        stringMap[CARDIO] = "CARDIO"
+        stringMap[CARRY] = "CARRY"
+        stringMap[CHOP] = "CHOP"
+        stringMap[CORE] = "CORE"
+        stringMap[CRUNCH] = "CRUNCH"
+        stringMap[CURL] = "CURL"
+        stringMap[DEADLIFT] = "DEADLIFT"
+        stringMap[FLYE] = "FLYE"
+        stringMap[HIP_RAISE] = "HIP_RAISE"
+        stringMap[HIP_STABILITY] = "HIP_STABILITY"
+        stringMap[HIP_SWING] = "HIP_SWING"
+        stringMap[HYPEREXTENSION] = "HYPEREXTENSION"
+        stringMap[LATERAL_RAISE] = "LATERAL_RAISE"
+        stringMap[LEG_CURL] = "LEG_CURL"
+        stringMap[LEG_RAISE] = "LEG_RAISE"
+        stringMap[LUNGE] = "LUNGE"
+        stringMap[OLYMPIC_LIFT] = "OLYMPIC_LIFT"
+        stringMap[PLANK] = "PLANK"
+        stringMap[PLYO] = "PLYO"
+        stringMap[PULL_UP] = "PULL_UP"
+        stringMap[PUSH_UP] = "PUSH_UP"
+        stringMap[ROW] = "ROW"
+        stringMap[SHOULDER_PRESS] = "SHOULDER_PRESS"
+        stringMap[SHOULDER_STABILITY] = "SHOULDER_STABILITY"
+        stringMap[SHRUG] = "SHRUG"
+        stringMap[SIT_UP] = "SIT_UP"
+        stringMap[SQUAT] = "SQUAT"
+        stringMap[TOTAL_BODY] = "TOTAL_BODY"
+        stringMap[TRICEPS_EXTENSION] = "TRICEPS_EXTENSION"
+        stringMap[WARM_UP] = "WARM_UP"
+        stringMap[RUN] = "RUN"
+        stringMap[BIKE] = "BIKE"
+        stringMap[CARDIO_SENSORS] = "CARDIO_SENSORS"
+        stringMap[MOVE] = "MOVE"
+        stringMap[POSE] = "POSE"
+        stringMap[BANDED_EXERCISES] = "BANDED_EXERCISES"
+        stringMap[BATTLE_ROPE] = "BATTLE_ROPE"
+        stringMap[ELLIPTICAL] = "ELLIPTICAL"
+        stringMap[FLOOR_CLIMB] = "FLOOR_CLIMB"
+        stringMap[INDOOR_BIKE] = "INDOOR_BIKE"
+        stringMap[INDOOR_ROW] = "INDOOR_ROW"
+        stringMap[LADDER] = "LADDER"
+        stringMap[SANDBAG] = "SANDBAG"
+        stringMap[SLED] = "SLED"
+        stringMap[SLEDGE_HAMMER] = "SLEDGE_HAMMER"
+        stringMap[STAIR_STEPPER] = "STAIR_STEPPER"
+        stringMap[SUSPENSION] = "SUSPENSION"
+        stringMap[TIRE] = "TIRE"
+        stringMap[RUN_INDOOR] = "RUN_INDOOR"
+        stringMap[BIKE_OUTDOOR] = "BIKE_OUTDOOR"
+        stringMap[UNKNOWN] = "UNKNOWN"
     }
 
 
@@ -130,9 +129,9 @@ object ExerciseCategory {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -143,7 +142,7 @@ object ExerciseCategory {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

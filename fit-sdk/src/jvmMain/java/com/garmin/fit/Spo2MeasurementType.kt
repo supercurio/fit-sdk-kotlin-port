@@ -23,7 +23,7 @@ enum class Spo2MeasurementType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return Spo2MeasurementType.INVALID
+            return INVALID
         }
 
         /**

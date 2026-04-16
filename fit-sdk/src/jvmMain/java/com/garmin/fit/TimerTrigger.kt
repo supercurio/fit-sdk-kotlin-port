@@ -22,7 +22,7 @@ enum class TimerTrigger(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return TimerTrigger.INVALID
+            return INVALID
         }
 
         /**

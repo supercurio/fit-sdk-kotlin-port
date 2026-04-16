@@ -45,54 +45,47 @@ object ShoulderStabilityExerciseName {
     const val CABLE_INTERNAL_ROTATION: Int = 33
     const val LYING_INTERNAL_ROTATION: Int = 34
     const val SEATED_DUMBBELL_INTERNAL_ROTATION: Int = 35
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(_90_DEGREE_CABLE_EXTERNAL_ROTATION, "_90_DEGREE_CABLE_EXTERNAL_ROTATION")
-        stringMap.put(BAND_EXTERNAL_ROTATION, "BAND_EXTERNAL_ROTATION")
-        stringMap.put(BAND_INTERNAL_ROTATION, "BAND_INTERNAL_ROTATION")
-        stringMap.put(
-            BENT_ARM_LATERAL_RAISE_AND_EXTERNAL_ROTATION,
-            "BENT_ARM_LATERAL_RAISE_AND_EXTERNAL_ROTATION"
-        )
-        stringMap.put(CABLE_EXTERNAL_ROTATION, "CABLE_EXTERNAL_ROTATION")
-        stringMap.put(
-            DUMBBELL_FACE_PULL_WITH_EXTERNAL_ROTATION,
-            "DUMBBELL_FACE_PULL_WITH_EXTERNAL_ROTATION"
-        )
-        stringMap.put(FLOOR_I_RAISE, "FLOOR_I_RAISE")
-        stringMap.put(WEIGHTED_FLOOR_I_RAISE, "WEIGHTED_FLOOR_I_RAISE")
-        stringMap.put(FLOOR_T_RAISE, "FLOOR_T_RAISE")
-        stringMap.put(WEIGHTED_FLOOR_T_RAISE, "WEIGHTED_FLOOR_T_RAISE")
-        stringMap.put(FLOOR_Y_RAISE, "FLOOR_Y_RAISE")
-        stringMap.put(WEIGHTED_FLOOR_Y_RAISE, "WEIGHTED_FLOOR_Y_RAISE")
-        stringMap.put(INCLINE_I_RAISE, "INCLINE_I_RAISE")
-        stringMap.put(WEIGHTED_INCLINE_I_RAISE, "WEIGHTED_INCLINE_I_RAISE")
-        stringMap.put(INCLINE_L_RAISE, "INCLINE_L_RAISE")
-        stringMap.put(WEIGHTED_INCLINE_L_RAISE, "WEIGHTED_INCLINE_L_RAISE")
-        stringMap.put(INCLINE_T_RAISE, "INCLINE_T_RAISE")
-        stringMap.put(WEIGHTED_INCLINE_T_RAISE, "WEIGHTED_INCLINE_T_RAISE")
-        stringMap.put(INCLINE_W_RAISE, "INCLINE_W_RAISE")
-        stringMap.put(WEIGHTED_INCLINE_W_RAISE, "WEIGHTED_INCLINE_W_RAISE")
-        stringMap.put(INCLINE_Y_RAISE, "INCLINE_Y_RAISE")
-        stringMap.put(WEIGHTED_INCLINE_Y_RAISE, "WEIGHTED_INCLINE_Y_RAISE")
-        stringMap.put(LYING_EXTERNAL_ROTATION, "LYING_EXTERNAL_ROTATION")
-        stringMap.put(SEATED_DUMBBELL_EXTERNAL_ROTATION, "SEATED_DUMBBELL_EXTERNAL_ROTATION")
-        stringMap.put(STANDING_L_RAISE, "STANDING_L_RAISE")
-        stringMap.put(SWISS_BALL_I_RAISE, "SWISS_BALL_I_RAISE")
-        stringMap.put(WEIGHTED_SWISS_BALL_I_RAISE, "WEIGHTED_SWISS_BALL_I_RAISE")
-        stringMap.put(SWISS_BALL_T_RAISE, "SWISS_BALL_T_RAISE")
-        stringMap.put(WEIGHTED_SWISS_BALL_T_RAISE, "WEIGHTED_SWISS_BALL_T_RAISE")
-        stringMap.put(SWISS_BALL_W_RAISE, "SWISS_BALL_W_RAISE")
-        stringMap.put(WEIGHTED_SWISS_BALL_W_RAISE, "WEIGHTED_SWISS_BALL_W_RAISE")
-        stringMap.put(SWISS_BALL_Y_RAISE, "SWISS_BALL_Y_RAISE")
-        stringMap.put(WEIGHTED_SWISS_BALL_Y_RAISE, "WEIGHTED_SWISS_BALL_Y_RAISE")
-        stringMap.put(CABLE_INTERNAL_ROTATION, "CABLE_INTERNAL_ROTATION")
-        stringMap.put(LYING_INTERNAL_ROTATION, "LYING_INTERNAL_ROTATION")
-        stringMap.put(SEATED_DUMBBELL_INTERNAL_ROTATION, "SEATED_DUMBBELL_INTERNAL_ROTATION")
+        stringMap[_90_DEGREE_CABLE_EXTERNAL_ROTATION] = "_90_DEGREE_CABLE_EXTERNAL_ROTATION"
+        stringMap[BAND_EXTERNAL_ROTATION] = "BAND_EXTERNAL_ROTATION"
+        stringMap[BAND_INTERNAL_ROTATION] = "BAND_INTERNAL_ROTATION"
+        stringMap[BENT_ARM_LATERAL_RAISE_AND_EXTERNAL_ROTATION] = "BENT_ARM_LATERAL_RAISE_AND_EXTERNAL_ROTATION"
+        stringMap[CABLE_EXTERNAL_ROTATION] = "CABLE_EXTERNAL_ROTATION"
+        stringMap[DUMBBELL_FACE_PULL_WITH_EXTERNAL_ROTATION] = "DUMBBELL_FACE_PULL_WITH_EXTERNAL_ROTATION"
+        stringMap[FLOOR_I_RAISE] = "FLOOR_I_RAISE"
+        stringMap[WEIGHTED_FLOOR_I_RAISE] = "WEIGHTED_FLOOR_I_RAISE"
+        stringMap[FLOOR_T_RAISE] = "FLOOR_T_RAISE"
+        stringMap[WEIGHTED_FLOOR_T_RAISE] = "WEIGHTED_FLOOR_T_RAISE"
+        stringMap[FLOOR_Y_RAISE] = "FLOOR_Y_RAISE"
+        stringMap[WEIGHTED_FLOOR_Y_RAISE] = "WEIGHTED_FLOOR_Y_RAISE"
+        stringMap[INCLINE_I_RAISE] = "INCLINE_I_RAISE"
+        stringMap[WEIGHTED_INCLINE_I_RAISE] = "WEIGHTED_INCLINE_I_RAISE"
+        stringMap[INCLINE_L_RAISE] = "INCLINE_L_RAISE"
+        stringMap[WEIGHTED_INCLINE_L_RAISE] = "WEIGHTED_INCLINE_L_RAISE"
+        stringMap[INCLINE_T_RAISE] = "INCLINE_T_RAISE"
+        stringMap[WEIGHTED_INCLINE_T_RAISE] = "WEIGHTED_INCLINE_T_RAISE"
+        stringMap[INCLINE_W_RAISE] = "INCLINE_W_RAISE"
+        stringMap[WEIGHTED_INCLINE_W_RAISE] = "WEIGHTED_INCLINE_W_RAISE"
+        stringMap[INCLINE_Y_RAISE] = "INCLINE_Y_RAISE"
+        stringMap[WEIGHTED_INCLINE_Y_RAISE] = "WEIGHTED_INCLINE_Y_RAISE"
+        stringMap[LYING_EXTERNAL_ROTATION] = "LYING_EXTERNAL_ROTATION"
+        stringMap[SEATED_DUMBBELL_EXTERNAL_ROTATION] = "SEATED_DUMBBELL_EXTERNAL_ROTATION"
+        stringMap[STANDING_L_RAISE] = "STANDING_L_RAISE"
+        stringMap[SWISS_BALL_I_RAISE] = "SWISS_BALL_I_RAISE"
+        stringMap[WEIGHTED_SWISS_BALL_I_RAISE] = "WEIGHTED_SWISS_BALL_I_RAISE"
+        stringMap[SWISS_BALL_T_RAISE] = "SWISS_BALL_T_RAISE"
+        stringMap[WEIGHTED_SWISS_BALL_T_RAISE] = "WEIGHTED_SWISS_BALL_T_RAISE"
+        stringMap[SWISS_BALL_W_RAISE] = "SWISS_BALL_W_RAISE"
+        stringMap[WEIGHTED_SWISS_BALL_W_RAISE] = "WEIGHTED_SWISS_BALL_W_RAISE"
+        stringMap[SWISS_BALL_Y_RAISE] = "SWISS_BALL_Y_RAISE"
+        stringMap[WEIGHTED_SWISS_BALL_Y_RAISE] = "WEIGHTED_SWISS_BALL_Y_RAISE"
+        stringMap[CABLE_INTERNAL_ROTATION] = "CABLE_INTERNAL_ROTATION"
+        stringMap[LYING_INTERNAL_ROTATION] = "LYING_INTERNAL_ROTATION"
+        stringMap[SEATED_DUMBBELL_INTERNAL_ROTATION] = "SEATED_DUMBBELL_INTERNAL_ROTATION"
     }
 
 
@@ -101,9 +94,9 @@ object ShoulderStabilityExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -114,7 +107,7 @@ object ShoulderStabilityExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

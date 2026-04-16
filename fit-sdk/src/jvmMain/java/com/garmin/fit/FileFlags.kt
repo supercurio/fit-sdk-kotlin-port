@@ -12,15 +12,14 @@ object FileFlags {
     const val READ: Short = 0x02
     const val WRITE: Short = 0x04
     const val ERASE: Short = 0x08
-    val INVALID: Short = Fit.UINT8Z_INVALID
+    const val INVALID: Short = Fit.UINT8Z_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(READ, "READ")
-        stringMap.put(WRITE, "WRITE")
-        stringMap.put(ERASE, "ERASE")
+        stringMap[READ] = "READ"
+        stringMap[WRITE] = "WRITE"
+        stringMap[ERASE] = "ERASE"
     }
 
 
@@ -29,9 +28,9 @@ object FileFlags {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -42,7 +41,7 @@ object FileFlags {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

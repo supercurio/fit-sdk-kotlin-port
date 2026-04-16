@@ -23,7 +23,7 @@ enum class RadarThreatLevelType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return RadarThreatLevelType.INVALID
+            return INVALID
         }
 
         /**

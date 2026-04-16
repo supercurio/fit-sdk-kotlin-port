@@ -12,23 +12,23 @@ package com.garmin.fit
 class HrvStatusSummaryMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HRV_STATUS_SUMMARY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var weeklyAverage: Float?
@@ -36,7 +36,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Get weekly_average field
          * Units: ms
          * Comment: 7 day RMSSD average over sleep
-         * 
+         *
          * @return weekly_average
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,7 +44,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Set weekly_average field
          * Units: ms
          * Comment: 7 day RMSSD average over sleep
-         * 
+         *
          * @param weeklyAverage The new weeklyAverage value to be set
          */
         set(weeklyAverage) {
@@ -56,7 +56,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Get last_night_average field
          * Units: ms
          * Comment: Last night RMSSD average over sleep
-         * 
+         *
          * @return last_night_average
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -64,7 +64,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Set last_night_average field
          * Units: ms
          * Comment: Last night RMSSD average over sleep
-         * 
+         *
          * @param lastNightAverage The new lastNightAverage value to be set
          */
         set(lastNightAverage) {
@@ -76,7 +76,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Get last_night_5_min_high field
          * Units: ms
          * Comment: 5 minute high RMSSD value over sleep
-         * 
+         *
          * @return last_night_5_min_high
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -84,7 +84,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Set last_night_5_min_high field
          * Units: ms
          * Comment: 5 minute high RMSSD value over sleep
-         * 
+         *
          * @param lastNight5MinHigh The new lastNight5MinHigh value to be set
          */
         set(lastNight5MinHigh) {
@@ -96,7 +96,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Get baseline_low_upper field
          * Units: ms
          * Comment: 3 week baseline, upper boundary of low HRV status
-         * 
+         *
          * @return baseline_low_upper
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -104,7 +104,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Set baseline_low_upper field
          * Units: ms
          * Comment: 3 week baseline, upper boundary of low HRV status
-         * 
+         *
          * @param baselineLowUpper The new baselineLowUpper value to be set
          */
         set(baselineLowUpper) {
@@ -116,7 +116,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Get baseline_balanced_lower field
          * Units: ms
          * Comment: 3 week baseline, lower boundary of balanced HRV status
-         * 
+         *
          * @return baseline_balanced_lower
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -124,7 +124,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Set baseline_balanced_lower field
          * Units: ms
          * Comment: 3 week baseline, lower boundary of balanced HRV status
-         * 
+         *
          * @param baselineBalancedLower The new baselineBalancedLower value to be set
          */
         set(baselineBalancedLower) {
@@ -136,7 +136,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Get baseline_balanced_upper field
          * Units: ms
          * Comment: 3 week baseline, upper boundary of balanced HRV status
-         * 
+         *
          * @return baseline_balanced_upper
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -144,7 +144,7 @@ class HrvStatusSummaryMesg : Mesg {
          * Set baseline_balanced_upper field
          * Units: ms
          * Comment: 3 week baseline, upper boundary of balanced HRV status
-         * 
+         *
          * @param baselineBalancedUpper The new baselineBalancedUpper value to be set
          */
         set(baselineBalancedUpper) {
@@ -154,19 +154,16 @@ class HrvStatusSummaryMesg : Mesg {
     var status: HrvStatus?
         /**
          * Get status field
-         * 
+         *
          * @return status
          */
         get() {
-            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return HrvStatus.Companion.getByValue(value)
+            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return HrvStatus.getByValue(value)
         }
         /**
          * Set status field
-         * 
+         *
          * @param status The new status value to be set
          */
         set(status) {
@@ -191,11 +188,10 @@ class HrvStatusSummaryMesg : Mesg {
         const val StatusFieldNum: Int = 6
 
 
-        val hrvStatusSummaryMesg: Mesg
+        // hrv_status_summary
+        val hrvStatusSummaryMesg: Mesg = Mesg("hrv_status_summary", MesgNum.HRV_STATUS_SUMMARY)
 
         init {
-            // hrv_status_summary
-            hrvStatusSummaryMesg = Mesg("hrv_status_summary", MesgNum.HRV_STATUS_SUMMARY)
             hrvStatusSummaryMesg.addField(
                 Field(
                     "timestamp",

@@ -12,19 +12,19 @@ package com.garmin.fit
 class ExdDataConceptConfigurationMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.EXD_DATA_CONCEPT_CONFIGURATION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var screenIndex: Short?
         /**
          * Get screen_index field
-         * 
+         *
          * @return screen_index
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set screen_index field
-         * 
+         *
          * @param screenIndex The new screenIndex value to be set
          */
         set(screenIndex) {
@@ -34,13 +34,13 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var conceptField: Byte?
         /**
          * Get concept_field field
-         * 
+         *
          * @return concept_field
          */
         get() = getFieldByteValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set concept_field field
-         * 
+         *
          * @param conceptField The new conceptField value to be set
          */
         set(conceptField) {
@@ -50,13 +50,13 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var fieldId: Short?
         /**
          * Get field_id field
-         * 
+         *
          * @return field_id
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set field_id field
-         * 
+         *
          * @param fieldId The new fieldId value to be set
          */
         set(fieldId) {
@@ -66,13 +66,13 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var conceptIndex: Short?
         /**
          * Get concept_index field
-         * 
+         *
          * @return concept_index
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set concept_index field
-         * 
+         *
          * @param conceptIndex The new conceptIndex value to be set
          */
         set(conceptIndex) {
@@ -82,13 +82,13 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var dataPage: Short?
         /**
          * Get data_page field
-         * 
+         *
          * @return data_page
          */
         get() = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set data_page field
-         * 
+         *
          * @param dataPage The new dataPage value to be set
          */
         set(dataPage) {
@@ -98,13 +98,13 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var conceptKey: Short?
         /**
          * Get concept_key field
-         * 
+         *
          * @return concept_key
          */
         get() = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set concept_key field
-         * 
+         *
          * @param conceptKey The new conceptKey value to be set
          */
         set(conceptKey) {
@@ -114,13 +114,13 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var scaling: Short?
         /**
          * Get scaling field
-         * 
+         *
          * @return scaling
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set scaling field
-         * 
+         *
          * @param scaling The new scaling value to be set
          */
         set(scaling) {
@@ -130,19 +130,16 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var dataUnits: ExdDataUnits?
         /**
          * Get data_units field
-         * 
+         *
          * @return data_units
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ExdDataUnits.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ExdDataUnits.getByValue(value)
         }
         /**
          * Set data_units field
-         * 
+         *
          * @param dataUnits The new dataUnits value to be set
          */
         set(dataUnits) {
@@ -152,19 +149,16 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var qualifier: ExdQualifiers?
         /**
          * Get qualifier field
-         * 
+         *
          * @return qualifier
          */
         get() {
-            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ExdQualifiers.Companion.getByValue(value)
+            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ExdQualifiers.getByValue(value)
         }
         /**
          * Set qualifier field
-         * 
+         *
          * @param qualifier The new qualifier value to be set
          */
         set(qualifier) {
@@ -174,19 +168,16 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var descriptor: ExdDescriptors?
         /**
          * Get descriptor field
-         * 
+         *
          * @return descriptor
          */
         get() {
-            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ExdDescriptors.Companion.getByValue(value)
+            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ExdDescriptors.getByValue(value)
         }
         /**
          * Set descriptor field
-         * 
+         *
          * @param descriptor The new descriptor value to be set
          */
         set(descriptor) {
@@ -196,19 +187,16 @@ class ExdDataConceptConfigurationMesg : Mesg {
     var isSigned: Bool?
         /**
          * Get is_signed field
-         * 
+         *
          * @return is_signed
          */
         get() {
-            val value = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set is_signed field
-         * 
+         *
          * @param isSigned The new isSigned value to be set
          */
         set(isSigned) {
@@ -271,7 +259,7 @@ class ExdDataConceptConfigurationMesg : Mesg {
                     Profile.Type.BYTE
                 )
             )
-            exdDataConceptConfigurationMesg.fields.get(field_index).components.add(
+            exdDataConceptConfigurationMesg.fields[field_index].components.add(
                 FieldComponent(
                     2,
                     false,
@@ -280,7 +268,7 @@ class ExdDataConceptConfigurationMesg : Mesg {
                     0.0
                 )
             ) // field_id
-            exdDataConceptConfigurationMesg.fields.get(field_index).components.add(
+            exdDataConceptConfigurationMesg.fields[field_index].components.add(
                 FieldComponent(
                     3,
                     false,

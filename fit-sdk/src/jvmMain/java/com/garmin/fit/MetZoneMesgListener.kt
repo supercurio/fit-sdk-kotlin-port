@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MetZoneMesgListener {
-    fun onMesg(mesg: MetZoneMesg?)
+    fun onMesg(mesg: MetZoneMesg)
 }

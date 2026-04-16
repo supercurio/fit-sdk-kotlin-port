@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MagnetometerDataMesgListener {
-    fun onMesg(mesg: MagnetometerDataMesg?)
+    fun onMesg(mesg: MagnetometerDataMesg)
 }

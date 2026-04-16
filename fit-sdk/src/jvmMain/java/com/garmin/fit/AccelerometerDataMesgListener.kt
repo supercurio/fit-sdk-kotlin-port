@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface AccelerometerDataMesgListener {
-    fun onMesg(mesg: AccelerometerDataMesg?)
+    fun onMesg(mesg: AccelerometerDataMesg)
 }

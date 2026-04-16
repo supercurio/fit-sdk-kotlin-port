@@ -20,7 +20,7 @@ enum class TissueModelType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return TissueModelType.INVALID
+            return INVALID
         }
 
         /**

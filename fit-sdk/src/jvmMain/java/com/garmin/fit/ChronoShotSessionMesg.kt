@@ -12,37 +12,37 @@ package com.garmin.fit
 class ChronoShotSessionMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CHRONO_SHOT_SESSION))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var minSpeed: Float?
         /**
          * Get min_speed field
          * Units: m/s
-         * 
+         *
          * @return min_speed
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set min_speed field
          * Units: m/s
-         * 
+         *
          * @param minSpeed The new minSpeed value to be set
          */
         set(minSpeed) {
@@ -53,14 +53,14 @@ class ChronoShotSessionMesg : Mesg {
         /**
          * Get max_speed field
          * Units: m/s
-         * 
+         *
          * @return max_speed
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_speed field
          * Units: m/s
-         * 
+         *
          * @param maxSpeed The new maxSpeed value to be set
          */
         set(maxSpeed) {
@@ -71,14 +71,14 @@ class ChronoShotSessionMesg : Mesg {
         /**
          * Get avg_speed field
          * Units: m/s
-         * 
+         *
          * @return avg_speed
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_speed field
          * Units: m/s
-         * 
+         *
          * @param avgSpeed The new avgSpeed value to be set
          */
         set(avgSpeed) {
@@ -88,13 +88,13 @@ class ChronoShotSessionMesg : Mesg {
     var shotCount: Int?
         /**
          * Get shot_count field
-         * 
+         *
          * @return shot_count
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set shot_count field
-         * 
+         *
          * @param shotCount The new shotCount value to be set
          */
         set(shotCount) {
@@ -104,19 +104,16 @@ class ChronoShotSessionMesg : Mesg {
     var projectileType: ProjectileType?
         /**
          * Get projectile_type field
-         * 
+         *
          * @return projectile_type
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ProjectileType.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ProjectileType.getByValue(value)
         }
         /**
          * Set projectile_type field
-         * 
+         *
          * @param projectileType The new projectileType value to be set
          */
         set(projectileType) {
@@ -127,14 +124,14 @@ class ChronoShotSessionMesg : Mesg {
         /**
          * Get grain_weight field
          * Units: gr
-         * 
+         *
          * @return grain_weight
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set grain_weight field
          * Units: gr
-         * 
+         *
          * @param grainWeight The new grainWeight value to be set
          */
         set(grainWeight) {
@@ -145,14 +142,14 @@ class ChronoShotSessionMesg : Mesg {
         /**
          * Get standard_deviation field
          * Units: m/s
-         * 
+         *
          * @return standard_deviation
          */
         get() = getFieldFloatValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set standard_deviation field
          * Units: m/s
-         * 
+         *
          * @param standardDeviation The new standardDeviation value to be set
          */
         set(standardDeviation) {
@@ -177,11 +174,10 @@ class ChronoShotSessionMesg : Mesg {
         const val StandardDeviationFieldNum: Int = 6
 
 
-        val chronoShotSessionMesg: Mesg
+        // chrono_shot_session
+        val chronoShotSessionMesg: Mesg = Mesg("chrono_shot_session", MesgNum.CHRONO_SHOT_SESSION)
 
         init {
-            // chrono_shot_session
-            chronoShotSessionMesg = Mesg("chrono_shot_session", MesgNum.CHRONO_SHOT_SESSION)
             chronoShotSessionMesg.addField(
                 Field(
                     "timestamp",

@@ -22,7 +22,7 @@ enum class GoalSource(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return GoalSource.INVALID
+            return INVALID
         }
 
         /**

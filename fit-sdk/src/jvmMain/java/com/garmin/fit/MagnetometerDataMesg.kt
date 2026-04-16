@@ -12,7 +12,7 @@ package com.garmin.fit
 class MagnetometerDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MAGNETOMETER_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class MagnetometerDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class MagnetometerDataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class MagnetometerDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,14 +48,14 @@ class MagnetometerDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val sampleTimeOffset: Array<Int?>?
+    val sampleTimeOffset: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSampleTimeOffset: Int
@@ -68,7 +68,7 @@ class MagnetometerDataMesg : Mesg {
      * Get sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the compass sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in cmps_x and cmps_y and cmps_z
-     * 
+     *
      * @param index of sample_time_offset
      * @return sample_time_offset
      */
@@ -80,7 +80,7 @@ class MagnetometerDataMesg : Mesg {
      * Set sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the compass sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in cmps_x and cmps_y and cmps_z
-     * 
+     *
      * @param index of sample_time_offset
      * @param sampleTimeOffset The new sampleTimeOffset value to be set
      */
@@ -88,7 +88,7 @@ class MagnetometerDataMesg : Mesg {
         setFieldValue(1, index, sampleTimeOffset, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val magX: Array<Int?>?
+    val magX: Array<Int>?
         get() = getFieldIntegerValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMagX: Int
@@ -101,7 +101,7 @@ class MagnetometerDataMesg : Mesg {
      * Get mag_x field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of mag_x
      * @return mag_x
      */
@@ -113,7 +113,7 @@ class MagnetometerDataMesg : Mesg {
      * Set mag_x field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of mag_x
      * @param magX The new magX value to be set
      */
@@ -121,7 +121,7 @@ class MagnetometerDataMesg : Mesg {
         setFieldValue(2, index, magX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val magY: Array<Int?>?
+    val magY: Array<Int>?
         get() = getFieldIntegerValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMagY: Int
@@ -134,7 +134,7 @@ class MagnetometerDataMesg : Mesg {
      * Get mag_y field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of mag_y
      * @return mag_y
      */
@@ -146,7 +146,7 @@ class MagnetometerDataMesg : Mesg {
      * Set mag_y field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of mag_y
      * @param magY The new magY value to be set
      */
@@ -154,7 +154,7 @@ class MagnetometerDataMesg : Mesg {
         setFieldValue(3, index, magY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val magZ: Array<Int?>?
+    val magZ: Array<Int>?
         get() = getFieldIntegerValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMagZ: Int
@@ -167,7 +167,7 @@ class MagnetometerDataMesg : Mesg {
      * Get mag_z field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of mag_z
      * @return mag_z
      */
@@ -179,7 +179,7 @@ class MagnetometerDataMesg : Mesg {
      * Set mag_z field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of mag_z
      * @param magZ The new magZ value to be set
      */
@@ -187,7 +187,7 @@ class MagnetometerDataMesg : Mesg {
         setFieldValue(4, index, magZ, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedMagX: Array<Float?>?
+    val calibratedMagX: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedMagX: Int
@@ -200,7 +200,7 @@ class MagnetometerDataMesg : Mesg {
      * Get calibrated_mag_x field
      * Units: G
      * Comment: Calibrated Magnetometer reading
-     * 
+     *
      * @param index of calibrated_mag_x
      * @return calibrated_mag_x
      */
@@ -212,7 +212,7 @@ class MagnetometerDataMesg : Mesg {
      * Set calibrated_mag_x field
      * Units: G
      * Comment: Calibrated Magnetometer reading
-     * 
+     *
      * @param index of calibrated_mag_x
      * @param calibratedMagX The new calibratedMagX value to be set
      */
@@ -220,7 +220,7 @@ class MagnetometerDataMesg : Mesg {
         setFieldValue(5, index, calibratedMagX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedMagY: Array<Float?>?
+    val calibratedMagY: Array<Float>?
         get() = getFieldFloatValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedMagY: Int
@@ -233,7 +233,7 @@ class MagnetometerDataMesg : Mesg {
      * Get calibrated_mag_y field
      * Units: G
      * Comment: Calibrated Magnetometer reading
-     * 
+     *
      * @param index of calibrated_mag_y
      * @return calibrated_mag_y
      */
@@ -245,7 +245,7 @@ class MagnetometerDataMesg : Mesg {
      * Set calibrated_mag_y field
      * Units: G
      * Comment: Calibrated Magnetometer reading
-     * 
+     *
      * @param index of calibrated_mag_y
      * @param calibratedMagY The new calibratedMagY value to be set
      */
@@ -253,7 +253,7 @@ class MagnetometerDataMesg : Mesg {
         setFieldValue(6, index, calibratedMagY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedMagZ: Array<Float?>?
+    val calibratedMagZ: Array<Float>?
         get() = getFieldFloatValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedMagZ: Int
@@ -266,7 +266,7 @@ class MagnetometerDataMesg : Mesg {
      * Get calibrated_mag_z field
      * Units: G
      * Comment: Calibrated Magnetometer reading
-     * 
+     *
      * @param index of calibrated_mag_z
      * @return calibrated_mag_z
      */
@@ -278,7 +278,7 @@ class MagnetometerDataMesg : Mesg {
      * Set calibrated_mag_z field
      * Units: G
      * Comment: Calibrated Magnetometer reading
-     * 
+     *
      * @param index of calibrated_mag_z
      * @param calibratedMagZ The new calibratedMagZ value to be set
      */
@@ -306,11 +306,10 @@ class MagnetometerDataMesg : Mesg {
         const val CalibratedMagZFieldNum: Int = 7
 
 
-        val magnetometerDataMesg: Mesg
+        // magnetometer_data
+        val magnetometerDataMesg: Mesg = Mesg("magnetometer_data", MesgNum.MAGNETOMETER_DATA)
 
         init {
-            // magnetometer_data
-            magnetometerDataMesg = Mesg("magnetometer_data", MesgNum.MAGNETOMETER_DATA)
             magnetometerDataMesg.addField(
                 Field(
                     "timestamp",

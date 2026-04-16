@@ -12,7 +12,7 @@ package com.garmin.fit
 class GyroscopeDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.GYROSCOPE_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class GyroscopeDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class GyroscopeDataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class GyroscopeDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,14 +48,14 @@ class GyroscopeDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val sampleTimeOffset: Array<Int?>?
+    val sampleTimeOffset: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSampleTimeOffset: Int
@@ -68,7 +68,7 @@ class GyroscopeDataMesg : Mesg {
      * Get sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the gyro sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in gyro_x and gyro_y and gyro_z
-     * 
+     *
      * @param index of sample_time_offset
      * @return sample_time_offset
      */
@@ -80,7 +80,7 @@ class GyroscopeDataMesg : Mesg {
      * Set sample_time_offset field
      * Units: ms
      * Comment: Each time in the array describes the time at which the gyro sample with the corrosponding index was taken. Limited to 30 samples in each message. The samples may span across seconds. Array size must match the number of samples in gyro_x and gyro_y and gyro_z
-     * 
+     *
      * @param index of sample_time_offset
      * @param sampleTimeOffset The new sampleTimeOffset value to be set
      */
@@ -88,7 +88,7 @@ class GyroscopeDataMesg : Mesg {
         setFieldValue(1, index, sampleTimeOffset, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val gyroX: Array<Int?>?
+    val gyroX: Array<Int>?
         get() = getFieldIntegerValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGyroX: Int
@@ -101,7 +101,7 @@ class GyroscopeDataMesg : Mesg {
      * Get gyro_x field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of gyro_x
      * @return gyro_x
      */
@@ -113,7 +113,7 @@ class GyroscopeDataMesg : Mesg {
      * Set gyro_x field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of gyro_x
      * @param gyroX The new gyroX value to be set
      */
@@ -121,7 +121,7 @@ class GyroscopeDataMesg : Mesg {
         setFieldValue(2, index, gyroX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val gyroY: Array<Int?>?
+    val gyroY: Array<Int>?
         get() = getFieldIntegerValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGyroY: Int
@@ -134,7 +134,7 @@ class GyroscopeDataMesg : Mesg {
      * Get gyro_y field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of gyro_y
      * @return gyro_y
      */
@@ -146,7 +146,7 @@ class GyroscopeDataMesg : Mesg {
      * Set gyro_y field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of gyro_y
      * @param gyroY The new gyroY value to be set
      */
@@ -154,7 +154,7 @@ class GyroscopeDataMesg : Mesg {
         setFieldValue(3, index, gyroY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val gyroZ: Array<Int?>?
+    val gyroZ: Array<Int>?
         get() = getFieldIntegerValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGyroZ: Int
@@ -167,7 +167,7 @@ class GyroscopeDataMesg : Mesg {
      * Get gyro_z field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of gyro_z
      * @return gyro_z
      */
@@ -179,7 +179,7 @@ class GyroscopeDataMesg : Mesg {
      * Set gyro_z field
      * Units: counts
      * Comment: These are the raw ADC reading. Maximum number of samples is 30 in each message. The samples may span across seconds. A conversion will need to be done on this data once read.
-     * 
+     *
      * @param index of gyro_z
      * @param gyroZ The new gyroZ value to be set
      */
@@ -187,7 +187,7 @@ class GyroscopeDataMesg : Mesg {
         setFieldValue(4, index, gyroZ, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedGyroX: Array<Float?>?
+    val calibratedGyroX: Array<Float>?
         get() = getFieldFloatValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedGyroX: Int
@@ -200,7 +200,7 @@ class GyroscopeDataMesg : Mesg {
      * Get calibrated_gyro_x field
      * Units: deg/s
      * Comment: Calibrated gyro reading
-     * 
+     *
      * @param index of calibrated_gyro_x
      * @return calibrated_gyro_x
      */
@@ -212,7 +212,7 @@ class GyroscopeDataMesg : Mesg {
      * Set calibrated_gyro_x field
      * Units: deg/s
      * Comment: Calibrated gyro reading
-     * 
+     *
      * @param index of calibrated_gyro_x
      * @param calibratedGyroX The new calibratedGyroX value to be set
      */
@@ -220,7 +220,7 @@ class GyroscopeDataMesg : Mesg {
         setFieldValue(5, index, calibratedGyroX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedGyroY: Array<Float?>?
+    val calibratedGyroY: Array<Float>?
         get() = getFieldFloatValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedGyroY: Int
@@ -233,7 +233,7 @@ class GyroscopeDataMesg : Mesg {
      * Get calibrated_gyro_y field
      * Units: deg/s
      * Comment: Calibrated gyro reading
-     * 
+     *
      * @param index of calibrated_gyro_y
      * @return calibrated_gyro_y
      */
@@ -245,7 +245,7 @@ class GyroscopeDataMesg : Mesg {
      * Set calibrated_gyro_y field
      * Units: deg/s
      * Comment: Calibrated gyro reading
-     * 
+     *
      * @param index of calibrated_gyro_y
      * @param calibratedGyroY The new calibratedGyroY value to be set
      */
@@ -253,7 +253,7 @@ class GyroscopeDataMesg : Mesg {
         setFieldValue(6, index, calibratedGyroY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val calibratedGyroZ: Array<Float?>?
+    val calibratedGyroZ: Array<Float>?
         get() = getFieldFloatValues(7, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCalibratedGyroZ: Int
@@ -266,7 +266,7 @@ class GyroscopeDataMesg : Mesg {
      * Get calibrated_gyro_z field
      * Units: deg/s
      * Comment: Calibrated gyro reading
-     * 
+     *
      * @param index of calibrated_gyro_z
      * @return calibrated_gyro_z
      */
@@ -278,7 +278,7 @@ class GyroscopeDataMesg : Mesg {
      * Set calibrated_gyro_z field
      * Units: deg/s
      * Comment: Calibrated gyro reading
-     * 
+     *
      * @param index of calibrated_gyro_z
      * @param calibratedGyroZ The new calibratedGyroZ value to be set
      */
@@ -306,11 +306,10 @@ class GyroscopeDataMesg : Mesg {
         const val CalibratedGyroZFieldNum: Int = 7
 
 
-        val gyroscopeDataMesg: Mesg
+        // gyroscope_data
+        val gyroscopeDataMesg: Mesg = Mesg("gyroscope_data", MesgNum.GYROSCOPE_DATA)
 
         init {
-            // gyroscope_data
-            gyroscopeDataMesg = Mesg("gyroscope_data", MesgNum.GYROSCOPE_DATA)
             gyroscopeDataMesg.addField(
                 Field(
                     "timestamp",

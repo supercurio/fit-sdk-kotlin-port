@@ -12,19 +12,19 @@ package com.garmin.fit
 class HrZoneMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HR_ZONE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,37 +35,37 @@ class HrZoneMesg : Mesg {
         /**
          * Get high_bpm field
          * Units: bpm
-         * 
+         *
          * @return high_bpm
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set high_bpm field
          * Units: bpm
-         * 
+         *
          * @param highBpm The new highBpm value to be set
          */
         set(highBpm) {
             setFieldValue(1, 0, highBpm, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(2, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     companion object {
         const val MessageIndexFieldNum: Int = 254
@@ -75,11 +75,10 @@ class HrZoneMesg : Mesg {
         const val NameFieldNum: Int = 2
 
 
-        val hrZoneMesg: Mesg
+        // hr_zone
+        val hrZoneMesg: Mesg = Mesg("hr_zone", MesgNum.HR_ZONE)
 
         init {
-            // hr_zone
-            hrZoneMesg = Mesg("hr_zone", MesgNum.HR_ZONE)
             hrZoneMesg.addField(
                 Field(
                     "message_index",

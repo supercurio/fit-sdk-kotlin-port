@@ -72,7 +72,7 @@ enum class CoursePoint(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return CoursePoint.INVALID
+            return INVALID
         }
 
         /**

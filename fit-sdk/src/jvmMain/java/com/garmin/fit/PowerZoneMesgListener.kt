@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface PowerZoneMesgListener {
-    fun onMesg(mesg: PowerZoneMesg?)
+    fun onMesg(mesg: PowerZoneMesg)
 }

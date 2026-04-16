@@ -12,9 +12,9 @@ package com.garmin.fit
  * Defines the interface that must be implemented
  * to create an application specific plugin for
  * the BufferedMesgBroadcaster
- * 
+ *
  */
 interface MesgBroadcastPlugin {
-    fun onBroadcast(mesgs: MutableList<Mesg?>?)
-    fun onIncomingMesg(mesg: Mesg?)
+    fun onBroadcast(mesgs: MutableList<Mesg>)
+    fun onIncomingMesg(mesg: Mesg)
 }

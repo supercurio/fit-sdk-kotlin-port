@@ -22,7 +22,7 @@ enum class ActivityClass(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ActivityClass.INVALID
+            return INVALID
         }
 
         /**

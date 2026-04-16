@@ -40,55 +40,42 @@ object ShoulderPressExerciseName {
     const val DUMBBELL_CURL_TO_OVERHEAD_PRESS_WHEELCHAIR: Int = 29
     const val ARNOLD_PRESS_WHEELCHAIR: Int = 30
     const val OVERHEAD_DUMBBELL_PRESS_WHEELCHAIR: Int = 31
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(ALTERNATING_DUMBBELL_SHOULDER_PRESS, "ALTERNATING_DUMBBELL_SHOULDER_PRESS")
-        stringMap.put(ARNOLD_PRESS, "ARNOLD_PRESS")
-        stringMap.put(BARBELL_FRONT_SQUAT_TO_PUSH_PRESS, "BARBELL_FRONT_SQUAT_TO_PUSH_PRESS")
-        stringMap.put(BARBELL_PUSH_PRESS, "BARBELL_PUSH_PRESS")
-        stringMap.put(BARBELL_SHOULDER_PRESS, "BARBELL_SHOULDER_PRESS")
-        stringMap.put(DEAD_CURL_PRESS, "DEAD_CURL_PRESS")
-        stringMap.put(
-            DUMBBELL_ALTERNATING_SHOULDER_PRESS_AND_TWIST,
-            "DUMBBELL_ALTERNATING_SHOULDER_PRESS_AND_TWIST"
-        )
-        stringMap.put(
-            DUMBBELL_HAMMER_CURL_TO_LUNGE_TO_PRESS,
-            "DUMBBELL_HAMMER_CURL_TO_LUNGE_TO_PRESS"
-        )
-        stringMap.put(DUMBBELL_PUSH_PRESS, "DUMBBELL_PUSH_PRESS")
-        stringMap.put(FLOOR_INVERTED_SHOULDER_PRESS, "FLOOR_INVERTED_SHOULDER_PRESS")
-        stringMap.put(
-            WEIGHTED_FLOOR_INVERTED_SHOULDER_PRESS,
-            "WEIGHTED_FLOOR_INVERTED_SHOULDER_PRESS"
-        )
-        stringMap.put(INVERTED_SHOULDER_PRESS, "INVERTED_SHOULDER_PRESS")
-        stringMap.put(WEIGHTED_INVERTED_SHOULDER_PRESS, "WEIGHTED_INVERTED_SHOULDER_PRESS")
-        stringMap.put(ONE_ARM_PUSH_PRESS, "ONE_ARM_PUSH_PRESS")
-        stringMap.put(OVERHEAD_BARBELL_PRESS, "OVERHEAD_BARBELL_PRESS")
-        stringMap.put(OVERHEAD_DUMBBELL_PRESS, "OVERHEAD_DUMBBELL_PRESS")
-        stringMap.put(SEATED_BARBELL_SHOULDER_PRESS, "SEATED_BARBELL_SHOULDER_PRESS")
-        stringMap.put(SEATED_DUMBBELL_SHOULDER_PRESS, "SEATED_DUMBBELL_SHOULDER_PRESS")
-        stringMap.put(SINGLE_ARM_DUMBBELL_SHOULDER_PRESS, "SINGLE_ARM_DUMBBELL_SHOULDER_PRESS")
-        stringMap.put(SINGLE_ARM_STEP_UP_AND_PRESS, "SINGLE_ARM_STEP_UP_AND_PRESS")
-        stringMap.put(SMITH_MACHINE_OVERHEAD_PRESS, "SMITH_MACHINE_OVERHEAD_PRESS")
-        stringMap.put(SPLIT_STANCE_HAMMER_CURL_TO_PRESS, "SPLIT_STANCE_HAMMER_CURL_TO_PRESS")
-        stringMap.put(SWISS_BALL_DUMBBELL_SHOULDER_PRESS, "SWISS_BALL_DUMBBELL_SHOULDER_PRESS")
-        stringMap.put(WEIGHT_PLATE_FRONT_RAISE, "WEIGHT_PLATE_FRONT_RAISE")
-        stringMap.put(DUMBBELL_SHOULDER_PRESS, "DUMBBELL_SHOULDER_PRESS")
-        stringMap.put(MILITARY_PRESS, "MILITARY_PRESS")
-        stringMap.put(STRICT_PRESS, "STRICT_PRESS")
-        stringMap.put(DUMBBELL_FRONT_RAISE, "DUMBBELL_FRONT_RAISE")
-        stringMap.put(
-            DUMBBELL_CURL_TO_OVERHEAD_PRESS_WHEELCHAIR,
-            "DUMBBELL_CURL_TO_OVERHEAD_PRESS_WHEELCHAIR"
-        )
-        stringMap.put(ARNOLD_PRESS_WHEELCHAIR, "ARNOLD_PRESS_WHEELCHAIR")
-        stringMap.put(OVERHEAD_DUMBBELL_PRESS_WHEELCHAIR, "OVERHEAD_DUMBBELL_PRESS_WHEELCHAIR")
+        stringMap[ALTERNATING_DUMBBELL_SHOULDER_PRESS] = "ALTERNATING_DUMBBELL_SHOULDER_PRESS"
+        stringMap[ARNOLD_PRESS] = "ARNOLD_PRESS"
+        stringMap[BARBELL_FRONT_SQUAT_TO_PUSH_PRESS] = "BARBELL_FRONT_SQUAT_TO_PUSH_PRESS"
+        stringMap[BARBELL_PUSH_PRESS] = "BARBELL_PUSH_PRESS"
+        stringMap[BARBELL_SHOULDER_PRESS] = "BARBELL_SHOULDER_PRESS"
+        stringMap[DEAD_CURL_PRESS] = "DEAD_CURL_PRESS"
+        stringMap[DUMBBELL_ALTERNATING_SHOULDER_PRESS_AND_TWIST] = "DUMBBELL_ALTERNATING_SHOULDER_PRESS_AND_TWIST"
+        stringMap[DUMBBELL_HAMMER_CURL_TO_LUNGE_TO_PRESS] = "DUMBBELL_HAMMER_CURL_TO_LUNGE_TO_PRESS"
+        stringMap[DUMBBELL_PUSH_PRESS] = "DUMBBELL_PUSH_PRESS"
+        stringMap[FLOOR_INVERTED_SHOULDER_PRESS] = "FLOOR_INVERTED_SHOULDER_PRESS"
+        stringMap[WEIGHTED_FLOOR_INVERTED_SHOULDER_PRESS] = "WEIGHTED_FLOOR_INVERTED_SHOULDER_PRESS"
+        stringMap[INVERTED_SHOULDER_PRESS] = "INVERTED_SHOULDER_PRESS"
+        stringMap[WEIGHTED_INVERTED_SHOULDER_PRESS] = "WEIGHTED_INVERTED_SHOULDER_PRESS"
+        stringMap[ONE_ARM_PUSH_PRESS] = "ONE_ARM_PUSH_PRESS"
+        stringMap[OVERHEAD_BARBELL_PRESS] = "OVERHEAD_BARBELL_PRESS"
+        stringMap[OVERHEAD_DUMBBELL_PRESS] = "OVERHEAD_DUMBBELL_PRESS"
+        stringMap[SEATED_BARBELL_SHOULDER_PRESS] = "SEATED_BARBELL_SHOULDER_PRESS"
+        stringMap[SEATED_DUMBBELL_SHOULDER_PRESS] = "SEATED_DUMBBELL_SHOULDER_PRESS"
+        stringMap[SINGLE_ARM_DUMBBELL_SHOULDER_PRESS] = "SINGLE_ARM_DUMBBELL_SHOULDER_PRESS"
+        stringMap[SINGLE_ARM_STEP_UP_AND_PRESS] = "SINGLE_ARM_STEP_UP_AND_PRESS"
+        stringMap[SMITH_MACHINE_OVERHEAD_PRESS] = "SMITH_MACHINE_OVERHEAD_PRESS"
+        stringMap[SPLIT_STANCE_HAMMER_CURL_TO_PRESS] = "SPLIT_STANCE_HAMMER_CURL_TO_PRESS"
+        stringMap[SWISS_BALL_DUMBBELL_SHOULDER_PRESS] = "SWISS_BALL_DUMBBELL_SHOULDER_PRESS"
+        stringMap[WEIGHT_PLATE_FRONT_RAISE] = "WEIGHT_PLATE_FRONT_RAISE"
+        stringMap[DUMBBELL_SHOULDER_PRESS] = "DUMBBELL_SHOULDER_PRESS"
+        stringMap[MILITARY_PRESS] = "MILITARY_PRESS"
+        stringMap[STRICT_PRESS] = "STRICT_PRESS"
+        stringMap[DUMBBELL_FRONT_RAISE] = "DUMBBELL_FRONT_RAISE"
+        stringMap[DUMBBELL_CURL_TO_OVERHEAD_PRESS_WHEELCHAIR] = "DUMBBELL_CURL_TO_OVERHEAD_PRESS_WHEELCHAIR"
+        stringMap[ARNOLD_PRESS_WHEELCHAIR] = "ARNOLD_PRESS_WHEELCHAIR"
+        stringMap[OVERHEAD_DUMBBELL_PRESS_WHEELCHAIR] = "OVERHEAD_DUMBBELL_PRESS_WHEELCHAIR"
     }
 
 
@@ -97,9 +84,9 @@ object ShoulderPressExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -110,7 +97,7 @@ object ShoulderPressExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

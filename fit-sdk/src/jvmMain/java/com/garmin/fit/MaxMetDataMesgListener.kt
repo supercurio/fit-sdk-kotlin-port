@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MaxMetDataMesgListener {
-    fun onMesg(mesg: MaxMetDataMesg?)
+    fun onMesg(mesg: MaxMetDataMesg)
 }

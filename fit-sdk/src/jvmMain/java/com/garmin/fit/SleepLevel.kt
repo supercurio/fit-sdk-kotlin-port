@@ -24,7 +24,7 @@ enum class SleepLevel(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SleepLevel.INVALID
+            return INVALID
         }
 
         /**

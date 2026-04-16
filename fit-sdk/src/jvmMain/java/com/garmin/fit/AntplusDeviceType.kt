@@ -34,37 +34,36 @@ object AntplusDeviceType {
     const val BIKE_CADENCE: Short = 122
     const val BIKE_SPEED: Short = 123
     const val STRIDE_SPEED_DISTANCE: Short = 124
-    val INVALID: Short = Fit.UINT8_INVALID
+    const val INVALID: Short = Fit.UINT8_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(ANTFS, "ANTFS")
-        stringMap.put(BIKE_POWER, "BIKE_POWER")
-        stringMap.put(ENVIRONMENT_SENSOR_LEGACY, "ENVIRONMENT_SENSOR_LEGACY")
-        stringMap.put(MULTI_SPORT_SPEED_DISTANCE, "MULTI_SPORT_SPEED_DISTANCE")
-        stringMap.put(CONTROL, "CONTROL")
-        stringMap.put(FITNESS_EQUIPMENT, "FITNESS_EQUIPMENT")
-        stringMap.put(BLOOD_PRESSURE, "BLOOD_PRESSURE")
-        stringMap.put(GEOCACHE_NODE, "GEOCACHE_NODE")
-        stringMap.put(LIGHT_ELECTRIC_VEHICLE, "LIGHT_ELECTRIC_VEHICLE")
-        stringMap.put(ENV_SENSOR, "ENV_SENSOR")
-        stringMap.put(RACQUET, "RACQUET")
-        stringMap.put(CONTROL_HUB, "CONTROL_HUB")
-        stringMap.put(MUSCLE_OXYGEN, "MUSCLE_OXYGEN")
-        stringMap.put(SHIFTING, "SHIFTING")
-        stringMap.put(BIKE_LIGHT_MAIN, "BIKE_LIGHT_MAIN")
-        stringMap.put(BIKE_LIGHT_SHARED, "BIKE_LIGHT_SHARED")
-        stringMap.put(EXD, "EXD")
-        stringMap.put(BIKE_RADAR, "BIKE_RADAR")
-        stringMap.put(BIKE_AERO, "BIKE_AERO")
-        stringMap.put(WEIGHT_SCALE, "WEIGHT_SCALE")
-        stringMap.put(HEART_RATE, "HEART_RATE")
-        stringMap.put(BIKE_SPEED_CADENCE, "BIKE_SPEED_CADENCE")
-        stringMap.put(BIKE_CADENCE, "BIKE_CADENCE")
-        stringMap.put(BIKE_SPEED, "BIKE_SPEED")
-        stringMap.put(STRIDE_SPEED_DISTANCE, "STRIDE_SPEED_DISTANCE")
+        stringMap[ANTFS] = "ANTFS"
+        stringMap[BIKE_POWER] = "BIKE_POWER"
+        stringMap[ENVIRONMENT_SENSOR_LEGACY] = "ENVIRONMENT_SENSOR_LEGACY"
+        stringMap[MULTI_SPORT_SPEED_DISTANCE] = "MULTI_SPORT_SPEED_DISTANCE"
+        stringMap[CONTROL] = "CONTROL"
+        stringMap[FITNESS_EQUIPMENT] = "FITNESS_EQUIPMENT"
+        stringMap[BLOOD_PRESSURE] = "BLOOD_PRESSURE"
+        stringMap[GEOCACHE_NODE] = "GEOCACHE_NODE"
+        stringMap[LIGHT_ELECTRIC_VEHICLE] = "LIGHT_ELECTRIC_VEHICLE"
+        stringMap[ENV_SENSOR] = "ENV_SENSOR"
+        stringMap[RACQUET] = "RACQUET"
+        stringMap[CONTROL_HUB] = "CONTROL_HUB"
+        stringMap[MUSCLE_OXYGEN] = "MUSCLE_OXYGEN"
+        stringMap[SHIFTING] = "SHIFTING"
+        stringMap[BIKE_LIGHT_MAIN] = "BIKE_LIGHT_MAIN"
+        stringMap[BIKE_LIGHT_SHARED] = "BIKE_LIGHT_SHARED"
+        stringMap[EXD] = "EXD"
+        stringMap[BIKE_RADAR] = "BIKE_RADAR"
+        stringMap[BIKE_AERO] = "BIKE_AERO"
+        stringMap[WEIGHT_SCALE] = "WEIGHT_SCALE"
+        stringMap[HEART_RATE] = "HEART_RATE"
+        stringMap[BIKE_SPEED_CADENCE] = "BIKE_SPEED_CADENCE"
+        stringMap[BIKE_CADENCE] = "BIKE_CADENCE"
+        stringMap[BIKE_SPEED] = "BIKE_SPEED"
+        stringMap[STRIDE_SPEED_DISTANCE] = "STRIDE_SPEED_DISTANCE"
     }
 
 
@@ -73,9 +72,9 @@ object AntplusDeviceType {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -86,7 +85,7 @@ object AntplusDeviceType {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

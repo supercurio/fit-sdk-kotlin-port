@@ -22,7 +22,7 @@ enum class TapSensitivity(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return TapSensitivity.INVALID
+            return INVALID
         }
 
         /**

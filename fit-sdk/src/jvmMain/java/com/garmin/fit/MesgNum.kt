@@ -138,139 +138,137 @@ object MesgNum {
         0xFF00 // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
     const val MFG_RANGE_MAX: Int =
         0xFFFE // 0xFF00 - 0xFFFE reserved for manufacturer specific messages
-    @JvmField
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(FILE_ID, "FILE_ID")
-        stringMap.put(CAPABILITIES, "CAPABILITIES")
-        stringMap.put(DEVICE_SETTINGS, "DEVICE_SETTINGS")
-        stringMap.put(USER_PROFILE, "USER_PROFILE")
-        stringMap.put(HRM_PROFILE, "HRM_PROFILE")
-        stringMap.put(SDM_PROFILE, "SDM_PROFILE")
-        stringMap.put(BIKE_PROFILE, "BIKE_PROFILE")
-        stringMap.put(ZONES_TARGET, "ZONES_TARGET")
-        stringMap.put(HR_ZONE, "HR_ZONE")
-        stringMap.put(POWER_ZONE, "POWER_ZONE")
-        stringMap.put(MET_ZONE, "MET_ZONE")
-        stringMap.put(SPORT, "SPORT")
-        stringMap.put(TRAINING_SETTINGS, "TRAINING_SETTINGS")
-        stringMap.put(GOAL, "GOAL")
-        stringMap.put(SESSION, "SESSION")
-        stringMap.put(LAP, "LAP")
-        stringMap.put(RECORD, "RECORD")
-        stringMap.put(EVENT, "EVENT")
-        stringMap.put(DEVICE_INFO, "DEVICE_INFO")
-        stringMap.put(WORKOUT, "WORKOUT")
-        stringMap.put(WORKOUT_STEP, "WORKOUT_STEP")
-        stringMap.put(SCHEDULE, "SCHEDULE")
-        stringMap.put(WEIGHT_SCALE, "WEIGHT_SCALE")
-        stringMap.put(COURSE, "COURSE")
-        stringMap.put(COURSE_POINT, "COURSE_POINT")
-        stringMap.put(TOTALS, "TOTALS")
-        stringMap.put(ACTIVITY, "ACTIVITY")
-        stringMap.put(SOFTWARE, "SOFTWARE")
-        stringMap.put(FILE_CAPABILITIES, "FILE_CAPABILITIES")
-        stringMap.put(MESG_CAPABILITIES, "MESG_CAPABILITIES")
-        stringMap.put(FIELD_CAPABILITIES, "FIELD_CAPABILITIES")
-        stringMap.put(FILE_CREATOR, "FILE_CREATOR")
-        stringMap.put(BLOOD_PRESSURE, "BLOOD_PRESSURE")
-        stringMap.put(SPEED_ZONE, "SPEED_ZONE")
-        stringMap.put(MONITORING, "MONITORING")
-        stringMap.put(TRAINING_FILE, "TRAINING_FILE")
-        stringMap.put(HRV, "HRV")
-        stringMap.put(ANT_RX, "ANT_RX")
-        stringMap.put(ANT_TX, "ANT_TX")
-        stringMap.put(ANT_CHANNEL_ID, "ANT_CHANNEL_ID")
-        stringMap.put(LENGTH, "LENGTH")
-        stringMap.put(MONITORING_INFO, "MONITORING_INFO")
-        stringMap.put(PAD, "PAD")
-        stringMap.put(SLAVE_DEVICE, "SLAVE_DEVICE")
-        stringMap.put(CONNECTIVITY, "CONNECTIVITY")
-        stringMap.put(WEATHER_CONDITIONS, "WEATHER_CONDITIONS")
-        stringMap.put(WEATHER_ALERT, "WEATHER_ALERT")
-        stringMap.put(CADENCE_ZONE, "CADENCE_ZONE")
-        stringMap.put(HR, "HR")
-        stringMap.put(SEGMENT_LAP, "SEGMENT_LAP")
-        stringMap.put(MEMO_GLOB, "MEMO_GLOB")
-        stringMap.put(SEGMENT_ID, "SEGMENT_ID")
-        stringMap.put(SEGMENT_LEADERBOARD_ENTRY, "SEGMENT_LEADERBOARD_ENTRY")
-        stringMap.put(SEGMENT_POINT, "SEGMENT_POINT")
-        stringMap.put(SEGMENT_FILE, "SEGMENT_FILE")
-        stringMap.put(WORKOUT_SESSION, "WORKOUT_SESSION")
-        stringMap.put(WATCHFACE_SETTINGS, "WATCHFACE_SETTINGS")
-        stringMap.put(GPS_METADATA, "GPS_METADATA")
-        stringMap.put(CAMERA_EVENT, "CAMERA_EVENT")
-        stringMap.put(TIMESTAMP_CORRELATION, "TIMESTAMP_CORRELATION")
-        stringMap.put(GYROSCOPE_DATA, "GYROSCOPE_DATA")
-        stringMap.put(ACCELEROMETER_DATA, "ACCELEROMETER_DATA")
-        stringMap.put(THREE_D_SENSOR_CALIBRATION, "THREE_D_SENSOR_CALIBRATION")
-        stringMap.put(VIDEO_FRAME, "VIDEO_FRAME")
-        stringMap.put(OBDII_DATA, "OBDII_DATA")
-        stringMap.put(NMEA_SENTENCE, "NMEA_SENTENCE")
-        stringMap.put(AVIATION_ATTITUDE, "AVIATION_ATTITUDE")
-        stringMap.put(VIDEO, "VIDEO")
-        stringMap.put(VIDEO_TITLE, "VIDEO_TITLE")
-        stringMap.put(VIDEO_DESCRIPTION, "VIDEO_DESCRIPTION")
-        stringMap.put(VIDEO_CLIP, "VIDEO_CLIP")
-        stringMap.put(OHR_SETTINGS, "OHR_SETTINGS")
-        stringMap.put(EXD_SCREEN_CONFIGURATION, "EXD_SCREEN_CONFIGURATION")
-        stringMap.put(EXD_DATA_FIELD_CONFIGURATION, "EXD_DATA_FIELD_CONFIGURATION")
-        stringMap.put(EXD_DATA_CONCEPT_CONFIGURATION, "EXD_DATA_CONCEPT_CONFIGURATION")
-        stringMap.put(FIELD_DESCRIPTION, "FIELD_DESCRIPTION")
-        stringMap.put(DEVELOPER_DATA_ID, "DEVELOPER_DATA_ID")
-        stringMap.put(MAGNETOMETER_DATA, "MAGNETOMETER_DATA")
-        stringMap.put(BAROMETER_DATA, "BAROMETER_DATA")
-        stringMap.put(ONE_D_SENSOR_CALIBRATION, "ONE_D_SENSOR_CALIBRATION")
-        stringMap.put(MONITORING_HR_DATA, "MONITORING_HR_DATA")
-        stringMap.put(TIME_IN_ZONE, "TIME_IN_ZONE")
-        stringMap.put(SET, "SET")
-        stringMap.put(STRESS_LEVEL, "STRESS_LEVEL")
-        stringMap.put(MAX_MET_DATA, "MAX_MET_DATA")
-        stringMap.put(DIVE_SETTINGS, "DIVE_SETTINGS")
-        stringMap.put(DIVE_GAS, "DIVE_GAS")
-        stringMap.put(DIVE_ALARM, "DIVE_ALARM")
-        stringMap.put(EXERCISE_TITLE, "EXERCISE_TITLE")
-        stringMap.put(DIVE_SUMMARY, "DIVE_SUMMARY")
-        stringMap.put(SPO2_DATA, "SPO2_DATA")
-        stringMap.put(SLEEP_LEVEL, "SLEEP_LEVEL")
-        stringMap.put(JUMP, "JUMP")
-        stringMap.put(AAD_ACCEL_FEATURES, "AAD_ACCEL_FEATURES")
-        stringMap.put(BEAT_INTERVALS, "BEAT_INTERVALS")
-        stringMap.put(RESPIRATION_RATE, "RESPIRATION_RATE")
-        stringMap.put(HSA_ACCELEROMETER_DATA, "HSA_ACCELEROMETER_DATA")
-        stringMap.put(HSA_STEP_DATA, "HSA_STEP_DATA")
-        stringMap.put(HSA_SPO2_DATA, "HSA_SPO2_DATA")
-        stringMap.put(HSA_STRESS_DATA, "HSA_STRESS_DATA")
-        stringMap.put(HSA_RESPIRATION_DATA, "HSA_RESPIRATION_DATA")
-        stringMap.put(HSA_HEART_RATE_DATA, "HSA_HEART_RATE_DATA")
-        stringMap.put(SPLIT, "SPLIT")
-        stringMap.put(SPLIT_SUMMARY, "SPLIT_SUMMARY")
-        stringMap.put(HSA_BODY_BATTERY_DATA, "HSA_BODY_BATTERY_DATA")
-        stringMap.put(HSA_EVENT, "HSA_EVENT")
-        stringMap.put(CLIMB_PRO, "CLIMB_PRO")
-        stringMap.put(TANK_UPDATE, "TANK_UPDATE")
-        stringMap.put(TANK_SUMMARY, "TANK_SUMMARY")
-        stringMap.put(SLEEP_ASSESSMENT, "SLEEP_ASSESSMENT")
-        stringMap.put(HRV_STATUS_SUMMARY, "HRV_STATUS_SUMMARY")
-        stringMap.put(HRV_VALUE, "HRV_VALUE")
-        stringMap.put(RAW_BBI, "RAW_BBI")
-        stringMap.put(DEVICE_AUX_BATTERY_INFO, "DEVICE_AUX_BATTERY_INFO")
-        stringMap.put(HSA_GYROSCOPE_DATA, "HSA_GYROSCOPE_DATA")
-        stringMap.put(CHRONO_SHOT_SESSION, "CHRONO_SHOT_SESSION")
-        stringMap.put(CHRONO_SHOT_DATA, "CHRONO_SHOT_DATA")
-        stringMap.put(HSA_CONFIGURATION_DATA, "HSA_CONFIGURATION_DATA")
-        stringMap.put(DIVE_APNEA_ALARM, "DIVE_APNEA_ALARM")
-        stringMap.put(SKIN_TEMP_OVERNIGHT, "SKIN_TEMP_OVERNIGHT")
-        stringMap.put(HSA_WRIST_TEMPERATURE_DATA, "HSA_WRIST_TEMPERATURE_DATA")
-        stringMap.put(NAP_EVENT, "NAP_EVENT")
-        stringMap.put(SLEEP_DISRUPTION_SEVERITY_PERIOD, "SLEEP_DISRUPTION_SEVERITY_PERIOD")
-        stringMap.put(SLEEP_DISRUPTION_OVERNIGHT_SEVERITY, "SLEEP_DISRUPTION_OVERNIGHT_SEVERITY")
-        stringMap.put(MFG_RANGE_MIN, "MFG_RANGE_MIN")
-        stringMap.put(MFG_RANGE_MAX, "MFG_RANGE_MAX")
+        stringMap[FILE_ID] = "FILE_ID"
+        stringMap[CAPABILITIES] = "CAPABILITIES"
+        stringMap[DEVICE_SETTINGS] = "DEVICE_SETTINGS"
+        stringMap[USER_PROFILE] = "USER_PROFILE"
+        stringMap[HRM_PROFILE] = "HRM_PROFILE"
+        stringMap[SDM_PROFILE] = "SDM_PROFILE"
+        stringMap[BIKE_PROFILE] = "BIKE_PROFILE"
+        stringMap[ZONES_TARGET] = "ZONES_TARGET"
+        stringMap[HR_ZONE] = "HR_ZONE"
+        stringMap[POWER_ZONE] = "POWER_ZONE"
+        stringMap[MET_ZONE] = "MET_ZONE"
+        stringMap[SPORT] = "SPORT"
+        stringMap[TRAINING_SETTINGS] = "TRAINING_SETTINGS"
+        stringMap[GOAL] = "GOAL"
+        stringMap[SESSION] = "SESSION"
+        stringMap[LAP] = "LAP"
+        stringMap[RECORD] = "RECORD"
+        stringMap[EVENT] = "EVENT"
+        stringMap[DEVICE_INFO] = "DEVICE_INFO"
+        stringMap[WORKOUT] = "WORKOUT"
+        stringMap[WORKOUT_STEP] = "WORKOUT_STEP"
+        stringMap[SCHEDULE] = "SCHEDULE"
+        stringMap[WEIGHT_SCALE] = "WEIGHT_SCALE"
+        stringMap[COURSE] = "COURSE"
+        stringMap[COURSE_POINT] = "COURSE_POINT"
+        stringMap[TOTALS] = "TOTALS"
+        stringMap[ACTIVITY] = "ACTIVITY"
+        stringMap[SOFTWARE] = "SOFTWARE"
+        stringMap[FILE_CAPABILITIES] = "FILE_CAPABILITIES"
+        stringMap[MESG_CAPABILITIES] = "MESG_CAPABILITIES"
+        stringMap[FIELD_CAPABILITIES] = "FIELD_CAPABILITIES"
+        stringMap[FILE_CREATOR] = "FILE_CREATOR"
+        stringMap[BLOOD_PRESSURE] = "BLOOD_PRESSURE"
+        stringMap[SPEED_ZONE] = "SPEED_ZONE"
+        stringMap[MONITORING] = "MONITORING"
+        stringMap[TRAINING_FILE] = "TRAINING_FILE"
+        stringMap[HRV] = "HRV"
+        stringMap[ANT_RX] = "ANT_RX"
+        stringMap[ANT_TX] = "ANT_TX"
+        stringMap[ANT_CHANNEL_ID] = "ANT_CHANNEL_ID"
+        stringMap[LENGTH] = "LENGTH"
+        stringMap[MONITORING_INFO] = "MONITORING_INFO"
+        stringMap[PAD] = "PAD"
+        stringMap[SLAVE_DEVICE] = "SLAVE_DEVICE"
+        stringMap[CONNECTIVITY] = "CONNECTIVITY"
+        stringMap[WEATHER_CONDITIONS] = "WEATHER_CONDITIONS"
+        stringMap[WEATHER_ALERT] = "WEATHER_ALERT"
+        stringMap[CADENCE_ZONE] = "CADENCE_ZONE"
+        stringMap[HR] = "HR"
+        stringMap[SEGMENT_LAP] = "SEGMENT_LAP"
+        stringMap[MEMO_GLOB] = "MEMO_GLOB"
+        stringMap[SEGMENT_ID] = "SEGMENT_ID"
+        stringMap[SEGMENT_LEADERBOARD_ENTRY] = "SEGMENT_LEADERBOARD_ENTRY"
+        stringMap[SEGMENT_POINT] = "SEGMENT_POINT"
+        stringMap[SEGMENT_FILE] = "SEGMENT_FILE"
+        stringMap[WORKOUT_SESSION] = "WORKOUT_SESSION"
+        stringMap[WATCHFACE_SETTINGS] = "WATCHFACE_SETTINGS"
+        stringMap[GPS_METADATA] = "GPS_METADATA"
+        stringMap[CAMERA_EVENT] = "CAMERA_EVENT"
+        stringMap[TIMESTAMP_CORRELATION] = "TIMESTAMP_CORRELATION"
+        stringMap[GYROSCOPE_DATA] = "GYROSCOPE_DATA"
+        stringMap[ACCELEROMETER_DATA] = "ACCELEROMETER_DATA"
+        stringMap[THREE_D_SENSOR_CALIBRATION] = "THREE_D_SENSOR_CALIBRATION"
+        stringMap[VIDEO_FRAME] = "VIDEO_FRAME"
+        stringMap[OBDII_DATA] = "OBDII_DATA"
+        stringMap[NMEA_SENTENCE] = "NMEA_SENTENCE"
+        stringMap[AVIATION_ATTITUDE] = "AVIATION_ATTITUDE"
+        stringMap[VIDEO] = "VIDEO"
+        stringMap[VIDEO_TITLE] = "VIDEO_TITLE"
+        stringMap[VIDEO_DESCRIPTION] = "VIDEO_DESCRIPTION"
+        stringMap[VIDEO_CLIP] = "VIDEO_CLIP"
+        stringMap[OHR_SETTINGS] = "OHR_SETTINGS"
+        stringMap[EXD_SCREEN_CONFIGURATION] = "EXD_SCREEN_CONFIGURATION"
+        stringMap[EXD_DATA_FIELD_CONFIGURATION] = "EXD_DATA_FIELD_CONFIGURATION"
+        stringMap[EXD_DATA_CONCEPT_CONFIGURATION] = "EXD_DATA_CONCEPT_CONFIGURATION"
+        stringMap[FIELD_DESCRIPTION] = "FIELD_DESCRIPTION"
+        stringMap[DEVELOPER_DATA_ID] = "DEVELOPER_DATA_ID"
+        stringMap[MAGNETOMETER_DATA] = "MAGNETOMETER_DATA"
+        stringMap[BAROMETER_DATA] = "BAROMETER_DATA"
+        stringMap[ONE_D_SENSOR_CALIBRATION] = "ONE_D_SENSOR_CALIBRATION"
+        stringMap[MONITORING_HR_DATA] = "MONITORING_HR_DATA"
+        stringMap[TIME_IN_ZONE] = "TIME_IN_ZONE"
+        stringMap[SET] = "SET"
+        stringMap[STRESS_LEVEL] = "STRESS_LEVEL"
+        stringMap[MAX_MET_DATA] = "MAX_MET_DATA"
+        stringMap[DIVE_SETTINGS] = "DIVE_SETTINGS"
+        stringMap[DIVE_GAS] = "DIVE_GAS"
+        stringMap[DIVE_ALARM] = "DIVE_ALARM"
+        stringMap[EXERCISE_TITLE] = "EXERCISE_TITLE"
+        stringMap[DIVE_SUMMARY] = "DIVE_SUMMARY"
+        stringMap[SPO2_DATA] = "SPO2_DATA"
+        stringMap[SLEEP_LEVEL] = "SLEEP_LEVEL"
+        stringMap[JUMP] = "JUMP"
+        stringMap[AAD_ACCEL_FEATURES] = "AAD_ACCEL_FEATURES"
+        stringMap[BEAT_INTERVALS] = "BEAT_INTERVALS"
+        stringMap[RESPIRATION_RATE] = "RESPIRATION_RATE"
+        stringMap[HSA_ACCELEROMETER_DATA] = "HSA_ACCELEROMETER_DATA"
+        stringMap[HSA_STEP_DATA] = "HSA_STEP_DATA"
+        stringMap[HSA_SPO2_DATA] = "HSA_SPO2_DATA"
+        stringMap[HSA_STRESS_DATA] = "HSA_STRESS_DATA"
+        stringMap[HSA_RESPIRATION_DATA] = "HSA_RESPIRATION_DATA"
+        stringMap[HSA_HEART_RATE_DATA] = "HSA_HEART_RATE_DATA"
+        stringMap[SPLIT] = "SPLIT"
+        stringMap[SPLIT_SUMMARY] = "SPLIT_SUMMARY"
+        stringMap[HSA_BODY_BATTERY_DATA] = "HSA_BODY_BATTERY_DATA"
+        stringMap[HSA_EVENT] = "HSA_EVENT"
+        stringMap[CLIMB_PRO] = "CLIMB_PRO"
+        stringMap[TANK_UPDATE] = "TANK_UPDATE"
+        stringMap[TANK_SUMMARY] = "TANK_SUMMARY"
+        stringMap[SLEEP_ASSESSMENT] = "SLEEP_ASSESSMENT"
+        stringMap[HRV_STATUS_SUMMARY] = "HRV_STATUS_SUMMARY"
+        stringMap[HRV_VALUE] = "HRV_VALUE"
+        stringMap[RAW_BBI] = "RAW_BBI"
+        stringMap[DEVICE_AUX_BATTERY_INFO] = "DEVICE_AUX_BATTERY_INFO"
+        stringMap[HSA_GYROSCOPE_DATA] = "HSA_GYROSCOPE_DATA"
+        stringMap[CHRONO_SHOT_SESSION] = "CHRONO_SHOT_SESSION"
+        stringMap[CHRONO_SHOT_DATA] = "CHRONO_SHOT_DATA"
+        stringMap[HSA_CONFIGURATION_DATA] = "HSA_CONFIGURATION_DATA"
+        stringMap[DIVE_APNEA_ALARM] = "DIVE_APNEA_ALARM"
+        stringMap[SKIN_TEMP_OVERNIGHT] = "SKIN_TEMP_OVERNIGHT"
+        stringMap[HSA_WRIST_TEMPERATURE_DATA] = "HSA_WRIST_TEMPERATURE_DATA"
+        stringMap[NAP_EVENT] = "NAP_EVENT"
+        stringMap[SLEEP_DISRUPTION_SEVERITY_PERIOD] = "SLEEP_DISRUPTION_SEVERITY_PERIOD"
+        stringMap[SLEEP_DISRUPTION_OVERNIGHT_SEVERITY] = "SLEEP_DISRUPTION_OVERNIGHT_SEVERITY"
+        stringMap[MFG_RANGE_MIN] = "MFG_RANGE_MIN"
+        stringMap[MFG_RANGE_MAX] = "MFG_RANGE_MAX"
     }
 
 
@@ -279,9 +277,9 @@ object MesgNum {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -292,7 +290,7 @@ object MesgNum {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

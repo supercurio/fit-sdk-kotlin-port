@@ -12,19 +12,19 @@ package com.garmin.fit
 class FileCreatorMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.FILE_CREATOR))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var softwareVersion: Int?
         /**
          * Get software_version field
-         * 
+         *
          * @return software_version
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set software_version field
-         * 
+         *
          * @param softwareVersion The new softwareVersion value to be set
          */
         set(softwareVersion) {
@@ -34,13 +34,13 @@ class FileCreatorMesg : Mesg {
     var hardwareVersion: Short?
         /**
          * Get hardware_version field
-         * 
+         *
          * @return hardware_version
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set hardware_version field
-         * 
+         *
          * @param hardwareVersion The new hardwareVersion value to be set
          */
         set(hardwareVersion) {
@@ -53,11 +53,10 @@ class FileCreatorMesg : Mesg {
         const val HardwareVersionFieldNum: Int = 1
 
 
-        val fileCreatorMesg: Mesg
+        // file_creator
+        val fileCreatorMesg: Mesg = Mesg("file_creator", MesgNum.FILE_CREATOR)
 
         init {
-            // file_creator
-            fileCreatorMesg = Mesg("file_creator", MesgNum.FILE_CREATOR)
             fileCreatorMesg.addField(
                 Field(
                     "software_version",

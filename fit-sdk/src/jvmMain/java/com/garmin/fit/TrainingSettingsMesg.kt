@@ -12,21 +12,21 @@ package com.garmin.fit
 class TrainingSettingsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.TRAINING_SETTINGS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var targetDistance: Float?
         /**
          * Get target_distance field
          * Units: m
-         * 
+         *
          * @return target_distance
          */
         get() = getFieldFloatValue(31, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set target_distance field
          * Units: m
-         * 
+         *
          * @param targetDistance The new targetDistance value to be set
          */
         set(targetDistance) {
@@ -37,14 +37,14 @@ class TrainingSettingsMesg : Mesg {
         /**
          * Get target_speed field
          * Units: m/s
-         * 
+         *
          * @return target_speed
          */
         get() = getFieldFloatValue(32, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set target_speed field
          * Units: m/s
-         * 
+         *
          * @param targetSpeed The new targetSpeed value to be set
          */
         set(targetSpeed) {
@@ -55,14 +55,14 @@ class TrainingSettingsMesg : Mesg {
         /**
          * Get target_time field
          * Units: s
-         * 
+         *
          * @return target_time
          */
         get() = getFieldLongValue(33, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set target_time field
          * Units: s
-         * 
+         *
          * @param targetTime The new targetTime value to be set
          */
         set(targetTime) {
@@ -74,7 +74,7 @@ class TrainingSettingsMesg : Mesg {
          * Get precise_target_speed field
          * Units: m/s
          * Comment: A more precise target speed field
-         * 
+         *
          * @return precise_target_speed
          */
         get() = getFieldFloatValue(153, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -82,7 +82,7 @@ class TrainingSettingsMesg : Mesg {
          * Set precise_target_speed field
          * Units: m/s
          * Comment: A more precise target speed field
-         * 
+         *
          * @param preciseTargetSpeed The new preciseTargetSpeed value to be set
          */
         set(preciseTargetSpeed) {
@@ -99,11 +99,10 @@ class TrainingSettingsMesg : Mesg {
         const val PreciseTargetSpeedFieldNum: Int = 153
 
 
-        val trainingSettingsMesg: Mesg
+        // training_settings
+        val trainingSettingsMesg: Mesg = Mesg("training_settings", MesgNum.TRAINING_SETTINGS)
 
         init {
-            // training_settings
-            trainingSettingsMesg = Mesg("training_settings", MesgNum.TRAINING_SETTINGS)
             trainingSettingsMesg.addField(
                 Field(
                     "target_distance",

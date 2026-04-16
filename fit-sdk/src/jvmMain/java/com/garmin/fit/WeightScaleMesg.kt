@@ -12,39 +12,39 @@ package com.garmin.fit
 class WeightScaleMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.WEIGHT_SCALE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var weight: Float?
         /**
          * Get weight field
          * Units: kg
-         * 
+         *
          * @return weight
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set weight field
          * Units: kg
-         * 
+         *
          * @param weight The new weight value to be set
          */
         set(weight) {
@@ -55,14 +55,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get percent_fat field
          * Units: %
-         * 
+         *
          * @return percent_fat
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set percent_fat field
          * Units: %
-         * 
+         *
          * @param percentFat The new percentFat value to be set
          */
         set(percentFat) {
@@ -73,14 +73,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get percent_hydration field
          * Units: %
-         * 
+         *
          * @return percent_hydration
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set percent_hydration field
          * Units: %
-         * 
+         *
          * @param percentHydration The new percentHydration value to be set
          */
         set(percentHydration) {
@@ -91,14 +91,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get visceral_fat_mass field
          * Units: kg
-         * 
+         *
          * @return visceral_fat_mass
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set visceral_fat_mass field
          * Units: kg
-         * 
+         *
          * @param visceralFatMass The new visceralFatMass value to be set
          */
         set(visceralFatMass) {
@@ -109,14 +109,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get bone_mass field
          * Units: kg
-         * 
+         *
          * @return bone_mass
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bone_mass field
          * Units: kg
-         * 
+         *
          * @param boneMass The new boneMass value to be set
          */
         set(boneMass) {
@@ -127,14 +127,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get muscle_mass field
          * Units: kg
-         * 
+         *
          * @return muscle_mass
          */
         get() = getFieldFloatValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set muscle_mass field
          * Units: kg
-         * 
+         *
          * @param muscleMass The new muscleMass value to be set
          */
         set(muscleMass) {
@@ -145,14 +145,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get basal_met field
          * Units: kcal/day
-         * 
+         *
          * @return basal_met
          */
         get() = getFieldFloatValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set basal_met field
          * Units: kcal/day
-         * 
+         *
          * @param basalMet The new basalMet value to be set
          */
         set(basalMet) {
@@ -162,13 +162,13 @@ class WeightScaleMesg : Mesg {
     var physiqueRating: Short?
         /**
          * Get physique_rating field
-         * 
+         *
          * @return physique_rating
          */
         get() = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set physique_rating field
-         * 
+         *
          * @param physiqueRating The new physiqueRating value to be set
          */
         set(physiqueRating) {
@@ -180,7 +180,7 @@ class WeightScaleMesg : Mesg {
          * Get active_met field
          * Units: kcal/day
          * Comment: ~4kJ per kcal, 0.25 allows max 16384 kcal
-         * 
+         *
          * @return active_met
          */
         get() = getFieldFloatValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -188,7 +188,7 @@ class WeightScaleMesg : Mesg {
          * Set active_met field
          * Units: kcal/day
          * Comment: ~4kJ per kcal, 0.25 allows max 16384 kcal
-         * 
+         *
          * @param activeMet The new activeMet value to be set
          */
         set(activeMet) {
@@ -199,14 +199,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get metabolic_age field
          * Units: years
-         * 
+         *
          * @return metabolic_age
          */
         get() = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set metabolic_age field
          * Units: years
-         * 
+         *
          * @param metabolicAge The new metabolicAge value to be set
          */
         set(metabolicAge) {
@@ -216,13 +216,13 @@ class WeightScaleMesg : Mesg {
     var visceralFatRating: Short?
         /**
          * Get visceral_fat_rating field
-         * 
+         *
          * @return visceral_fat_rating
          */
         get() = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set visceral_fat_rating field
-         * 
+         *
          * @param visceralFatRating The new visceralFatRating value to be set
          */
         set(visceralFatRating) {
@@ -233,14 +233,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get user_profile_index field
          * Comment: Associates this weight scale message to a user. This corresponds to the index of the user profile message in the weight scale file.
-         * 
+         *
          * @return user_profile_index
          */
         get() = getFieldIntegerValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set user_profile_index field
          * Comment: Associates this weight scale message to a user. This corresponds to the index of the user profile message in the weight scale file.
-         * 
+         *
          * @param userProfileIndex The new userProfileIndex value to be set
          */
         set(userProfileIndex) {
@@ -251,14 +251,14 @@ class WeightScaleMesg : Mesg {
         /**
          * Get bmi field
          * Units: kg/m^2
-         * 
+         *
          * @return bmi
          */
         get() = getFieldFloatValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bmi field
          * Units: kg/m^2
-         * 
+         *
          * @param bmi The new bmi value to be set
          */
         set(bmi) {
@@ -295,11 +295,10 @@ class WeightScaleMesg : Mesg {
         const val BmiFieldNum: Int = 13
 
 
-        val weightScaleMesg: Mesg
+        // weight_scale
+        val weightScaleMesg: Mesg = Mesg("weight_scale", MesgNum.WEIGHT_SCALE)
 
         init {
-            // weight_scale
-            weightScaleMesg = Mesg("weight_scale", MesgNum.WEIGHT_SCALE)
             weightScaleMesg.addField(
                 Field(
                     "timestamp",

@@ -23,7 +23,7 @@ enum class WeatherReport(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return WeatherReport.INVALID
+            return INVALID
         }
 
         /**

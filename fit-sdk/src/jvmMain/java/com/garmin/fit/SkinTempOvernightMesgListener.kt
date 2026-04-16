@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SkinTempOvernightMesgListener {
-    fun onMesg(mesg: SkinTempOvernightMesg?)
+    fun onMesg(mesg: SkinTempOvernightMesg)
 }

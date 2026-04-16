@@ -13,16 +13,15 @@ object HipSwingExerciseName {
     const val SINGLE_ARM_DUMBBELL_SWING: Int = 1
     const val STEP_OUT_SWING: Int = 2
     const val ONE_ARM_SWING: Int = 3
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(SINGLE_ARM_KETTLEBELL_SWING, "SINGLE_ARM_KETTLEBELL_SWING")
-        stringMap.put(SINGLE_ARM_DUMBBELL_SWING, "SINGLE_ARM_DUMBBELL_SWING")
-        stringMap.put(STEP_OUT_SWING, "STEP_OUT_SWING")
-        stringMap.put(ONE_ARM_SWING, "ONE_ARM_SWING")
+        stringMap[SINGLE_ARM_KETTLEBELL_SWING] = "SINGLE_ARM_KETTLEBELL_SWING"
+        stringMap[SINGLE_ARM_DUMBBELL_SWING] = "SINGLE_ARM_DUMBBELL_SWING"
+        stringMap[STEP_OUT_SWING] = "STEP_OUT_SWING"
+        stringMap[ONE_ARM_SWING] = "ONE_ARM_SWING"
     }
 
 
@@ -31,9 +30,9 @@ object HipSwingExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -44,7 +43,7 @@ object HipSwingExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

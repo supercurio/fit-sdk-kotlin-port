@@ -37,46 +37,39 @@ object BattleRopeExerciseName {
     const val STAGE_COACH: Int = 25
     const val ULTIMATE_WARRIOR: Int = 26
     const val UPPER_CUTS: Int = 27
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(ALTERNATING_FIGURE_EIGHT, "ALTERNATING_FIGURE_EIGHT")
-        stringMap.put(ALTERNATING_JUMP_WAVE, "ALTERNATING_JUMP_WAVE")
-        stringMap.put(
-            ALTERNATING_KNEELING_TO_STANDING_WAVE,
-            "ALTERNATING_KNEELING_TO_STANDING_WAVE"
-        )
-        stringMap.put(ALTERNATING_LUNGE_WAVE, "ALTERNATING_LUNGE_WAVE")
-        stringMap.put(ALTERNATING_SQUAT_WAVE, "ALTERNATING_SQUAT_WAVE")
-        stringMap.put(ALTERNATING_WAVE, "ALTERNATING_WAVE")
-        stringMap.put(
-            ALTERNATING_WAVE_WITH_LATERAL_SHUFFLE,
-            "ALTERNATING_WAVE_WITH_LATERAL_SHUFFLE"
-        )
-        stringMap.put(CLAP_WAVE, "CLAP_WAVE")
-        stringMap.put(DOUBLE_ARM_FIGURE_EIGHT, "DOUBLE_ARM_FIGURE_EIGHT")
-        stringMap.put(DOUBLE_ARM_SIDE_TO_SIDE_SNAKE, "DOUBLE_ARM_SIDE_TO_SIDE_SNAKE")
-        stringMap.put(DOUBLE_ARM_SIDE_WAVE, "DOUBLE_ARM_SIDE_WAVE")
-        stringMap.put(DOUBLE_ARM_SLAM, "DOUBLE_ARM_SLAM")
-        stringMap.put(DOUBLE_ARM_WAVE, "DOUBLE_ARM_WAVE")
-        stringMap.put(GRAPPLER_TOSS, "GRAPPLER_TOSS")
-        stringMap.put(HIP_TOSS, "HIP_TOSS")
-        stringMap.put(IN_AND_OUT_WAVE, "IN_AND_OUT_WAVE")
-        stringMap.put(INSIDE_CIRCLE, "INSIDE_CIRCLE")
-        stringMap.put(JUMPING_JACKS, "JUMPING_JACKS")
-        stringMap.put(OUTSIDE_CIRCLE, "OUTSIDE_CIRCLE")
-        stringMap.put(RAINBOW, "RAINBOW")
-        stringMap.put(SIDE_PLANK_WAVE, "SIDE_PLANK_WAVE")
-        stringMap.put(SIDEWINDER, "SIDEWINDER")
-        stringMap.put(SITTING_RUSSIAN_TWIST, "SITTING_RUSSIAN_TWIST")
-        stringMap.put(SNAKE_WAVE, "SNAKE_WAVE")
-        stringMap.put(SPLIT_JACK, "SPLIT_JACK")
-        stringMap.put(STAGE_COACH, "STAGE_COACH")
-        stringMap.put(ULTIMATE_WARRIOR, "ULTIMATE_WARRIOR")
-        stringMap.put(UPPER_CUTS, "UPPER_CUTS")
+        stringMap[ALTERNATING_FIGURE_EIGHT] = "ALTERNATING_FIGURE_EIGHT"
+        stringMap[ALTERNATING_JUMP_WAVE] = "ALTERNATING_JUMP_WAVE"
+        stringMap[ALTERNATING_KNEELING_TO_STANDING_WAVE] = "ALTERNATING_KNEELING_TO_STANDING_WAVE"
+        stringMap[ALTERNATING_LUNGE_WAVE] = "ALTERNATING_LUNGE_WAVE"
+        stringMap[ALTERNATING_SQUAT_WAVE] = "ALTERNATING_SQUAT_WAVE"
+        stringMap[ALTERNATING_WAVE] = "ALTERNATING_WAVE"
+        stringMap[ALTERNATING_WAVE_WITH_LATERAL_SHUFFLE] = "ALTERNATING_WAVE_WITH_LATERAL_SHUFFLE"
+        stringMap[CLAP_WAVE] = "CLAP_WAVE"
+        stringMap[DOUBLE_ARM_FIGURE_EIGHT] = "DOUBLE_ARM_FIGURE_EIGHT"
+        stringMap[DOUBLE_ARM_SIDE_TO_SIDE_SNAKE] = "DOUBLE_ARM_SIDE_TO_SIDE_SNAKE"
+        stringMap[DOUBLE_ARM_SIDE_WAVE] = "DOUBLE_ARM_SIDE_WAVE"
+        stringMap[DOUBLE_ARM_SLAM] = "DOUBLE_ARM_SLAM"
+        stringMap[DOUBLE_ARM_WAVE] = "DOUBLE_ARM_WAVE"
+        stringMap[GRAPPLER_TOSS] = "GRAPPLER_TOSS"
+        stringMap[HIP_TOSS] = "HIP_TOSS"
+        stringMap[IN_AND_OUT_WAVE] = "IN_AND_OUT_WAVE"
+        stringMap[INSIDE_CIRCLE] = "INSIDE_CIRCLE"
+        stringMap[JUMPING_JACKS] = "JUMPING_JACKS"
+        stringMap[OUTSIDE_CIRCLE] = "OUTSIDE_CIRCLE"
+        stringMap[RAINBOW] = "RAINBOW"
+        stringMap[SIDE_PLANK_WAVE] = "SIDE_PLANK_WAVE"
+        stringMap[SIDEWINDER] = "SIDEWINDER"
+        stringMap[SITTING_RUSSIAN_TWIST] = "SITTING_RUSSIAN_TWIST"
+        stringMap[SNAKE_WAVE] = "SNAKE_WAVE"
+        stringMap[SPLIT_JACK] = "SPLIT_JACK"
+        stringMap[STAGE_COACH] = "STAGE_COACH"
+        stringMap[ULTIMATE_WARRIOR] = "ULTIMATE_WARRIOR"
+        stringMap[UPPER_CUTS] = "UPPER_CUTS"
     }
 
 
@@ -85,9 +78,9 @@ object BattleRopeExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -98,7 +91,7 @@ object BattleRopeExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

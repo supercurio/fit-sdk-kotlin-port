@@ -32,41 +32,34 @@ object ChopExerciseName {
     const val STANDING_SPLIT_ROTATIONAL_CHOP: Int = 20
     const val STANDING_SPLIT_ROTATIONAL_REVERSE_CHOP: Int = 21
     const val STANDING_STABILITY_REVERSE_CHOP: Int = 22
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(CABLE_PULL_THROUGH, "CABLE_PULL_THROUGH")
-        stringMap.put(CABLE_ROTATIONAL_LIFT, "CABLE_ROTATIONAL_LIFT")
-        stringMap.put(CABLE_WOODCHOP, "CABLE_WOODCHOP")
-        stringMap.put(CROSS_CHOP_TO_KNEE, "CROSS_CHOP_TO_KNEE")
-        stringMap.put(WEIGHTED_CROSS_CHOP_TO_KNEE, "WEIGHTED_CROSS_CHOP_TO_KNEE")
-        stringMap.put(DUMBBELL_CHOP, "DUMBBELL_CHOP")
-        stringMap.put(HALF_KNEELING_ROTATION, "HALF_KNEELING_ROTATION")
-        stringMap.put(WEIGHTED_HALF_KNEELING_ROTATION, "WEIGHTED_HALF_KNEELING_ROTATION")
-        stringMap.put(HALF_KNEELING_ROTATIONAL_CHOP, "HALF_KNEELING_ROTATIONAL_CHOP")
-        stringMap.put(
-            HALF_KNEELING_ROTATIONAL_REVERSE_CHOP,
-            "HALF_KNEELING_ROTATIONAL_REVERSE_CHOP"
-        )
-        stringMap.put(HALF_KNEELING_STABILITY_CHOP, "HALF_KNEELING_STABILITY_CHOP")
-        stringMap.put(HALF_KNEELING_STABILITY_REVERSE_CHOP, "HALF_KNEELING_STABILITY_REVERSE_CHOP")
-        stringMap.put(KNEELING_ROTATIONAL_CHOP, "KNEELING_ROTATIONAL_CHOP")
-        stringMap.put(KNEELING_ROTATIONAL_REVERSE_CHOP, "KNEELING_ROTATIONAL_REVERSE_CHOP")
-        stringMap.put(KNEELING_STABILITY_CHOP, "KNEELING_STABILITY_CHOP")
-        stringMap.put(KNEELING_WOODCHOPPER, "KNEELING_WOODCHOPPER")
-        stringMap.put(MEDICINE_BALL_WOOD_CHOPS, "MEDICINE_BALL_WOOD_CHOPS")
-        stringMap.put(POWER_SQUAT_CHOPS, "POWER_SQUAT_CHOPS")
-        stringMap.put(WEIGHTED_POWER_SQUAT_CHOPS, "WEIGHTED_POWER_SQUAT_CHOPS")
-        stringMap.put(STANDING_ROTATIONAL_CHOP, "STANDING_ROTATIONAL_CHOP")
-        stringMap.put(STANDING_SPLIT_ROTATIONAL_CHOP, "STANDING_SPLIT_ROTATIONAL_CHOP")
-        stringMap.put(
-            STANDING_SPLIT_ROTATIONAL_REVERSE_CHOP,
-            "STANDING_SPLIT_ROTATIONAL_REVERSE_CHOP"
-        )
-        stringMap.put(STANDING_STABILITY_REVERSE_CHOP, "STANDING_STABILITY_REVERSE_CHOP")
+        stringMap[CABLE_PULL_THROUGH] = "CABLE_PULL_THROUGH"
+        stringMap[CABLE_ROTATIONAL_LIFT] = "CABLE_ROTATIONAL_LIFT"
+        stringMap[CABLE_WOODCHOP] = "CABLE_WOODCHOP"
+        stringMap[CROSS_CHOP_TO_KNEE] = "CROSS_CHOP_TO_KNEE"
+        stringMap[WEIGHTED_CROSS_CHOP_TO_KNEE] = "WEIGHTED_CROSS_CHOP_TO_KNEE"
+        stringMap[DUMBBELL_CHOP] = "DUMBBELL_CHOP"
+        stringMap[HALF_KNEELING_ROTATION] = "HALF_KNEELING_ROTATION"
+        stringMap[WEIGHTED_HALF_KNEELING_ROTATION] = "WEIGHTED_HALF_KNEELING_ROTATION"
+        stringMap[HALF_KNEELING_ROTATIONAL_CHOP] = "HALF_KNEELING_ROTATIONAL_CHOP"
+        stringMap[HALF_KNEELING_ROTATIONAL_REVERSE_CHOP] = "HALF_KNEELING_ROTATIONAL_REVERSE_CHOP"
+        stringMap[HALF_KNEELING_STABILITY_CHOP] = "HALF_KNEELING_STABILITY_CHOP"
+        stringMap[HALF_KNEELING_STABILITY_REVERSE_CHOP] = "HALF_KNEELING_STABILITY_REVERSE_CHOP"
+        stringMap[KNEELING_ROTATIONAL_CHOP] = "KNEELING_ROTATIONAL_CHOP"
+        stringMap[KNEELING_ROTATIONAL_REVERSE_CHOP] = "KNEELING_ROTATIONAL_REVERSE_CHOP"
+        stringMap[KNEELING_STABILITY_CHOP] = "KNEELING_STABILITY_CHOP"
+        stringMap[KNEELING_WOODCHOPPER] = "KNEELING_WOODCHOPPER"
+        stringMap[MEDICINE_BALL_WOOD_CHOPS] = "MEDICINE_BALL_WOOD_CHOPS"
+        stringMap[POWER_SQUAT_CHOPS] = "POWER_SQUAT_CHOPS"
+        stringMap[WEIGHTED_POWER_SQUAT_CHOPS] = "WEIGHTED_POWER_SQUAT_CHOPS"
+        stringMap[STANDING_ROTATIONAL_CHOP] = "STANDING_ROTATIONAL_CHOP"
+        stringMap[STANDING_SPLIT_ROTATIONAL_CHOP] = "STANDING_SPLIT_ROTATIONAL_CHOP"
+        stringMap[STANDING_SPLIT_ROTATIONAL_REVERSE_CHOP] = "STANDING_SPLIT_ROTATIONAL_REVERSE_CHOP"
+        stringMap[STANDING_STABILITY_REVERSE_CHOP] = "STANDING_STABILITY_REVERSE_CHOP"
     }
 
 
@@ -75,9 +68,9 @@ object ChopExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -88,7 +81,7 @@ object ChopExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

@@ -16,36 +16,35 @@ import com.garmin.fit.util.DateTimeConverter
 import com.garmin.fit.util.SemicirclesConverter
 import java.io.ByteArrayOutputStream
 
-open class MesgCSVWriterBase(byteArrayOutputStream: ByteArrayOutputStream?) {
+open class MesgCSVWriterBase(byteArrayOutputStream: ByteArrayOutputStream) {
     @JvmField
-    protected var csv: CSVWriter
+    protected var csv: CSVWriter = CSVWriter(byteArrayOutputStream)
     var isBytesAsHexEnabled: Boolean = false
         protected set
     var isDateTimeAsISO8601Enabled: Boolean = false
         protected set
     var isEnumsAsStringsEnabled: Boolean = false
         protected set
-    var isHideUnknownDataEnabled: Boolean = false
-        protected set
+
+    @JvmField
+    protected var hideUnknownData: Boolean = false
     var isShowInvalidsAsEmptyEnabled: Boolean = false
         protected set
+
     @JvmField
     protected var removeExpandedFields: Boolean = false
-    var isPreserveGapsEnabled: Boolean = false
-        protected set
+
+    @JvmField
+    protected var preserveGaps: Boolean = false
     var isSemicirclesAsDegreesEnabled: Boolean = false
         protected set
-
-    init {
-        this.csv = CSVWriter(byteArrayOutputStream)
-    }
 
     open fun close() {
         csv.close()
     }
 
     fun enableHideUnknownData(enable: Boolean) {
-        this.isHideUnknownDataEnabled = enable
+        this.hideUnknownData = enable
     }
 
     fun enableBytesAsHex(enable: Boolean) {
@@ -69,46 +68,47 @@ open class MesgCSVWriterBase(byteArrayOutputStream: ByteArrayOutputStream?) {
     }
 
     fun enablePreserveGaps(enable: Boolean) {
-        this.isPreserveGapsEnabled = enable
+        this.preserveGaps = enable
     }
 
 
     protected fun getValueString(fieldBase: FieldBase, subFieldIndex: Int): String {
         var value = fieldBase.getValue(0, subFieldIndex)
         val outStringBuilder = StringBuilder()
-        var out: String
 
-        var profileType: Profile.Type
+        var profileType: Profile.Type?
 
         try {
             // This might fail as the fieldBase could be a developer field
             val field = fieldBase as Field
-            profileType = field.getProfileType()
+            profileType = field.profileType
         } catch (e: ClassCastException) {
             // Default to dummy ENUM type
             profileType = Profile.Type.ENUM
         }
 
-        for (fieldElement in 0..<fieldBase.getNumValues()) {
-            if (value != null && !(this.isShowInvalidsAsEmptyEnabled && value == Fit.baseTypeInvalidMap.get(
-                    fieldBase.getType(subFieldIndex)
-                ))
+        for (fieldElement in 0..<fieldBase.numValues) {
+            if (value != null && !(this.isShowInvalidsAsEmptyEnabled && value == Fit.baseTypeInvalidMap[fieldBase.getType(
+                    subFieldIndex
+                )])
             ) {
                 value = fieldBase.getValue(fieldElement, subFieldIndex)
 
                 if (this.isBytesAsHexEnabled && fieldBase.getType(subFieldIndex) == Fit.BASE_TYPE_BYTE) {
                     outStringBuilder.append(String.format("0x%02x", value))
-                } else if (this.isSemicirclesAsDegreesEnabled && fieldBase.getUnits() == "semicircles") {
+                } else if (this.isSemicirclesAsDegreesEnabled && fieldBase.units == "semicircles") {
                     val degrees =
                         SemicirclesConverter.semicirclesToDegrees(value.toString().toInt())
                     outStringBuilder.append(String.format("%.8f", degrees))
-                } else if (this.isDateTimeAsISO8601Enabled && profileType.name.equals(
+                } else if (this.isDateTimeAsISO8601Enabled && profileType?.name.equals(
                         "DATE_TIME",
                         ignoreCase = true
                     )
                 ) {
-                    outStringBuilder.append(DateTimeConverter.fitTimestampToISO8601((value as kotlin.Long?)!!))
-                } else if (this.isEnumsAsStringsEnabled && profileType.ordinal > Profile.Type.BOOL.ordinal) {
+                    outStringBuilder.append(DateTimeConverter.fitTimestampToISO8601((value as Long?)!!))
+                } else if (this.isEnumsAsStringsEnabled &&
+                    (profileType?.ordinal ?: -1) > Profile.Type.BOOL.ordinal
+                ) {
                     outStringBuilder.append(
                         Profile.enumValueName(
                             profileType,
@@ -119,31 +119,35 @@ open class MesgCSVWriterBase(byteArrayOutputStream: ByteArrayOutputStream?) {
                     outStringBuilder.append(value.toString())
                 }
 
-                if (fieldElement != fieldBase.getNumValues() - 1) {
+                if (fieldElement != fieldBase.numValues - 1) {
                     outStringBuilder.append('|')
                 }
             }
         }
 
-        out = outStringBuilder.toString()
+        var out: String = outStringBuilder.toString()
         // Escapes embedded commas, double quotes, and newline characters
         out = out.replace("\"".toRegex(), "\"\"")
         out = "\"" + out + "\""
         return out
     }
 
-    protected fun formatUnits(units: String, profileType: String? = null): String? {
+    protected fun formatUnits(units: String?): String? {
+        return formatUnits(units, null)
+    }
+
+    protected fun formatUnits(units: String?, profileType: String?): String? {
         if (this.isSemicirclesAsDegreesEnabled && units.equals("semicircles", ignoreCase = true)) {
             return "degrees"
         }
-        if (this.isDateTimeAsISO8601Enabled && profileType != null && profileType.equals(
+        return if (this.isDateTimeAsISO8601Enabled && profileType != null && profileType.equals(
                 "DATE_TIME",
                 ignoreCase = true
             )
         ) {
-            return ""
+            ""
         } else {
-            return units
+            units
         }
     }
 }

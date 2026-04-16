@@ -14,19 +14,19 @@ import com.garmin.fit.Profile.SubFields
 class WatchfaceSettingsMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.WATCHFACE_SETTINGS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -36,19 +36,16 @@ class WatchfaceSettingsMesg : Mesg {
     var mode: WatchfaceMode?
         /**
          * Get mode field
-         * 
+         *
          * @return mode
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return WatchfaceMode.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return WatchfaceMode.getByValue(value)
         }
         /**
          * Set mode field
-         * 
+         *
          * @param mode The new mode value to be set
          */
         set(mode) {
@@ -58,13 +55,13 @@ class WatchfaceSettingsMesg : Mesg {
     var layout: Byte?
         /**
          * Get layout field
-         * 
+         *
          * @return layout
          */
         get() = getFieldByteValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set layout field
-         * 
+         *
          * @param layout The new layout value to be set
          */
         set(layout) {
@@ -74,7 +71,7 @@ class WatchfaceSettingsMesg : Mesg {
     var digitalLayout: DigitalWatchfaceLayout?
         /**
          * Get digital_layout field
-         * 
+         *
          * @return digital_layout
          */
         get() {
@@ -86,11 +83,11 @@ class WatchfaceSettingsMesg : Mesg {
             if (value == null) {
                 return null
             }
-            return DigitalWatchfaceLayout.Companion.getByValue(value)
+            return DigitalWatchfaceLayout.getByValue(value)
         }
         /**
          * Set digital_layout field
-         * 
+         *
          * @param digitalLayout The new digitalLayout value to be set
          */
         set(digitalLayout) {
@@ -105,7 +102,7 @@ class WatchfaceSettingsMesg : Mesg {
     var analogLayout: AnalogWatchfaceLayout?
         /**
          * Get analog_layout field
-         * 
+         *
          * @return analog_layout
          */
         get() {
@@ -117,11 +114,11 @@ class WatchfaceSettingsMesg : Mesg {
             if (value == null) {
                 return null
             }
-            return AnalogWatchfaceLayout.Companion.getByValue(value)
+            return AnalogWatchfaceLayout.getByValue(value)
         }
         /**
          * Set analog_layout field
-         * 
+         *
          * @param analogLayout The new analogLayout value to be set
          */
         set(analogLayout) {
@@ -187,7 +184,7 @@ class WatchfaceSettingsMesg : Mesg {
                 )
             )
             subfield_index = 0
-            watchfaceSettingsMesg.fields.get(field_index).subFields.add(
+            watchfaceSettingsMesg.fields[field_index].subFields.add(
                 SubField(
                     "digital_layout",
                     0,
@@ -196,9 +193,9 @@ class WatchfaceSettingsMesg : Mesg {
                     ""
                 )
             )
-            watchfaceSettingsMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 0)
+            watchfaceSettingsMesg.fields[field_index].subFields[subfield_index].addMap(0, 0)
             subfield_index++
-            watchfaceSettingsMesg.fields.get(field_index).subFields.add(
+            watchfaceSettingsMesg.fields[field_index].subFields.add(
                 SubField(
                     "analog_layout",
                     0,
@@ -207,7 +204,7 @@ class WatchfaceSettingsMesg : Mesg {
                     ""
                 )
             )
-            watchfaceSettingsMesg.fields.get(field_index).subFields.get(subfield_index).addMap(0, 1)
+            watchfaceSettingsMesg.fields[field_index].subFields[subfield_index].addMap(0, 1)
             subfield_index++
             field_index++
         }

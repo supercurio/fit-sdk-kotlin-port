@@ -9,11 +9,10 @@
 package com.garmin.fit
 
 class FitListener : MesgListener, DeveloperFieldDescriptionListener {
-    @JvmField
     val fitMessages: FitMessages = FitMessages()
 
     override fun onMesg(mesg: Mesg) {
-        when (mesg.getNum()) {
+        when (mesg.num) {
             MesgNum.FILE_ID -> fitMessages.fileIdMesgs.add(FileIdMesg(mesg))
             MesgNum.FILE_CREATOR -> fitMessages.fileCreatorMesgs.add(FileCreatorMesg(mesg))
             MesgNum.TIMESTAMP_CORRELATION -> fitMessages.timestampCorrelationMesgs.add(
@@ -278,7 +277,7 @@ class FitListener : MesgListener, DeveloperFieldDescriptionListener {
         }
     }
 
-    override fun onDescription(desc: DeveloperFieldDescription?) {
+    override fun onDescription(desc: DeveloperFieldDescription) {
         fitMessages.developerFieldDescriptionMesgs.add(desc)
     }
 }

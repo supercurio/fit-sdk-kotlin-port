@@ -17,26 +17,32 @@ import java.util.Collections
 import java.util.LinkedList
 
 open class Mesg {
-    open var name: String?
-    @JvmField
+    open var name: String? = null
     var num: Int
-    var localNum: Int
+    var localNum: Int = 0
+        set(localNum) {
+            if (localNum >= Fit.MAX_LOCAL_MESGS) {
+                throw FitRuntimeException(
+                    ("Invalid local message number " + localNum
+                            + ".  Local message number must be < " + Fit.MAX_LOCAL_MESGS + ".")
+                )
+            }
+
+            field = localNum
+
+        }
+
+    @JvmField
     var fields: ArrayList<Field>
     var developerFields: ArrayList<DeveloperField>
+        internal set
     var systemTimeOffset: Long
     var decoderMesgIndex: Int = 0
         private set
 
-    constructor(mesg: Mesg?) {
-        this.fields = ArrayList<Field>()
-        this.developerFields = ArrayList<DeveloperField>()
-
-        if (mesg == null) {
-            this.name = "unknown"
-            this.num = MesgNum.INVALID
-            this.systemTimeOffset = 0
-            return
-        }
+    constructor(mesg: Mesg) {
+        this.fields = ArrayList()
+        this.developerFields = ArrayList()
 
         this.name = mesg.name
         this.num = mesg.num
@@ -45,13 +51,13 @@ open class Mesg {
         this.decoderMesgIndex = mesg.decoderMesgIndex
 
         for (field in mesg.fields) {
-            if (field.getNumValues() > 0) {
+            if (field.numValues > 0) {
                 this.fields.add(Field(field))
             }
         }
 
         for (field in mesg.developerFields) {
-            if (field.getNumValues() > 0) {
+            if (field.numValues > 0) {
                 this.developerFields.add(DeveloperField(field))
             }
         }
@@ -61,8 +67,8 @@ open class Mesg {
         this.name = name
         this.num = num
         this.localNum = 0
-        this.fields = ArrayList<Field>()
-        this.developerFields = ArrayList<DeveloperField>()
+        this.fields = ArrayList()
+        this.developerFields = ArrayList()
         this.systemTimeOffset = 0
     }
 
@@ -71,10 +77,10 @@ open class Mesg {
      * component expansion while decoding the source .FIT file.
      */
     fun removeExpandedFields() {
-        val fieldsToRemove = ArrayList<Field?>()
+        val fieldsToRemove = mutableSetOf<Field>()
 
         for (field in fields) {
-            if (field.getIsExpanded()) {
+            if (field.isExpanded) {
                 fieldsToRemove.add(field)
             }
         }
@@ -83,7 +89,7 @@ open class Mesg {
     }
 
     @JvmOverloads
-    fun write(out: OutputStream?, mesgDef: MesgDefinition? = null) {
+    fun write(out: OutputStream, mesgDef: MesgDefinition? = null) {
         var mesgDef = mesgDef
         try {
             val headerByte = localNum and Fit.HDR_TYPE_MASK
@@ -109,11 +115,11 @@ open class Mesg {
 
         for (fieldDef in mesgDef.developerFields) {
             var field =
-                getDeveloperField(fieldDef.getDeveloperDataIndex(), fieldDef.getNum().toInt())
+                getDeveloperField(fieldDef.developerDataIndex, fieldDef.num.toInt())
 
             if (field == null) {
                 // Get Default from Definition
-                field = fieldDef.getDefaultField()
+                field = fieldDef.defaultField
             }
 
             field.write(out, fieldDef)
@@ -122,7 +128,7 @@ open class Mesg {
 
     fun hasField(num: Int): Boolean {
         for (i in fields.indices) {
-            if (fields.get(i).num == num) {
+            if (fields[i].num == num) {
                 return true
             }
         }
@@ -136,11 +142,11 @@ open class Mesg {
 
     fun addDeveloperField(field: DeveloperField) {
         for (i in developerFields.indices) {
-            val fieldToCompare: DeveloperField = developerFields.get(i)
-            if ((fieldToCompare.getNum() == field.getNum()) &&
-                (fieldToCompare.getDeveloperDataIndex() == field.getDeveloperDataIndex())
+            val fieldToCompare: DeveloperField = developerFields[i]
+            if ((fieldToCompare.num == field.num) &&
+                (fieldToCompare.developerDataIndex == field.developerDataIndex)
             ) {
-                developerFields.set(i, field)
+                developerFields[i] = field
                 return
             }
         }
@@ -150,8 +156,8 @@ open class Mesg {
 
     fun setField(field: Field) {
         for (i in fields.indices) {
-            if (fields.get(i).num == field.num) {
-                fields.set(i, field)
+            if (fields[i].num == field.num) {
+                fields[i] = field
                 return
             }
         }
@@ -164,8 +170,8 @@ open class Mesg {
 
     private fun getDeveloperField(developerIndex: Short, num: Int): DeveloperField? {
         for (field in developerFields) {
-            if ((field.getDeveloperDataIndex() == developerIndex) &&
-                (field.getNum() == num)
+            if ((field.developerDataIndex == developerIndex) &&
+                (field.num == num)
             ) {
                 return field
             }
@@ -176,8 +182,8 @@ open class Mesg {
 
     fun getField(num: Int): Field? {
         for (i in fields.indices) {
-            if (fields.get(i).num == num) {
-                return fields.get(i)
+            if (fields[i].num == num) {
+                return fields[i]
             }
         }
 
@@ -190,16 +196,16 @@ open class Mesg {
 
     fun getField(name: String?, checkMesgSupportForSubFields: Boolean): Field? {
         for (i in fields.indices) {
-            if (fields.get(i).name == name) {
-                return fields.get(i)
+            if (fields[i].name == name) {
+                return fields[i]
             }
 
-            for (j in fields.get(i).subFields.indices) {
-                if ((fields.get(i).subFields.get(j).name == name) && (!checkMesgSupportForSubFields || (fields.get(
-                        i
-                    ).subFields.get(j).canMesgSupport(this)))
+            for (j in fields[i].subFields.indices) {
+                if ((fields[i].subFields[j].name == name) && (!checkMesgSupportForSubFields || (fields[i].subFields[j].canMesgSupport(
+                        this
+                    )))
                 ) {
-                    return fields.get(i)
+                    return fields[i]
                 }
             }
         }
@@ -209,19 +215,15 @@ open class Mesg {
 
     /**
      * Returns the active subfield index of a given field for this message.
-     * 
+     *
      * @param num The field number for the field to be checked
      * @return the subfield index used for the field in this message
      */
     fun getActiveSubFieldIndex(num: Int): Int {
         val testField = Factory.createField(this.num, num)
 
-        if (testField == null) {
-            return Fit.SUBFIELD_INDEX_MAIN_FIELD
-        }
-
         for (i in testField.subFields.indices) {
-            if (testField.subFields.get(i).canMesgSupport(this)) {
+            if (testField.subFields[i].canMesgSupport(this)) {
                 return i
             }
         }
@@ -231,20 +233,16 @@ open class Mesg {
 
     /**
      * Returns the active subfield name of a given field for this message.
-     * 
+     *
      * @param num The field number for the field to be checked
      * @return the subfield name used for the field in this message
      */
     fun getActiveSubFieldName(num: Int): String? {
         val testField = Factory.createField(this.num, num)
 
-        if (testField == null) {
-            return Fit.SUBFIELD_NAME_MAIN_FIELD
-        }
-
         for (i in testField.subFields.indices) {
-            if (testField.subFields.get(i).canMesgSupport(this)) {
-                return testField.subFields.get(i).getName()
+            if (testField.subFields[i].canMesgSupport(this)) {
+                return testField.subFields[i].name
             }
         }
 
@@ -256,54 +254,42 @@ open class Mesg {
     }
 
     fun getNumFieldValues(num: Int, subFieldIndex: Int): Int {
-        val field = getField(num)
-
-        if (field == null) {
-            return 0
-        }
+        val field = getField(num) ?: return 0
 
         if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getNumValues()
+            return field.numValues
         }
 
         val subField = field.getSubField(subFieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getNumValues()
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.numValues
         } else {
-            return 0
+            0
         }
     }
 
     fun getNumFieldValues(num: Int, subFieldName: String?): Int {
-        val field = getField(num)
-
-        if (field == null) {
-            return 0
-        }
+        val field = getField(num) ?: return 0
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getNumValues()
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.numValues
         } else {
-            return 0
+            0
         }
     }
 
     fun getNumFieldValues(name: String?): Int {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return 0
-        }
+        val field = getField(name, false) ?: return 0
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getNumValues()
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.numValues
         } else {
-            return 0
+            0
         }
     }
 
@@ -316,38 +302,30 @@ open class Mesg {
     }
 
     fun getFieldValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Any? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getValue(fieldArrayIndex, subFieldIndex)
+                field.getValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Any? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -356,25 +334,21 @@ open class Mesg {
     }
 
     fun getFieldValue(name: String?, fieldArrayIndex: Int): Any? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
     fun getIsFieldAccumulated(num: Int): Boolean {
         val field = getField(num)
         if (field != null) {
-            return field.getIsAccumulated()
+            return field.isAccumulated
         }
         return false
     }
@@ -430,64 +404,48 @@ open class Mesg {
     }
 
     fun getFieldBitsValue(num: Int, offset: Int, bits: Int, signed: Boolean): Long? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         return field.getBitsValue(offset, bits, signed)
     }
 
     fun getFieldBitsValue(name: String?, offset: Int, bits: Int, signed: Boolean): Long? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBitsValue(offset, bits, signed)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBitsValue(offset, bits, signed)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldByteValues(num: Int): Array<Byte?>? {
+    fun getFieldByteValues(num: Int): Array<Byte>? {
         return getFieldByteValues(num, Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD)
     }
 
-    fun getFieldByteValues(num: Int, subfieldIndex: Int): Array<Byte?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldByteValues(num: Int, subfieldIndex: Int): Array<Byte>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getByteValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getByteValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldByteValues(num: Int, subfieldName: String?): Array<Byte?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldByteValues(num: Int, subfieldName: String): Array<Byte>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getByteValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getByteValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -500,38 +458,30 @@ open class Mesg {
     }
 
     fun getFieldByteValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Byte? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getByteValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getByteValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getByteValue(fieldArrayIndex, subFieldIndex)
+                field.getByteValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldByteValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Byte? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getByteValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getByteValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -540,54 +490,42 @@ open class Mesg {
     }
 
     fun getFieldByteValue(name: String?, fieldArrayIndex: Int): Byte? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getByteValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getByteValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldShortValues(num: Int): Array<Short?>? {
+    fun getFieldShortValues(num: Int): Array<Short>? {
         return getFieldShortValues(num, Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD)
     }
 
-    fun getFieldShortValues(num: Int, subfieldIndex: Int): Array<Short?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldShortValues(num: Int, subfieldIndex: Int): Array<Short>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getShortValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getShortValues(subfieldIndex).filterNotNull().toTypedArray()
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldShortValues(num: Int, subfieldName: String?): Array<Short?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldShortValues(num: Int, subfieldName: String?): Array<Short>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getShortValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getShortValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -600,38 +538,30 @@ open class Mesg {
     }
 
     fun getFieldShortValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Short? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getShortValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getShortValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getShortValue(fieldArrayIndex, subFieldIndex)
+                field.getShortValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldShortValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Short? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getShortValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getShortValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -640,54 +570,42 @@ open class Mesg {
     }
 
     fun getFieldShortValue(name: String?, fieldArrayIndex: Int): Short? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getShortValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getShortValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldIntegerValues(num: Int): Array<Int?>? {
+    fun getFieldIntegerValues(num: Int): Array<Int>? {
         return getFieldIntegerValues(num, Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD)
     }
 
-    fun getFieldIntegerValues(num: Int, subfieldIndex: Int): Array<Int?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldIntegerValues(num: Int, subfieldIndex: Int): Array<Int>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getIntegerValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getIntegerValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldIntegerValues(num: Int, subfieldName: String?): Array<Int?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldIntegerValues(num: Int, subfieldName: String?): Array<Int>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getIntegerValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getIntegerValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -700,38 +618,30 @@ open class Mesg {
     }
 
     fun getFieldIntegerValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Int? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getIntegerValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getIntegerValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getIntegerValue(fieldArrayIndex, subFieldIndex)
+                field.getIntegerValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldIntegerValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Int? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getIntegerValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getIntegerValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -740,54 +650,42 @@ open class Mesg {
     }
 
     fun getFieldIntegerValue(name: String?, fieldArrayIndex: Int): Int? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getIntegerValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getIntegerValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldLongValues(num: Int): Array<Long?>? {
+    fun getFieldLongValues(num: Int): Array<Long>? {
         return getFieldLongValues(num, Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD)
     }
 
-    fun getFieldLongValues(num: Int, subfieldIndex: Int): Array<Long?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldLongValues(num: Int, subfieldIndex: Int): Array<Long>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getLongValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getLongValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldLongValues(num: Int, subfieldName: String?): Array<Long?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldLongValues(num: Int, subfieldName: String?): Array<Long>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getLongValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getLongValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -800,38 +698,30 @@ open class Mesg {
     }
 
     fun getFieldLongValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Long? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getLongValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getLongValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getLongValue(fieldArrayIndex, subFieldIndex)
+                field.getLongValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldLongValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Long? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getLongValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getLongValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -840,54 +730,42 @@ open class Mesg {
     }
 
     fun getFieldLongValue(name: String?, fieldArrayIndex: Int): Long? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getLongValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getLongValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldFloatValues(num: Int): Array<Float?>? {
+    fun getFieldFloatValues(num: Int): Array<Float>? {
         return getFieldFloatValues(num, Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD)
     }
 
-    fun getFieldFloatValues(num: Int, subfieldIndex: Int): Array<Float?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldFloatValues(num: Int, subfieldIndex: Int): Array<Float>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getFloatValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getFloatValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldFloatValues(num: Int, subfieldName: String?): Array<Float?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldFloatValues(num: Int, subfieldName: String?): Array<Float>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getFloatValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getFloatValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -900,38 +778,30 @@ open class Mesg {
     }
 
     fun getFieldFloatValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Float? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getFloatValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getFloatValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getFloatValue(fieldArrayIndex, subFieldIndex)
+                field.getFloatValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldFloatValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Float? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getFloatValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getFloatValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -940,54 +810,42 @@ open class Mesg {
     }
 
     fun getFieldFloatValue(name: String?, fieldArrayIndex: Int): Float? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getFloatValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getFloatValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldDoubleValues(num: Int): Array<Double?>? {
+    fun getFieldDoubleValues(num: Int): Array<Double>? {
         return getFieldDoubleValues(num, Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD)
     }
 
-    fun getFieldDoubleValues(num: Int, subfieldIndex: Int): Array<Double?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldDoubleValues(num: Int, subfieldIndex: Int): Array<Double>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getDoubleValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getDoubleValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
-    fun getFieldDoubleValues(num: Int, subfieldName: String?): Array<Double?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+    fun getFieldDoubleValues(num: Int, subfieldName: String?): Array<Double>? {
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getDoubleValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getDoubleValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1000,38 +858,30 @@ open class Mesg {
     }
 
     fun getFieldDoubleValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): Double? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getDoubleValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getDoubleValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getDoubleValue(fieldArrayIndex, subFieldIndex)
+                field.getDoubleValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldDoubleValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): Double? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getDoubleValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getDoubleValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1040,18 +890,14 @@ open class Mesg {
     }
 
     fun getFieldDoubleValue(name: String?, fieldArrayIndex: Int): Double? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getDoubleValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getDoubleValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
@@ -1060,34 +906,26 @@ open class Mesg {
     }
 
     fun getFieldStringValues(num: Int, subfieldIndex: Int): Array<String?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getStringValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getStringValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
     fun getFieldStringValues(num: Int, subfieldName: String?): Array<String?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getStringValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getStringValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1100,38 +938,30 @@ open class Mesg {
     }
 
     fun getFieldStringValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): String? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getStringValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getStringValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getStringValue(fieldArrayIndex, subFieldIndex)
+                field.getStringValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
 
     fun getFieldStringValue(num: Int, fieldArrayIndex: Int, subFieldName: String?): String? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getStringValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getStringValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1140,18 +970,14 @@ open class Mesg {
     }
 
     fun getFieldStringValue(name: String?, fieldArrayIndex: Int): String? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getStringValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getStringValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
@@ -1160,34 +986,26 @@ open class Mesg {
     }
 
     fun getFieldBigIntegerValues(num: Int, subfieldIndex: Int): Array<BigInteger?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigIntegerValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigIntegerValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
     fun getFieldBigIntegerValues(num: Int, subfieldName: String?): Array<BigInteger?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigIntegerValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigIntegerValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1200,21 +1018,17 @@ open class Mesg {
     }
 
     fun getFieldBigIntegerValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): BigInteger? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getBigIntegerValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getBigIntegerValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getBigIntegerValue(fieldArrayIndex, subFieldIndex)
+                field.getBigIntegerValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
@@ -1224,18 +1038,14 @@ open class Mesg {
         fieldArrayIndex: Int,
         subFieldName: String?
     ): BigInteger? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigIntegerValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigIntegerValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1244,18 +1054,14 @@ open class Mesg {
     }
 
     fun getFieldBigIntegerValue(name: String?, fieldArrayIndex: Int): BigInteger? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigIntegerValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigIntegerValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
@@ -1264,34 +1070,26 @@ open class Mesg {
     }
 
     fun getFieldBigDecimalValues(num: Int, subfieldIndex: Int): Array<BigDecimal?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldIndex)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigDecimalValues(subfieldIndex)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigDecimalValues(subfieldIndex)
         } else {
-            return null
+            null
         }
     }
 
     fun getFieldBigDecimalValues(num: Int, subfieldName: String?): Array<BigDecimal?>? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subfieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigDecimalValues(subfieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigDecimalValues(subfieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1304,21 +1102,17 @@ open class Mesg {
     }
 
     fun getFieldBigDecimalValue(num: Int, fieldArrayIndex: Int, subFieldIndex: Int): BigDecimal? {
-        val field = getField(num)
+        val field = getField(num) ?: return null
 
-        if (field == null) {
-            return null
-        }
-
-        if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
-            return field.getBigDecimalValue(fieldArrayIndex, getActiveSubFieldIndex(num))
+        return if (subFieldIndex == Fit.SUBFIELD_INDEX_ACTIVE_SUBFIELD) {
+            field.getBigDecimalValue(fieldArrayIndex, getActiveSubFieldIndex(num))
         } else {
             val subField = field.getSubField(subFieldIndex)
 
             if ((subField == null) || (subField.canMesgSupport(this))) {
-                return field.getBigDecimalValue(fieldArrayIndex, subFieldIndex)
+                field.getBigDecimalValue(fieldArrayIndex, subFieldIndex)
             } else {
-                return null
+                null
             }
         }
     }
@@ -1328,18 +1122,14 @@ open class Mesg {
         fieldArrayIndex: Int,
         subFieldName: String?
     ): BigDecimal? {
-        val field = getField(num)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(num) ?: return null
 
         val subField = field.getSubField(subFieldName)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigDecimalValue(fieldArrayIndex, subFieldName)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigDecimalValue(fieldArrayIndex, subFieldName)
         } else {
-            return null
+            null
         }
     }
 
@@ -1348,18 +1138,14 @@ open class Mesg {
     }
 
     fun getFieldBigDecimalValue(name: String?, fieldArrayIndex: Int): BigDecimal? {
-        val field = getField(name, false)
-
-        if (field == null) {
-            return null
-        }
+        val field = getField(name, false) ?: return null
 
         val subField = field.getSubField(name)
 
-        if ((subField == null) || (subField.canMesgSupport(this))) {
-            return field.getBigDecimalValue(fieldArrayIndex, name)
+        return if ((subField == null) || (subField.canMesgSupport(this))) {
+            field.getBigDecimalValue(fieldArrayIndex, name)
         } else {
-            return null
+            null
         }
     }
 
@@ -1378,31 +1164,15 @@ open class Mesg {
     }
 
     fun timestampToDateTime(timestamp: Long?): DateTime? {
-        val dateTime: DateTime?
 
         if (timestamp == null) {
             return null
         }
 
-        dateTime = DateTime(timestamp)
+        val dateTime = DateTime(timestamp)
         dateTime.convertSystemTimeToUTC(systemTimeOffset)
 
         return dateTime
-    }
-
-    fun getLocalNum(): Int {
-        return localNum
-    }
-
-    fun setLocalNum(localNum: Int) {
-        if (localNum >= Fit.MAX_LOCAL_MESGS) {
-            throw FitRuntimeException(
-                ("Invalid local message number " + localNum
-                        + ".  Local message number must be < " + Fit.MAX_LOCAL_MESGS + ".")
-            )
-        }
-
-        this.localNum = localNum
     }
 
     fun setDecoderMessageIndex(decoderMesgIndex: Int) {
@@ -1419,17 +1189,8 @@ open class Mesg {
     }
 
     /**
-     * Retrieve all developer fields in the message
-     * 
-     * @return [Iterable] of all [DeveloperField]s in the message
-     */
-    fun getDeveloperFields(): Iterable<DeveloperField> {
-        return developerFields
-    }
-
-    /**
      * Retrieve all fields that are equivalent to the requested field number
-     * 
+     *
      * @param fieldNum The Field Number from the Profile that we are looking for
      * @return [Iterable] of [FieldBase]s that are equivalent to the
      * field number provided
@@ -1444,7 +1205,7 @@ open class Mesg {
         }
 
         for (devField in developerFields) {
-            if (devField.getNativeOverride() == fieldNum) {
+            if (devField.nativeOverride == fieldNum) {
                 fields.add(devField)
             }
         }

@@ -21,7 +21,7 @@ enum class LengthType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return LengthType.INVALID
+            return INVALID
         }
 
         /**

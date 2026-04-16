@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface BikeProfileMesgListener {
-    fun onMesg(mesg: BikeProfileMesg?)
+    fun onMesg(mesg: BikeProfileMesg)
 }

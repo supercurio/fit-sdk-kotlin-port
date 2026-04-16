@@ -12,15 +12,11 @@ package com.garmin.fit
 class PadMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.PAD))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     companion object {
-        val padMesg: Mesg
-
-        init {
-            // pad
-            padMesg = Mesg("pad", MesgNum.PAD)
-        }
+        // pad
+        val padMesg: Mesg = Mesg("pad", MesgNum.PAD)
     }
 }

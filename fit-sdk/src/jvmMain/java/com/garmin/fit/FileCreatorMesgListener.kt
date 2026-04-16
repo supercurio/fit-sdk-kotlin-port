@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface FileCreatorMesgListener {
-    fun onMesg(mesg: FileCreatorMesg?)
+    fun onMesg(mesg: FileCreatorMesg)
 }

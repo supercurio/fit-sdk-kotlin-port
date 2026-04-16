@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface FieldCapabilitiesMesgListener {
-    fun onMesg(mesg: FieldCapabilitiesMesg?)
+    fun onMesg(mesg: FieldCapabilitiesMesg)
 }

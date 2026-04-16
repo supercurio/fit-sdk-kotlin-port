@@ -23,7 +23,7 @@ enum class AttitudeStage(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return AttitudeStage.INVALID
+            return INVALID
         }
 
         /**

@@ -21,7 +21,7 @@ enum class SegmentSelectionType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SegmentSelectionType.INVALID
+            return INVALID
         }
 
         /**

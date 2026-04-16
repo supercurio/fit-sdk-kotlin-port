@@ -15,7 +15,7 @@ object SemicirclesConverter {
 
     /**
      * Converts a value in semicircles to degrees.
-     * 
+     *
      * @param semicircles the value in semicircles
      * @return the converted value in degrees
      */
@@ -29,7 +29,7 @@ object SemicirclesConverter {
 
     /**
      * Converts a value in degrees to semicircles.
-     * 
+     *
      * @param degrees the value in degrees
      * @return the converted value in semicircles.
      */

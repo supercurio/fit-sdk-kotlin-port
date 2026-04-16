@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface RespirationRateMesgListener {
-    fun onMesg(mesg: RespirationRateMesg?)
+    fun onMesg(mesg: RespirationRateMesg)
 }

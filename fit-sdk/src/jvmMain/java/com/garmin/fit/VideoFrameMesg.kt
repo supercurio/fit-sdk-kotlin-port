@@ -12,7 +12,7 @@ package com.garmin.fit
 class VideoFrameMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.VIDEO_FRAME))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class VideoFrameMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class VideoFrameMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Whole second part of the timestamp
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class VideoFrameMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,7 +48,7 @@ class VideoFrameMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond part of the timestamp.
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -59,14 +59,14 @@ class VideoFrameMesg : Mesg {
         /**
          * Get frame_number field
          * Comment: Number of the frame that the timestamp and timestamp_ms correlate to
-         * 
+         *
          * @return frame_number
          */
         get() = getFieldLongValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set frame_number field
          * Comment: Number of the frame that the timestamp and timestamp_ms correlate to
-         * 
+         *
          * @param frameNumber The new frameNumber value to be set
          */
         set(frameNumber) {
@@ -81,11 +81,10 @@ class VideoFrameMesg : Mesg {
         const val FrameNumberFieldNum: Int = 1
 
 
-        val videoFrameMesg: Mesg
+        // video_frame
+        val videoFrameMesg: Mesg = Mesg("video_frame", MesgNum.VIDEO_FRAME)
 
         init {
-            // video_frame
-            videoFrameMesg = Mesg("video_frame", MesgNum.VIDEO_FRAME)
             videoFrameMesg.addField(
                 Field(
                     "timestamp",

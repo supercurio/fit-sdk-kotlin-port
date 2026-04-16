@@ -12,19 +12,19 @@ package com.garmin.fit
 class UserProfileMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.USER_PROFILE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,14 +35,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get friendly_name field
          * Comment: Used for Morning Report greeting
-         * 
+         *
          * @return friendly_name
          */
         get() = getFieldStringValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set friendly_name field
          * Comment: Used for Morning Report greeting
-         * 
+         *
          * @param friendlyName The new friendlyName value to be set
          */
         set(friendlyName) {
@@ -52,19 +52,16 @@ class UserProfileMesg : Mesg {
     var gender: Gender?
         /**
          * Get gender field
-         * 
+         *
          * @return gender
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Gender.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Gender.getByValue(value)
         }
         /**
          * Set gender field
-         * 
+         *
          * @param gender The new gender value to be set
          */
         set(gender) {
@@ -75,14 +72,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get age field
          * Units: years
-         * 
+         *
          * @return age
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set age field
          * Units: years
-         * 
+         *
          * @param age The new age value to be set
          */
         set(age) {
@@ -93,14 +90,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get height field
          * Units: m
-         * 
+         *
          * @return height
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set height field
          * Units: m
-         * 
+         *
          * @param height The new height value to be set
          */
         set(height) {
@@ -111,14 +108,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get weight field
          * Units: kg
-         * 
+         *
          * @return weight
          */
         get() = getFieldFloatValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set weight field
          * Units: kg
-         * 
+         *
          * @param weight The new weight value to be set
          */
         set(weight) {
@@ -128,19 +125,16 @@ class UserProfileMesg : Mesg {
     var language: Language?
         /**
          * Get language field
-         * 
+         *
          * @return language
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Language.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Language.getByValue(value)
         }
         /**
          * Set language field
-         * 
+         *
          * @param language The new language value to be set
          */
         set(language) {
@@ -150,19 +144,16 @@ class UserProfileMesg : Mesg {
     var elevSetting: DisplayMeasure?
         /**
          * Get elev_setting field
-         * 
+         *
          * @return elev_setting
          */
         get() {
-            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set elev_setting field
-         * 
+         *
          * @param elevSetting The new elevSetting value to be set
          */
         set(elevSetting) {
@@ -172,19 +163,16 @@ class UserProfileMesg : Mesg {
     var weightSetting: DisplayMeasure?
         /**
          * Get weight_setting field
-         * 
+         *
          * @return weight_setting
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set weight_setting field
-         * 
+         *
          * @param weightSetting The new weightSetting value to be set
          */
         set(weightSetting) {
@@ -195,14 +183,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get resting_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return resting_heart_rate
          */
         get() = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set resting_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param restingHeartRate The new restingHeartRate value to be set
          */
         set(restingHeartRate) {
@@ -213,14 +201,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get default_max_running_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return default_max_running_heart_rate
          */
         get() = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set default_max_running_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param defaultMaxRunningHeartRate The new defaultMaxRunningHeartRate value to be set
          */
         set(defaultMaxRunningHeartRate) {
@@ -231,14 +219,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get default_max_biking_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return default_max_biking_heart_rate
          */
         get() = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set default_max_biking_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param defaultMaxBikingHeartRate The new defaultMaxBikingHeartRate value to be set
          */
         set(defaultMaxBikingHeartRate) {
@@ -249,14 +237,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get default_max_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return default_max_heart_rate
          */
         get() = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set default_max_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param defaultMaxHeartRate The new defaultMaxHeartRate value to be set
          */
         set(defaultMaxHeartRate) {
@@ -266,19 +254,16 @@ class UserProfileMesg : Mesg {
     var hrSetting: DisplayHeart?
         /**
          * Get hr_setting field
-         * 
+         *
          * @return hr_setting
          */
         get() {
-            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayHeart.Companion.getByValue(value)
+            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayHeart.getByValue(value)
         }
         /**
          * Set hr_setting field
-         * 
+         *
          * @param hrSetting The new hrSetting value to be set
          */
         set(hrSetting) {
@@ -288,19 +273,16 @@ class UserProfileMesg : Mesg {
     var speedSetting: DisplayMeasure?
         /**
          * Get speed_setting field
-         * 
+         *
          * @return speed_setting
          */
         get() {
-            val value = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set speed_setting field
-         * 
+         *
          * @param speedSetting The new speedSetting value to be set
          */
         set(speedSetting) {
@@ -310,19 +292,16 @@ class UserProfileMesg : Mesg {
     var distSetting: DisplayMeasure?
         /**
          * Get dist_setting field
-         * 
+         *
          * @return dist_setting
          */
         get() {
-            val value = getFieldShortValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set dist_setting field
-         * 
+         *
          * @param distSetting The new distSetting value to be set
          */
         set(distSetting) {
@@ -332,19 +311,16 @@ class UserProfileMesg : Mesg {
     var powerSetting: DisplayPower?
         /**
          * Get power_setting field
-         * 
+         *
          * @return power_setting
          */
         get() {
-            val value = getFieldShortValue(16, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayPower.Companion.getByValue(value)
+            val value = getFieldShortValue(16, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayPower.getByValue(value)
         }
         /**
          * Set power_setting field
-         * 
+         *
          * @param powerSetting The new powerSetting value to be set
          */
         set(powerSetting) {
@@ -354,19 +330,16 @@ class UserProfileMesg : Mesg {
     var activityClass: ActivityClass?
         /**
          * Get activity_class field
-         * 
+         *
          * @return activity_class
          */
         get() {
-            val value = getFieldShortValue(17, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return ActivityClass.Companion.getByValue(value)
+            val value = getFieldShortValue(17, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return ActivityClass.getByValue(value)
         }
         /**
          * Set activity_class field
-         * 
+         *
          * @param activityClass The new activityClass value to be set
          */
         set(activityClass) {
@@ -376,19 +349,16 @@ class UserProfileMesg : Mesg {
     var positionSetting: DisplayPosition?
         /**
          * Get position_setting field
-         * 
+         *
          * @return position_setting
          */
         get() {
-            val value = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayPosition.Companion.getByValue(value)
+            val value = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayPosition.getByValue(value)
         }
         /**
          * Set position_setting field
-         * 
+         *
          * @param positionSetting The new positionSetting value to be set
          */
         set(positionSetting) {
@@ -398,19 +368,16 @@ class UserProfileMesg : Mesg {
     var temperatureSetting: DisplayMeasure?
         /**
          * Get temperature_setting field
-         * 
+         *
          * @return temperature_setting
          */
         get() {
-            val value = getFieldShortValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set temperature_setting field
-         * 
+         *
          * @param temperatureSetting The new temperatureSetting value to be set
          */
         set(temperatureSetting) {
@@ -420,20 +387,20 @@ class UserProfileMesg : Mesg {
     var localId: Int?
         /**
          * Get local_id field
-         * 
+         *
          * @return local_id
          */
         get() = getFieldIntegerValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set local_id field
-         * 
+         *
          * @param localId The new localId value to be set
          */
         set(localId) {
             setFieldValue(22, 0, localId, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val globalId: Array<Byte?>?
+    val globalId: Array<Byte>?
         get() = getFieldByteValues(23, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numGlobalId: Int
@@ -444,7 +411,7 @@ class UserProfileMesg : Mesg {
 
     /**
      * Get global_id field
-     * 
+     *
      * @param index of global_id
      * @return global_id
      */
@@ -454,7 +421,7 @@ class UserProfileMesg : Mesg {
 
     /**
      * Set global_id field
-     * 
+     *
      * @param index of global_id
      * @param globalId The new globalId value to be set
      */
@@ -466,14 +433,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get wake_time field
          * Comment: Typical wake time
-         * 
+         *
          * @return wake_time
          */
         get() = getFieldLongValue(28, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set wake_time field
          * Comment: Typical wake time
-         * 
+         *
          * @param wakeTime The new wakeTime value to be set
          */
         set(wakeTime) {
@@ -484,14 +451,14 @@ class UserProfileMesg : Mesg {
         /**
          * Get sleep_time field
          * Comment: Typical bed time
-         * 
+         *
          * @return sleep_time
          */
         get() = getFieldLongValue(29, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sleep_time field
          * Comment: Typical bed time
-         * 
+         *
          * @param sleepTime The new sleepTime value to be set
          */
         set(sleepTime) {
@@ -501,19 +468,16 @@ class UserProfileMesg : Mesg {
     var heightSetting: DisplayMeasure?
         /**
          * Get height_setting field
-         * 
+         *
          * @return height_setting
          */
         get() {
-            val value = getFieldShortValue(30, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(30, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set height_setting field
-         * 
+         *
          * @param heightSetting The new heightSetting value to be set
          */
         set(heightSetting) {
@@ -525,7 +489,7 @@ class UserProfileMesg : Mesg {
          * Get user_running_step_length field
          * Units: m
          * Comment: User defined running step length set to 0 for auto length
-         * 
+         *
          * @return user_running_step_length
          */
         get() = getFieldFloatValue(31, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -533,7 +497,7 @@ class UserProfileMesg : Mesg {
          * Set user_running_step_length field
          * Units: m
          * Comment: User defined running step length set to 0 for auto length
-         * 
+         *
          * @param userRunningStepLength The new userRunningStepLength value to be set
          */
         set(userRunningStepLength) {
@@ -545,7 +509,7 @@ class UserProfileMesg : Mesg {
          * Get user_walking_step_length field
          * Units: m
          * Comment: User defined walking step length set to 0 for auto length
-         * 
+         *
          * @return user_walking_step_length
          */
         get() = getFieldFloatValue(32, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -553,7 +517,7 @@ class UserProfileMesg : Mesg {
          * Set user_walking_step_length field
          * Units: m
          * Comment: User defined walking step length set to 0 for auto length
-         * 
+         *
          * @param userWalkingStepLength The new userWalkingStepLength value to be set
          */
         set(userWalkingStepLength) {
@@ -563,19 +527,16 @@ class UserProfileMesg : Mesg {
     var depthSetting: DisplayMeasure?
         /**
          * Get depth_setting field
-         * 
+         *
          * @return depth_setting
          */
         get() {
-            val value = getFieldShortValue(47, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DisplayMeasure.Companion.getByValue(value)
+            val value = getFieldShortValue(47, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DisplayMeasure.getByValue(value)
         }
         /**
          * Set depth_setting field
-         * 
+         *
          * @param depthSetting The new depthSetting value to be set
          */
         set(depthSetting) {
@@ -585,13 +546,13 @@ class UserProfileMesg : Mesg {
     var diveCount: Long?
         /**
          * Get dive_count field
-         * 
+         *
          * @return dive_count
          */
         get() = getFieldLongValue(49, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set dive_count field
-         * 
+         *
          * @param diveCount The new diveCount value to be set
          */
         set(diveCount) {
@@ -658,11 +619,10 @@ class UserProfileMesg : Mesg {
         const val DiveCountFieldNum: Int = 49
 
 
-        val userProfileMesg: Mesg
+        // user_profile
+        val userProfileMesg: Mesg = Mesg("user_profile", MesgNum.USER_PROFILE)
 
         init {
-            // user_profile
-            userProfileMesg = Mesg("user_profile", MesgNum.USER_PROFILE)
             userProfileMesg.addField(
                 Field(
                     "message_index",

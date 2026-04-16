@@ -22,7 +22,7 @@ enum class AnalogWatchfaceLayout(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return AnalogWatchfaceLayout.INVALID
+            return INVALID
         }
 
         /**

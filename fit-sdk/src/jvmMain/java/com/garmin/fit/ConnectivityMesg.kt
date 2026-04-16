@@ -12,27 +12,24 @@ package com.garmin.fit
 class ConnectivityMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.CONNECTIVITY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var bluetoothEnabled: Bool?
         /**
          * Get bluetooth_enabled field
          * Comment: Use Bluetooth for connectivity features
-         * 
+         *
          * @return bluetooth_enabled
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set bluetooth_enabled field
          * Comment: Use Bluetooth for connectivity features
-         * 
+         *
          * @param bluetoothEnabled The new bluetoothEnabled value to be set
          */
         set(bluetoothEnabled) {
@@ -43,20 +40,17 @@ class ConnectivityMesg : Mesg {
         /**
          * Get bluetooth_le_enabled field
          * Comment: Use Bluetooth Low Energy for connectivity features
-         * 
+         *
          * @return bluetooth_le_enabled
          */
         get() {
-            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set bluetooth_le_enabled field
          * Comment: Use Bluetooth Low Energy for connectivity features
-         * 
+         *
          * @param bluetoothLeEnabled The new bluetoothLeEnabled value to be set
          */
         set(bluetoothLeEnabled) {
@@ -67,60 +61,54 @@ class ConnectivityMesg : Mesg {
         /**
          * Get ant_enabled field
          * Comment: Use ANT for connectivity features
-         * 
+         *
          * @return ant_enabled
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set ant_enabled field
          * Comment: Use ANT for connectivity features
-         * 
+         *
          * @param antEnabled The new antEnabled value to be set
          */
         set(antEnabled) {
             setFieldValue(2, 0, antEnabled!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(3, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var liveTrackingEnabled: Bool?
         /**
          * Get live_tracking_enabled field
-         * 
+         *
          * @return live_tracking_enabled
          */
         get() {
-            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set live_tracking_enabled field
-         * 
+         *
          * @param liveTrackingEnabled The new liveTrackingEnabled value to be set
          */
         set(liveTrackingEnabled) {
@@ -130,19 +118,16 @@ class ConnectivityMesg : Mesg {
     var weatherConditionsEnabled: Bool?
         /**
          * Get weather_conditions_enabled field
-         * 
+         *
          * @return weather_conditions_enabled
          */
         get() {
-            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set weather_conditions_enabled field
-         * 
+         *
          * @param weatherConditionsEnabled The new weatherConditionsEnabled value to be set
          */
         set(weatherConditionsEnabled) {
@@ -152,19 +137,16 @@ class ConnectivityMesg : Mesg {
     var weatherAlertsEnabled: Bool?
         /**
          * Get weather_alerts_enabled field
-         * 
+         *
          * @return weather_alerts_enabled
          */
         get() {
-            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set weather_alerts_enabled field
-         * 
+         *
          * @param weatherAlertsEnabled The new weatherAlertsEnabled value to be set
          */
         set(weatherAlertsEnabled) {
@@ -174,19 +156,16 @@ class ConnectivityMesg : Mesg {
     var autoActivityUploadEnabled: Bool?
         /**
          * Get auto_activity_upload_enabled field
-         * 
+         *
          * @return auto_activity_upload_enabled
          */
         get() {
-            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set auto_activity_upload_enabled field
-         * 
+         *
          * @param autoActivityUploadEnabled The new autoActivityUploadEnabled value to be set
          */
         set(autoActivityUploadEnabled) {
@@ -196,19 +175,16 @@ class ConnectivityMesg : Mesg {
     var courseDownloadEnabled: Bool?
         /**
          * Get course_download_enabled field
-         * 
+         *
          * @return course_download_enabled
          */
         get() {
-            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set course_download_enabled field
-         * 
+         *
          * @param courseDownloadEnabled The new courseDownloadEnabled value to be set
          */
         set(courseDownloadEnabled) {
@@ -218,19 +194,16 @@ class ConnectivityMesg : Mesg {
     var workoutDownloadEnabled: Bool?
         /**
          * Get workout_download_enabled field
-         * 
+         *
          * @return workout_download_enabled
          */
         get() {
-            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set workout_download_enabled field
-         * 
+         *
          * @param workoutDownloadEnabled The new workoutDownloadEnabled value to be set
          */
         set(workoutDownloadEnabled) {
@@ -240,19 +213,16 @@ class ConnectivityMesg : Mesg {
     var gpsEphemerisDownloadEnabled: Bool?
         /**
          * Get gps_ephemeris_download_enabled field
-         * 
+         *
          * @return gps_ephemeris_download_enabled
          */
         get() {
-            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set gps_ephemeris_download_enabled field
-         * 
+         *
          * @param gpsEphemerisDownloadEnabled The new gpsEphemerisDownloadEnabled value to be set
          */
         set(gpsEphemerisDownloadEnabled) {
@@ -262,19 +232,16 @@ class ConnectivityMesg : Mesg {
     var incidentDetectionEnabled: Bool?
         /**
          * Get incident_detection_enabled field
-         * 
+         *
          * @return incident_detection_enabled
          */
         get() {
-            val value = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set incident_detection_enabled field
-         * 
+         *
          * @param incidentDetectionEnabled The new incidentDetectionEnabled value to be set
          */
         set(incidentDetectionEnabled) {
@@ -284,19 +251,16 @@ class ConnectivityMesg : Mesg {
     var grouptrackEnabled: Bool?
         /**
          * Get grouptrack_enabled field
-         * 
+         *
          * @return grouptrack_enabled
          */
         get() {
-            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Bool.Companion.getByValue(value)
+            val value = getFieldShortValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Bool.getByValue(value)
         }
         /**
          * Set grouptrack_enabled field
-         * 
+         *
          * @param grouptrackEnabled The new grouptrackEnabled value to be set
          */
         set(grouptrackEnabled) {
@@ -331,11 +295,10 @@ class ConnectivityMesg : Mesg {
         const val GrouptrackEnabledFieldNum: Int = 12
 
 
-        val connectivityMesg: Mesg
+        // connectivity
+        val connectivityMesg: Mesg = Mesg("connectivity", MesgNum.CONNECTIVITY)
 
         init {
-            // connectivity
-            connectivityMesg = Mesg("connectivity", MesgNum.CONNECTIVITY)
             connectivityMesg.addField(
                 Field(
                     "bluetooth_enabled",

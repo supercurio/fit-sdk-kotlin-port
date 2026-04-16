@@ -116,7 +116,7 @@ enum class ExdDescriptors(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ExdDescriptors.INVALID
+            return INVALID
         }
 
         /**

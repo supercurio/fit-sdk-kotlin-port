@@ -30,10 +30,9 @@ object CRC {
 
     fun get16(crc: Int, data: Byte): Int {
         var crc = crc
-        var tmp: Int
 
         // compute checksum of lower four bits of byte
-        tmp = crc16_table[crc and 0x0F]
+        var tmp: Int = crc16_table[crc and 0x0F]
         crc = (crc shr 4) and 0x0FFF
         crc = crc xor tmp xor crc16_table[data.toInt() and 0x0F]
 

@@ -12,37 +12,37 @@ package com.garmin.fit
 class DiveSummaryMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DIVE_SUMMARY))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var referenceMesg: Int?
         /**
          * Get reference_mesg field
-         * 
+         *
          * @return reference_mesg
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set reference_mesg field
-         * 
+         *
          * @param referenceMesg The new referenceMesg value to be set
          */
         set(referenceMesg) {
@@ -52,13 +52,13 @@ class DiveSummaryMesg : Mesg {
     var referenceIndex: Int?
         /**
          * Get reference_index field
-         * 
+         *
          * @return reference_index
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set reference_index field
-         * 
+         *
          * @param referenceIndex The new referenceIndex value to be set
          */
         set(referenceIndex) {
@@ -70,7 +70,7 @@ class DiveSummaryMesg : Mesg {
          * Get avg_depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @return avg_depth
          */
         get() = getFieldFloatValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -78,7 +78,7 @@ class DiveSummaryMesg : Mesg {
          * Set avg_depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @param avgDepth The new avgDepth value to be set
          */
         set(avgDepth) {
@@ -90,7 +90,7 @@ class DiveSummaryMesg : Mesg {
          * Get max_depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @return max_depth
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -98,7 +98,7 @@ class DiveSummaryMesg : Mesg {
          * Set max_depth field
          * Units: m
          * Comment: 0 if above water
-         * 
+         *
          * @param maxDepth The new maxDepth value to be set
          */
         set(maxDepth) {
@@ -110,7 +110,7 @@ class DiveSummaryMesg : Mesg {
          * Get surface_interval field
          * Units: s
          * Comment: Time since end of last dive
-         * 
+         *
          * @return surface_interval
          */
         get() = getFieldLongValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -118,7 +118,7 @@ class DiveSummaryMesg : Mesg {
          * Set surface_interval field
          * Units: s
          * Comment: Time since end of last dive
-         * 
+         *
          * @param surfaceInterval The new surfaceInterval value to be set
          */
         set(surfaceInterval) {
@@ -129,14 +129,14 @@ class DiveSummaryMesg : Mesg {
         /**
          * Get start_cns field
          * Units: percent
-         * 
+         *
          * @return start_cns
          */
         get() = getFieldShortValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set start_cns field
          * Units: percent
-         * 
+         *
          * @param startCns The new startCns value to be set
          */
         set(startCns) {
@@ -147,14 +147,14 @@ class DiveSummaryMesg : Mesg {
         /**
          * Get end_cns field
          * Units: percent
-         * 
+         *
          * @return end_cns
          */
         get() = getFieldShortValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set end_cns field
          * Units: percent
-         * 
+         *
          * @param endCns The new endCns value to be set
          */
         set(endCns) {
@@ -165,14 +165,14 @@ class DiveSummaryMesg : Mesg {
         /**
          * Get start_n2 field
          * Units: percent
-         * 
+         *
          * @return start_n2
          */
         get() = getFieldIntegerValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set start_n2 field
          * Units: percent
-         * 
+         *
          * @param startN2 The new startN2 value to be set
          */
         set(startN2) {
@@ -183,14 +183,14 @@ class DiveSummaryMesg : Mesg {
         /**
          * Get end_n2 field
          * Units: percent
-         * 
+         *
          * @return end_n2
          */
         get() = getFieldIntegerValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set end_n2 field
          * Units: percent
-         * 
+         *
          * @param endN2 The new endN2 value to be set
          */
         set(endN2) {
@@ -201,14 +201,14 @@ class DiveSummaryMesg : Mesg {
         /**
          * Get o2_toxicity field
          * Units: OTUs
-         * 
+         *
          * @return o2_toxicity
          */
         get() = getFieldIntegerValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set o2_toxicity field
          * Units: OTUs
-         * 
+         *
          * @param o2Toxicity The new o2Toxicity value to be set
          */
         set(o2Toxicity) {
@@ -218,13 +218,13 @@ class DiveSummaryMesg : Mesg {
     var diveNumber: Long?
         /**
          * Get dive_number field
-         * 
+         *
          * @return dive_number
          */
         get() = getFieldLongValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set dive_number field
-         * 
+         *
          * @param diveNumber The new diveNumber value to be set
          */
         set(diveNumber) {
@@ -235,14 +235,14 @@ class DiveSummaryMesg : Mesg {
         /**
          * Get bottom_time field
          * Units: s
-         * 
+         *
          * @return bottom_time
          */
         get() = getFieldFloatValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set bottom_time field
          * Units: s
-         * 
+         *
          * @param bottomTime The new bottomTime value to be set
          */
         set(bottomTime) {
@@ -254,7 +254,7 @@ class DiveSummaryMesg : Mesg {
          * Get avg_pressure_sac field
          * Units: bar/min
          * Comment: Average pressure-based surface air consumption
-         * 
+         *
          * @return avg_pressure_sac
          */
         get() = getFieldFloatValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -262,7 +262,7 @@ class DiveSummaryMesg : Mesg {
          * Set avg_pressure_sac field
          * Units: bar/min
          * Comment: Average pressure-based surface air consumption
-         * 
+         *
          * @param avgPressureSac The new avgPressureSac value to be set
          */
         set(avgPressureSac) {
@@ -274,7 +274,7 @@ class DiveSummaryMesg : Mesg {
          * Get avg_volume_sac field
          * Units: L/min
          * Comment: Average volumetric surface air consumption
-         * 
+         *
          * @return avg_volume_sac
          */
         get() = getFieldFloatValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -282,7 +282,7 @@ class DiveSummaryMesg : Mesg {
          * Set avg_volume_sac field
          * Units: L/min
          * Comment: Average volumetric surface air consumption
-         * 
+         *
          * @param avgVolumeSac The new avgVolumeSac value to be set
          */
         set(avgVolumeSac) {
@@ -294,7 +294,7 @@ class DiveSummaryMesg : Mesg {
          * Get avg_rmv field
          * Units: L/min
          * Comment: Average respiratory minute volume
-         * 
+         *
          * @return avg_rmv
          */
         get() = getFieldFloatValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -302,7 +302,7 @@ class DiveSummaryMesg : Mesg {
          * Set avg_rmv field
          * Units: L/min
          * Comment: Average respiratory minute volume
-         * 
+         *
          * @param avgRmv The new avgRmv value to be set
          */
         set(avgRmv) {
@@ -314,7 +314,7 @@ class DiveSummaryMesg : Mesg {
          * Get descent_time field
          * Units: s
          * Comment: Time to reach deepest level stop
-         * 
+         *
          * @return descent_time
          */
         get() = getFieldFloatValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -322,7 +322,7 @@ class DiveSummaryMesg : Mesg {
          * Set descent_time field
          * Units: s
          * Comment: Time to reach deepest level stop
-         * 
+         *
          * @param descentTime The new descentTime value to be set
          */
         set(descentTime) {
@@ -334,7 +334,7 @@ class DiveSummaryMesg : Mesg {
          * Get ascent_time field
          * Units: s
          * Comment: Time after leaving bottom until reaching surface
-         * 
+         *
          * @return ascent_time
          */
         get() = getFieldFloatValue(16, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -342,7 +342,7 @@ class DiveSummaryMesg : Mesg {
          * Set ascent_time field
          * Units: s
          * Comment: Time after leaving bottom until reaching surface
-         * 
+         *
          * @param ascentTime The new ascentTime value to be set
          */
         set(ascentTime) {
@@ -354,7 +354,7 @@ class DiveSummaryMesg : Mesg {
          * Get avg_ascent_rate field
          * Units: m/s
          * Comment: Average ascent rate, not including descents or stops
-         * 
+         *
          * @return avg_ascent_rate
          */
         get() = getFieldFloatValue(17, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -362,7 +362,7 @@ class DiveSummaryMesg : Mesg {
          * Set avg_ascent_rate field
          * Units: m/s
          * Comment: Average ascent rate, not including descents or stops
-         * 
+         *
          * @param avgAscentRate The new avgAscentRate value to be set
          */
         set(avgAscentRate) {
@@ -374,7 +374,7 @@ class DiveSummaryMesg : Mesg {
          * Get avg_descent_rate field
          * Units: m/s
          * Comment: Average descent rate, not including ascents or stops
-         * 
+         *
          * @return avg_descent_rate
          */
         get() = getFieldFloatValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -382,7 +382,7 @@ class DiveSummaryMesg : Mesg {
          * Set avg_descent_rate field
          * Units: m/s
          * Comment: Average descent rate, not including ascents or stops
-         * 
+         *
          * @param avgDescentRate The new avgDescentRate value to be set
          */
         set(avgDescentRate) {
@@ -394,7 +394,7 @@ class DiveSummaryMesg : Mesg {
          * Get max_ascent_rate field
          * Units: m/s
          * Comment: Maximum ascent rate
-         * 
+         *
          * @return max_ascent_rate
          */
         get() = getFieldFloatValue(23, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -402,7 +402,7 @@ class DiveSummaryMesg : Mesg {
          * Set max_ascent_rate field
          * Units: m/s
          * Comment: Maximum ascent rate
-         * 
+         *
          * @param maxAscentRate The new maxAscentRate value to be set
          */
         set(maxAscentRate) {
@@ -414,7 +414,7 @@ class DiveSummaryMesg : Mesg {
          * Get max_descent_rate field
          * Units: m/s
          * Comment: Maximum descent rate
-         * 
+         *
          * @return max_descent_rate
          */
         get() = getFieldFloatValue(24, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -422,7 +422,7 @@ class DiveSummaryMesg : Mesg {
          * Set max_descent_rate field
          * Units: m/s
          * Comment: Maximum descent rate
-         * 
+         *
          * @param maxDescentRate The new maxDescentRate value to be set
          */
         set(maxDescentRate) {
@@ -434,7 +434,7 @@ class DiveSummaryMesg : Mesg {
          * Get hang_time field
          * Units: s
          * Comment: Time spent neither ascending nor descending
-         * 
+         *
          * @return hang_time
          */
         get() = getFieldFloatValue(25, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -442,7 +442,7 @@ class DiveSummaryMesg : Mesg {
          * Set hang_time field
          * Units: s
          * Comment: Time spent neither ascending nor descending
-         * 
+         *
          * @param hangTime The new hangTime value to be set
          */
         set(hangTime) {
@@ -497,11 +497,10 @@ class DiveSummaryMesg : Mesg {
         const val HangTimeFieldNum: Int = 25
 
 
-        val diveSummaryMesg: Mesg
+        // dive_summary
+        val diveSummaryMesg: Mesg = Mesg("dive_summary", MesgNum.DIVE_SUMMARY)
 
         init {
-            // dive_summary
-            diveSummaryMesg = Mesg("dive_summary", MesgNum.DIVE_SUMMARY)
             diveSummaryMesg.addField(
                 Field(
                     "timestamp",

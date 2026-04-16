@@ -12,37 +12,37 @@ package com.garmin.fit
 class HrMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HR))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var fractionalTimestamp: Float?
         /**
          * Get fractional_timestamp field
          * Units: s
-         * 
+         *
          * @return fractional_timestamp
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set fractional_timestamp field
          * Units: s
-         * 
+         *
          * @param fractionalTimestamp The new fractionalTimestamp value to be set
          */
         set(fractionalTimestamp) {
@@ -53,33 +53,33 @@ class HrMesg : Mesg {
         /**
          * Get time256 field
          * Units: s
-         * 
+         *
          * @return time256
          */
         get() = getFieldFloatValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set time256 field
          * Units: s
-         * 
+         *
          * @param time256 The new time256 value to be set
          */
         set(time256) {
             setFieldValue(1, 0, time256, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val filteredBpm: Array<Short?>?
-        get() = getFieldShortValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val filteredBpm: Array<Short>?
+        get() = getFieldShortValues(FilteredBpmFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numFilteredBpm: Int
         /**
          * @return number of filtered_bpm
          */
-        get() = getNumFieldValues(6, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(FilteredBpmFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get filtered_bpm field
      * Units: bpm
-     * 
+     *
      * @param index of filtered_bpm
      * @return filtered_bpm
      */
@@ -90,7 +90,7 @@ class HrMesg : Mesg {
     /**
      * Set filtered_bpm field
      * Units: bpm
-     * 
+     *
      * @param index of filtered_bpm
      * @param filteredBpm The new filteredBpm value to be set
      */
@@ -98,7 +98,7 @@ class HrMesg : Mesg {
         setFieldValue(6, index, filteredBpm, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val eventTimestamp: Array<Float?>?
+    val eventTimestamp: Array<Float>?
         get() = getFieldFloatValues(9, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numEventTimestamp: Int
@@ -110,7 +110,7 @@ class HrMesg : Mesg {
     /**
      * Get event_timestamp field
      * Units: s
-     * 
+     *
      * @param index of event_timestamp
      * @return event_timestamp
      */
@@ -121,7 +121,7 @@ class HrMesg : Mesg {
     /**
      * Set event_timestamp field
      * Units: s
-     * 
+     *
      * @param index of event_timestamp
      * @param eventTimestamp The new eventTimestamp value to be set
      */
@@ -129,7 +129,7 @@ class HrMesg : Mesg {
         setFieldValue(9, index, eventTimestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val eventTimestamp12: Array<Byte?>?
+    val eventTimestamp12: Array<Byte>?
         get() = getFieldByteValues(10, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numEventTimestamp12: Int
@@ -140,7 +140,7 @@ class HrMesg : Mesg {
 
     /**
      * Get event_timestamp_12 field
-     * 
+     *
      * @param index of event_timestamp_12
      * @return event_timestamp_12
      */
@@ -150,7 +150,7 @@ class HrMesg : Mesg {
 
     /**
      * Set event_timestamp_12 field
-     * 
+     *
      * @param index of event_timestamp_12
      * @param eventTimestamp12 The new eventTimestamp12 value to be set
      */
@@ -216,7 +216,7 @@ class HrMesg : Mesg {
                     Profile.Type.UINT8
                 )
             )
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     0,
                     false,
@@ -264,7 +264,7 @@ class HrMesg : Mesg {
                     Profile.Type.BYTE
                 )
             )
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -273,7 +273,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -282,7 +282,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -291,7 +291,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -300,7 +300,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -309,7 +309,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -318,7 +318,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -327,7 +327,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -336,7 +336,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,
@@ -345,7 +345,7 @@ class HrMesg : Mesg {
                     0.0
                 )
             ) // event_timestamp
-            hrMesg.fields.get(field_index).components.add(
+            hrMesg.fields[field_index].components.add(
                 FieldComponent(
                     9,
                     true,

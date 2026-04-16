@@ -40,7 +40,7 @@ enum class SplitType(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SplitType.INVALID
+            return INVALID
         }
 
         /**

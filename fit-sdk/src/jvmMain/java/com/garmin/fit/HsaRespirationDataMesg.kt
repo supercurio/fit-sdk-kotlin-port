@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaRespirationDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_RESPIRATION_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -38,7 +38,7 @@ class HsaRespirationDataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,14 +46,14 @@ class HsaRespirationDataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
             setFieldValue(0, 0, processingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val respirationRate: Array<Float?>?
+    val respirationRate: Array<Float>?
         get() = getFieldFloatValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numRespirationRate: Int
@@ -66,7 +66,7 @@ class HsaRespirationDataMesg : Mesg {
      * Get respiration_rate field
      * Units: breaths/min
      * Comment: Breaths / min: [1,100] Invalid: 255 Excess motion: 254 Off wrist: 253 Not available: 252 Blank: 2.4
-     * 
+     *
      * @param index of respiration_rate
      * @return respiration_rate
      */
@@ -78,7 +78,7 @@ class HsaRespirationDataMesg : Mesg {
      * Set respiration_rate field
      * Units: breaths/min
      * Comment: Breaths / min: [1,100] Invalid: 255 Excess motion: 254 Off wrist: 253 Not available: 252 Blank: 2.4
-     * 
+     *
      * @param index of respiration_rate
      * @param respirationRate The new respirationRate value to be set
      */
@@ -94,11 +94,10 @@ class HsaRespirationDataMesg : Mesg {
         const val RespirationRateFieldNum: Int = 1
 
 
-        val hsaRespirationDataMesg: Mesg
+        // hsa_respiration_data
+        val hsaRespirationDataMesg: Mesg = Mesg("hsa_respiration_data", MesgNum.HSA_RESPIRATION_DATA)
 
         init {
-            // hsa_respiration_data
-            hsaRespirationDataMesg = Mesg("hsa_respiration_data", MesgNum.HSA_RESPIRATION_DATA)
             hsaRespirationDataMesg.addField(
                 Field(
                     "timestamp",

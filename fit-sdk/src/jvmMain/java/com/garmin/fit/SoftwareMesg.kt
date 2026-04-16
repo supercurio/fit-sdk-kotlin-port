@@ -12,19 +12,19 @@ package com.garmin.fit
 class SoftwareMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SOFTWARE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,13 +34,13 @@ class SoftwareMesg : Mesg {
     var version: Float?
         /**
          * Get version field
-         * 
+         *
          * @return version
          */
         get() = getFieldFloatValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set version field
-         * 
+         *
          * @param version The new version value to be set
          */
         set(version) {
@@ -50,13 +50,13 @@ class SoftwareMesg : Mesg {
     var partNumber: String?
         /**
          * Get part_number field
-         * 
+         *
          * @return part_number
          */
         get() = getFieldStringValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set part_number field
-         * 
+         *
          * @param partNumber The new partNumber value to be set
          */
         set(partNumber) {
@@ -71,11 +71,10 @@ class SoftwareMesg : Mesg {
         const val PartNumberFieldNum: Int = 5
 
 
-        val softwareMesg: Mesg
+        // software
+        val softwareMesg: Mesg = Mesg("software", MesgNum.SOFTWARE)
 
         init {
-            // software
-            softwareMesg = Mesg("software", MesgNum.SOFTWARE)
             softwareMesg.addField(
                 Field(
                     "message_index",

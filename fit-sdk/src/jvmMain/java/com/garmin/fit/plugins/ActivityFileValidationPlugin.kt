@@ -27,16 +27,10 @@ import java.util.stream.Collectors
 import kotlin.math.abs
 
 class ActivityFileValidationPlugin : MesgBroadcastPlugin {
-    private val fitListener: FitListener
-    private val results: ArrayList<ActivityFileValidationResult?>
-    var mesgCount: Int
+    private val fitListener: FitListener = FitListener()
+    private val results: ArrayList<ActivityFileValidationResult> = ArrayList()
+    var mesgCount = 0
         private set
-
-    init {
-        fitListener = FitListener()
-        results = ArrayList<ActivityFileValidationResult?>()
-        mesgCount = 0
-    }
 
     override fun onIncomingMesg(mesg: Mesg) {
         fitListener.onMesg(mesg)
@@ -44,35 +38,35 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     override fun onBroadcast(mesgs: MutableList<Mesg>) {
-        val fitMessages = fitListener.getFitMessages()
+        val fitMessages = fitListener.fitMessages
 
         results.clear()
 
         // FileId Message Checks
         results.add(checkFileIdMesgExists(fitMessages.getFileIdMesgs()))
 
-        if (fitMessages.getFileIdMesgs().size > 0) {
+        if (fitMessages.getFileIdMesgs().isNotEmpty()) {
             results.add(checkFileIdMesgIsFirst(mesgs))
-            results.add(checkFileIdMesgType(fitMessages.getFileIdMesgs().get(0)))
-            results.add(checkFileIdMesgManufacturerId(fitMessages.getFileIdMesgs().get(0)))
-            results.add(checkFileIdMesgTimeCreated(fitMessages.getFileIdMesgs().get(0)))
+            results.add(checkFileIdMesgType(fitMessages.getFileIdMesgs()[0]))
+            results.add(checkFileIdMesgManufacturerId(fitMessages.getFileIdMesgs()[0]))
+            results.add(checkFileIdMesgTimeCreated(fitMessages.getFileIdMesgs()[0]))
         }
 
         // Activity Message Checks
         results.add(checkActivityMesgExists(fitMessages.getActivityMesgs()))
 
-        if (fitMessages.getActivityMesgs().size > 0) {
-            results.add(checkActivityMesgTimestamp(fitMessages.getActivityMesgs().get(0)))
-            results.add(checkActivityMesgLocalTimeStamp(fitMessages.getActivityMesgs().get(0)))
+        if (fitMessages.getActivityMesgs().isNotEmpty()) {
+            results.add(checkActivityMesgTimestamp(fitMessages.getActivityMesgs()[0]))
+            results.add(checkActivityMesgLocalTimeStamp(fitMessages.getActivityMesgs()[0]))
             results.add(
                 checkActivityMesgTotalTimerTime(
-                    fitMessages.getActivityMesgs().get(0),
+                    fitMessages.getActivityMesgs()[0],
                     fitMessages.getSessionMesgs()
                 )
             )
             results.add(
                 checkActivityMesgSessionCount(
-                    fitMessages.getActivityMesgs().get(0),
+                    fitMessages.getActivityMesgs()[0],
                     fitMessages.getSessionMesgs().size
                 )
             )
@@ -138,23 +132,23 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
      * circumstances, this method does not need to called directly.
      */
     fun repeatValidation() {
-        onBroadcast(ArrayList<Mesg>())
+        onBroadcast(ArrayList())
     }
 
     fun getResults(): MutableList<ActivityFileValidationResult?> {
         return Collections.unmodifiableList<ActivityFileValidationResult?>(results)
     }
 
-    fun checkFileIdMesgExists(fileIdMesgs: MutableList<FileIdMesg?>): ActivityFileValidationResult {
+    fun checkFileIdMesgExists(fileIdMesgs: MutableList<FileIdMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "FileId Message Exists",
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (fileIdMesgs.size > 0) {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        if (fileIdMesgs.isNotEmpty()) {
+            result.status = ActivityFileValidationResult.Status.PASSED
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
+            result.status = ActivityFileValidationResult.Status.FAILED
         }
         return result
     }
@@ -166,13 +160,13 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         )
 
         for (mesg in mesgs) {
-            if (mesg.getName() == "pad") {
+            if (mesg.name == "pad") {
                 continue
-            } else if (mesg.getName() == "file_id") {
-                result.setStatus(ActivityFileValidationResult.Status.PASSED)
+            } else if (mesg.name == "file_id") {
+                result.status = ActivityFileValidationResult.Status.PASSED
                 break
             } else {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
+                result.status = ActivityFileValidationResult.Status.FAILED
                 break
             }
         }
@@ -185,11 +179,11 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (fileIdMesg.getType() == File.ACTIVITY) {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        if (fileIdMesg.type == File.ACTIVITY) {
+            result.status = ActivityFileValidationResult.Status.PASSED
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Expected Type: Activity, actual Type: " + fileIdMesg.getType() + ".")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "Expected Type: Activity, actual Type: " + fileIdMesg.type + "."
         }
         return result
     }
@@ -200,19 +194,19 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (fileIdMesg.getManufacturer() == null) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Manufacturer Id is null.")
+        if (fileIdMesg.manufacturer == null) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "Manufacturer Id is null."
             return result
         }
 
-        if (Manufacturer.getStringFromValue(fileIdMesg.getManufacturer()) == "") {
-            result.setStatus(ActivityFileValidationResult.Status.WARNING)
-            result.setDescription("Unknown Manufacturer Id " + fileIdMesg.getManufacturer() + ".")
+        if (Manufacturer.getStringFromValue(fileIdMesg.manufacturer!!) == "") {
+            result.status = ActivityFileValidationResult.Status.WARNING
+            result.description = "Unknown Manufacturer Id " + fileIdMesg.manufacturer + "."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
         return result
     }
 
@@ -222,25 +216,25 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (fileIdMesg.getTimeCreated() == null) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Time Created is null.")
+        if (fileIdMesg.timeCreated == null) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "Time Created is null."
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+            result.status = ActivityFileValidationResult.Status.PASSED
         }
         return result
     }
 
-    fun checkActivityMesgExists(activityMesgs: MutableList<ActivityMesg?>): ActivityFileValidationResult {
+    fun checkActivityMesgExists(activityMesgs: MutableList<ActivityMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Activity Message Exists",
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (activityMesgs.size > 0) {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        if (activityMesgs.isNotEmpty()) {
+            result.status = ActivityFileValidationResult.Status.PASSED
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
+            result.status = ActivityFileValidationResult.Status.FAILED
         }
         return result
     }
@@ -251,11 +245,11 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (activityMesg.getTimestamp() == null) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Timestamp is null.")
+        if (activityMesg.timestamp == null) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "Timestamp is null."
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+            result.status = ActivityFileValidationResult.Status.PASSED
         }
         return result
     }
@@ -265,26 +259,27 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             "Activity Message Local Timestamp is Valid",
             ActivityFileValidationResult.Level.REQUIRED
         )
-        if (activityMesg.getLocalTimestamp() == null) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Local Timestamp is null.")
+        if (activityMesg.localTimestamp == null) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "Local Timestamp is null."
             return result
         }
 
-        if (activityMesg.getTimestamp() == null) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Activity Timestamp is null")
+        if (activityMesg.timestamp == null) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "Activity Timestamp is null"
             return result
         }
 
-        val localTimestamp = activityMesg.getLocalTimestamp()
-        val timestamp = activityMesg.getTimestamp().getTimestamp()
-        val timezoneOffset = localTimestamp - timestamp
+        val localTimestamp = activityMesg.localTimestamp
+        val timestamp = activityMesg.timestamp!!.timestamp
+        val timezoneOffset = localTimestamp!! - timestamp
         if ((timezoneOffset >= MIN_TIMEZONE_OFFSET_IN_SECONDS) && (timezoneOffset <= MAX_TIMEZONE_OFFSET_IN_SECONDS)) {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+            result.status = ActivityFileValidationResult.Status.PASSED
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Local Timestamp is not within the tolerated range of [-12,14] hours.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "Local Timestamp is not within the tolerated range of [-12,14] hours."
         }
         return result
     }
@@ -311,19 +306,20 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.OPTIONAL
         )
 
-        if (activityMesg.getNumSessions() == null) {
-            result.setStatus(ActivityFileValidationResult.Status.WARNING)
-            result.setDescription("Num Sessions is null.")
+        if (activityMesg.numSessions == null) {
+            result.status = ActivityFileValidationResult.Status.WARNING
+            result.description = "Num Sessions is null."
             return result
         }
 
-        if (activityMesg.getNumSessions() != numSessions) {
-            result.setStatus(ActivityFileValidationResult.Status.WARNING)
-            result.setDescription("Num Sessions does not match the actual number of Sessions messages found in the file.")
+        if (activityMesg.numSessions != numSessions) {
+            result.status = ActivityFileValidationResult.Status.WARNING
+            result.description =
+                "Num Sessions does not match the actual number of Sessions messages found in the file."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -335,9 +331,9 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         )
 
         if (sessionMesgsSize > 0) {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+            result.status = ActivityFileValidationResult.Status.PASSED
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
+            result.status = ActivityFileValidationResult.Status.FAILED
         }
         return result
     }
@@ -352,27 +348,28 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (sessionMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         val hasNullTimestamp = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTimestamp() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.timestamp == null }
 
         val hasNullStartTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getStartTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.startTime == null }
 
         val hasNullTotalElapsedTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTotalElapsedTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.totalElapsedTime == null }
 
         if (hasNullTimestamp || hasNullStartTime || hasNullTotalElapsedTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null Start Time, Timestamp and/or a null Total Elapsed Time.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null Start Time, Timestamp and/or a null Total Elapsed Time."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -383,32 +380,34 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (sessionMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         val hasNullTimerTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTotalTimerTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.totalTimerTime == null }
 
         val hasNullTotalElapsedTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTotalElapsedTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.totalElapsedTime == null }
 
         if (hasNullTimerTime || hasNullTotalElapsedTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null Start Time and/or a null Timestamp.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null Start Time and/or a null Timestamp."
             return result
         }
 
         for (sessionMesg in sessionMesgs) {
-            if (sessionMesg.getTotalElapsedTime() < sessionMesg.getTotalTimerTime()) {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                result.setDescription("Session message Total Timer Time " + sessionMesg.getTotalTimerTime() + " > " + " Total Elapsed Time" + sessionMesg.getTotalElapsedTime() + ".")
+            if (sessionMesg.totalElapsedTime!! < sessionMesg.totalTimerTime!!) {
+                result.status = ActivityFileValidationResult.Status.FAILED
+                result.description =
+                    "Session message Total Timer Time " + sessionMesg.totalTimerTime + " > " + " Total Elapsed Time" + sessionMesg.totalElapsedTime + "."
                 return result
             }
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -422,43 +421,46 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0 || lapMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
-            result.setDescription("No Session messages exist and/or no Lap messages exist.")
+        if (sessionMesgs.isEmpty() || lapMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
+            result.description = "No Session messages exist and/or no Lap messages exist."
             return result
         }
 
         val hasNullFirstLapIndex = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getFirstLapIndex() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.firstLapIndex == null }
 
         val hasNullNumLaps = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getNumLaps() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.numLaps == null }
 
         if (hasNullFirstLapIndex || hasNullNumLaps) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null First Lap Index value and/or null Num Lap value.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null First Lap Index value and/or null Num Lap value."
             return result
         }
 
         var expectedFirstLapIndex = 0
 
         for (sessionMesg in sessionMesgs) {
-            if (sessionMesg.getFirstLapIndex() != expectedFirstLapIndex) {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                result.setDescription("One or more Session messages contains an invlaid First Lap Index value.")
+            if (sessionMesg.firstLapIndex != expectedFirstLapIndex) {
+                result.status = ActivityFileValidationResult.Status.FAILED
+                result.description =
+                    "One or more Session messages contains an invlaid First Lap Index value."
                 return result
             }
 
-            expectedFirstLapIndex += sessionMesg.getNumLaps()
+            expectedFirstLapIndex += sessionMesg.numLaps!!
         }
 
         if (expectedFirstLapIndex != lapMesgs.size) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("Sum of Session messages Num Laps values is not equal to total number of Lap messages found in the file.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "Sum of Session messages Num Laps values is not equal to total number of Lap messages found in the file."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -472,40 +474,41 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0 || lapMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
-            result.setDescription("No Session messages exist and/or no Lap messages exist.")
+        if (sessionMesgs.isEmpty() || lapMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
+            result.description = "No Session messages exist and/or no Lap messages exist."
             return result
         }
 
         val hasNullSessionTotalTimerTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTotalTimerTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.totalTimerTime == null }
 
         if (hasNullSessionTotalTimerTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
+            result.status = ActivityFileValidationResult.Status.FAILED
             return result
         }
 
         val hasNullFirstLapIndex = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getFirstLapIndex() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.firstLapIndex == null }
 
         val hasNullNumLaps = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getNumLaps() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.numLaps == null }
 
         if (hasNullFirstLapIndex || hasNullNumLaps) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null First Lap Index value and/or null Num Lap value.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null First Lap Index value and/or null Num Lap value."
             return result
         }
 
         for (session in sessionMesgs) {
             val laps = lapMesgs.stream()
-                .skip(session.getFirstLapIndex().toLong())
-                .limit(session.getNumLaps().toLong())
+                .skip(session.firstLapIndex!!.toLong())
+                .limit(session.numLaps!!.toLong())
                 .collect(Collectors.toList())
 
             result = checkValidFieldSums(session, laps, "Session", "Lap", "total_timer_time")
-            if (result.getStatus() == ActivityFileValidationResult.Status.FAILED) {
+            if (result.status == ActivityFileValidationResult.Status.FAILED) {
                 return result
             }
         }
@@ -521,40 +524,41 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0 || lapMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
-            result.setDescription("No Session messages exist and/or no Lap messages exist.")
+        if (sessionMesgs.isEmpty() || lapMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
+            result.description = "No Session messages exist and/or no Lap messages exist."
             return result
         }
 
         val hasNullSessionTotalElapsedTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTotalElapsedTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.totalElapsedTime == null }
 
         if (hasNullSessionTotalElapsedTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
+            result.status = ActivityFileValidationResult.Status.FAILED
             return result
         }
 
         val hasNullFirstLapIndex = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getFirstLapIndex() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.firstLapIndex == null }
 
         val hasNullNumLaps = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getNumLaps() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.numLaps == null }
 
         if (hasNullFirstLapIndex || hasNullNumLaps) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null First Lap Index value and/or null Num Lap value.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null First Lap Index value and/or null Num Lap value."
             return result
         }
 
         for (session in sessionMesgs) {
             val laps = lapMesgs.stream()
-                .skip(session.getFirstLapIndex().toLong())
-                .limit(session.getNumLaps().toLong())
+                .skip(session.firstLapIndex!!.toLong())
+                .limit(session.numLaps!!.toLong())
                 .collect(Collectors.toList())
 
             result = checkValidFieldSums(session, laps, "Session", "Lap", "total_elapsed_time")
-            if (result.getStatus() == ActivityFileValidationResult.Status.FAILED) {
+            if (result.status == ActivityFileValidationResult.Status.FAILED) {
                 return result
             }
         }
@@ -570,10 +574,10 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         val status = checkFieldValuesAreValid(sessionMesgs, "sport")
 
         if (status == ActivityFileValidationResult.Status.FAILED) {
-            result.setDescription("One or more Session messages contain a null Sport value.")
+            result.description = "One or more Session messages contain a null Sport value."
         }
 
-        result.setStatus(status)
+        result.status = status
 
         return result
     }
@@ -587,10 +591,11 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         val status = checkSubSportValuesAreValid(sessionMesgs)
 
         if (status == ActivityFileValidationResult.Status.WARNING) {
-            result.setDescription("One or more Session messages contain a null Sub Sport value. Set Sub Sport value to 'generic' if unknown.")
+            result.description =
+                "One or more Session messages contain a null Sub Sport value. Set Sub Sport value to 'generic' if unknown."
         }
 
-        result.setStatus(status)
+        result.status = status
 
         return result
     }
@@ -614,9 +619,9 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         )
 
         if (lapMesgsSize > 0) {
-            result.setStatus(ActivityFileValidationResult.Status.PASSED)
+            result.status = ActivityFileValidationResult.Status.PASSED
         } else {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
+            result.status = ActivityFileValidationResult.Status.FAILED
         }
         return result
     }
@@ -630,72 +635,76 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0 || lapMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (sessionMesgs.isEmpty() || lapMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         val hasNullStartTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getStartTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.startTime == null }
 
         val hasNullTimestamp = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTimestamp() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.timestamp == null }
 
         val hasNullTotalElapsedTime = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getTotalElapsedTime() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.totalElapsedTime == null }
 
         if (hasNullStartTime || hasNullTimestamp || hasNullTotalElapsedTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null Start Time, Timestamp and/or null Total Elapsed Time.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null Start Time, Timestamp and/or null Total Elapsed Time."
             return result
         }
 
         val hasNullFirstLapIndex = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getFirstLapIndex() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.firstLapIndex == null }
 
         val hasNullNumLaps = sessionMesgs.stream()
-            .anyMatch { sessionMesg: SessionMesg? -> sessionMesg!!.getNumLaps() == null }
+            .anyMatch { sessionMesg: SessionMesg -> sessionMesg.numLaps == null }
 
         if (hasNullFirstLapIndex || hasNullNumLaps) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session messages contain a null First Lap Index value and/or a null Num Lap value.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session messages contain a null First Lap Index value and/or a null Num Lap value."
             return result
         }
 
         val hasNullLapMesgStartTime = lapMesgs.stream()
-            .anyMatch { lapMesg: LapMesg? -> lapMesg!!.getStartTime() == null }
+            .anyMatch { lapMesg: LapMesg? -> lapMesg!!.startTime == null }
 
         val hasNullLapMesgTimeStamp = lapMesgs.stream()
-            .anyMatch { lapMesg: LapMesg? -> lapMesg!!.getTimestamp() == null }
+            .anyMatch { lapMesg: LapMesg? -> lapMesg?.timestamp == null }
 
         val hasNullLapMesTotalElapsedTime = lapMesgs.stream()
-            .anyMatch { lapMesg: LapMesg? -> lapMesg!!.getTotalElapsedTime() == null }
+            .anyMatch { lapMesg: LapMesg? -> lapMesg!!.totalElapsedTime == null }
 
         if (hasNullLapMesgStartTime || hasNullLapMesgTimeStamp || hasNullLapMesTotalElapsedTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Lap messages contain a null Start Time, Total Elapsed Time and/or a null Timestamp.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Lap messages contain a null Start Time, Total Elapsed Time and/or a null Timestamp."
             return result
         }
 
         for (session in sessionMesgs) {
             val laps = lapMesgs.stream()
-                .skip(session.getFirstLapIndex().toLong())
-                .limit(session.getNumLaps().toLong())
+                .skip(session.firstLapIndex!!.toLong())
+                .limit(session.numLaps!!.toLong())
                 .collect(Collectors.toList())
 
             for (lap in laps) {
-                val isStartTimeBefore = lap.getStartTime().before(session.getStartTime())
+                val isStartTimeBefore = lap.startTime!!.before(session.startTime!!)
                 val isEndTimeAfter = calculateEndTime(lap)!! - (calculateEndTime(session)!!) > 1
 
                 if (isStartTimeBefore || isEndTimeAfter) {
-                    result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                    result.setDescription("One or more Lap messages contain an incorrect Start Time and/or an incorrect 'End Time' relative to the Session message.")
+                    result.status = ActivityFileValidationResult.Status.FAILED
+                    result.description =
+                        "One or more Lap messages contain an incorrect Start Time and/or an incorrect 'End Time' relative to the Session message."
                     return result
                 }
             }
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -713,42 +722,45 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (sessionMesgs.size == 0 || recordMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (sessionMesgs.isEmpty() || recordMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
-        val firstSessionMesgStartTime = sessionMesgs.get(0).getStartTime()
-        val lastSessionMesgEndTime = calculateEndTime(sessionMesgs.get(sessionMesgs.size - 1))
+        val firstSessionMesgStartTime = sessionMesgs[0].startTime
+        val lastSessionMesgEndTime = calculateEndTime(sessionMesgs[sessionMesgs.size - 1])
 
         if ((firstSessionMesgStartTime == null) || (lastSessionMesgEndTime == null)) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Session Messages contain a null Start Time and/or a null 'End Time'.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Session Messages contain a null Start Time and/or a null 'End Time'."
             return result
         }
 
-        val firstRecordMesgTimestamp = recordMesgs.get(0).getTimestamp()
-        val lastRecordMesgTimestamp = recordMesgs.get(recordMesgs.size - 1).getTimestamp()
+        val firstRecordMesgTimestamp = recordMesgs[0].timestamp
+        val lastRecordMesgTimestamp = recordMesgs[recordMesgs.size - 1].timestamp
 
         if ((firstRecordMesgTimestamp == null) || (lastRecordMesgTimestamp == null)) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Record messages contain a null Timestamp.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "One or more Record messages contain a null Timestamp."
             return result
         }
 
-        if (firstRecordMesgTimestamp.getTimestamp() - firstSessionMesgStartTime.getTimestamp() < -1) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Record message Timestamps is earlier than Session Start Time.")
+        if (firstRecordMesgTimestamp.timestamp - firstSessionMesgStartTime.timestamp < -1) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Record message Timestamps is earlier than Session Start Time."
             return result
         }
 
-        if (lastRecordMesgTimestamp.getTimestamp() - lastSessionMesgEndTime > 1) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Record message Timestamps is later than Session 'End Time'.")
+        if (lastRecordMesgTimestamp.timestamp - lastSessionMesgEndTime > 1) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Record message Timestamps is later than Session 'End Time'."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -759,32 +771,32 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (recordMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (recordMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         val hasNullTimestamp = recordMesgs.stream()
-            .anyMatch { recordMesg: RecordMesg? -> recordMesg!!.getTimestamp() == null }
+            .anyMatch { recordMesg: RecordMesg -> recordMesg.timestamp == null }
 
         if (hasNullTimestamp) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Record messages contain a null Timestamp.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "One or more Record messages contain a null Timestamp."
             return result
         }
 
-        var previousTimestamp = recordMesgs.get(0).getTimestamp()
+        var previousTimestamp = recordMesgs[0].timestamp
 
         for (recordMesg in recordMesgs) {
-            if (previousTimestamp.after(recordMesg.getTimestamp())) {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                result.setDescription("One or more Record messages are not sequential.")
+            if (previousTimestamp!!.after(recordMesg.timestamp!!)) {
+                result.status = ActivityFileValidationResult.Status.FAILED
+                result.description = "One or more Record messages are not sequential."
                 return result
             }
-            previousTimestamp = recordMesg.getTimestamp()
+            previousTimestamp = recordMesg.timestamp
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -799,30 +811,32 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (deviceInfoMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (deviceInfoMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         val hasNullDeviceIndex = deviceInfoMesgs.stream()
-            .anyMatch { deviceInfoMesg: DeviceInfoMesg? -> deviceInfoMesg!!.getDeviceIndex() == null }
+            .anyMatch { deviceInfoMesg: DeviceInfoMesg? -> deviceInfoMesg!!.deviceIndex == null }
 
         if (hasNullDeviceIndex) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more Device Info messages contain a null Device Index value.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more Device Info messages contain a null Device Index value."
             return result
         }
 
         val hasCreator = deviceInfoMesgs.stream()
-            .anyMatch { deviceInfoMesg: DeviceInfoMesg? -> deviceInfoMesg!!.getDeviceIndex() == DeviceIndex.CREATOR }
+            .anyMatch { deviceInfoMesg: DeviceInfoMesg? -> deviceInfoMesg!!.deviceIndex == DeviceIndex.CREATOR }
 
         if (!hasCreator) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("At least one Device Info message Device Index field needs to be set to Creator.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "At least one Device Info message Device Index field needs to be set to Creator."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -833,42 +847,41 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             ActivityFileValidationResult.Level.OPTIONAL
         )
 
-        if (deviceInfoMesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (deviceInfoMesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         val hasNullManufacturer = deviceInfoMesgs.stream()
-            .anyMatch { deviceInfoMesg: DeviceInfoMesg? -> deviceInfoMesg!!.getManufacturer() == null }
+            .anyMatch { deviceInfoMesg: DeviceInfoMesg -> deviceInfoMesg.manufacturer == null }
 
         if (hasNullManufacturer) {
-            result.setStatus(ActivityFileValidationResult.Status.WARNING)
-            result.setDescription("One or more Device Info messages contain a null Manufacturer Id.")
+            result.status = ActivityFileValidationResult.Status.WARNING
+            result.description = "One or more Device Info messages contain a null Manufacturer Id."
             return result
         }
 
         val hasInvalidManufacturer = deviceInfoMesgs.stream()
-            .anyMatch { deviceInfoMesg: DeviceInfoMesg? ->
-                Manufacturer.getStringFromValue(
-                    deviceInfoMesg!!.getManufacturer()
-                ) == ""
+            .anyMatch { deviceInfoMesg: DeviceInfoMesg ->
+                Manufacturer.getStringFromValue(deviceInfoMesg.manufacturer!!) == ""
             }
 
         if (hasInvalidManufacturer) {
-            result.setStatus(ActivityFileValidationResult.Status.WARNING)
-            result.setDescription("One or more Device Info messages contain an unknown Manufacturer Id.")
+            result.status = ActivityFileValidationResult.Status.WARNING
+            result.description =
+                "One or more Device Info messages contain an unknown Manufacturer Id."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
 
     @SafeVarargs
-    fun isEmpty(vararg lists: MutableList<out Mesg?>?): Boolean {
-        return Arrays.stream<MutableList<out Mesg?>?>(lists)
-            .anyMatch { l: MutableList<out Mesg?>? -> l!!.size == 0 }
+    fun isEmpty(vararg lists: MutableList<out Mesg>?): Boolean {
+        return Arrays.stream<MutableList<out Mesg>?>(lists)
+            .anyMatch { l: MutableList<out Mesg>? -> l!!.isEmpty() }
     }
 
     fun checkValidMesgIndexes(
@@ -876,33 +889,34 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         mesgName: String?
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
-            mesgName + " Message Valid Message Index",
+            "$mesgName Message Valid Message Index",
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (mesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (mesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         for (i in mesgs.indices) {
             val messageIndex =
-                mesgs.get(i).getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+                mesgs[i].getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
             if (messageIndex == null) {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                result.setDescription("One or more " + mesgName + " messages contain a null Message Index value.")
+                result.status = ActivityFileValidationResult.Status.FAILED
+                result.description =
+                    "One or more $mesgName messages contain a null Message Index value."
                 return result
             }
 
             if (messageIndex != i) {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                result.setDescription("Message Indexes are not sequential.")
+                result.status = ActivityFileValidationResult.Status.FAILED
+                result.description = "Message Indexes are not sequential."
                 return result
             }
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -912,12 +926,12 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         name: String?
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
-            name + " Message Timestamps are Valid",
+            "$name Message Timestamps are Valid",
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (mesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (mesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
@@ -925,12 +939,12 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             .anyMatch { mesg: Mesg -> mesg.getFieldLongValue("timestamp") == null }
 
         if (hasNullTimestamp) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more " + name + " messages contain a null Timestamp.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "One or more $name messages contain a null Timestamp."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -943,18 +957,18 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         fieldName: String?
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
-            mesgName + " Message " + fieldName + " is Equal to the Sum of " + mesgListName + " Messages " + fieldName + " Values",
+            "$mesgName Message $fieldName is Equal to the Sum of $mesgListName Messages $fieldName Values",
             ActivityFileValidationResult.Level.REQUIRED
         )
 
-        if (mesgs.size == 0) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
+        if (mesgs.isEmpty()) {
+            result.status = ActivityFileValidationResult.Status.SKIPPED
             return result
         }
 
         if ((mesg.getFieldFloatValue(fieldName) == null)) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription(mesgName + " Message contains a null " + fieldName)
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = "$mesgName Message contains a null $fieldName"
             return result
         }
 
@@ -962,22 +976,23 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             .anyMatch { m: Mesg -> m.getFieldFloatValue(fieldName) == null }
 
         if (hasNullValue) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription(mesgListName + "Message contains a null " + fieldName + " value.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description = mesgListName + "Message contains a null " + fieldName + " value."
             return result
         }
 
         val sumOfFieldValues = mesgs.stream()
-            .mapToDouble { mesgList: Mesg -> mesgList.getFieldFloatValue(fieldName) }
+            .mapToDouble { mesgList: Mesg -> mesgList.getFieldFloatValue(fieldName)!!.toDouble() }
             .sum()
 
-        if (abs(mesg.getFieldFloatValue(fieldName) - sumOfFieldValues) > 1) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription(mesgName + " message " + fieldName + " does not equal the sum of " + mesgListName + " messages " + fieldName + " values.")
+        if (abs(mesg.getFieldFloatValue(fieldName)!! - sumOfFieldValues) > 1) {
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "$mesgName message $fieldName does not equal the sum of $mesgListName messages $fieldName values."
             return result
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -987,13 +1002,14 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         mesgName: String?
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
-            mesgName + " Message Are Sequential and Abut",
+            "$mesgName Message Are Sequential and Abut",
             ActivityFileValidationResult.Level.REQUIRED
         )
 
         if (mesgs.size <= 1) {
-            result.setStatus(ActivityFileValidationResult.Status.SKIPPED)
-            result.setDescription("Check requires two or more " + mesgName + " messages, found " + mesgs.size + ".")
+            result.status = ActivityFileValidationResult.Status.SKIPPED
+            result.description =
+                "Check requires two or more " + mesgName + " messages, found " + mesgs.size + "."
             return result
         }
 
@@ -1004,26 +1020,27 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             .anyMatch { mesg: Mesg -> mesg.getFieldLongValue("total_elapsed_time") == null }
 
         if (hasNullStartTime || hasNullTotalElapsedTime) {
-            result.setStatus(ActivityFileValidationResult.Status.FAILED)
-            result.setDescription("One or more " + mesgName + " messages contain a null Start Time and/or a null Total Elapsed Time.")
+            result.status = ActivityFileValidationResult.Status.FAILED
+            result.description =
+                "One or more $mesgName messages contain a null Start Time and/or a null Total Elapsed Time."
             return result
         }
 
-        var previousEndTime = calculateEndTime(mesgs.get(0))!!
+        var previousEndTime = calculateEndTime(mesgs[0])!!
 
         for (mesg in mesgs.subList(1, mesgs.size)) {
             val startTime = mesg.getFieldLongValue("start_time")
 
-            if (abs(startTime - previousEndTime) > 2) {
-                result.setStatus(ActivityFileValidationResult.Status.FAILED)
-                result.setDescription(mesgName + " messages are not sequential, or do not abut.")
+            if (abs(startTime!! - previousEndTime) > 2) {
+                result.status = ActivityFileValidationResult.Status.FAILED
+                result.description = "$mesgName messages are not sequential, or do not abut."
                 return result
             }
 
             previousEndTime = calculateEndTime(mesg)!!
         }
 
-        result.setStatus(ActivityFileValidationResult.Status.PASSED)
+        result.status = ActivityFileValidationResult.Status.PASSED
 
         return result
     }
@@ -1040,7 +1057,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         mesgs: MutableList<out Mesg>,
         fieldName: String?
     ): ActivityFileValidationResult.Status {
-        if (mesgs.size == 0) {
+        if (mesgs.isEmpty()) {
             return ActivityFileValidationResult.Status.SKIPPED
         }
 
@@ -1065,8 +1082,8 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         val startTime: Long
         val totalElapsedTime: Long
         try {
-            startTime = mesg.getFieldLongValue("start_time")
-            totalElapsedTime = mesg.getFieldLongValue("total_elapsed_time")
+            startTime = mesg.getFieldLongValue("start_time")!!
+            totalElapsedTime = mesg.getFieldLongValue("total_elapsed_time")!!
         } catch (e: NullPointerException) {
             return null
         }
@@ -1074,7 +1091,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     companion object {
-        private val MIN_TIMEZONE_OFFSET_IN_SECONDS = -43200 // -12 hours
+        private const val MIN_TIMEZONE_OFFSET_IN_SECONDS = -43200 // -12 hours
         private const val MAX_TIMEZONE_OFFSET_IN_SECONDS = 50400 // +14 hours
     }
 }

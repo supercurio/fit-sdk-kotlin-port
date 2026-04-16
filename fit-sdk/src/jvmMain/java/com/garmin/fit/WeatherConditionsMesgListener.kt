@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface WeatherConditionsMesgListener {
-    fun onMesg(mesg: WeatherConditionsMesg?)
+    fun onMesg(mesg: WeatherConditionsMesg)
 }

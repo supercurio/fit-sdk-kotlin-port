@@ -12,7 +12,7 @@ package com.garmin.fit
 class NmeaSentenceMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.NMEA_SENTENCE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class NmeaSentenceMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Timestamp message was output
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class NmeaSentenceMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Timestamp message was output
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class NmeaSentenceMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Fractional part of timestamp, added to timestamp
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,7 +48,7 @@ class NmeaSentenceMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Fractional part of timestamp, added to timestamp
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -59,14 +59,14 @@ class NmeaSentenceMesg : Mesg {
         /**
          * Get sentence field
          * Comment: NMEA sentence
-         * 
+         *
          * @return sentence
          */
         get() = getFieldStringValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set sentence field
          * Comment: NMEA sentence
-         * 
+         *
          * @param sentence The new sentence value to be set
          */
         set(sentence) {
@@ -81,11 +81,10 @@ class NmeaSentenceMesg : Mesg {
         const val SentenceFieldNum: Int = 1
 
 
-        val nmeaSentenceMesg: Mesg
+        // nmea_sentence
+        val nmeaSentenceMesg: Mesg = Mesg("nmea_sentence", MesgNum.NMEA_SENTENCE)
 
         init {
-            // nmea_sentence
-            nmeaSentenceMesg = Mesg("nmea_sentence", MesgNum.NMEA_SENTENCE)
             nmeaSentenceMesg.addField(
                 Field(
                     "timestamp",

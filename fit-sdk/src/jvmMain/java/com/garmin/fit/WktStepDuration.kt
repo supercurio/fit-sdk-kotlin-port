@@ -50,7 +50,7 @@ enum class WktStepDuration(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return WktStepDuration.INVALID
+            return INVALID
         }
 
         /**

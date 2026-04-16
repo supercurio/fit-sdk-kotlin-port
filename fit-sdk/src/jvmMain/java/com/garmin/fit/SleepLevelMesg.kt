@@ -12,43 +12,40 @@ package com.garmin.fit
 class SleepLevelMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.SLEEP_LEVEL))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var sleepLevel: SleepLevel?
         /**
          * Get sleep_level field
-         * 
+         *
          * @return sleep_level
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SleepLevel.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SleepLevel.getByValue(value)
         }
         /**
          * Set sleep_level field
-         * 
+         *
          * @param sleepLevel The new sleepLevel value to be set
          */
         set(sleepLevel) {
@@ -61,11 +58,10 @@ class SleepLevelMesg : Mesg {
         const val SleepLevelFieldNum: Int = 0
 
 
-        val sleepLevelMesg: Mesg
+        // sleep_level
+        val sleepLevelMesg: Mesg = Mesg("sleep_level", MesgNum.SLEEP_LEVEL)
 
         init {
-            // sleep_level
-            sleepLevelMesg = Mesg("sleep_level", MesgNum.SLEEP_LEVEL)
             sleepLevelMesg.addField(
                 Field(
                     "timestamp",

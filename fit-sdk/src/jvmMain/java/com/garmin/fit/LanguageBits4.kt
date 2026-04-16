@@ -15,18 +15,17 @@ object LanguageBits4 {
     const val VIETNAMESE: Short = 0x08
     const val BURMESE: Short = 0x10
     const val MONGOLIAN: Short = 0x20
-    val INVALID: Short = Fit.UINT8Z_INVALID
+    const val INVALID: Short = Fit.UINT8Z_INVALID
 
-    private val stringMap: MutableMap<Short?, String?>
+    private val stringMap = mutableMapOf<Short, String>()
 
     init {
-        stringMap = HashMap<Short?, String?>()
-        stringMap.put(BRAZILIAN_PORTUGUESE, "BRAZILIAN_PORTUGUESE")
-        stringMap.put(INDONESIAN, "INDONESIAN")
-        stringMap.put(MALAYSIAN, "MALAYSIAN")
-        stringMap.put(VIETNAMESE, "VIETNAMESE")
-        stringMap.put(BURMESE, "BURMESE")
-        stringMap.put(MONGOLIAN, "MONGOLIAN")
+        stringMap[BRAZILIAN_PORTUGUESE] = "BRAZILIAN_PORTUGUESE"
+        stringMap[INDONESIAN] = "INDONESIAN"
+        stringMap[MALAYSIAN] = "MALAYSIAN"
+        stringMap[VIETNAMESE] = "VIETNAMESE"
+        stringMap[BURMESE] = "BURMESE"
+        stringMap[MONGOLIAN] = "MONGOLIAN"
     }
 
 
@@ -35,9 +34,9 @@ object LanguageBits4 {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Short?): String? {
+    fun getStringFromValue(value: Short): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -48,7 +47,7 @@ object LanguageBits4 {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Short? {
+    fun getValueFromString(value: String): Short {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

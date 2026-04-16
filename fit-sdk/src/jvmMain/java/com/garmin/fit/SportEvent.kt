@@ -28,7 +28,7 @@ enum class SportEvent(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return SportEvent.INVALID
+            return INVALID
         }
 
         /**

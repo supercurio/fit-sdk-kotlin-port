@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface TimeInZoneMesgListener {
-    fun onMesg(mesg: TimeInZoneMesg?)
+    fun onMesg(mesg: TimeInZoneMesg)
 }

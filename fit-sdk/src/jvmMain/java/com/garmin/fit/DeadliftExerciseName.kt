@@ -33,45 +33,35 @@ object DeadliftExerciseName {
     const val ROMANIAN_DEADLIFT: Int = 23
     const val SINGLE_LEG_ROMANIAN_DEADLIFT_CIRCUIT: Int = 24
     const val STRAIGHT_LEG_DEADLIFT: Int = 25
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(BARBELL_DEADLIFT, "BARBELL_DEADLIFT")
-        stringMap.put(BARBELL_STRAIGHT_LEG_DEADLIFT, "BARBELL_STRAIGHT_LEG_DEADLIFT")
-        stringMap.put(DUMBBELL_DEADLIFT, "DUMBBELL_DEADLIFT")
-        stringMap.put(DUMBBELL_SINGLE_LEG_DEADLIFT_TO_ROW, "DUMBBELL_SINGLE_LEG_DEADLIFT_TO_ROW")
-        stringMap.put(DUMBBELL_STRAIGHT_LEG_DEADLIFT, "DUMBBELL_STRAIGHT_LEG_DEADLIFT")
-        stringMap.put(KETTLEBELL_FLOOR_TO_SHELF, "KETTLEBELL_FLOOR_TO_SHELF")
-        stringMap.put(ONE_ARM_ONE_LEG_DEADLIFT, "ONE_ARM_ONE_LEG_DEADLIFT")
-        stringMap.put(RACK_PULL, "RACK_PULL")
-        stringMap.put(
-            ROTATIONAL_DUMBBELL_STRAIGHT_LEG_DEADLIFT,
-            "ROTATIONAL_DUMBBELL_STRAIGHT_LEG_DEADLIFT"
-        )
-        stringMap.put(SINGLE_ARM_DEADLIFT, "SINGLE_ARM_DEADLIFT")
-        stringMap.put(SINGLE_LEG_BARBELL_DEADLIFT, "SINGLE_LEG_BARBELL_DEADLIFT")
-        stringMap.put(
-            SINGLE_LEG_BARBELL_STRAIGHT_LEG_DEADLIFT,
-            "SINGLE_LEG_BARBELL_STRAIGHT_LEG_DEADLIFT"
-        )
-        stringMap.put(SINGLE_LEG_DEADLIFT_WITH_BARBELL, "SINGLE_LEG_DEADLIFT_WITH_BARBELL")
-        stringMap.put(SINGLE_LEG_RDL_CIRCUIT, "SINGLE_LEG_RDL_CIRCUIT")
-        stringMap.put(
-            SINGLE_LEG_ROMANIAN_DEADLIFT_WITH_DUMBBELL,
-            "SINGLE_LEG_ROMANIAN_DEADLIFT_WITH_DUMBBELL"
-        )
-        stringMap.put(SUMO_DEADLIFT, "SUMO_DEADLIFT")
-        stringMap.put(SUMO_DEADLIFT_HIGH_PULL, "SUMO_DEADLIFT_HIGH_PULL")
-        stringMap.put(TRAP_BAR_DEADLIFT, "TRAP_BAR_DEADLIFT")
-        stringMap.put(WIDE_GRIP_BARBELL_DEADLIFT, "WIDE_GRIP_BARBELL_DEADLIFT")
-        stringMap.put(KETTLEBELL_DEADLIFT, "KETTLEBELL_DEADLIFT")
-        stringMap.put(KETTLEBELL_SUMO_DEADLIFT, "KETTLEBELL_SUMO_DEADLIFT")
-        stringMap.put(ROMANIAN_DEADLIFT, "ROMANIAN_DEADLIFT")
-        stringMap.put(SINGLE_LEG_ROMANIAN_DEADLIFT_CIRCUIT, "SINGLE_LEG_ROMANIAN_DEADLIFT_CIRCUIT")
-        stringMap.put(STRAIGHT_LEG_DEADLIFT, "STRAIGHT_LEG_DEADLIFT")
+        stringMap[BARBELL_DEADLIFT] = "BARBELL_DEADLIFT"
+        stringMap[BARBELL_STRAIGHT_LEG_DEADLIFT] = "BARBELL_STRAIGHT_LEG_DEADLIFT"
+        stringMap[DUMBBELL_DEADLIFT] = "DUMBBELL_DEADLIFT"
+        stringMap[DUMBBELL_SINGLE_LEG_DEADLIFT_TO_ROW] = "DUMBBELL_SINGLE_LEG_DEADLIFT_TO_ROW"
+        stringMap[DUMBBELL_STRAIGHT_LEG_DEADLIFT] = "DUMBBELL_STRAIGHT_LEG_DEADLIFT"
+        stringMap[KETTLEBELL_FLOOR_TO_SHELF] = "KETTLEBELL_FLOOR_TO_SHELF"
+        stringMap[ONE_ARM_ONE_LEG_DEADLIFT] = "ONE_ARM_ONE_LEG_DEADLIFT"
+        stringMap[RACK_PULL] = "RACK_PULL"
+        stringMap[ROTATIONAL_DUMBBELL_STRAIGHT_LEG_DEADLIFT] = "ROTATIONAL_DUMBBELL_STRAIGHT_LEG_DEADLIFT"
+        stringMap[SINGLE_ARM_DEADLIFT] = "SINGLE_ARM_DEADLIFT"
+        stringMap[SINGLE_LEG_BARBELL_DEADLIFT] = "SINGLE_LEG_BARBELL_DEADLIFT"
+        stringMap[SINGLE_LEG_BARBELL_STRAIGHT_LEG_DEADLIFT] = "SINGLE_LEG_BARBELL_STRAIGHT_LEG_DEADLIFT"
+        stringMap[SINGLE_LEG_DEADLIFT_WITH_BARBELL] = "SINGLE_LEG_DEADLIFT_WITH_BARBELL"
+        stringMap[SINGLE_LEG_RDL_CIRCUIT] = "SINGLE_LEG_RDL_CIRCUIT"
+        stringMap[SINGLE_LEG_ROMANIAN_DEADLIFT_WITH_DUMBBELL] = "SINGLE_LEG_ROMANIAN_DEADLIFT_WITH_DUMBBELL"
+        stringMap[SUMO_DEADLIFT] = "SUMO_DEADLIFT"
+        stringMap[SUMO_DEADLIFT_HIGH_PULL] = "SUMO_DEADLIFT_HIGH_PULL"
+        stringMap[TRAP_BAR_DEADLIFT] = "TRAP_BAR_DEADLIFT"
+        stringMap[WIDE_GRIP_BARBELL_DEADLIFT] = "WIDE_GRIP_BARBELL_DEADLIFT"
+        stringMap[KETTLEBELL_DEADLIFT] = "KETTLEBELL_DEADLIFT"
+        stringMap[KETTLEBELL_SUMO_DEADLIFT] = "KETTLEBELL_SUMO_DEADLIFT"
+        stringMap[ROMANIAN_DEADLIFT] = "ROMANIAN_DEADLIFT"
+        stringMap[SINGLE_LEG_ROMANIAN_DEADLIFT_CIRCUIT] = "SINGLE_LEG_ROMANIAN_DEADLIFT_CIRCUIT"
+        stringMap[STRAIGHT_LEG_DEADLIFT] = "STRAIGHT_LEG_DEADLIFT"
     }
 
 
@@ -80,9 +70,9 @@ object DeadliftExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -93,7 +83,7 @@ object DeadliftExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

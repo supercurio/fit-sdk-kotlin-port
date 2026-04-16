@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface MemoGlobMesgListener {
-    fun onMesg(mesg: MemoGlobMesg?)
+    fun onMesg(mesg: MemoGlobMesg)
 }

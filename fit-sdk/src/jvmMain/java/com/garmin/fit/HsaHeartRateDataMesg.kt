@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaHeartRateDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_HEART_RATE_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -38,7 +38,7 @@ class HsaHeartRateDataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,7 +46,7 @@ class HsaHeartRateDataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
@@ -57,51 +57,51 @@ class HsaHeartRateDataMesg : Mesg {
         /**
          * Get status field
          * Comment: Status of measurements in buffer - 0 indicates SEARCHING 1 indicates LOCKED
-         * 
+         *
          * @return status
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set status field
          * Comment: Status of measurements in buffer - 0 indicates SEARCHING 1 indicates LOCKED
-         * 
+         *
          * @param status The new status value to be set
          */
         set(status) {
             setFieldValue(1, 0, status, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val heartRate: Array<Short?>?
-        get() = getFieldShortValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val heartRate: Array<Short>?
+        get() = getFieldShortValues(HeartRateFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numHeartRate: Int
         /**
          * @return number of heart_rate
          */
-        get() = getNumFieldValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(HeartRateFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get heart_rate field
      * Units: bpm
      * Comment: Beats / min. Blank: 0
-     * 
+     *
      * @param index of heart_rate
      * @return heart_rate
      */
     fun getHeartRate(index: Int): Short? {
-        return getFieldShortValue(2, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        return getFieldShortValue(HeartRateFieldNum, index, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
     /**
      * Set heart_rate field
      * Units: bpm
      * Comment: Beats / min. Blank: 0
-     * 
+     *
      * @param index of heart_rate
      * @param heartRate The new heartRate value to be set
      */
-    fun setHeartRate(index: Int, heartRate: Short?) {
-        setFieldValue(2, index, heartRate, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    fun setHeartRate(index: Int, heartRate: Short) {
+        setFieldValue(HeartRateFieldNum, index, heartRate, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
     companion object {
@@ -114,11 +114,10 @@ class HsaHeartRateDataMesg : Mesg {
         const val HeartRateFieldNum: Int = 2
 
 
-        val hsaHeartRateDataMesg: Mesg
+        // hsa_heart_rate_data
+        val hsaHeartRateDataMesg: Mesg = Mesg("hsa_heart_rate_data", MesgNum.HSA_HEART_RATE_DATA)
 
         init {
-            // hsa_heart_rate_data
-            hsaHeartRateDataMesg = Mesg("hsa_heart_rate_data", MesgNum.HSA_HEART_RATE_DATA)
             hsaHeartRateDataMesg.addField(
                 Field(
                     "timestamp",

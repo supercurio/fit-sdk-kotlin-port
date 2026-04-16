@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaWristTemperatureDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_WRIST_TEMPERATURE_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -38,7 +38,7 @@ class HsaWristTemperatureDataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,14 +46,14 @@ class HsaWristTemperatureDataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
             setFieldValue(0, 0, processingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val value: Array<Float?>?
+    val value: Array<Float>?
         get() = getFieldFloatValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numValue: Int
@@ -66,7 +66,7 @@ class HsaWristTemperatureDataMesg : Mesg {
      * Get value field
      * Units: degC
      * Comment: Wrist temperature reading
-     * 
+     *
      * @param index of value
      * @return value
      */
@@ -78,7 +78,7 @@ class HsaWristTemperatureDataMesg : Mesg {
      * Set value field
      * Units: degC
      * Comment: Wrist temperature reading
-     * 
+     *
      * @param index of value
      * @param value The new value value to be set
      */
@@ -94,12 +94,10 @@ class HsaWristTemperatureDataMesg : Mesg {
         const val ValueFieldNum: Int = 1
 
 
-        val hsaWristTemperatureDataMesg: Mesg
+        // hsa_wrist_temperature_data
+        val hsaWristTemperatureDataMesg: Mesg = Mesg("hsa_wrist_temperature_data", MesgNum.HSA_WRIST_TEMPERATURE_DATA)
 
         init {
-            // hsa_wrist_temperature_data
-            hsaWristTemperatureDataMesg =
-                Mesg("hsa_wrist_temperature_data", MesgNum.HSA_WRIST_TEMPERATURE_DATA)
             hsaWristTemperatureDataMesg.addField(
                 Field(
                     "timestamp",

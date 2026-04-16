@@ -47,56 +47,49 @@ object PlyoExerciseName {
     const val BOX_JUMP_OVERS_OVER_THE_BOX: Int = 35
     const val STAR_JUMP_SQUATS: Int = 36
     const val JUMP_SQUAT: Int = 37
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(ALTERNATING_JUMP_LUNGE, "ALTERNATING_JUMP_LUNGE")
-        stringMap.put(WEIGHTED_ALTERNATING_JUMP_LUNGE, "WEIGHTED_ALTERNATING_JUMP_LUNGE")
-        stringMap.put(BARBELL_JUMP_SQUAT, "BARBELL_JUMP_SQUAT")
-        stringMap.put(BODY_WEIGHT_JUMP_SQUAT, "BODY_WEIGHT_JUMP_SQUAT")
-        stringMap.put(WEIGHTED_JUMP_SQUAT, "WEIGHTED_JUMP_SQUAT")
-        stringMap.put(CROSS_KNEE_STRIKE, "CROSS_KNEE_STRIKE")
-        stringMap.put(WEIGHTED_CROSS_KNEE_STRIKE, "WEIGHTED_CROSS_KNEE_STRIKE")
-        stringMap.put(DEPTH_JUMP, "DEPTH_JUMP")
-        stringMap.put(WEIGHTED_DEPTH_JUMP, "WEIGHTED_DEPTH_JUMP")
-        stringMap.put(DUMBBELL_JUMP_SQUAT, "DUMBBELL_JUMP_SQUAT")
-        stringMap.put(DUMBBELL_SPLIT_JUMP, "DUMBBELL_SPLIT_JUMP")
-        stringMap.put(FRONT_KNEE_STRIKE, "FRONT_KNEE_STRIKE")
-        stringMap.put(WEIGHTED_FRONT_KNEE_STRIKE, "WEIGHTED_FRONT_KNEE_STRIKE")
-        stringMap.put(HIGH_BOX_JUMP, "HIGH_BOX_JUMP")
-        stringMap.put(WEIGHTED_HIGH_BOX_JUMP, "WEIGHTED_HIGH_BOX_JUMP")
-        stringMap.put(
-            ISOMETRIC_EXPLOSIVE_BODY_WEIGHT_JUMP_SQUAT,
-            "ISOMETRIC_EXPLOSIVE_BODY_WEIGHT_JUMP_SQUAT"
-        )
-        stringMap.put(
-            WEIGHTED_ISOMETRIC_EXPLOSIVE_JUMP_SQUAT,
-            "WEIGHTED_ISOMETRIC_EXPLOSIVE_JUMP_SQUAT"
-        )
-        stringMap.put(LATERAL_LEAP_AND_HOP, "LATERAL_LEAP_AND_HOP")
-        stringMap.put(WEIGHTED_LATERAL_LEAP_AND_HOP, "WEIGHTED_LATERAL_LEAP_AND_HOP")
-        stringMap.put(LATERAL_PLYO_SQUATS, "LATERAL_PLYO_SQUATS")
-        stringMap.put(WEIGHTED_LATERAL_PLYO_SQUATS, "WEIGHTED_LATERAL_PLYO_SQUATS")
-        stringMap.put(LATERAL_SLIDE, "LATERAL_SLIDE")
-        stringMap.put(WEIGHTED_LATERAL_SLIDE, "WEIGHTED_LATERAL_SLIDE")
-        stringMap.put(MEDICINE_BALL_OVERHEAD_THROWS, "MEDICINE_BALL_OVERHEAD_THROWS")
-        stringMap.put(MEDICINE_BALL_SIDE_THROW, "MEDICINE_BALL_SIDE_THROW")
-        stringMap.put(MEDICINE_BALL_SLAM, "MEDICINE_BALL_SLAM")
-        stringMap.put(SIDE_TO_SIDE_MEDICINE_BALL_THROWS, "SIDE_TO_SIDE_MEDICINE_BALL_THROWS")
-        stringMap.put(SIDE_TO_SIDE_SHUFFLE_JUMP, "SIDE_TO_SIDE_SHUFFLE_JUMP")
-        stringMap.put(WEIGHTED_SIDE_TO_SIDE_SHUFFLE_JUMP, "WEIGHTED_SIDE_TO_SIDE_SHUFFLE_JUMP")
-        stringMap.put(SQUAT_JUMP_ONTO_BOX, "SQUAT_JUMP_ONTO_BOX")
-        stringMap.put(WEIGHTED_SQUAT_JUMP_ONTO_BOX, "WEIGHTED_SQUAT_JUMP_ONTO_BOX")
-        stringMap.put(SQUAT_JUMPS_IN_AND_OUT, "SQUAT_JUMPS_IN_AND_OUT")
-        stringMap.put(WEIGHTED_SQUAT_JUMPS_IN_AND_OUT, "WEIGHTED_SQUAT_JUMPS_IN_AND_OUT")
-        stringMap.put(BOX_JUMP, "BOX_JUMP")
-        stringMap.put(BOX_JUMP_OVERS, "BOX_JUMP_OVERS")
-        stringMap.put(BOX_JUMP_OVERS_OVER_THE_BOX, "BOX_JUMP_OVERS_OVER_THE_BOX")
-        stringMap.put(STAR_JUMP_SQUATS, "STAR_JUMP_SQUATS")
-        stringMap.put(JUMP_SQUAT, "JUMP_SQUAT")
+        stringMap[ALTERNATING_JUMP_LUNGE] = "ALTERNATING_JUMP_LUNGE"
+        stringMap[WEIGHTED_ALTERNATING_JUMP_LUNGE] = "WEIGHTED_ALTERNATING_JUMP_LUNGE"
+        stringMap[BARBELL_JUMP_SQUAT] = "BARBELL_JUMP_SQUAT"
+        stringMap[BODY_WEIGHT_JUMP_SQUAT] = "BODY_WEIGHT_JUMP_SQUAT"
+        stringMap[WEIGHTED_JUMP_SQUAT] = "WEIGHTED_JUMP_SQUAT"
+        stringMap[CROSS_KNEE_STRIKE] = "CROSS_KNEE_STRIKE"
+        stringMap[WEIGHTED_CROSS_KNEE_STRIKE] = "WEIGHTED_CROSS_KNEE_STRIKE"
+        stringMap[DEPTH_JUMP] = "DEPTH_JUMP"
+        stringMap[WEIGHTED_DEPTH_JUMP] = "WEIGHTED_DEPTH_JUMP"
+        stringMap[DUMBBELL_JUMP_SQUAT] = "DUMBBELL_JUMP_SQUAT"
+        stringMap[DUMBBELL_SPLIT_JUMP] = "DUMBBELL_SPLIT_JUMP"
+        stringMap[FRONT_KNEE_STRIKE] = "FRONT_KNEE_STRIKE"
+        stringMap[WEIGHTED_FRONT_KNEE_STRIKE] = "WEIGHTED_FRONT_KNEE_STRIKE"
+        stringMap[HIGH_BOX_JUMP] = "HIGH_BOX_JUMP"
+        stringMap[WEIGHTED_HIGH_BOX_JUMP] = "WEIGHTED_HIGH_BOX_JUMP"
+        stringMap[ISOMETRIC_EXPLOSIVE_BODY_WEIGHT_JUMP_SQUAT] = "ISOMETRIC_EXPLOSIVE_BODY_WEIGHT_JUMP_SQUAT"
+        stringMap[WEIGHTED_ISOMETRIC_EXPLOSIVE_JUMP_SQUAT] = "WEIGHTED_ISOMETRIC_EXPLOSIVE_JUMP_SQUAT"
+        stringMap[LATERAL_LEAP_AND_HOP] = "LATERAL_LEAP_AND_HOP"
+        stringMap[WEIGHTED_LATERAL_LEAP_AND_HOP] = "WEIGHTED_LATERAL_LEAP_AND_HOP"
+        stringMap[LATERAL_PLYO_SQUATS] = "LATERAL_PLYO_SQUATS"
+        stringMap[WEIGHTED_LATERAL_PLYO_SQUATS] = "WEIGHTED_LATERAL_PLYO_SQUATS"
+        stringMap[LATERAL_SLIDE] = "LATERAL_SLIDE"
+        stringMap[WEIGHTED_LATERAL_SLIDE] = "WEIGHTED_LATERAL_SLIDE"
+        stringMap[MEDICINE_BALL_OVERHEAD_THROWS] = "MEDICINE_BALL_OVERHEAD_THROWS"
+        stringMap[MEDICINE_BALL_SIDE_THROW] = "MEDICINE_BALL_SIDE_THROW"
+        stringMap[MEDICINE_BALL_SLAM] = "MEDICINE_BALL_SLAM"
+        stringMap[SIDE_TO_SIDE_MEDICINE_BALL_THROWS] = "SIDE_TO_SIDE_MEDICINE_BALL_THROWS"
+        stringMap[SIDE_TO_SIDE_SHUFFLE_JUMP] = "SIDE_TO_SIDE_SHUFFLE_JUMP"
+        stringMap[WEIGHTED_SIDE_TO_SIDE_SHUFFLE_JUMP] = "WEIGHTED_SIDE_TO_SIDE_SHUFFLE_JUMP"
+        stringMap[SQUAT_JUMP_ONTO_BOX] = "SQUAT_JUMP_ONTO_BOX"
+        stringMap[WEIGHTED_SQUAT_JUMP_ONTO_BOX] = "WEIGHTED_SQUAT_JUMP_ONTO_BOX"
+        stringMap[SQUAT_JUMPS_IN_AND_OUT] = "SQUAT_JUMPS_IN_AND_OUT"
+        stringMap[WEIGHTED_SQUAT_JUMPS_IN_AND_OUT] = "WEIGHTED_SQUAT_JUMPS_IN_AND_OUT"
+        stringMap[BOX_JUMP] = "BOX_JUMP"
+        stringMap[BOX_JUMP_OVERS] = "BOX_JUMP_OVERS"
+        stringMap[BOX_JUMP_OVERS_OVER_THE_BOX] = "BOX_JUMP_OVERS_OVER_THE_BOX"
+        stringMap[STAR_JUMP_SQUATS] = "STAR_JUMP_SQUATS"
+        stringMap[JUMP_SQUAT] = "JUMP_SQUAT"
     }
 
 
@@ -105,9 +98,9 @@ object PlyoExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -118,7 +111,7 @@ object PlyoExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

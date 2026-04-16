@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaAccelerometerDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_ACCELEROMETER_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -38,7 +38,7 @@ class HsaAccelerometerDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Millisecond resolution of the timestamp
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,7 +46,7 @@ class HsaAccelerometerDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Millisecond resolution of the timestamp
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
@@ -58,7 +58,7 @@ class HsaAccelerometerDataMesg : Mesg {
          * Get sampling_interval field
          * Units: ms
          * Comment: Sampling Interval in Milliseconds
-         * 
+         *
          * @return sampling_interval
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -66,14 +66,14 @@ class HsaAccelerometerDataMesg : Mesg {
          * Set sampling_interval field
          * Units: ms
          * Comment: Sampling Interval in Milliseconds
-         * 
+         *
          * @param samplingInterval The new samplingInterval value to be set
          */
         set(samplingInterval) {
             setFieldValue(1, 0, samplingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val accelX: Array<Float?>?
+    val accelX: Array<Float>?
         get() = getFieldFloatValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelX: Int
@@ -86,7 +86,7 @@ class HsaAccelerometerDataMesg : Mesg {
      * Get accel_x field
      * Units: mG
      * Comment: X-Axis Measurement
-     * 
+     *
      * @param index of accel_x
      * @return accel_x
      */
@@ -98,7 +98,7 @@ class HsaAccelerometerDataMesg : Mesg {
      * Set accel_x field
      * Units: mG
      * Comment: X-Axis Measurement
-     * 
+     *
      * @param index of accel_x
      * @param accelX The new accelX value to be set
      */
@@ -106,7 +106,7 @@ class HsaAccelerometerDataMesg : Mesg {
         setFieldValue(2, index, accelX, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelY: Array<Float?>?
+    val accelY: Array<Float>?
         get() = getFieldFloatValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelY: Int
@@ -119,7 +119,7 @@ class HsaAccelerometerDataMesg : Mesg {
      * Get accel_y field
      * Units: mG
      * Comment: Y-Axis Measurement
-     * 
+     *
      * @param index of accel_y
      * @return accel_y
      */
@@ -131,7 +131,7 @@ class HsaAccelerometerDataMesg : Mesg {
      * Set accel_y field
      * Units: mG
      * Comment: Y-Axis Measurement
-     * 
+     *
      * @param index of accel_y
      * @param accelY The new accelY value to be set
      */
@@ -139,7 +139,7 @@ class HsaAccelerometerDataMesg : Mesg {
         setFieldValue(3, index, accelY, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val accelZ: Array<Float?>?
+    val accelZ: Array<Float>?
         get() = getFieldFloatValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAccelZ: Int
@@ -152,7 +152,7 @@ class HsaAccelerometerDataMesg : Mesg {
      * Get accel_z field
      * Units: mG
      * Comment: Z-Axis Measurement
-     * 
+     *
      * @param index of accel_z
      * @return accel_z
      */
@@ -164,7 +164,7 @@ class HsaAccelerometerDataMesg : Mesg {
      * Set accel_z field
      * Units: mG
      * Comment: Z-Axis Measurement
-     * 
+     *
      * @param index of accel_z
      * @param accelZ The new accelZ value to be set
      */
@@ -176,14 +176,14 @@ class HsaAccelerometerDataMesg : Mesg {
         /**
          * Get timestamp_32k field
          * Comment: 32 kHz timestamp
-         * 
+         *
          * @return timestamp_32k
          */
         get() = getFieldLongValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set timestamp_32k field
          * Comment: 32 kHz timestamp
-         * 
+         *
          * @param timestamp32k The new timestamp32k value to be set
          */
         set(timestamp32k) {
@@ -206,12 +206,11 @@ class HsaAccelerometerDataMesg : Mesg {
         const val Timestamp32kFieldNum: Int = 5
 
 
-        val hsaAccelerometerDataMesg: Mesg
+        // hsa_accelerometer_data
+        val hsaAccelerometerDataMesg: Mesg =
+            Mesg("hsa_accelerometer_data", MesgNum.HSA_ACCELEROMETER_DATA)
 
         init {
-            // hsa_accelerometer_data
-            hsaAccelerometerDataMesg =
-                Mesg("hsa_accelerometer_data", MesgNum.HSA_ACCELEROMETER_DATA)
             hsaAccelerometerDataMesg.addField(
                 Field(
                     "timestamp",

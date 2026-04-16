@@ -28,7 +28,7 @@ enum class ExdLayout(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return ExdLayout.INVALID
+            return INVALID
         }
 
         /**

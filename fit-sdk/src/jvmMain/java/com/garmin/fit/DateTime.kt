@@ -8,7 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-import java.lang.Double
 import java.time.Instant
 import java.util.Date
 import kotlin.Boolean
@@ -16,17 +15,10 @@ import kotlin.Comparable
 import kotlin.Int
 import kotlin.Long
 import kotlin.String
-import kotlin.collections.HashMap
-import kotlin.collections.MutableMap
-import kotlin.collections.minus
-import kotlin.collections.minusAssign
-import kotlin.collections.plusAssign
 import kotlin.math.floor
-import kotlin.minus
-import kotlin.sequences.minus
-import kotlin.times
+import kotlin.math.roundToLong
 
-class DateTime : Comparable<DateTime?> {
+class DateTime : Comparable<DateTime> {
     var timestamp: Long
         private set
     var fractionalTimestamp: Double
@@ -38,8 +30,8 @@ class DateTime : Comparable<DateTime?> {
     }
 
     constructor(date: Date) {
-        this.timestamp = (date.getTime() - OFFSET) / 1000
-        this.fractionalTimestamp = ((date.getTime() - OFFSET) % 1000) / 1000.0
+        this.timestamp = (date.time - OFFSET) / 1000
+        this.fractionalTimestamp = ((date.time - OFFSET) % 1000) / 1000.0
     }
 
     constructor(timestamp: DateTime) : this(
@@ -53,7 +45,7 @@ class DateTime : Comparable<DateTime?> {
     }
 
     constructor(instant: Instant) {
-        this.timestamp = instant.getEpochSecond() - (OFFSET / 1000)
+        this.timestamp = instant.epochSecond - (OFFSET / 1000)
         this.fractionalTimestamp = (instant.toEpochMilli() - OFFSET) % 1000 / 1000.0
     }
 
@@ -70,7 +62,7 @@ class DateTime : Comparable<DateTime?> {
     val date: Date
         get() {
             // Express fractional component in (nearest) ms
-            val fractional_ms = Math.round(this.fractionalTimestamp * 1000)
+            val fractional_ms = (this.fractionalTimestamp * 1000).roundToLong()
 
             return Date((timestamp * 1000) + fractional_ms + OFFSET)
         }
@@ -78,7 +70,7 @@ class DateTime : Comparable<DateTime?> {
     val instant: Instant?
         get() {
             // Express fractional component in (nearest) ms
-            val fractional_ms = Math.round(this.fractionalTimestamp * 1000)
+            val fractional_ms = (this.fractionalTimestamp * 1000).roundToLong()
 
             return Instant.ofEpochMilli((timestamp * 1000) + fractional_ms + OFFSET)
         }
@@ -106,15 +98,15 @@ class DateTime : Comparable<DateTime?> {
 
     // returns 0 if t1 is equal to target object; a value less that 0 if target object is numerically less t1
     // a value greater than 0 if target object is numerically greater than t1
-    override fun compareTo(t1: DateTime): Int {
+    override fun compareTo(other: DateTime): Int {
         // fractional_timestamp is guaranteed to be less that 1 which allows simplified comparison below
-        if (this.timestamp == t1.timestamp) {
+        return if (this.timestamp == other.timestamp) {
             // Timestamps are equal; must compare fractional part.
-            return Double.compare(this.fractionalTimestamp, t1.fractionalTimestamp)
-        } else if (this.timestamp > t1.timestamp) {
-            return 1
+            this.fractionalTimestamp.compareTo(other.fractionalTimestamp)
+        } else if (this.timestamp > other.timestamp) {
+            1
         } else {
-            return -1
+            -1
         }
     }
 
@@ -129,13 +121,12 @@ class DateTime : Comparable<DateTime?> {
     companion object {
         const val MIN: Long =
             0x10000000 // if date_time is < 0x10000000 then it is system time (seconds from device power on)
-        val INVALID: Long = Fit.UINT32_INVALID
+        const val INVALID: Long = Fit.UINT32_INVALID
 
-        private val stringMap: MutableMap<Long?, String?>
+        private val stringMap = mutableMapOf<Long, String>()
 
         init {
-            stringMap = HashMap<Long?, String?>()
-            stringMap.put(MIN, "MIN")
+            stringMap[MIN] = "MIN"
         }
 
         const val OFFSET: Long =
@@ -146,9 +137,9 @@ class DateTime : Comparable<DateTime?> {
          * @param value The enum constant
          * @return The name of this enum contsant
          */
-        fun getStringFromValue(value: Long?): String? {
+        fun getStringFromValue(value: Long): String {
             if (stringMap.containsKey(value)) {
-                return stringMap.get(value)
+                return stringMap[value] ?: ""
             }
 
             return ""
@@ -159,7 +150,7 @@ class DateTime : Comparable<DateTime?> {
          * @param value The enum string value
          * @return The enum constant or INVALID if unknown
          */
-        fun getValueFromString(value: String?): Long? {
+        fun getValueFromString(value: String): Long {
             for (entry in stringMap.entries) {
                 if (entry.value == value) {
                     return entry.key

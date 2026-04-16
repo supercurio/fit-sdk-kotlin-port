@@ -14,117 +14,111 @@ import com.garmin.fit.Profile.SubFields
 class SegmentLapMesg : Mesg, MesgWithEvent {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_LAP))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
             setFieldValue(254, 0, messageIndex, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get timestamp field
-     * Units: s
-     * 
-     * @return timestamp
-     */
-    override fun getTimestamp(): DateTime? {
-        return timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
-    }
-
-    /**
-     * Set timestamp field
-     * Units: s
-     * 
-     * @param timestamp The new timestamp value to be set
-     */
-    override fun setTimestamp(timestamp: DateTime) {
-        setFieldValue(253, 0, timestamp.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Get event field
-     * 
-     * @return event
-     */
-    override fun getEvent(): Event? {
-        val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
+    override var timestamp: DateTime?
+        /**
+         * Get timestamp field
+         *
+         * @return timestamp
+         */
+        get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
+        /**
+         * Set timestamp field
+         *
+         * @param timestamp The new timestamp value to be set
+         */
+        set(timestamp) {
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
-        return Event.Companion.getByValue(value)
-    }
 
-    /**
-     * Set event field
-     * 
-     * @param event The new event value to be set
-     */
-    override fun setEvent(event: Event) {
-        setFieldValue(0, 0, event.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Get event_type field
-     * 
-     * @return event_type
-     */
-    override fun getEventType(): EventType? {
-        val value = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-        if (value == null) {
-            return null
+    override var event: Event?
+        /**
+         * Get event field
+         * Comment: session
+         *
+         * @return event
+         */
+        get() {
+            val value = getFieldShortValue(EventFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+                ?: return null
+            return Event.getByValue(value)
         }
-        return EventType.Companion.getByValue(value)
-    }
+        /**
+         * Set event field
+         * Comment: session
+         *
+         * @param event The new event value to be set
+         */
+        set(event) {
+            setFieldValue(EventFieldNum, 0, event?.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
-    /**
-     * Set event_type field
-     * 
-     * @param eventType The new eventType value to be set
-     */
-    override fun setEventType(eventType: EventType) {
-        setFieldValue(1, 0, eventType.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var eventType: EventType?
+        /**
+         * Get event_type field
+         *
+         * @return event_type
+         */
+        get() {
+            val value = getFieldShortValue(EventTypeFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+                ?: return null
+            return EventType.getByValue(value)
+        }
+        /**
+         * Set event_type field
+         *
+         * @param eventType The new eventType value to be set
+         */
+        set(eventType) {
+            setFieldValue(EventTypeFieldNum, 0, eventType?.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var startTime: DateTime?
         /**
          * Get start_time field
-         * 
+         *
          * @return start_time
          */
         get() = timestampToDateTime(getFieldLongValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set start_time field
-         * 
+         *
          * @param startTime The new startTime value to be set
          */
         set(startTime) {
-            setFieldValue(2, 0, startTime!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(2, 0, startTime?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var startPositionLat: Int?
         /**
          * Get start_position_lat field
          * Units: semicircles
-         * 
+         *
          * @return start_position_lat
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set start_position_lat field
          * Units: semicircles
-         * 
+         *
          * @param startPositionLat The new startPositionLat value to be set
          */
         set(startPositionLat) {
@@ -135,14 +129,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get start_position_long field
          * Units: semicircles
-         * 
+         *
          * @return start_position_long
          */
         get() = getFieldIntegerValue(4, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set start_position_long field
          * Units: semicircles
-         * 
+         *
          * @param startPositionLong The new startPositionLong value to be set
          */
         set(startPositionLong) {
@@ -153,14 +147,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get end_position_lat field
          * Units: semicircles
-         * 
+         *
          * @return end_position_lat
          */
         get() = getFieldIntegerValue(5, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set end_position_lat field
          * Units: semicircles
-         * 
+         *
          * @param endPositionLat The new endPositionLat value to be set
          */
         set(endPositionLat) {
@@ -171,14 +165,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get end_position_long field
          * Units: semicircles
-         * 
+         *
          * @return end_position_long
          */
         get() = getFieldIntegerValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set end_position_long field
          * Units: semicircles
-         * 
+         *
          * @param endPositionLong The new endPositionLong value to be set
          */
         set(endPositionLong) {
@@ -190,7 +184,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_elapsed_time field
          * Units: s
          * Comment: Time (includes pauses)
-         * 
+         *
          * @return total_elapsed_time
          */
         get() = getFieldFloatValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -198,7 +192,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_elapsed_time field
          * Units: s
          * Comment: Time (includes pauses)
-         * 
+         *
          * @param totalElapsedTime The new totalElapsedTime value to be set
          */
         set(totalElapsedTime) {
@@ -210,7 +204,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_timer_time field
          * Units: s
          * Comment: Timer Time (excludes pauses)
-         * 
+         *
          * @return total_timer_time
          */
         get() = getFieldFloatValue(8, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -218,7 +212,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_timer_time field
          * Units: s
          * Comment: Timer Time (excludes pauses)
-         * 
+         *
          * @param totalTimerTime The new totalTimerTime value to be set
          */
         set(totalTimerTime) {
@@ -229,14 +223,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_distance field
          * Units: m
-         * 
+         *
          * @return total_distance
          */
         get() = getFieldFloatValue(9, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_distance field
          * Units: m
-         * 
+         *
          * @param totalDistance The new totalDistance value to be set
          */
         set(totalDistance) {
@@ -247,14 +241,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_cycles field
          * Units: cycles
-         * 
+         *
          * @return total_cycles
          */
         get() = getFieldLongValue(10, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_cycles field
          * Units: cycles
-         * 
+         *
          * @param totalCycles The new totalCycles value to be set
          */
         set(totalCycles) {
@@ -265,7 +259,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_strokes field
          * Units: strokes
-         * 
+         *
          * @return total_strokes
          */
         get() = getFieldLongValue(
@@ -276,7 +270,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Set total_strokes field
          * Units: strokes
-         * 
+         *
          * @param totalStrokes The new totalStrokes value to be set
          */
         set(totalStrokes) {
@@ -292,14 +286,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_calories field
          * Units: kcal
-         * 
+         *
          * @return total_calories
          */
         get() = getFieldIntegerValue(11, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_calories field
          * Units: kcal
-         * 
+         *
          * @param totalCalories The new totalCalories value to be set
          */
         set(totalCalories) {
@@ -311,7 +305,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_fat_calories field
          * Units: kcal
          * Comment: If New Leaf
-         * 
+         *
          * @return total_fat_calories
          */
         get() = getFieldIntegerValue(12, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -319,7 +313,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_fat_calories field
          * Units: kcal
          * Comment: If New Leaf
-         * 
+         *
          * @param totalFatCalories The new totalFatCalories value to be set
          */
         set(totalFatCalories) {
@@ -330,14 +324,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_speed field
          * Units: m/s
-         * 
+         *
          * @return avg_speed
          */
         get() = getFieldFloatValue(13, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_speed field
          * Units: m/s
-         * 
+         *
          * @param avgSpeed The new avgSpeed value to be set
          */
         set(avgSpeed) {
@@ -348,14 +342,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_speed field
          * Units: m/s
-         * 
+         *
          * @return max_speed
          */
         get() = getFieldFloatValue(14, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_speed field
          * Units: m/s
-         * 
+         *
          * @param maxSpeed The new maxSpeed value to be set
          */
         set(maxSpeed) {
@@ -366,14 +360,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return avg_heart_rate
          */
         get() = getFieldShortValue(15, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param avgHeartRate The new avgHeartRate value to be set
          */
         set(avgHeartRate) {
@@ -384,14 +378,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return max_heart_rate
          */
         get() = getFieldShortValue(16, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param maxHeartRate The new maxHeartRate value to be set
          */
         set(maxHeartRate) {
@@ -403,7 +397,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_cadence field
          * Units: rpm
          * Comment: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
-         * 
+         *
          * @return avg_cadence
          */
         get() = getFieldShortValue(17, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -411,7 +405,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_cadence field
          * Units: rpm
          * Comment: total_cycles / total_timer_time if non_zero_avg_cadence otherwise total_cycles / total_elapsed_time
-         * 
+         *
          * @param avgCadence The new avgCadence value to be set
          */
         set(avgCadence) {
@@ -422,14 +416,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_cadence field
          * Units: rpm
-         * 
+         *
          * @return max_cadence
          */
         get() = getFieldShortValue(18, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_cadence field
          * Units: rpm
-         * 
+         *
          * @param maxCadence The new maxCadence value to be set
          */
         set(maxCadence) {
@@ -441,7 +435,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_power field
          * Units: watts
          * Comment: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
-         * 
+         *
          * @return avg_power
          */
         get() = getFieldIntegerValue(19, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -449,7 +443,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_power field
          * Units: watts
          * Comment: total_power / total_timer_time if non_zero_avg_power otherwise total_power / total_elapsed_time
-         * 
+         *
          * @param avgPower The new avgPower value to be set
          */
         set(avgPower) {
@@ -460,14 +454,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_power field
          * Units: watts
-         * 
+         *
          * @return max_power
          */
         get() = getFieldIntegerValue(20, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_power field
          * Units: watts
-         * 
+         *
          * @param maxPower The new maxPower value to be set
          */
         set(maxPower) {
@@ -478,14 +472,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_ascent field
          * Units: m
-         * 
+         *
          * @return total_ascent
          */
         get() = getFieldIntegerValue(21, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_ascent field
          * Units: m
-         * 
+         *
          * @param totalAscent The new totalAscent value to be set
          */
         set(totalAscent) {
@@ -496,14 +490,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_descent field
          * Units: m
-         * 
+         *
          * @return total_descent
          */
         get() = getFieldIntegerValue(22, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_descent field
          * Units: m
-         * 
+         *
          * @param totalDescent The new totalDescent value to be set
          */
         set(totalDescent) {
@@ -513,49 +507,44 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var sport: Sport?
         /**
          * Get sport field
-         * 
+         *
          * @return sport
          */
         get() {
-            val value = getFieldShortValue(23, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return Sport.Companion.getByValue(value)
+            val value = getFieldShortValue(23, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return Sport.getByValue(value)
         }
         /**
          * Set sport field
-         * 
+         *
          * @param sport The new sport value to be set
          */
         set(sport) {
             setFieldValue(23, 0, sport!!.value, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get event_group field
-     * 
-     * @return event_group
-     */
-    override fun getEventGroup(): Short? {
-        return getFieldShortValue(24, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set event_group field
-     * 
-     * @param eventGroup The new eventGroup value to be set
-     */
-    override fun setEventGroup(eventGroup: Short?) {
-        setFieldValue(24, 0, eventGroup, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var eventGroup: Short?
+        /**
+         * Get event_group field
+         *
+         * @return event_group
+         */
+        get() = getFieldShortValue(EventGroupFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set event_group field
+         *
+         * @param eventGroup The new eventGroup value to be set
+         */
+        set(eventGroup) {
+            setFieldValue(EventGroupFieldNum, 0, eventGroup, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var necLat: Int?
         /**
          * Get nec_lat field
          * Units: semicircles
          * Comment: North east corner latitude.
-         * 
+         *
          * @return nec_lat
          */
         get() = getFieldIntegerValue(25, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -563,7 +552,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set nec_lat field
          * Units: semicircles
          * Comment: North east corner latitude.
-         * 
+         *
          * @param necLat The new necLat value to be set
          */
         set(necLat) {
@@ -575,7 +564,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get nec_long field
          * Units: semicircles
          * Comment: North east corner longitude.
-         * 
+         *
          * @return nec_long
          */
         get() = getFieldIntegerValue(26, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -583,7 +572,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set nec_long field
          * Units: semicircles
          * Comment: North east corner longitude.
-         * 
+         *
          * @param necLong The new necLong value to be set
          */
         set(necLong) {
@@ -595,7 +584,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get swc_lat field
          * Units: semicircles
          * Comment: South west corner latitude.
-         * 
+         *
          * @return swc_lat
          */
         get() = getFieldIntegerValue(27, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -603,7 +592,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set swc_lat field
          * Units: semicircles
          * Comment: South west corner latitude.
-         * 
+         *
          * @param swcLat The new swcLat value to be set
          */
         set(swcLat) {
@@ -615,7 +604,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get swc_long field
          * Units: semicircles
          * Comment: South west corner latitude.
-         * 
+         *
          * @return swc_long
          */
         get() = getFieldIntegerValue(28, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -623,43 +612,43 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set swc_long field
          * Units: semicircles
          * Comment: South west corner latitude.
-         * 
+         *
          * @param swcLong The new swcLong value to be set
          */
         set(swcLong) {
             setFieldValue(28, 0, swcLong, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    /**
-     * Get name field
-     * 
-     * @return name
-     */
-    override fun getName(): String? {
-        return getFieldStringValue(29, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
-
-    /**
-     * Set name field
-     * 
-     * @param name The new name value to be set
-     */
-    fun setName(name: String?) {
-        setFieldValue(29, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-    }
+    override var name: String?
+        /**
+         * Get name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @return name
+         */
+        get() = getFieldStringValue(NameFieldNum, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        /**
+         * Set name field
+         * Comment: Friendly name assigned to leader
+         *
+         * @param name The new name value to be set
+         */
+        set(name) {
+            setFieldValue(NameFieldNum, 0, name, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        }
 
     var normalizedPower: Int?
         /**
          * Get normalized_power field
          * Units: watts
-         * 
+         *
          * @return normalized_power
          */
         get() = getFieldIntegerValue(30, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set normalized_power field
          * Units: watts
-         * 
+         *
          * @param normalizedPower The new normalizedPower value to be set
          */
         set(normalizedPower) {
@@ -669,13 +658,13 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var leftRightBalance: Int?
         /**
          * Get left_right_balance field
-         * 
+         *
          * @return left_right_balance
          */
         get() = getFieldIntegerValue(31, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set left_right_balance field
-         * 
+         *
          * @param leftRightBalance The new leftRightBalance value to be set
          */
         set(leftRightBalance) {
@@ -685,19 +674,16 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var subSport: SubSport?
         /**
          * Get sub_sport field
-         * 
+         *
          * @return sub_sport
          */
         get() {
-            val value = getFieldShortValue(32, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SubSport.Companion.getByValue(value)
+            val value = getFieldShortValue(32, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SubSport.getByValue(value)
         }
         /**
          * Set sub_sport field
-         * 
+         *
          * @param subSport The new subSport value to be set
          */
         set(subSport) {
@@ -708,14 +694,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_work field
          * Units: J
-         * 
+         *
          * @return total_work
          */
         get() = getFieldLongValue(33, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_work field
          * Units: J
-         * 
+         *
          * @param totalWork The new totalWork value to be set
          */
         set(totalWork) {
@@ -726,14 +712,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_altitude field
          * Units: m
-         * 
+         *
          * @return avg_altitude
          */
         get() = getFieldFloatValue(34, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_altitude field
          * Units: m
-         * 
+         *
          * @param avgAltitude The new avgAltitude value to be set
          */
         set(avgAltitude) {
@@ -744,14 +730,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_altitude field
          * Units: m
-         * 
+         *
          * @return max_altitude
          */
         get() = getFieldFloatValue(35, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_altitude field
          * Units: m
-         * 
+         *
          * @param maxAltitude The new maxAltitude value to be set
          */
         set(maxAltitude) {
@@ -762,14 +748,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get gps_accuracy field
          * Units: m
-         * 
+         *
          * @return gps_accuracy
          */
         get() = getFieldShortValue(36, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set gps_accuracy field
          * Units: m
-         * 
+         *
          * @param gpsAccuracy The new gpsAccuracy value to be set
          */
         set(gpsAccuracy) {
@@ -780,14 +766,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_grade field
          * Units: %
-         * 
+         *
          * @return avg_grade
          */
         get() = getFieldFloatValue(37, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_grade field
          * Units: %
-         * 
+         *
          * @param avgGrade The new avgGrade value to be set
          */
         set(avgGrade) {
@@ -798,14 +784,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_pos_grade field
          * Units: %
-         * 
+         *
          * @return avg_pos_grade
          */
         get() = getFieldFloatValue(38, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_pos_grade field
          * Units: %
-         * 
+         *
          * @param avgPosGrade The new avgPosGrade value to be set
          */
         set(avgPosGrade) {
@@ -816,14 +802,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_neg_grade field
          * Units: %
-         * 
+         *
          * @return avg_neg_grade
          */
         get() = getFieldFloatValue(39, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_neg_grade field
          * Units: %
-         * 
+         *
          * @param avgNegGrade The new avgNegGrade value to be set
          */
         set(avgNegGrade) {
@@ -834,14 +820,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_pos_grade field
          * Units: %
-         * 
+         *
          * @return max_pos_grade
          */
         get() = getFieldFloatValue(40, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_pos_grade field
          * Units: %
-         * 
+         *
          * @param maxPosGrade The new maxPosGrade value to be set
          */
         set(maxPosGrade) {
@@ -852,14 +838,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_neg_grade field
          * Units: %
-         * 
+         *
          * @return max_neg_grade
          */
         get() = getFieldFloatValue(41, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_neg_grade field
          * Units: %
-         * 
+         *
          * @param maxNegGrade The new maxNegGrade value to be set
          */
         set(maxNegGrade) {
@@ -870,14 +856,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_temperature field
          * Units: C
-         * 
+         *
          * @return avg_temperature
          */
         get() = getFieldByteValue(42, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_temperature field
          * Units: C
-         * 
+         *
          * @param avgTemperature The new avgTemperature value to be set
          */
         set(avgTemperature) {
@@ -888,14 +874,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_temperature field
          * Units: C
-         * 
+         *
          * @return max_temperature
          */
         get() = getFieldByteValue(43, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_temperature field
          * Units: C
-         * 
+         *
          * @param maxTemperature The new maxTemperature value to be set
          */
         set(maxTemperature) {
@@ -906,14 +892,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get total_moving_time field
          * Units: s
-         * 
+         *
          * @return total_moving_time
          */
         get() = getFieldFloatValue(44, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set total_moving_time field
          * Units: s
-         * 
+         *
          * @param totalMovingTime The new totalMovingTime value to be set
          */
         set(totalMovingTime) {
@@ -924,14 +910,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_pos_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @return avg_pos_vertical_speed
          */
         get() = getFieldFloatValue(45, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_pos_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @param avgPosVerticalSpeed The new avgPosVerticalSpeed value to be set
          */
         set(avgPosVerticalSpeed) {
@@ -942,14 +928,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_neg_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @return avg_neg_vertical_speed
          */
         get() = getFieldFloatValue(46, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_neg_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @param avgNegVerticalSpeed The new avgNegVerticalSpeed value to be set
          */
         set(avgNegVerticalSpeed) {
@@ -960,14 +946,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_pos_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @return max_pos_vertical_speed
          */
         get() = getFieldFloatValue(47, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_pos_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @param maxPosVerticalSpeed The new maxPosVerticalSpeed value to be set
          */
         set(maxPosVerticalSpeed) {
@@ -978,21 +964,21 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get max_neg_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @return max_neg_vertical_speed
          */
         get() = getFieldFloatValue(48, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set max_neg_vertical_speed field
          * Units: m/s
-         * 
+         *
          * @param maxNegVerticalSpeed The new maxNegVerticalSpeed value to be set
          */
         set(maxNegVerticalSpeed) {
             setFieldValue(48, 0, maxNegVerticalSpeed, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val timeInHrZone: Array<Float?>?
+    val timeInHrZone: Array<Float>?
         get() = getFieldFloatValues(49, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInHrZone: Int
@@ -1004,7 +990,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Get time_in_hr_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_hr_zone
      * @return time_in_hr_zone
      */
@@ -1015,7 +1001,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Set time_in_hr_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_hr_zone
      * @param timeInHrZone The new timeInHrZone value to be set
      */
@@ -1023,7 +1009,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(49, index, timeInHrZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeInSpeedZone: Array<Float?>?
+    val timeInSpeedZone: Array<Float>?
         get() = getFieldFloatValues(50, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInSpeedZone: Int
@@ -1035,7 +1021,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Get time_in_speed_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_speed_zone
      * @return time_in_speed_zone
      */
@@ -1046,7 +1032,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Set time_in_speed_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_speed_zone
      * @param timeInSpeedZone The new timeInSpeedZone value to be set
      */
@@ -1054,7 +1040,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(50, index, timeInSpeedZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeInCadenceZone: Array<Float?>?
+    val timeInCadenceZone: Array<Float>?
         get() = getFieldFloatValues(51, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInCadenceZone: Int
@@ -1066,7 +1052,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Get time_in_cadence_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_cadence_zone
      * @return time_in_cadence_zone
      */
@@ -1077,7 +1063,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Set time_in_cadence_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_cadence_zone
      * @param timeInCadenceZone The new timeInCadenceZone value to be set
      */
@@ -1085,7 +1071,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(51, index, timeInCadenceZone, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val timeInPowerZone: Array<Float?>?
+    val timeInPowerZone: Array<Float>?
         get() = getFieldFloatValues(52, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeInPowerZone: Int
@@ -1097,7 +1083,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Get time_in_power_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_power_zone
      * @return time_in_power_zone
      */
@@ -1108,7 +1094,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     /**
      * Set time_in_power_zone field
      * Units: s
-     * 
+     *
      * @param index of time_in_power_zone
      * @param timeInPowerZone The new timeInPowerZone value to be set
      */
@@ -1119,13 +1105,13 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var repetitionNum: Int?
         /**
          * Get repetition_num field
-         * 
+         *
          * @return repetition_num
          */
         get() = getFieldIntegerValue(53, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set repetition_num field
-         * 
+         *
          * @param repetitionNum The new repetitionNum value to be set
          */
         set(repetitionNum) {
@@ -1136,14 +1122,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get min_altitude field
          * Units: m
-         * 
+         *
          * @return min_altitude
          */
         get() = getFieldFloatValue(54, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set min_altitude field
          * Units: m
-         * 
+         *
          * @param minAltitude The new minAltitude value to be set
          */
         set(minAltitude) {
@@ -1154,14 +1140,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get min_heart_rate field
          * Units: bpm
-         * 
+         *
          * @return min_heart_rate
          */
         get() = getFieldShortValue(55, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set min_heart_rate field
          * Units: bpm
-         * 
+         *
          * @param minHeartRate The new minHeartRate value to be set
          */
         set(minHeartRate) {
@@ -1172,14 +1158,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get active_time field
          * Units: s
-         * 
+         *
          * @return active_time
          */
         get() = getFieldFloatValue(56, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set active_time field
          * Units: s
-         * 
+         *
          * @param activeTime The new activeTime value to be set
          */
         set(activeTime) {
@@ -1189,13 +1175,13 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var wktStepIndex: Int?
         /**
          * Get wkt_step_index field
-         * 
+         *
          * @return wkt_step_index
          */
         get() = getFieldIntegerValue(57, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set wkt_step_index field
-         * 
+         *
          * @param wktStepIndex The new wktStepIndex value to be set
          */
         set(wktStepIndex) {
@@ -1205,19 +1191,16 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var sportEvent: SportEvent?
         /**
          * Get sport_event field
-         * 
+         *
          * @return sport_event
          */
         get() {
-            val value = getFieldShortValue(58, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SportEvent.Companion.getByValue(value)
+            val value = getFieldShortValue(58, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SportEvent.getByValue(value)
         }
         /**
          * Set sport_event field
-         * 
+         *
          * @param sportEvent The new sportEvent value to be set
          */
         set(sportEvent) {
@@ -1228,14 +1211,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_left_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @return avg_left_torque_effectiveness
          */
         get() = getFieldFloatValue(59, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_left_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @param avgLeftTorqueEffectiveness The new avgLeftTorqueEffectiveness value to be set
          */
         set(avgLeftTorqueEffectiveness) {
@@ -1246,14 +1229,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_right_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @return avg_right_torque_effectiveness
          */
         get() = getFieldFloatValue(60, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_right_torque_effectiveness field
          * Units: percent
-         * 
+         *
          * @param avgRightTorqueEffectiveness The new avgRightTorqueEffectiveness value to be set
          */
         set(avgRightTorqueEffectiveness) {
@@ -1264,14 +1247,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_left_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @return avg_left_pedal_smoothness
          */
         get() = getFieldFloatValue(61, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_left_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @param avgLeftPedalSmoothness The new avgLeftPedalSmoothness value to be set
          */
         set(avgLeftPedalSmoothness) {
@@ -1282,14 +1265,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_right_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @return avg_right_pedal_smoothness
          */
         get() = getFieldFloatValue(62, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_right_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @param avgRightPedalSmoothness The new avgRightPedalSmoothness value to be set
          */
         set(avgRightPedalSmoothness) {
@@ -1300,14 +1283,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get avg_combined_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @return avg_combined_pedal_smoothness
          */
         get() = getFieldFloatValue(63, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set avg_combined_pedal_smoothness field
          * Units: percent
-         * 
+         *
          * @param avgCombinedPedalSmoothness The new avgCombinedPedalSmoothness value to be set
          */
         set(avgCombinedPedalSmoothness) {
@@ -1317,19 +1300,16 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var status: SegmentLapStatus?
         /**
          * Get status field
-         * 
+         *
          * @return status
          */
         get() {
-            val value = getFieldShortValue(64, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return SegmentLapStatus.Companion.getByValue(value)
+            val value = getFieldShortValue(64, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return SegmentLapStatus.getByValue(value)
         }
         /**
          * Set status field
-         * 
+         *
          * @param status The new status value to be set
          */
         set(status) {
@@ -1339,13 +1319,13 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var uuid: String?
         /**
          * Get uuid field
-         * 
+         *
          * @return uuid
          */
         get() = getFieldStringValue(65, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set uuid field
-         * 
+         *
          * @param uuid The new uuid value to be set
          */
         set(uuid) {
@@ -1357,7 +1337,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_fractional_cadence field
          * Units: rpm
          * Comment: fractional part of the avg_cadence
-         * 
+         *
          * @return avg_fractional_cadence
          */
         get() = getFieldFloatValue(66, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1365,7 +1345,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_fractional_cadence field
          * Units: rpm
          * Comment: fractional part of the avg_cadence
-         * 
+         *
          * @param avgFractionalCadence The new avgFractionalCadence value to be set
          */
         set(avgFractionalCadence) {
@@ -1377,7 +1357,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get max_fractional_cadence field
          * Units: rpm
          * Comment: fractional part of the max_cadence
-         * 
+         *
          * @return max_fractional_cadence
          */
         get() = getFieldFloatValue(67, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1385,7 +1365,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set max_fractional_cadence field
          * Units: rpm
          * Comment: fractional part of the max_cadence
-         * 
+         *
          * @param maxFractionalCadence The new maxFractionalCadence value to be set
          */
         set(maxFractionalCadence) {
@@ -1397,7 +1377,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_fractional_cycles field
          * Units: cycles
          * Comment: fractional part of the total_cycles
-         * 
+         *
          * @return total_fractional_cycles
          */
         get() = getFieldFloatValue(68, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1405,7 +1385,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_fractional_cycles field
          * Units: cycles
          * Comment: fractional part of the total_cycles
-         * 
+         *
          * @param totalFractionalCycles The new totalFractionalCycles value to be set
          */
         set(totalFractionalCycles) {
@@ -1415,13 +1395,13 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var frontGearShiftCount: Int?
         /**
          * Get front_gear_shift_count field
-         * 
+         *
          * @return front_gear_shift_count
          */
         get() = getFieldIntegerValue(69, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set front_gear_shift_count field
-         * 
+         *
          * @param frontGearShiftCount The new frontGearShiftCount value to be set
          */
         set(frontGearShiftCount) {
@@ -1431,13 +1411,13 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
     var rearGearShiftCount: Int?
         /**
          * Get rear_gear_shift_count field
-         * 
+         *
          * @return rear_gear_shift_count
          */
         get() = getFieldIntegerValue(70, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set rear_gear_shift_count field
-         * 
+         *
          * @param rearGearShiftCount The new rearGearShiftCount value to be set
          */
         set(rearGearShiftCount) {
@@ -1449,7 +1429,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get time_standing field
          * Units: s
          * Comment: Total time spent in the standing position
-         * 
+         *
          * @return time_standing
          */
         get() = getFieldFloatValue(71, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1457,7 +1437,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set time_standing field
          * Units: s
          * Comment: Total time spent in the standing position
-         * 
+         *
          * @param timeStanding The new timeStanding value to be set
          */
         set(timeStanding) {
@@ -1468,14 +1448,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get stand_count field
          * Comment: Number of transitions to the standing state
-         * 
+         *
          * @return stand_count
          */
         get() = getFieldIntegerValue(72, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set stand_count field
          * Comment: Number of transitions to the standing state
-         * 
+         *
          * @param standCount The new standCount value to be set
          */
         set(standCount) {
@@ -1487,7 +1467,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_left_pco field
          * Units: mm
          * Comment: Average left platform center offset
-         * 
+         *
          * @return avg_left_pco
          */
         get() = getFieldByteValue(73, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1495,7 +1475,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_left_pco field
          * Units: mm
          * Comment: Average left platform center offset
-         * 
+         *
          * @param avgLeftPco The new avgLeftPco value to be set
          */
         set(avgLeftPco) {
@@ -1507,7 +1487,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_right_pco field
          * Units: mm
          * Comment: Average right platform center offset
-         * 
+         *
          * @return avg_right_pco
          */
         get() = getFieldByteValue(74, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1515,14 +1495,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_right_pco field
          * Units: mm
          * Comment: Average right platform center offset
-         * 
+         *
          * @param avgRightPco The new avgRightPco value to be set
          */
         set(avgRightPco) {
             setFieldValue(74, 0, avgRightPco, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val avgLeftPowerPhase: Array<Float?>?
+    val avgLeftPowerPhase: Array<Float>?
         get() = getFieldFloatValues(75, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAvgLeftPowerPhase: Int
@@ -1535,7 +1515,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Get avg_left_power_phase field
      * Units: degrees
      * Comment: Average left power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_left_power_phase
      * @return avg_left_power_phase
      */
@@ -1547,7 +1527,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set avg_left_power_phase field
      * Units: degrees
      * Comment: Average left power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_left_power_phase
      * @param avgLeftPowerPhase The new avgLeftPowerPhase value to be set
      */
@@ -1555,7 +1535,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(75, index, avgLeftPowerPhase, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val avgLeftPowerPhasePeak: Array<Float?>?
+    val avgLeftPowerPhasePeak: Array<Float>?
         get() = getFieldFloatValues(76, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAvgLeftPowerPhasePeak: Int
@@ -1568,7 +1548,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Get avg_left_power_phase_peak field
      * Units: degrees
      * Comment: Average left power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_left_power_phase_peak
      * @return avg_left_power_phase_peak
      */
@@ -1580,7 +1560,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set avg_left_power_phase_peak field
      * Units: degrees
      * Comment: Average left power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_left_power_phase_peak
      * @param avgLeftPowerPhasePeak The new avgLeftPowerPhasePeak value to be set
      */
@@ -1588,7 +1568,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(76, index, avgLeftPowerPhasePeak, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val avgRightPowerPhase: Array<Float?>?
+    val avgRightPowerPhase: Array<Float>?
         get() = getFieldFloatValues(77, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAvgRightPowerPhase: Int
@@ -1601,7 +1581,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Get avg_right_power_phase field
      * Units: degrees
      * Comment: Average right power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_right_power_phase
      * @return avg_right_power_phase
      */
@@ -1613,7 +1593,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set avg_right_power_phase field
      * Units: degrees
      * Comment: Average right power phase angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_right_power_phase
      * @param avgRightPowerPhase The new avgRightPowerPhase value to be set
      */
@@ -1621,7 +1601,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(77, index, avgRightPowerPhase, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val avgRightPowerPhasePeak: Array<Float?>?
+    val avgRightPowerPhasePeak: Array<Float>?
         get() = getFieldFloatValues(78, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAvgRightPowerPhasePeak: Int
@@ -1634,7 +1614,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Get avg_right_power_phase_peak field
      * Units: degrees
      * Comment: Average right power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_right_power_phase_peak
      * @return avg_right_power_phase_peak
      */
@@ -1646,7 +1626,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set avg_right_power_phase_peak field
      * Units: degrees
      * Comment: Average right power phase peak angles. Data value indexes defined by power_phase_type.
-     * 
+     *
      * @param index of avg_right_power_phase_peak
      * @param avgRightPowerPhasePeak The new avgRightPowerPhasePeak value to be set
      */
@@ -1654,7 +1634,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(78, index, avgRightPowerPhasePeak, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val avgPowerPosition: Array<Int?>?
+    val avgPowerPosition: Array<Int>?
         get() = getFieldIntegerValues(79, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAvgPowerPosition: Int
@@ -1667,7 +1647,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Get avg_power_position field
      * Units: watts
      * Comment: Average power by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of avg_power_position
      * @return avg_power_position
      */
@@ -1679,7 +1659,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set avg_power_position field
      * Units: watts
      * Comment: Average power by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of avg_power_position
      * @param avgPowerPosition The new avgPowerPosition value to be set
      */
@@ -1687,7 +1667,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(79, index, avgPowerPosition, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val maxPowerPosition: Array<Int?>?
+    val maxPowerPosition: Array<Int>?
         get() = getFieldIntegerValues(80, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMaxPowerPosition: Int
@@ -1700,7 +1680,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Get max_power_position field
      * Units: watts
      * Comment: Maximum power by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of max_power_position
      * @return max_power_position
      */
@@ -1712,7 +1692,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set max_power_position field
      * Units: watts
      * Comment: Maximum power by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of max_power_position
      * @param maxPowerPosition The new maxPowerPosition value to be set
      */
@@ -1720,20 +1700,20 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(80, index, maxPowerPosition, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val avgCadencePosition: Array<Short?>?
-        get() = getFieldShortValues(81, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val avgCadencePosition: Array<Short>?
+        get() = getFieldShortValues(AvgCadencePositionFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numAvgCadencePosition: Int
         /**
          * @return number of avg_cadence_position
          */
-        get() = getNumFieldValues(81, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(AvgCadencePositionFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get avg_cadence_position field
      * Units: rpm
      * Comment: Average cadence by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of avg_cadence_position
      * @return avg_cadence_position
      */
@@ -1745,7 +1725,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set avg_cadence_position field
      * Units: rpm
      * Comment: Average cadence by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of avg_cadence_position
      * @param avgCadencePosition The new avgCadencePosition value to be set
      */
@@ -1753,20 +1733,20 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         setFieldValue(81, index, avgCadencePosition, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val maxCadencePosition: Array<Short?>?
-        get() = getFieldShortValues(82, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val maxCadencePosition: Array<Short>?
+        get() = getFieldShortValues(MaxCadencePositionFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMaxCadencePosition: Int
         /**
          * @return number of max_cadence_position
          */
-        get() = getNumFieldValues(82, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(MaxCadencePositionFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get max_cadence_position field
      * Units: rpm
      * Comment: Maximum cadence by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of max_cadence_position
      * @return max_cadence_position
      */
@@ -1778,7 +1758,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
      * Set max_cadence_position field
      * Units: rpm
      * Comment: Maximum cadence by position. Data value indexes defined by rider_position_type.
-     * 
+     *
      * @param index of max_cadence_position
      * @param maxCadencePosition The new maxCadencePosition value to be set
      */
@@ -1790,14 +1770,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get manufacturer field
          * Comment: Manufacturer that produced the segment
-         * 
+         *
          * @return manufacturer
          */
         get() = getFieldIntegerValue(83, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set manufacturer field
          * Comment: Manufacturer that produced the segment
-         * 
+         *
          * @param manufacturer The new manufacturer value to be set
          */
         set(manufacturer) {
@@ -1809,7 +1789,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_grit field
          * Units: kGrit
          * Comment: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
-         * 
+         *
          * @return total_grit
          */
         get() = getFieldFloatValue(84, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1817,7 +1797,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_grit field
          * Units: kGrit
          * Comment: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
-         * 
+         *
          * @param totalGrit The new totalGrit value to be set
          */
         set(totalGrit) {
@@ -1829,7 +1809,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_flow field
          * Units: Flow
          * Comment: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
-         * 
+         *
          * @return total_flow
          */
         get() = getFieldFloatValue(85, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1837,7 +1817,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_flow field
          * Units: Flow
          * Comment: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
-         * 
+         *
          * @param totalFlow The new totalFlow value to be set
          */
         set(totalFlow) {
@@ -1849,7 +1829,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_grit field
          * Units: kGrit
          * Comment: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
-         * 
+         *
          * @return avg_grit
          */
         get() = getFieldFloatValue(86, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1857,7 +1837,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_grit field
          * Units: kGrit
          * Comment: The grit score estimates how challenging a route could be for a cyclist in terms of time spent going over sharp turns or large grade slopes.
-         * 
+         *
          * @param avgGrit The new avgGrit value to be set
          */
         set(avgGrit) {
@@ -1869,7 +1849,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get avg_flow field
          * Units: Flow
          * Comment: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
-         * 
+         *
          * @return avg_flow
          */
         get() = getFieldFloatValue(87, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1877,7 +1857,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set avg_flow field
          * Units: Flow
          * Comment: The flow score estimates how long distance wise a cyclist deaccelerates over intervals where deacceleration is unnecessary such as smooth turns or small grade angle intervals.
-         * 
+         *
          * @param avgFlow The new avgFlow value to be set
          */
         set(avgFlow) {
@@ -1889,7 +1869,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_fractional_ascent field
          * Units: m
          * Comment: fractional part of total_ascent
-         * 
+         *
          * @return total_fractional_ascent
          */
         get() = getFieldFloatValue(89, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1897,7 +1877,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_fractional_ascent field
          * Units: m
          * Comment: fractional part of total_ascent
-         * 
+         *
          * @param totalFractionalAscent The new totalFractionalAscent value to be set
          */
         set(totalFractionalAscent) {
@@ -1909,7 +1889,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Get total_fractional_descent field
          * Units: m
          * Comment: fractional part of total_descent
-         * 
+         *
          * @return total_fractional_descent
          */
         get() = getFieldFloatValue(90, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -1917,7 +1897,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
          * Set total_fractional_descent field
          * Units: m
          * Comment: fractional part of total_descent
-         * 
+         *
          * @param totalFractionalDescent The new totalFractionalDescent value to be set
          */
         set(totalFractionalDescent) {
@@ -1928,14 +1908,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get enhanced_avg_altitude field
          * Units: m
-         * 
+         *
          * @return enhanced_avg_altitude
          */
         get() = getFieldFloatValue(91, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_avg_altitude field
          * Units: m
-         * 
+         *
          * @param enhancedAvgAltitude The new enhancedAvgAltitude value to be set
          */
         set(enhancedAvgAltitude) {
@@ -1946,14 +1926,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get enhanced_max_altitude field
          * Units: m
-         * 
+         *
          * @return enhanced_max_altitude
          */
         get() = getFieldFloatValue(92, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_max_altitude field
          * Units: m
-         * 
+         *
          * @param enhancedMaxAltitude The new enhancedMaxAltitude value to be set
          */
         set(enhancedMaxAltitude) {
@@ -1964,14 +1944,14 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
         /**
          * Get enhanced_min_altitude field
          * Units: m
-         * 
+         *
          * @return enhanced_min_altitude
          */
         get() = getFieldFloatValue(93, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set enhanced_min_altitude field
          * Units: m
-         * 
+         *
          * @param enhancedMinAltitude The new enhancedMinAltitude value to be set
          */
         set(enhancedMinAltitude) {
@@ -2346,7 +2326,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
                 )
             )
             subfield_index = 0
-            segmentLapMesg.fields.get(field_index).subFields.add(
+            segmentLapMesg.fields[field_index].subFields.add(
                 SubField(
                     "total_strokes",
                     134,
@@ -2355,7 +2335,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
                     "strokes"
                 )
             )
-            segmentLapMesg.fields.get(field_index).subFields.get(subfield_index).addMap(23, 2)
+            segmentLapMesg.fields[field_index].subFields[subfield_index].addMap(23, 2)
             subfield_index++
             field_index++
             segmentLapMesg.addField(
@@ -2669,7 +2649,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
                     Profile.Type.UINT16
                 )
             )
-            segmentLapMesg.fields.get(field_index).components.add(
+            segmentLapMesg.fields[field_index].components.add(
                 FieldComponent(
                     91,
                     false,
@@ -2691,7 +2671,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
                     Profile.Type.UINT16
                 )
             )
-            segmentLapMesg.fields.get(field_index).components.add(
+            segmentLapMesg.fields[field_index].components.add(
                 FieldComponent(
                     92,
                     false,
@@ -2947,7 +2927,7 @@ class SegmentLapMesg : Mesg, MesgWithEvent {
                     Profile.Type.UINT16
                 )
             )
-            segmentLapMesg.fields.get(field_index).components.add(
+            segmentLapMesg.fields[field_index].components.add(
                 FieldComponent(
                     93,
                     false,

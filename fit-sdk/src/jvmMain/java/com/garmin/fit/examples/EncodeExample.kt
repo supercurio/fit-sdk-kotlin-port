@@ -27,8 +27,8 @@ import java.util.Random
 
 /**
  * Example demonstrating how to encode FIT files.
- * 
- * 
+ *
+ *
  * The example creates 3 sample FIT files.
  */
 object EncodeExample {
@@ -68,10 +68,10 @@ object EncodeExample {
         //Generate FileIdMessage
         val fileIdMesg =
             FileIdMesg() // Every FIT file MUST contain a 'File ID' message as the first message
-        fileIdMesg.setManufacturer(Manufacturer.DEVELOPMENT)
-        fileIdMesg.setType(com.garmin.fit.File.ACTIVITY)
-        fileIdMesg.setProduct(1)
-        fileIdMesg.setSerialNumber(12345L)
+        fileIdMesg.manufacturer = Manufacturer.DEVELOPMENT
+        fileIdMesg.type = com.garmin.fit.File.ACTIVITY
+        fileIdMesg.product = 1
+        fileIdMesg.serialNumber = 12345L
 
         encode.write(fileIdMesg) // Encode the FileIDMesg
 
@@ -86,24 +86,24 @@ object EncodeExample {
         for (i in appId.indices) {
             developerIdMesg.setApplicationId(i, appId[i])
         }
-        developerIdMesg.setDeveloperDataIndex(0.toShort())
+        developerIdMesg.developerDataIndex = 0.toShort()
         encode.write(developerIdMesg)
 
         val fieldDescMesg = FieldDescriptionMesg()
-        fieldDescMesg.setDeveloperDataIndex(0.toShort())
-        fieldDescMesg.setFieldDefinitionNumber(0.toShort())
-        fieldDescMesg.setFitBaseTypeId(Fit.BASE_TYPE_SINT8.toShort())
+        fieldDescMesg.developerDataIndex = 0.toShort()
+        fieldDescMesg.fieldDefinitionNumber = 0.toShort()
+        fieldDescMesg.fitBaseTypeId = Fit.BASE_TYPE_SINT8.toShort()
         fieldDescMesg.setFieldName(0, "doughnuts_earned")
         fieldDescMesg.setUnits(0, "doughnuts")
         encode.write(fieldDescMesg)
 
         val hrFieldDescMesg = FieldDescriptionMesg()
-        hrFieldDescMesg.setDeveloperDataIndex(0.toShort())
-        hrFieldDescMesg.setFieldDefinitionNumber(1.toShort())
-        hrFieldDescMesg.setFitBaseTypeId(Fit.BASE_TYPE_UINT8.toShort())
+        hrFieldDescMesg.developerDataIndex = 0.toShort()
+        hrFieldDescMesg.fieldDefinitionNumber = 1.toShort()
+        hrFieldDescMesg.fitBaseTypeId = Fit.BASE_TYPE_UINT8.toShort()
         hrFieldDescMesg.setFieldName(0, "hr")
         hrFieldDescMesg.setUnits(0, "bpm")
-        hrFieldDescMesg.setNativeFieldNum(RecordMesg.Companion.HeartRateFieldNum.toShort())
+        hrFieldDescMesg.nativeFieldNum = RecordMesg.HeartRateFieldNum.toShort()
         encode.write(hrFieldDescMesg)
 
         val record = RecordMesg()
@@ -112,28 +112,28 @@ object EncodeExample {
         record.addDeveloperField(doughnutsEarnedField)
         record.addDeveloperField(hrDevField)
 
-        record.setHeartRate(140.toShort())
-        hrDevField.setValue(140.toShort())
-        record.setCadence(88.toShort())
-        record.setDistance(510f)
-        record.setSpeed(2800f)
-        doughnutsEarnedField.setValue(1)
+        record.heartRate = 140.toShort()
+        hrDevField.value = 140.toShort()
+        record.cadence = 88.toShort()
+        record.distance = 510f
+        record.speed = 2800f
+        doughnutsEarnedField.value = 1
         encode.write(record)
 
-        record.setHeartRate(Fit.UINT8_INVALID)
-        hrDevField.setValue(143.toShort())
-        record.setCadence(90.toShort())
-        record.setDistance(2080f)
-        record.setSpeed(2920f)
-        doughnutsEarnedField.setValue(2)
+        record.heartRate = Fit.UINT8_INVALID
+        hrDevField.value = 143.toShort()
+        record.cadence = 90.toShort()
+        record.distance = 2080f
+        record.speed = 2920f
+        doughnutsEarnedField.value = 2
         encode.write(record)
 
-        record.setHeartRate(144.toShort())
-        hrDevField.setValue(144.toShort())
-        record.setCadence(92.toShort())
-        record.setDistance(3710f)
-        record.setSpeed(3050f)
-        doughnutsEarnedField.setValue(3)
+        record.heartRate = 144.toShort()
+        hrDevField.value = 144.toShort()
+        record.cadence = 92.toShort()
+        record.distance = 3710f
+        record.speed = 3050f
+        doughnutsEarnedField.value = 3
         encode.write(record)
 
         try {
@@ -160,19 +160,19 @@ object EncodeExample {
         //Generate FileIdMessage
         val fileIdMesg =
             FileIdMesg() // Every FIT file MUST contain a 'File ID' message as the first message
-        fileIdMesg.setManufacturer(Manufacturer.DEVELOPMENT)
-        fileIdMesg.setType(com.garmin.fit.File.SETTINGS)
-        fileIdMesg.setProduct(1)
-        fileIdMesg.setSerialNumber(12345L)
+        fileIdMesg.manufacturer = Manufacturer.DEVELOPMENT
+        fileIdMesg.type = com.garmin.fit.File.SETTINGS
+        fileIdMesg.product = 1
+        fileIdMesg.serialNumber = 12345L
 
         encode.write(fileIdMesg) // Encode the FileIDMesg
 
         //Generate UserProfileMesg
         val userProfileMesg = UserProfileMesg()
-        userProfileMesg.setGender(Gender.FEMALE)
-        userProfileMesg.setWeight(63.1f)
-        userProfileMesg.setAge(99.toShort())
-        userProfileMesg.setFriendlyName("TestUser")
+        userProfileMesg.gender = Gender.FEMALE
+        userProfileMesg.weight = 63.1f
+        userProfileMesg.age = 99.toShort()
+        userProfileMesg.friendlyName = "TestUser"
 
         encode.write(userProfileMesg) // Encode the UserProfileMesg
 
@@ -204,18 +204,18 @@ object EncodeExample {
 
         val fileIdMesg =
             FileIdMesg() // Every FIT file MUST contain a 'File ID' message as the first message
-        fileIdMesg.setTimeCreated(DateTime(systemStartTime.getTime()))
-        fileIdMesg.setType(com.garmin.fit.File.MONITORING_B)
-        fileIdMesg.setManufacturer(Manufacturer.DEVELOPMENT)
-        fileIdMesg.setProduct(1)
-        fileIdMesg.setSerialNumber(12345L)
-        fileIdMesg.setNumber(0)
+        fileIdMesg.timeCreated = DateTime(systemStartTime.getTime())
+        fileIdMesg.type = com.garmin.fit.File.MONITORING_B
+        fileIdMesg.manufacturer = Manufacturer.DEVELOPMENT
+        fileIdMesg.product = 1
+        fileIdMesg.serialNumber = 12345L
+        fileIdMesg.number = 0
 
         encode.write(fileIdMesg) // Encode the FileIDMesg
 
         val deviceInfoMesg = DeviceInfoMesg()
-        deviceInfoMesg.setTimestamp(DateTime(systemCurrentTime.getTime()))
-        deviceInfoMesg.setBatteryStatus(BatteryStatus.GOOD)
+        deviceInfoMesg.timestamp = DateTime(systemCurrentTime.getTime())
+        deviceInfoMesg.batteryStatus = BatteryStatus.GOOD
 
         encode.write(deviceInfoMesg) // Encode the DeviceInfoMesg
 
@@ -224,26 +224,29 @@ object EncodeExample {
         // By default, each time a new message is written the Local Message Type 0 will be redefined to match the new message.
         // In this case,to avoid having a definition message each time there is a DeviceInfoMesg, we can manually set the Local Message Type of the MonitoringMessage to '1'.
         // By doing this we avoid an additional 7 definition messages in our FIT file.
-        monitoringMesg.setLocalNum(1)
+        monitoringMesg.localNum = 1
 
-        monitoringMesg.setTimestamp((DateTime(systemCurrentTime.getTime()))) // Initialise Timestamp to current time
-        monitoringMesg.setCycles(0f) //Initialise Cycles to 0
+        monitoringMesg.timestamp =
+            (DateTime(systemCurrentTime.getTime())) // Initialise Timestamp to current time
+        monitoringMesg.cycles = 0f //Initialise Cycles to 0
 
         val numberOfCycles = Random() // Random number of cycles for example data
         for (i in 0..3) { // Each of these loops represent a quarter of a day
 
             for (j in 0..5) { // Each of these loops represent 1 hour
-                monitoringMesg.setTimestamp(DateTime(systemCurrentTime.getTime()))
-                monitoringMesg.setActivityType(ActivityType.WALKING) // Setting this to WALKING will cause Cycles to be interpreted as steps
-                monitoringMesg.setCycles(monitoringMesg.getCycles() + (numberOfCycles.nextFloat() * 1000)) // Cycles are accumulated (i.e. must be increasing)
+                monitoringMesg.timestamp = DateTime(systemCurrentTime.getTime())
+                monitoringMesg.activityType =
+                    ActivityType.WALKING // Setting this to WALKING will cause Cycles to be interpreted as steps
+                monitoringMesg.cycles =
+                    monitoringMesg.cycles!! + (numberOfCycles.nextFloat() * 1000) // Cycles are accumulated (i.e. must be increasing)
 
                 encode.write(monitoringMesg) // Encode the MonitoringMesg
 
                 systemCurrentTime.add(Calendar.HOUR, 1) // Add an hour to our contrived timestamp
             }
 
-            deviceInfoMesg.setTimestamp((DateTime(systemCurrentTime.getTime())))
-            deviceInfoMesg.setBatteryStatus(BatteryStatus.GOOD)
+            deviceInfoMesg.timestamp = DateTime(systemCurrentTime.getTime())
+            deviceInfoMesg.batteryStatus = BatteryStatus.GOOD
 
             encode.write(deviceInfoMesg) // Encode the DeviceInfoMesg
         }

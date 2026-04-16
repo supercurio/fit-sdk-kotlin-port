@@ -12,19 +12,19 @@ package com.garmin.fit
 class FieldCapabilitiesMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.FIELD_CAPABILITIES))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -34,19 +34,16 @@ class FieldCapabilitiesMesg : Mesg {
     var file: File?
         /**
          * Get file field
-         * 
+         *
          * @return file
          */
         get() {
-            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return File.Companion.getByValue(value)
+            val value = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return File.getByValue(value)
         }
         /**
          * Set file field
-         * 
+         *
          * @param file The new file value to be set
          */
         set(file) {
@@ -56,13 +53,13 @@ class FieldCapabilitiesMesg : Mesg {
     var mesgNum: Int?
         /**
          * Get mesg_num field
-         * 
+         *
          * @return mesg_num
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set mesg_num field
-         * 
+         *
          * @param mesgNum The new mesgNum value to be set
          */
         set(mesgNum) {
@@ -72,13 +69,13 @@ class FieldCapabilitiesMesg : Mesg {
     var fieldNum: Short?
         /**
          * Get field_num field
-         * 
+         *
          * @return field_num
          */
         get() = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set field_num field
-         * 
+         *
          * @param fieldNum The new fieldNum value to be set
          */
         set(fieldNum) {
@@ -88,13 +85,13 @@ class FieldCapabilitiesMesg : Mesg {
     var count: Int?
         /**
          * Get count field
-         * 
+         *
          * @return count
          */
         get() = getFieldIntegerValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set count field
-         * 
+         *
          * @param count The new count value to be set
          */
         set(count) {
@@ -113,11 +110,10 @@ class FieldCapabilitiesMesg : Mesg {
         const val CountFieldNum: Int = 3
 
 
-        val fieldCapabilitiesMesg: Mesg
+        // field_capabilities
+        val fieldCapabilitiesMesg: Mesg = Mesg("field_capabilities", MesgNum.FIELD_CAPABILITIES)
 
         init {
-            // field_capabilities
-            fieldCapabilitiesMesg = Mesg("field_capabilities", MesgNum.FIELD_CAPABILITIES)
             fieldCapabilitiesMesg.addField(
                 Field(
                     "message_index",

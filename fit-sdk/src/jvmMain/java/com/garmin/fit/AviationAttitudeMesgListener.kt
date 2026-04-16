@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface AviationAttitudeMesgListener {
-    fun onMesg(mesg: AviationAttitudeMesg?)
+    fun onMesg(mesg: AviationAttitudeMesg)
 }

@@ -22,7 +22,7 @@ internal class CSVWriterBufferedOutput(private val outputStream: OutputStream) :
     private var intermediateOutputStream: ByteArrayOutputStream? = null
     private var intermediateWriter: BufferedWriter? = null
 
-    override fun close(headers: ArrayList<String?>) {
+    override fun close(headers: ArrayList<String>) {
         try {
             if (intermediateWriter != null) {
                 intermediateWriter!!.close()
@@ -32,7 +32,7 @@ internal class CSVWriterBufferedOutput(private val outputStream: OutputStream) :
                     BufferedWriter(OutputStreamWriter(outputStream, StandardCharsets.UTF_8))
 
                 for (header in headers) {
-                    writer.write(header + ",")
+                    writer.write("$header,")
                 }
                 writer.write("\n")
 
@@ -58,20 +58,18 @@ internal class CSVWriterBufferedOutput(private val outputStream: OutputStream) :
         }
     }
 
-    override fun writeln(values: ArrayList<String?>, maxNumberValues: Int) {
+    override fun writeln(values: ArrayList<String>, maxNumberValues: Int) {
         try {
             if (intermediateWriter == null) {
-                intermediateOutputStream = ByteArrayOutputStream()
-                intermediateWriter = BufferedWriter(
-                    OutputStreamWriter(
-                        intermediateOutputStream,
-                        StandardCharsets.UTF_8
+                intermediateOutputStream = ByteArrayOutputStream().also {
+                    intermediateWriter = BufferedWriter(
+                        OutputStreamWriter(it, StandardCharsets.UTF_8)
                     )
-                )
+                }
             }
 
             for (value in values) {
-                intermediateWriter!!.write(value + ",")
+                intermediateWriter!!.write("$value,")
             }
 
             if (values.size < maxNumberValues) {

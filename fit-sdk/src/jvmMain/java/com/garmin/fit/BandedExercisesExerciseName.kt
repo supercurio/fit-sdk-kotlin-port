@@ -69,75 +69,72 @@ object BandedExercisesExerciseName {
     const val PULL_APART_WHEELCHAIR: Int = 59
     const val SIDE_CURL_WHEELCHAIR: Int = 60
     const val OVERHEAD_PRESS_WHEELCHAIR: Int = 61
-    val INVALID: Int = Fit.UINT16_INVALID
+    const val INVALID: Int = Fit.UINT16_INVALID
 
-    private val stringMap: MutableMap<Int?, String?>
+    private val stringMap = mutableMapOf<Int, String>()
 
     init {
-        stringMap = HashMap<Int?, String?>()
-        stringMap.put(AB_TWIST, "AB_TWIST")
-        stringMap.put(BACK_EXTENSION, "BACK_EXTENSION")
-        stringMap.put(BICYCLE_CRUNCH, "BICYCLE_CRUNCH")
-        stringMap.put(CALF_RAISES, "CALF_RAISES")
-        stringMap.put(CHEST_PRESS, "CHEST_PRESS")
-        stringMap.put(CLAM_SHELLS, "CLAM_SHELLS")
-        stringMap.put(CURL, "CURL")
-        stringMap.put(DEADBUG, "DEADBUG")
-        stringMap.put(DEADLIFT, "DEADLIFT")
-        stringMap.put(DONKEY_KICK, "DONKEY_KICK")
-        stringMap.put(EXTERNAL_ROTATION, "EXTERNAL_ROTATION")
-        stringMap.put(
-            EXTERNAL_ROTATION_AT_90_DEGREE_ABDUCTION,
+        stringMap[AB_TWIST] = "AB_TWIST"
+        stringMap[BACK_EXTENSION] = "BACK_EXTENSION"
+        stringMap[BICYCLE_CRUNCH] = "BICYCLE_CRUNCH"
+        stringMap[CALF_RAISES] = "CALF_RAISES"
+        stringMap[CHEST_PRESS] = "CHEST_PRESS"
+        stringMap[CLAM_SHELLS] = "CLAM_SHELLS"
+        stringMap[CURL] = "CURL"
+        stringMap[DEADBUG] = "DEADBUG"
+        stringMap[DEADLIFT] = "DEADLIFT"
+        stringMap[DONKEY_KICK] = "DONKEY_KICK"
+        stringMap[EXTERNAL_ROTATION] = "EXTERNAL_ROTATION"
+        stringMap[EXTERNAL_ROTATION_AT_90_DEGREE_ABDUCTION] =
             "EXTERNAL_ROTATION_AT_90_DEGREE_ABDUCTION"
-        )
-        stringMap.put(FACE_PULL, "FACE_PULL")
-        stringMap.put(FIRE_HYDRANT, "FIRE_HYDRANT")
-        stringMap.put(FLY, "FLY")
-        stringMap.put(FRONT_RAISE, "FRONT_RAISE")
-        stringMap.put(GLUTE_BRIDGE, "GLUTE_BRIDGE")
-        stringMap.put(HAMSTRING_CURLS, "HAMSTRING_CURLS")
-        stringMap.put(HIGH_PLANK_LEG_LIFTS, "HIGH_PLANK_LEG_LIFTS")
-        stringMap.put(HIP_EXTENSION, "HIP_EXTENSION")
-        stringMap.put(INTERNAL_ROTATION, "INTERNAL_ROTATION")
-        stringMap.put(JUMPING_JACK, "JUMPING_JACK")
-        stringMap.put(KNEELING_CRUNCH, "KNEELING_CRUNCH")
-        stringMap.put(LATERAL_BAND_WALKS, "LATERAL_BAND_WALKS")
-        stringMap.put(LATERAL_RAISE, "LATERAL_RAISE")
-        stringMap.put(LATPULL, "LATPULL")
-        stringMap.put(LEG_ABDUCTION, "LEG_ABDUCTION")
-        stringMap.put(LEG_ADDUCTION, "LEG_ADDUCTION")
-        stringMap.put(LEG_EXTENSION, "LEG_EXTENSION")
-        stringMap.put(LUNGE, "LUNGE")
-        stringMap.put(PLANK, "PLANK")
-        stringMap.put(PULL_APART, "PULL_APART")
-        stringMap.put(PUSH_UPS, "PUSH_UPS")
-        stringMap.put(REVERSE_CRUNCH, "REVERSE_CRUNCH")
-        stringMap.put(ROW, "ROW")
-        stringMap.put(SHOULDER_ABDUCTION, "SHOULDER_ABDUCTION")
-        stringMap.put(SHOULDER_EXTENSION, "SHOULDER_EXTENSION")
-        stringMap.put(SHOULDER_EXTERNAL_ROTATION, "SHOULDER_EXTERNAL_ROTATION")
-        stringMap.put(SHOULDER_FLEXION_TO_90_DEGREES, "SHOULDER_FLEXION_TO_90_DEGREES")
-        stringMap.put(SIDE_PLANK_LEG_LIFTS, "SIDE_PLANK_LEG_LIFTS")
-        stringMap.put(SIDE_RAISE, "SIDE_RAISE")
-        stringMap.put(SQUAT, "SQUAT")
-        stringMap.put(SQUAT_TO_PRESS, "SQUAT_TO_PRESS")
-        stringMap.put(TRICEP_EXTENSION, "TRICEP_EXTENSION")
-        stringMap.put(TRICEP_KICKBACK, "TRICEP_KICKBACK")
-        stringMap.put(UPRIGHT_ROW, "UPRIGHT_ROW")
-        stringMap.put(WALL_CRAWL_WITH_EXTERNAL_ROTATION, "WALL_CRAWL_WITH_EXTERNAL_ROTATION")
-        stringMap.put(LATERAL_RAISE_WHEELCHAIR, "LATERAL_RAISE_WHEELCHAIR")
-        stringMap.put(TRICEPS_EXTENSION_WHEELCHAIR, "TRICEPS_EXTENSION_WHEELCHAIR")
-        stringMap.put(CHEST_FLY_INCLINE_WHEELCHAIR, "CHEST_FLY_INCLINE_WHEELCHAIR")
-        stringMap.put(CHEST_FLY_DECLINE_WHEELCHAIR, "CHEST_FLY_DECLINE_WHEELCHAIR")
-        stringMap.put(PULL_DOWN_WHEELCHAIR, "PULL_DOWN_WHEELCHAIR")
-        stringMap.put(STRAIGHT_ARM_PULL_DOWN_WHEELCHAIR, "STRAIGHT_ARM_PULL_DOWN_WHEELCHAIR")
-        stringMap.put(CURL_WHEELCHAIR, "CURL_WHEELCHAIR")
-        stringMap.put(OVERHEAD_CURL_WHEELCHAIR, "OVERHEAD_CURL_WHEELCHAIR")
-        stringMap.put(FACE_PULL_WHEELCHAIR, "FACE_PULL_WHEELCHAIR")
-        stringMap.put(AROUND_THE_WORLD_WHEELCHAIR, "AROUND_THE_WORLD_WHEELCHAIR")
-        stringMap.put(PULL_APART_WHEELCHAIR, "PULL_APART_WHEELCHAIR")
-        stringMap.put(SIDE_CURL_WHEELCHAIR, "SIDE_CURL_WHEELCHAIR")
-        stringMap.put(OVERHEAD_PRESS_WHEELCHAIR, "OVERHEAD_PRESS_WHEELCHAIR")
+        stringMap[FACE_PULL] = "FACE_PULL"
+        stringMap[FIRE_HYDRANT] = "FIRE_HYDRANT"
+        stringMap[FLY] = "FLY"
+        stringMap[FRONT_RAISE] = "FRONT_RAISE"
+        stringMap[GLUTE_BRIDGE] = "GLUTE_BRIDGE"
+        stringMap[HAMSTRING_CURLS] = "HAMSTRING_CURLS"
+        stringMap[HIGH_PLANK_LEG_LIFTS] = "HIGH_PLANK_LEG_LIFTS"
+        stringMap[HIP_EXTENSION] = "HIP_EXTENSION"
+        stringMap[INTERNAL_ROTATION] = "INTERNAL_ROTATION"
+        stringMap[JUMPING_JACK] = "JUMPING_JACK"
+        stringMap[KNEELING_CRUNCH] = "KNEELING_CRUNCH"
+        stringMap[LATERAL_BAND_WALKS] = "LATERAL_BAND_WALKS"
+        stringMap[LATERAL_RAISE] = "LATERAL_RAISE"
+        stringMap[LATPULL] = "LATPULL"
+        stringMap[LEG_ABDUCTION] = "LEG_ABDUCTION"
+        stringMap[LEG_ADDUCTION] = "LEG_ADDUCTION"
+        stringMap[LEG_EXTENSION] = "LEG_EXTENSION"
+        stringMap[LUNGE] = "LUNGE"
+        stringMap[PLANK] = "PLANK"
+        stringMap[PULL_APART] = "PULL_APART"
+        stringMap[PUSH_UPS] = "PUSH_UPS"
+        stringMap[REVERSE_CRUNCH] = "REVERSE_CRUNCH"
+        stringMap[ROW] = "ROW"
+        stringMap[SHOULDER_ABDUCTION] = "SHOULDER_ABDUCTION"
+        stringMap[SHOULDER_EXTENSION] = "SHOULDER_EXTENSION"
+        stringMap[SHOULDER_EXTERNAL_ROTATION] = "SHOULDER_EXTERNAL_ROTATION"
+        stringMap[SHOULDER_FLEXION_TO_90_DEGREES] = "SHOULDER_FLEXION_TO_90_DEGREES"
+        stringMap[SIDE_PLANK_LEG_LIFTS] = "SIDE_PLANK_LEG_LIFTS"
+        stringMap[SIDE_RAISE] = "SIDE_RAISE"
+        stringMap[SQUAT] = "SQUAT"
+        stringMap[SQUAT_TO_PRESS] = "SQUAT_TO_PRESS"
+        stringMap[TRICEP_EXTENSION] = "TRICEP_EXTENSION"
+        stringMap[TRICEP_KICKBACK] = "TRICEP_KICKBACK"
+        stringMap[UPRIGHT_ROW] = "UPRIGHT_ROW"
+        stringMap[WALL_CRAWL_WITH_EXTERNAL_ROTATION] = "WALL_CRAWL_WITH_EXTERNAL_ROTATION"
+        stringMap[LATERAL_RAISE_WHEELCHAIR] = "LATERAL_RAISE_WHEELCHAIR"
+        stringMap[TRICEPS_EXTENSION_WHEELCHAIR] = "TRICEPS_EXTENSION_WHEELCHAIR"
+        stringMap[CHEST_FLY_INCLINE_WHEELCHAIR] = "CHEST_FLY_INCLINE_WHEELCHAIR"
+        stringMap[CHEST_FLY_DECLINE_WHEELCHAIR] = "CHEST_FLY_DECLINE_WHEELCHAIR"
+        stringMap[PULL_DOWN_WHEELCHAIR] = "PULL_DOWN_WHEELCHAIR"
+        stringMap[STRAIGHT_ARM_PULL_DOWN_WHEELCHAIR] = "STRAIGHT_ARM_PULL_DOWN_WHEELCHAIR"
+        stringMap[CURL_WHEELCHAIR] = "CURL_WHEELCHAIR"
+        stringMap[OVERHEAD_CURL_WHEELCHAIR] = "OVERHEAD_CURL_WHEELCHAIR"
+        stringMap[FACE_PULL_WHEELCHAIR] = "FACE_PULL_WHEELCHAIR"
+        stringMap[AROUND_THE_WORLD_WHEELCHAIR] = "AROUND_THE_WORLD_WHEELCHAIR"
+        stringMap[PULL_APART_WHEELCHAIR] = "PULL_APART_WHEELCHAIR"
+        stringMap[SIDE_CURL_WHEELCHAIR] = "SIDE_CURL_WHEELCHAIR"
+        stringMap[OVERHEAD_PRESS_WHEELCHAIR] = "OVERHEAD_PRESS_WHEELCHAIR"
     }
 
 
@@ -146,9 +143,9 @@ object BandedExercisesExerciseName {
      * @param value The enum constant
      * @return The name of this enum contsant
      */
-    fun getStringFromValue(value: Int?): String? {
+    fun getStringFromValue(value: Int): String {
         if (stringMap.containsKey(value)) {
-            return stringMap.get(value)
+            return stringMap[value] ?: ""
         }
 
         return ""
@@ -159,7 +156,7 @@ object BandedExercisesExerciseName {
      * @param value The enum string value
      * @return The enum constant or INVALID if unknown
      */
-    fun getValueFromString(value: String?): Int? {
+    fun getValueFromString(value: String): Int {
         for (entry in stringMap.entries) {
             if (entry.value == value) {
                 return entry.key

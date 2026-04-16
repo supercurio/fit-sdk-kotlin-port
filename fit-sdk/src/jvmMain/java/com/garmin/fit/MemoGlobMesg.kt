@@ -12,28 +12,28 @@ package com.garmin.fit
 class MemoGlobMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.MEMO_GLOB))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var partIndex: Long?
         /**
          * Get part_index field
          * Comment: Sequence number of memo blocks
-         * 
+         *
          * @return part_index
          */
         get() = getFieldLongValue(250, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set part_index field
          * Comment: Sequence number of memo blocks
-         * 
+         *
          * @param partIndex The new partIndex value to be set
          */
         set(partIndex) {
             setFieldValue(250, 0, partIndex, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val memo: Array<Byte?>?
+    val memo: Array<Byte>?
         get() = getFieldByteValues(0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numMemo: Int
@@ -45,7 +45,7 @@ class MemoGlobMesg : Mesg {
     /**
      * Get memo field
      * Comment: Deprecated. Use data field.
-     * 
+     *
      * @param index of memo
      * @return memo
      */
@@ -56,7 +56,7 @@ class MemoGlobMesg : Mesg {
     /**
      * Set memo field
      * Comment: Deprecated. Use data field.
-     * 
+     *
      * @param index of memo
      * @param memo The new memo value to be set
      */
@@ -68,14 +68,14 @@ class MemoGlobMesg : Mesg {
         /**
          * Get mesg_num field
          * Comment: Message Number of the parent message
-         * 
+         *
          * @return mesg_num
          */
         get() = getFieldIntegerValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set mesg_num field
          * Comment: Message Number of the parent message
-         * 
+         *
          * @param mesgNum The new mesgNum value to be set
          */
         set(mesgNum) {
@@ -86,14 +86,14 @@ class MemoGlobMesg : Mesg {
         /**
          * Get parent_index field
          * Comment: Index of mesg that this glob is associated with.
-         * 
+         *
          * @return parent_index
          */
         get() = getFieldIntegerValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set parent_index field
          * Comment: Index of mesg that this glob is associated with.
-         * 
+         *
          * @param parentIndex The new parentIndex value to be set
          */
         set(parentIndex) {
@@ -104,33 +104,33 @@ class MemoGlobMesg : Mesg {
         /**
          * Get field_num field
          * Comment: Field within the parent that this glob is associated with
-         * 
+         *
          * @return field_num
          */
         get() = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set field_num field
          * Comment: Field within the parent that this glob is associated with
-         * 
+         *
          * @param fieldNum The new fieldNum value to be set
          */
         set(fieldNum) {
             setFieldValue(3, 0, fieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val data: Array<Short?>?
-        get() = getFieldShortValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val data: Array<Short>?
+        get() = getFieldShortValues(DataFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numData: Int
         /**
          * @return number of data
          */
-        get() = getNumFieldValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(DataFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get data field
      * Comment: Block of utf8 bytes. Note, mutltibyte characters may be split across adjoining memo_glob messages.
-     * 
+     *
      * @param index of data
      * @return data
      */
@@ -141,7 +141,7 @@ class MemoGlobMesg : Mesg {
     /**
      * Set data field
      * Comment: Block of utf8 bytes. Note, mutltibyte characters may be split across adjoining memo_glob messages.
-     * 
+     *
      * @param index of data
      * @param data The new data value to be set
      */
@@ -163,11 +163,10 @@ class MemoGlobMesg : Mesg {
         const val DataFieldNum: Int = 4
 
 
-        val memoGlobMesg: Mesg
+        // memo_glob
+        val memoGlobMesg: Mesg = Mesg("memo_glob", MesgNum.MEMO_GLOB)
 
         init {
-            // memo_glob
-            memoGlobMesg = Mesg("memo_glob", MesgNum.MEMO_GLOB)
             memoGlobMesg.addField(
                 Field(
                     "part_index",

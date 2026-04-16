@@ -16,22 +16,19 @@ import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
-internal abstract class DecoderBase : MesgSource {
+abstract class DecoderBase(bytes: ByteArray) : MesgSource {
     protected val CompressedHeaderMask: Int = Fit.HDR_TIME_REC_BIT
     protected val MesgDefinitionMask: Int = Fit.HDR_TYPE_DEF_BIT
     protected val DevDataMask: Int = Fit.HDR_DEV_FIELDS_BIT
     protected val MesgHeaderMask: Int = 0x00
     protected val LocalMesgNumMask: Int = Fit.HDR_TYPE_MASK
-    protected val localMesgDefs: Array<MesgDefinition?> =
-        arrayOfNulls<MesgDefinition>(Fit.MAX_LOCAL_MESGS)
+    protected val localMesgDefs: Array<MesgDefinition?> = arrayOfNulls(Fit.MAX_LOCAL_MESGS)
     protected val fieldData: ByteArray = ByteArray(Fit.MAX_FIELD_SIZE)
-    protected val mesgListeners: ArrayList<MesgListener?> = ArrayList<MesgListener?>()
+    protected val mesgListeners: ArrayList<MesgListener> = ArrayList()
     protected val accumulator: Accumulator = Accumulator()
-    protected var stream: ByteArrayDataInputStream? = null
-    protected var mesgDefListeners: ArrayList<MesgDefinitionListener?> =
-        ArrayList<MesgDefinitionListener?>()
-    protected var devFieldDescListeners: ArrayList<DeveloperFieldDescriptionListener?> =
-        ArrayList<DeveloperFieldDescriptionListener?>()
+    protected var stream: ByteArrayDataInputStream = ByteArrayDataInputStream(bytes)
+    protected var mesgDefListeners: ArrayList<MesgDefinitionListener> = ArrayList()
+    protected var devFieldDescListeners: ArrayList<DeveloperFieldDescriptionListener> = ArrayList()
     private var crc: CRC16? = null
     protected var decoderMesgIndex: Int = 0
 
@@ -41,15 +38,9 @@ internal abstract class DecoderBase : MesgSource {
     var isSkipExpandComponentsEnabled: Boolean = false
         protected set
 
-    protected constructor()
-
-    protected constructor(bytes: ByteArray?) {
-        stream = ByteArrayDataInputStream(bytes)
-    }
-
     @Throws(Exception::class)
     protected fun readHeader(): ByteArray {
-        val fileHeader: ByteArray = Companion.readHeader(stream!!)
+        val fileHeader: ByteArray = readHeader(stream)
         val headerSize = fileHeader[0]
 
         crc!!.update(fileHeader, 0, headerSize.toInt())
@@ -58,22 +49,22 @@ internal abstract class DecoderBase : MesgSource {
     }
 
     fun readByte(): Int {
-        val value = stream!!.read()
+        val value = stream.read()
         crc!!.update(value)
 
         return value
     }
 
     fun readUShort(): Int {
-        val value = stream!!.readUShort()
+        val value = stream.readUShort()
         crc!!.update(value and 0xFF)
         crc!!.update((value shr 8) and 0xFF)
 
         return value
     }
 
-    fun readBytes(bytes: ByteArray?, off: Int, len: Int): Int {
-        val bytesRead = stream!!.read(bytes, off, len)
+    fun readBytes(bytes: ByteArray, off: Int, len: Int): Int {
+        val bytesRead = stream.read(bytes, off, len)
 
         crc!!.update(bytes, off, len)
 
@@ -81,7 +72,7 @@ internal abstract class DecoderBase : MesgSource {
     }
 
     protected val crcValue: Long
-        get() = crc!!.getValue()
+        get() = crc!!.value
 
     protected fun resetCrc() {
         crc = CRC16()
@@ -89,23 +80,23 @@ internal abstract class DecoderBase : MesgSource {
 
     /**
      * Add a MesgListener observer
-     * 
+     *
      * @param mesgListener to add as an observer
      */
-    override fun addListener(mesgListener: MesgListener?) {
-        if ((mesgListener != null) && !mesgListeners.contains(mesgListener)) {
+    override fun addListener(mesgListener: MesgListener) {
+        if (!mesgListeners.contains(mesgListener)) {
             mesgListeners.add(mesgListener)
         }
     }
 
-    fun addListener(mesgDefinitionListener: MesgDefinitionListener?) {
-        if ((mesgDefinitionListener != null) && !mesgDefListeners.contains(mesgDefinitionListener)) {
+    fun addListener(mesgDefinitionListener: MesgDefinitionListener) {
+        if (!mesgDefListeners.contains(mesgDefinitionListener)) {
             mesgDefListeners.add(mesgDefinitionListener)
         }
     }
 
-    fun addListener(listener: DeveloperFieldDescriptionListener?) {
-        if ((listener != null) && !devFieldDescListeners.contains(listener)) {
+    fun addListener(listener: DeveloperFieldDescriptionListener) {
+        if (!devFieldDescListeners.contains(listener)) {
             devFieldDescListeners.add(listener)
         }
     }
@@ -116,11 +107,9 @@ internal abstract class DecoderBase : MesgSource {
         componentList: ArrayList<FieldComponent>
     ) {
         var offset = 0
-        var i: Int
-
-        i = 0
+        var i = 0
         while (i < componentList.size) {
-            val component = componentList.get(i)
+            val component = componentList[i]
 
             if (component.fieldNum != Fit.FIELD_NUM_INVALID) {
                 val componentField = Factory.createField(mesg.num, component.fieldNum)
@@ -129,13 +118,13 @@ internal abstract class DecoderBase : MesgSource {
                 var bitsValue: Long?
 
                 // Mark that this field has been generated through expansion
-                componentField.setIsExpanded(true)
+                componentField.isExpanded = true
 
                 // Get raw bits value
                 bitsValue = containingField.getBitsValue(
                     offset,
                     component.bits,
-                    componentField.isSignedInteger()
+                    componentField.isSignedInteger
                 )
 
                 if (bitsValue == null) {
@@ -156,24 +145,23 @@ internal abstract class DecoderBase : MesgSource {
                 if (componentField.components.size == 1) {
                     val nestedRawValue: Any?
 
-                    if (is64BitType(componentField.getType())) {
-                        nestedRawValue = applyScaleOffset64(
+                    nestedRawValue = if (is64BitType(componentField.type)) {
+                        applyScaleOffset64(
                             bitsValue,
-                            componentField.getType(),
+                            componentField.type,
                             component.scale,
                             component.offset,
                             componentField.components.get(0).scale,
                             componentField.components.get(0).offset
                         )
                     } else {
-                        nestedRawValue =
-                            (((bitsValue / component.scale) - component.offset) + componentField.components.get(
-                                0
-                            ).offset) * componentField.components.get(0).scale
+                        (((bitsValue / component.scale) - component.offset) + componentField.components.get(
+                            0
+                        ).offset) * componentField.components.get(0).scale
                     }
 
                     if (mesg.hasField(componentField.num)) {
-                        mesg.getField(componentField.num).addRawValue(nestedRawValue)
+                        mesg.getField(componentField.num)?.addRawValue(nestedRawValue)
                     } else {
                         componentField.addRawValue(nestedRawValue)
                         mesg.addField(componentField)
@@ -186,37 +174,36 @@ internal abstract class DecoderBase : MesgSource {
                         mask =
                             (1L shl Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]) - 1
                         if (mesg.hasField(componentField.num)) {
-                            mesg.getField(componentField.num).addValue(bitsValue!! and mask)
+                            mesg.getField(componentField.num)?.addValue(bitsValue!! and mask)
                         } else {
                             componentField.addValue(bitsValue!! and mask)
                             mesg.addField(componentField)
                         }
                         bitsValue =
-                            bitsValue ushr Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]
+                            (bitsValue
+                                ?: 0) ushr Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]
                         bitsAdded += Fit.baseTypeSizes[componentField.type and Fit.BASE_TYPE_NUM_MASK]
                     }
                 } else {
-                    val compOffset =
-                        if (subField == null) componentField.offset else subField.offset
-                    val compScale = if (subField == null) componentField.scale else subField.scale
+                    val compOffset = subField?.offset ?: componentField.offset
+                    val compScale = subField?.scale ?: componentField.scale
                     val rawValue: Any?
 
-                    if (is64BitType(componentField.getType())) {
-                        rawValue = applyScaleOffset64(
+                    rawValue = if (is64BitType(componentField.type)) {
+                        applyScaleOffset64(
                             bitsValue,
-                            componentField.getType(),
+                            componentField.type,
                             component.scale,
                             component.offset,
                             compScale,
                             compOffset
                         )
                     } else {
-                        rawValue =
-                            (((bitsValue / component.scale) - component.offset) + compOffset) * compScale
+                        (((bitsValue / component.scale) - component.offset) + compOffset) * compScale
                     }
 
                     if (mesg.hasField(componentField.num)) {
-                        mesg.getField(componentField.num).addRawValue(rawValue)
+                        mesg.getField(componentField.num)?.addRawValue(rawValue)
                     } else {
                         componentField.addRawValue(rawValue)
                         mesg.addField(componentField)
@@ -230,7 +217,7 @@ internal abstract class DecoderBase : MesgSource {
 
     @Throws(Exception::class)
     protected fun decodeCompressedTimestampDataMessage() {
-        val recordHeader = stream!!.read()
+        stream.read()
         throw FitRuntimeException("Compressed timestamp messages are not currently supported.")
     }
 
@@ -247,7 +234,7 @@ internal abstract class DecoderBase : MesgSource {
 
     /**
      * Skips generating fields from component expansion. Default: false
-     * 
+     *
      * @param enable if true component expansion will be skipped; if false component expansion will be performed and expanded fields added to messages.
      */
     fun enableSkipExpandComponents(enable: Boolean) {
@@ -258,7 +245,7 @@ internal abstract class DecoderBase : MesgSource {
         /**
          * Reads the FIT file header from the input stream and checks that the input
          * is a valid .FIT file. The position of the input stream is not changed.
-         * 
+         *
          * @param stream representing the FIT file to be checked
          * @return true if the input is a FIT file, false if it is not
          */
@@ -280,7 +267,7 @@ internal abstract class DecoderBase : MesgSource {
         /**
          * Reads the FIT file header from the input stream and checks that the input
          * is a valid .FIT file. The position of the input stream is not changed.
-         * 
+         *
          * @param bytes representing the FIT file to be checked
          * @return true if the input is a FIT file, false if it is not
          */
@@ -293,7 +280,7 @@ internal abstract class DecoderBase : MesgSource {
         /**
          * Reads the FIT file header from the input stream and checks that the input
          * is a valid .FIT file and checks the integrity file.
-         * 
+         *
          * @param stream representing the FIT file to be checked
          * @return true if the integrity of the FIT file is good, false if it is not
          */
@@ -324,7 +311,7 @@ internal abstract class DecoderBase : MesgSource {
                     crc.update(data, 0, data.size)
 
                     val fileCrc = stream.readUShort()
-                    if (fileCrc.toLong() != crc.getValue()) {
+                    if (fileCrc.toLong() != crc.value) {
                         throw Exception()
                     }
                 }
@@ -339,18 +326,18 @@ internal abstract class DecoderBase : MesgSource {
         /**
          * Reads the FIT file header from the input stream and checks that the input
          * is a valid .FIT file and checks the integrity file.
-         * 
+         *
          * @param bytes representing the FIT file to be checked
          * @return true if the integrity of the FIT file is good, false if it is not
          */
-        fun checkIntegrity(bytes: ByteArray?): Boolean {
+        fun checkIntegrity(bytes: ByteArray): Boolean {
             val stream = ByteArrayDataInputStream(bytes)
             return checkIntegrity(stream)
         }
 
         /**
          * Reads the FIT file header from the input stream and returns the byte array containing the header.
-         * 
+         *
          * @param stream representing the FIT file to read the header from
          * @return a byte array containing the bytes of the header
          * @throws Exception if an error occurs while trying to read the header

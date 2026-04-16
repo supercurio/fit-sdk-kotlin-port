@@ -12,39 +12,39 @@ package com.garmin.fit
 class HsaEventMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_EVENT))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var eventId: Short?
         /**
          * Get event_id field
          * Comment: Event ID. Health SDK use only
-         * 
+         *
          * @return event_id
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set event_id field
          * Comment: Event ID. Health SDK use only
-         * 
+         *
          * @param eventId The new eventId value to be set
          */
         set(eventId) {
@@ -57,11 +57,10 @@ class HsaEventMesg : Mesg {
         const val EventIdFieldNum: Int = 0
 
 
-        val hsaEventMesg: Mesg
+        // hsa_event
+        val hsaEventMesg: Mesg = Mesg("hsa_event", MesgNum.HSA_EVENT)
 
         init {
-            // hsa_event
-            hsaEventMesg = Mesg("hsa_event", MesgNum.HSA_EVENT)
             hsaEventMesg.addField(
                 Field(
                     "timestamp",

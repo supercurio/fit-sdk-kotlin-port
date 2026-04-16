@@ -12,19 +12,19 @@ package com.garmin.fit
 class DiveGasMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.DIVE_GAS))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var messageIndex: Int?
         /**
          * Get message_index field
-         * 
+         *
          * @return message_index
          */
         get() = getFieldIntegerValue(254, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set message_index field
-         * 
+         *
          * @param messageIndex The new messageIndex value to be set
          */
         set(messageIndex) {
@@ -35,14 +35,14 @@ class DiveGasMesg : Mesg {
         /**
          * Get helium_content field
          * Units: percent
-         * 
+         *
          * @return helium_content
          */
         get() = getFieldShortValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set helium_content field
          * Units: percent
-         * 
+         *
          * @param heliumContent The new heliumContent value to be set
          */
         set(heliumContent) {
@@ -53,14 +53,14 @@ class DiveGasMesg : Mesg {
         /**
          * Get oxygen_content field
          * Units: percent
-         * 
+         *
          * @return oxygen_content
          */
         get() = getFieldShortValue(1, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set oxygen_content field
          * Units: percent
-         * 
+         *
          * @param oxygenContent The new oxygenContent value to be set
          */
         set(oxygenContent) {
@@ -70,19 +70,16 @@ class DiveGasMesg : Mesg {
     var status: DiveGasStatus?
         /**
          * Get status field
-         * 
+         *
          * @return status
          */
         get() {
-            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DiveGasStatus.Companion.getByValue(value)
+            val value = getFieldShortValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DiveGasStatus.getByValue(value)
         }
         /**
          * Set status field
-         * 
+         *
          * @param status The new status value to be set
          */
         set(status) {
@@ -92,19 +89,16 @@ class DiveGasMesg : Mesg {
     var mode: DiveGasMode?
         /**
          * Get mode field
-         * 
+         *
          * @return mode
          */
         get() {
-            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
-            if (value == null) {
-                return null
-            }
-            return DiveGasMode.Companion.getByValue(value)
+            val value = getFieldShortValue(3, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD) ?: return null
+            return DiveGasMode.getByValue(value)
         }
         /**
          * Set mode field
-         * 
+         *
          * @param mode The new mode value to be set
          */
         set(mode) {
@@ -123,11 +117,10 @@ class DiveGasMesg : Mesg {
         const val ModeFieldNum: Int = 3
 
 
-        val diveGasMesg: Mesg
+        // dive_gas
+        val diveGasMesg: Mesg = Mesg("dive_gas", MesgNum.DIVE_GAS)
 
         init {
-            // dive_gas
-            diveGasMesg = Mesg("dive_gas", MesgNum.DIVE_GAS)
             diveGasMesg.addField(
                 Field(
                     "message_index",

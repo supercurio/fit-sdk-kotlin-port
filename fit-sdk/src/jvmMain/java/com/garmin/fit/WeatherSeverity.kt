@@ -24,7 +24,7 @@ enum class WeatherSeverity(var value: Short) {
                 if (value == type.value) return type
             }
 
-            return WeatherSeverity.INVALID
+            return INVALID
         }
 
         /**

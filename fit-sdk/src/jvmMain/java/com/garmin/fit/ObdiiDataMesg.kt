@@ -12,7 +12,7 @@ package com.garmin.fit
 class ObdiiDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.OBDII_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
@@ -20,7 +20,7 @@ class ObdiiDataMesg : Mesg {
          * Get timestamp field
          * Units: s
          * Comment: Timestamp message was output
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
@@ -28,11 +28,11 @@ class ObdiiDataMesg : Mesg {
          * Set timestamp field
          * Units: s
          * Comment: Timestamp message was output
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var timestampMs: Int?
@@ -40,7 +40,7 @@ class ObdiiDataMesg : Mesg {
          * Get timestamp_ms field
          * Units: ms
          * Comment: Fractional part of timestamp, added to timestamp
-         * 
+         *
          * @return timestamp_ms
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -48,14 +48,14 @@ class ObdiiDataMesg : Mesg {
          * Set timestamp_ms field
          * Units: ms
          * Comment: Fractional part of timestamp, added to timestamp
-         * 
+         *
          * @param timestampMs The new timestampMs value to be set
          */
         set(timestampMs) {
             setFieldValue(0, 0, timestampMs, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val timeOffset: Array<Int?>?
+    val timeOffset: Array<Int>?
         get() = getFieldIntegerValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numTimeOffset: Int
@@ -68,7 +68,7 @@ class ObdiiDataMesg : Mesg {
      * Get time_offset field
      * Units: ms
      * Comment: Offset of PID reading [i] from start_timestamp+start_timestamp_ms. Readings may span accross seconds.
-     * 
+     *
      * @param index of time_offset
      * @return time_offset
      */
@@ -80,7 +80,7 @@ class ObdiiDataMesg : Mesg {
      * Set time_offset field
      * Units: ms
      * Comment: Offset of PID reading [i] from start_timestamp+start_timestamp_ms. Readings may span accross seconds.
-     * 
+     *
      * @param index of time_offset
      * @param timeOffset The new timeOffset value to be set
      */
@@ -92,21 +92,21 @@ class ObdiiDataMesg : Mesg {
         /**
          * Get pid field
          * Comment: Parameter ID
-         * 
+         *
          * @return pid
          */
         get() = getFieldByteValue(2, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         /**
          * Set pid field
          * Comment: Parameter ID
-         * 
+         *
          * @param pid The new pid value to be set
          */
         set(pid) {
             setFieldValue(2, 0, pid, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val rawData: Array<Byte?>?
+    val rawData: Array<Byte>?
         get() = getFieldByteValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numRawData: Int
@@ -118,7 +118,7 @@ class ObdiiDataMesg : Mesg {
     /**
      * Get raw_data field
      * Comment: Raw parameter data
-     * 
+     *
      * @param index of raw_data
      * @return raw_data
      */
@@ -129,7 +129,7 @@ class ObdiiDataMesg : Mesg {
     /**
      * Set raw_data field
      * Comment: Raw parameter data
-     * 
+     *
      * @param index of raw_data
      * @param rawData The new rawData value to be set
      */
@@ -137,19 +137,19 @@ class ObdiiDataMesg : Mesg {
         setFieldValue(3, index, rawData, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val pidDataSize: Array<Short?>?
-        get() = getFieldShortValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val pidDataSize: Array<Short>?
+        get() = getFieldShortValues(PidDataSizeFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numPidDataSize: Int
         /**
          * @return number of pid_data_size
          */
-        get() = getNumFieldValues(4, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(PidDataSizeFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get pid_data_size field
      * Comment: Optional, data size of PID[i]. If not specified refer to SAE J1979.
-     * 
+     *
      * @param index of pid_data_size
      * @return pid_data_size
      */
@@ -160,7 +160,7 @@ class ObdiiDataMesg : Mesg {
     /**
      * Set pid_data_size field
      * Comment: Optional, data size of PID[i]. If not specified refer to SAE J1979.
-     * 
+     *
      * @param index of pid_data_size
      * @param pidDataSize The new pidDataSize value to be set
      */
@@ -168,7 +168,7 @@ class ObdiiDataMesg : Mesg {
         setFieldValue(4, index, pidDataSize, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val systemTime: Array<Long?>?
+    val systemTime: Array<Long>?
         get() = getFieldLongValues(5, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numSystemTime: Int
@@ -180,7 +180,7 @@ class ObdiiDataMesg : Mesg {
     /**
      * Get system_time field
      * Comment: System time associated with sample expressed in ms, can be used instead of time_offset. There will be a system_time value for each raw_data element. For multibyte pids the system_time is repeated.
-     * 
+     *
      * @param index of system_time
      * @return system_time
      */
@@ -191,7 +191,7 @@ class ObdiiDataMesg : Mesg {
     /**
      * Set system_time field
      * Comment: System time associated with sample expressed in ms, can be used instead of time_offset. There will be a system_time value for each raw_data element. For multibyte pids the system_time is repeated.
-     * 
+     *
      * @param index of system_time
      * @param systemTime The new systemTime value to be set
      */
@@ -203,18 +203,18 @@ class ObdiiDataMesg : Mesg {
         /**
          * Get start_timestamp field
          * Comment: Timestamp of first sample recorded in the message. Used with time_offset to generate time of each sample
-         * 
+         *
          * @return start_timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(6, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set start_timestamp field
          * Comment: Timestamp of first sample recorded in the message. Used with time_offset to generate time of each sample
-         * 
+         *
          * @param startTimestamp The new startTimestamp value to be set
          */
         set(startTimestamp) {
-            setFieldValue(6, 0, startTimestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(6, 0, startTimestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var startTimestampMs: Int?
@@ -222,7 +222,7 @@ class ObdiiDataMesg : Mesg {
          * Get start_timestamp_ms field
          * Units: ms
          * Comment: Fractional part of start_timestamp
-         * 
+         *
          * @return start_timestamp_ms
          */
         get() = getFieldIntegerValue(7, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -230,7 +230,7 @@ class ObdiiDataMesg : Mesg {
          * Set start_timestamp_ms field
          * Units: ms
          * Comment: Fractional part of start_timestamp
-         * 
+         *
          * @param startTimestampMs The new startTimestampMs value to be set
          */
         set(startTimestampMs) {
@@ -257,11 +257,10 @@ class ObdiiDataMesg : Mesg {
         const val StartTimestampMsFieldNum: Int = 7
 
 
-        val obdiiDataMesg: Mesg
+        // obdii_data
+        val obdiiDataMesg: Mesg = Mesg("obdii_data", MesgNum.OBDII_DATA)
 
         init {
-            // obdii_data
-            obdiiDataMesg = Mesg("obdii_data", MesgNum.OBDII_DATA)
             obdiiDataMesg.addField(
                 Field(
                     "timestamp",

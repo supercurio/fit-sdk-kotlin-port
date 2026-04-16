@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface OneDSensorCalibrationMesgListener {
-    fun onMesg(mesg: OneDSensorCalibrationMesg?)
+    fun onMesg(mesg: OneDSensorCalibrationMesg)
 }

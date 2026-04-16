@@ -12,23 +12,23 @@ package com.garmin.fit
 class HrvValueMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HRV_VALUE))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var value: Float?
@@ -36,7 +36,7 @@ class HrvValueMesg : Mesg {
          * Get value field
          * Units: ms
          * Comment: 5 minute RMSSD
-         * 
+         *
          * @return value
          */
         get() = getFieldFloatValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -44,7 +44,7 @@ class HrvValueMesg : Mesg {
          * Set value field
          * Units: ms
          * Comment: 5 minute RMSSD
-         * 
+         *
          * @param value The new value value to be set
          */
         set(value) {
@@ -57,11 +57,10 @@ class HrvValueMesg : Mesg {
         const val ValueFieldNum: Int = 0
 
 
-        val hrvValueMesg: Mesg
+        // hrv_value
+        val hrvValueMesg: Mesg = Mesg("hrv_value", MesgNum.HRV_VALUE)
 
         init {
-            // hrv_value
-            hrvValueMesg = Mesg("hrv_value", MesgNum.HRV_VALUE)
             hrvValueMesg.addField(
                 Field(
                     "timestamp",

@@ -9,5 +9,5 @@
 package com.garmin.fit
 
 interface SegmentLeaderboardEntryMesgListener {
-    fun onMesg(mesg: SegmentLeaderboardEntryMesg?)
+    fun onMesg(mesg: SegmentLeaderboardEntryMesg)
 }

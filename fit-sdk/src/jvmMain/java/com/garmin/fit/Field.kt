@@ -9,21 +9,25 @@
 package com.garmin.fit
 
 open class Field : FieldBase {
-    var name: String?
-    @JvmField
+    override var name: String? = null
+        protected set
     var num: Int
-    var type: Int
-    var scale: Double
-    var offset: Double
-    protected var units: String?
+    override var type: Int = Fit.BASE_TYPE_ENUM
+    override var scale: Double = Fit.FIELD_DEFAULT_SCALE.toDouble()
+    override val fieldName: String? get() = name
+    override var offset: Double = Fit.FIELD_DEFAULT_SCALE.toDouble()
+    override var units: String? = null
+        protected set
     var isAccumulated: Boolean
         protected set
-    var components: ArrayList<FieldComponent?>?
-    var subFields: ArrayList<SubField?>
+    var components: ArrayList<FieldComponent>
+        protected set
+    var subFields: ArrayList<SubField>
+        protected set
 
     var profileType: Profile.Type?
         private set
-    var isExpanded: Boolean
+    internal var isExpanded: Boolean
 
     constructor(field: Field?) : super(field) {
         if (field == null) {
@@ -35,9 +39,9 @@ open class Field : FieldBase {
             this.offset = 0.0
             this.units = ""
             this.isAccumulated = false
-            this.values = ArrayList<Any?>()
-            this.components = ArrayList<FieldComponent?>()
-            this.subFields = ArrayList<SubField?>()
+            this.values = ArrayList()
+            this.components = ArrayList()
+            this.subFields = ArrayList()
             this.isExpanded = false
             return
         }
@@ -73,35 +77,16 @@ open class Field : FieldBase {
         this.offset = offset
         this.units = units
         this.isAccumulated = accumulated
-        this.components = ArrayList<FieldComponent?>()
-        this.subFields = ArrayList<SubField?>()
+        this.components = ArrayList()
+        this.subFields = ArrayList()
         this.isExpanded = false
     }
 
-    override fun getUnits(): String? {
-        return this.units
-    }
-
-    override fun getType(): Int {
-        return this.type
-    }
-
-    override fun getOffset(): Double {
-        return offset
-    }
-
-    override fun getScale(): Double {
-        return scale
-    }
-
-    override fun getFieldName(): String? {
-        return name
-    }
 
     public override fun getSubField(subFieldName: String?): SubField? {
         for (i in subFields.indices) {
-            if (subFields.get(i)!!.name == subFieldName) {
-                return subFields.get(i)
+            if (subFields[i].name == subFieldName) {
+                return subFields[i]
             }
         }
 
@@ -109,10 +94,10 @@ open class Field : FieldBase {
     }
 
     public override fun getSubField(subFieldIndex: Int): SubField? {
-        if ((subFieldIndex >= 0) && (subFieldIndex < subFields.size)) {
-            return subFields.get(subFieldIndex)
+        return if ((subFieldIndex >= 0) && (subFieldIndex < subFields.size)) {
+            subFields[subFieldIndex]
         } else {
-            return null
+            null
         }
     }
 }

@@ -12,25 +12,25 @@ package com.garmin.fit
 class HsaBodyBatteryDataMesg : Mesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_BODY_BATTERY_DATA))
 
-    constructor(mesg: Mesg?) : super(mesg)
+    constructor(mesg: Mesg) : super(mesg)
 
 
     var timestamp: DateTime?
         /**
          * Get timestamp field
          * Units: s
-         * 
+         *
          * @return timestamp
          */
         get() = timestampToDateTime(getFieldLongValue(253, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD))
         /**
          * Set timestamp field
          * Units: s
-         * 
+         *
          * @param timestamp The new timestamp value to be set
          */
         set(timestamp) {
-            setFieldValue(253, 0, timestamp!!.getTimestamp(), Fit.SUBFIELD_INDEX_MAIN_FIELD)
+            setFieldValue(253, 0, timestamp?.timestamp, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
     var processingInterval: Int?
@@ -38,7 +38,7 @@ class HsaBodyBatteryDataMesg : Mesg {
          * Get processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @return processing_interval
          */
         get() = getFieldIntegerValue(0, 0, Fit.SUBFIELD_INDEX_MAIN_FIELD)
@@ -46,14 +46,14 @@ class HsaBodyBatteryDataMesg : Mesg {
          * Set processing_interval field
          * Units: s
          * Comment: Processing interval length in seconds
-         * 
+         *
          * @param processingInterval The new processingInterval value to be set
          */
         set(processingInterval) {
             setFieldValue(0, 0, processingInterval, Fit.SUBFIELD_INDEX_MAIN_FIELD)
         }
 
-    val level: Array<Byte?>?
+    val level: Array<Byte>?
         get() = getFieldByteValues(1, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numLevel: Int
@@ -66,7 +66,7 @@ class HsaBodyBatteryDataMesg : Mesg {
      * Get level field
      * Units: percent
      * Comment: Body battery level: [0,100] Blank: -16
-     * 
+     *
      * @param index of level
      * @return level
      */
@@ -78,7 +78,7 @@ class HsaBodyBatteryDataMesg : Mesg {
      * Set level field
      * Units: percent
      * Comment: Body battery level: [0,100] Blank: -16
-     * 
+     *
      * @param index of level
      * @param level The new level value to be set
      */
@@ -86,19 +86,19 @@ class HsaBodyBatteryDataMesg : Mesg {
         setFieldValue(1, index, level, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val charged: Array<Short?>?
-        get() = getFieldShortValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val charged: Array<Short>?
+        get() = getFieldShortValues(ChargedFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numCharged: Int
         /**
          * @return number of charged
          */
-        get() = getNumFieldValues(2, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(ChargedFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get charged field
      * Comment: Body battery charged value
-     * 
+     *
      * @param index of charged
      * @return charged
      */
@@ -109,27 +109,27 @@ class HsaBodyBatteryDataMesg : Mesg {
     /**
      * Set charged field
      * Comment: Body battery charged value
-     * 
+     *
      * @param index of charged
      * @param charged The new charged value to be set
      */
-    fun setCharged(index: Int, charged: Short?) {
+    fun setCharged(index: Int, charged: Short) {
         setFieldValue(2, index, charged, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
 
-    val uncharged: Array<Short?>?
-        get() = getFieldShortValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    val uncharged: Array<Short>?
+        get() = getFieldShortValues(UnchargedFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     val numUncharged: Int
         /**
          * @return number of uncharged
          */
-        get() = getNumFieldValues(3, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+        get() = getNumFieldValues(UnchargedFieldNum, Fit.SUBFIELD_INDEX_MAIN_FIELD)
 
     /**
      * Get uncharged field
      * Comment: Body battery uncharged value
-     * 
+     *
      * @param index of uncharged
      * @return uncharged
      */
@@ -140,7 +140,7 @@ class HsaBodyBatteryDataMesg : Mesg {
     /**
      * Set uncharged field
      * Comment: Body battery uncharged value
-     * 
+     *
      * @param index of uncharged
      * @param uncharged The new uncharged value to be set
      */
@@ -160,11 +160,10 @@ class HsaBodyBatteryDataMesg : Mesg {
         const val UnchargedFieldNum: Int = 3
 
 
-        val hsaBodyBatteryDataMesg: Mesg
+        // hsa_body_battery_data
+        val hsaBodyBatteryDataMesg: Mesg = Mesg("hsa_body_battery_data", MesgNum.HSA_BODY_BATTERY_DATA)
 
         init {
-            // hsa_body_battery_data
-            hsaBodyBatteryDataMesg = Mesg("hsa_body_battery_data", MesgNum.HSA_BODY_BATTERY_DATA)
             hsaBodyBatteryDataMesg.addField(
                 Field(
                     "timestamp",
