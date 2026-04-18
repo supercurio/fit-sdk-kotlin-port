@@ -159,6 +159,7 @@ object Fit {
 
     @JvmField
     val UINT64_MAX: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
+
     @JvmField
     val UINT64_MIN: BigInteger = BigInteger("00000000000000000")
 
@@ -168,6 +169,7 @@ object Fit {
 
     @JvmField
     val UINT64Z_MAX: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
+
     @JvmField
     val UINT64Z_MIN: BigInteger = BigInteger("0000000000000000")
 
@@ -184,6 +186,7 @@ object Fit {
     const val UTF8_BOM_BYTE_2: Byte = 0xBB.toByte()
 
     const val UTF8_BOM_BYTE_3: Byte = 0xBF.toByte()
+
     @JvmField
     val UTF8_BOM_BYTES: ByteArray = byteArrayOf(UTF8_BOM_BYTE_1, UTF8_BOM_BYTE_2, UTF8_BOM_BYTE_3)
     const val UTF8_NUM_BOM_BYTES: Int = 3

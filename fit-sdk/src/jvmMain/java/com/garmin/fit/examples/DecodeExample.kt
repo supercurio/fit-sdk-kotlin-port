@@ -39,7 +39,6 @@ object DecodeExample {
             //decode.incompleteStream();  // This suppresses exceptions with unexpected eof (also incorrect crc)
             val mesgBroadcaster = MesgBroadcaster(decode)
             val listener = Listener()
-            var   inputStream: FileInputStream?
 
             System.out.printf(
                 "FIT Decode Example Application - Protocol %d.%d Profile %d.%d %s\n",
@@ -55,14 +54,14 @@ object DecodeExample {
                 return
             }
 
-            try {
-                  inputStream = FileInputStream(args[0])
+            var inputStream = try {
+                FileInputStream(args[0])
             } catch (e: IOException) {
                 throw RuntimeException("Error opening file " + args[0] + " [1]")
             }
 
             try {
-                if (!decode.checkFileIntegrity(  inputStream as InputStream)) {
+                if (!decode.checkFileIntegrity(inputStream as InputStream)) {
                     throw RuntimeException("FIT file integrity failed.")
                 }
             } catch (e: RuntimeException) {
@@ -71,14 +70,14 @@ object DecodeExample {
                 System.err.println("Trying to continue...")
             } finally {
                 try {
-                      inputStream.close()
+                    inputStream.close()
                 } catch (e: IOException) {
                     throw RuntimeException(e)
                 }
             }
 
             try {
-                  inputStream = FileInputStream(args[0])
+                inputStream = FileInputStream(args[0])
             } catch (e: IOException) {
                 throw RuntimeException("Error opening file " + args[0] + " [2]")
             }
@@ -92,19 +91,19 @@ object DecodeExample {
             decode.addListener(listener as DeveloperFieldDescriptionListener)
 
             try {
-                decode.read(  inputStream, mesgBroadcaster, mesgBroadcaster)
+                decode.read(inputStream, mesgBroadcaster, mesgBroadcaster)
             } catch (e: FitRuntimeException) {
                 // If a file with 0 data size in it's header  has been encountered,
                 // attempt to keep processing the file
                 if (decode.invalidFileDataSize) {
                     decode.nextFile()
-                    decode.read(  inputStream, mesgBroadcaster, mesgBroadcaster)
+                    decode.read(inputStream, mesgBroadcaster, mesgBroadcaster)
                 } else {
                     System.err.print("Exception decoding file: ")
                     System.err.println(e.message)
 
                     try {
-                          inputStream.close()
+                        inputStream.close()
                     } catch (f: IOException) {
                         throw RuntimeException(f)
                     }
@@ -114,7 +113,7 @@ object DecodeExample {
             }
 
             try {
-                  inputStream.close()
+                inputStream.close()
             } catch (e: IOException) {
                 throw RuntimeException(e)
             }

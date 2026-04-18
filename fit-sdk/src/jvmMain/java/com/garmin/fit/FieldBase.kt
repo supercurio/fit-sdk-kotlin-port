@@ -928,13 +928,13 @@ abstract class FieldBase {
         return value.toString()
     }
 
-    fun read(  inputStream: InputStream, size: Int): Boolean {
+    fun read(inputStream: InputStream, size: Int): Boolean {
         try {
-            val data = DataInputStream(  inputStream)
+            val data = DataInputStream(inputStream)
             if (this.type == Fit.BASE_TYPE_STRING) {
                 try {
                     val bytes = ByteArray(size)
-                      inputStream.read(bytes, 0, size)
+                    inputStream.read(bytes, 0, size)
                     val byteBuffer = ByteBuffer.wrap(bytes)
 
                     val utf8Decoder = Charset.forName("UTF-8").newDecoder()

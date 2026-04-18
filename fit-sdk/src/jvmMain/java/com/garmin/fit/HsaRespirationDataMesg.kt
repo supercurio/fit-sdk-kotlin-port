@@ -95,7 +95,8 @@ class HsaRespirationDataMesg : Mesg {
 
 
         // hsa_respiration_data
-        val hsaRespirationDataMesg: Mesg = Mesg("hsa_respiration_data", MesgNum.HSA_RESPIRATION_DATA)
+        val hsaRespirationDataMesg: Mesg =
+            Mesg("hsa_respiration_data", MesgNum.HSA_RESPIRATION_DATA)
 
         init {
             hsaRespirationDataMesg.addField(

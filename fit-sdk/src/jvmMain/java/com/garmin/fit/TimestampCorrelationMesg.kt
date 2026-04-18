@@ -172,7 +172,8 @@ class TimestampCorrelationMesg : Mesg {
 
 
         // timestamp_correlation
-        val timestampCorrelationMesg: Mesg = Mesg("timestamp_correlation", MesgNum.TIMESTAMP_CORRELATION)
+        val timestampCorrelationMesg: Mesg =
+            Mesg("timestamp_correlation", MesgNum.TIMESTAMP_CORRELATION)
 
         init {
             timestampCorrelationMesg.addField(

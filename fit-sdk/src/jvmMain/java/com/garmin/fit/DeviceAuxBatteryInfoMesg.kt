@@ -110,7 +110,8 @@ class DeviceAuxBatteryInfoMesg : Mesg {
 
 
         // device_aux_battery_info
-        val deviceAuxBatteryInfoMesg: Mesg = Mesg("device_aux_battery_info", MesgNum.DEVICE_AUX_BATTERY_INFO)
+        val deviceAuxBatteryInfoMesg: Mesg =
+            Mesg("device_aux_battery_info", MesgNum.DEVICE_AUX_BATTERY_INFO)
 
         init {
             deviceAuxBatteryInfoMesg.addField(

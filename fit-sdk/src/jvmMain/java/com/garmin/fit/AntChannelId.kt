@@ -18,7 +18,8 @@ object AntChannelId {
     private val stringMap = mutableMapOf<Long, String>()
 
     init {
-        stringMap[ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE] = "ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE"
+        stringMap[ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE] =
+            "ANT_EXTENDED_DEVICE_NUMBER_UPPER_NIBBLE"
         stringMap[ANT_TRANSMISSION_TYPE_LOWER_NIBBLE] = "ANT_TRANSMISSION_TYPE_LOWER_NIBBLE"
         stringMap[ANT_DEVICE_TYPE] = "ANT_DEVICE_TYPE"
         stringMap[ANT_DEVICE_NUMBER] = "ANT_DEVICE_NUMBER"

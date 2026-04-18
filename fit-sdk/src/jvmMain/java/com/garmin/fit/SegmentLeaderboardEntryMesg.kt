@@ -161,7 +161,8 @@ class SegmentLeaderboardEntryMesg : Mesg {
 
 
         // segment_leaderboard_entry
-        val segmentLeaderboardEntryMesg: Mesg = Mesg("segment_leaderboard_entry", MesgNum.SEGMENT_LEADERBOARD_ENTRY)
+        val segmentLeaderboardEntryMesg: Mesg =
+            Mesg("segment_leaderboard_entry", MesgNum.SEGMENT_LEADERBOARD_ENTRY)
 
         init {
             segmentLeaderboardEntryMesg.addField(

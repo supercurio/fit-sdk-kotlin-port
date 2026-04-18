@@ -530,35 +530,35 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
      * @return
      * Extracted message
      */
-    private fun extract(  inputStream: MonitoringMesg): MonitoringMesg {
+    private fun extract(inputStream: MonitoringMesg): MonitoringMesg {
         val out = MonitoringMesg()
         var activityTypeInfoIndex = Int.MAX_VALUE
         var lastMesg: MonitoringMesg? = null
         var extractState: ExtractState? = null
 
         // Timestamp
-        if (  inputStream.timestamp != null) {
-            mesgTimestamp =   inputStream.timestamp!!.timestamp
-        } else if (  inputStream.timestamp16 != null) {
-            mesgTimestamp += (  inputStream.timestamp16!! - (mesgTimestamp and 0xFFFFL)) and 0xFFFFL
-        } else if (  inputStream.timestampMin8 != null) {
+        if (inputStream.timestamp != null) {
+            mesgTimestamp = inputStream.timestamp!!.timestamp
+        } else if (inputStream.timestamp16 != null) {
+            mesgTimestamp += (inputStream.timestamp16!! - (mesgTimestamp and 0xFFFFL)) and 0xFFFFL
+        } else if (inputStream.timestampMin8 != null) {
             mesgTimestamp /= 60 // Truncate to nearest minute.
-            mesgTimestamp += (  inputStream.timestampMin8!! - (mesgTimestamp and 0xFFL)) and 0xFFL
+            mesgTimestamp += (inputStream.timestampMin8!! - (mesgTimestamp and 0xFFL)) and 0xFFL
             mesgTimestamp *= 60 // Back to seconds.
         }
         val timestamp = DateTime(mesgTimestamp)
         timestamp.convertSystemTimeToUTC(systemToUtcTimestampOffset)
         out.timestamp = timestamp
 
-        if (  inputStream.localTimestamp != null) {
-            out.localTimestamp =   inputStream.localTimestamp
+        if (inputStream.localTimestamp != null) {
+            out.localTimestamp = inputStream.localTimestamp
         } else {
             out.localTimestamp = timestamp.timestamp + localTimeOffset
         }
 
         // Activity Type
-        if (  inputStream.activityType != null) {
-            out.activityType =   inputStream.activityType
+        if (inputStream.activityType != null) {
+            out.activityType = inputStream.activityType
         }
 
         val outActivityType = out.activityType
@@ -579,32 +579,32 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
             }
         }
 
-        val inActivityType =   inputStream.activityType
+        val inActivityType = inputStream.activityType
         // Get the last message for decoding rolling over accumulated fields.
         if (inActivityType != null) lastMesg = lastMesgs[inActivityType]
 
         if (lastMesg == null) lastMesg = MonitoringMesg()
 
         // Duration
-        if (  inputStream.duration != null) {
-            out.duration =   inputStream.duration
-        } else if (  inputStream.durationMin != null) {
-            out.duration =   inputStream.durationMin!!.toLong() * 60
+        if (inputStream.duration != null) {
+            out.duration = inputStream.duration
+        } else if (inputStream.durationMin != null) {
+            out.duration = inputStream.durationMin!!.toLong() * 60
         }
 
         // Active time
-        if (  inputStream.activeTime != null) {
-            out.activeTime =   inputStream.activeTime
-        } else if (  inputStream.activeTime16 != null) {
+        if (inputStream.activeTime != null) {
+            out.activeTime = inputStream.activeTime
+        } else if (inputStream.activeTime16 != null) {
             var time: Long = 0
 
             if (lastMesg.activeTime != null) {
                 time = (lastMesg.activeTime!! + 0.5).toLong()
             }
 
-            time += (  inputStream.activeTime16!! - (time and 0xFFFFL)) and 0xFFFFL
+            time += (inputStream.activeTime16!! - (time and 0xFFFFL)) and 0xFFFFL
             out.activeTime = time.toFloat()
-        } else if (  inputStream.currentActivityTypeIntensity != null) {
+        } else if (inputStream.currentActivityTypeIntensity != null) {
             // If this is the current activity type then time since last message is
             // active time in the current activity type.
             var time: Long = 0
@@ -618,76 +618,76 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
         }
 
         // Cycles
-        if (  inputStream.cycles != null) {
-            out.cycles =   inputStream.cycles
-        } else if (  inputStream.cycles16 != null) {
+        if (inputStream.cycles != null) {
+            out.cycles = inputStream.cycles
+        } else if (inputStream.cycles16 != null) {
             var cycles: Long = 0
 
             if (lastMesg.cycles != null) {
                 cycles = (lastMesg.cycles!! * 2).toLong()
             }
 
-            cycles += (  inputStream.cycles16!! - (cycles and 0xFFFFL)) and 0xFFFFL
+            cycles += (inputStream.cycles16!! - (cycles and 0xFFFFL)) and 0xFFFFL
             out.cycles = cycles.toFloat() / 2
         }
 
         // Distance
-        if (  inputStream.distance != null) {
-            out.distance =   inputStream.distance
-        } else if (  inputStream.distance16 != null) {
+        if (inputStream.distance != null) {
+            out.distance = inputStream.distance
+        } else if (inputStream.distance16 != null) {
             var distance: Long = 0
 
             if (lastMesg.distance != null) {
                 distance = (lastMesg.distance!! * 100).toLong()
             }
 
-            distance += (  inputStream.distance16!! - (distance and 0xFFFFL)) and 0xFFFFL
+            distance += (inputStream.distance16!! - (distance and 0xFFFFL)) and 0xFFFFL
             out.distance = distance.toFloat() / 100
         }
 
         // Active Calories
-        if (  inputStream.activeCalories != null) {
-            out.activeCalories =   inputStream.activeCalories
+        if (inputStream.activeCalories != null) {
+            out.activeCalories = inputStream.activeCalories
         }
 
         // Total Calories
-        if (  inputStream.calories != null) {
-            out.calories =   inputStream.calories
+        if (inputStream.calories != null) {
+            out.calories = inputStream.calories
         }
 
         // Intensity
-        if ((  inputStream.intensity != null)) {
-            out.intensity =   inputStream.intensity
+        if ((inputStream.intensity != null)) {
+            out.intensity = inputStream.intensity
         }
 
         // Heart Rate
-        if ((  inputStream.heartRate != null)) {
-            out.heartRate =   inputStream.heartRate
+        if ((inputStream.heartRate != null)) {
+            out.heartRate = inputStream.heartRate
         }
 
         // Temperature
-        if ((  inputStream.temperature != null)) {
-            out.temperature =   inputStream.temperature
+        if ((inputStream.temperature != null)) {
+            out.temperature = inputStream.temperature
         }
 
         // Ascent
-        if ((  inputStream.ascent != null)) {
-            out.ascent =   inputStream.ascent
+        if ((inputStream.ascent != null)) {
+            out.ascent = inputStream.ascent
         }
 
         // Descent
-        if ((  inputStream.descent != null)) {
-            out.descent =   inputStream.descent
+        if ((inputStream.descent != null)) {
+            out.descent = inputStream.descent
         }
 
         // Moderate activity minutes
-        if ((  inputStream.moderateActivityMinutes != null)) {
-            out.moderateActivityMinutes =   inputStream.moderateActivityMinutes
+        if ((inputStream.moderateActivityMinutes != null)) {
+            out.moderateActivityMinutes = inputStream.moderateActivityMinutes
         }
 
         // Vigorous activity minutes
-        if ((  inputStream.vigorousActivityMinutes != null)) {
-            out.vigorousActivityMinutes =   inputStream.vigorousActivityMinutes
+        if ((inputStream.vigorousActivityMinutes != null)) {
+            out.vigorousActivityMinutes = inputStream.vigorousActivityMinutes
         }
 
         // Compute distance from cycles if not logged directly.
