@@ -1151,6 +1151,20 @@ abstract class FieldBase {
         }
     }
 
+    override fun toString() = "FieldBase(" +
+            "fieldName=$fieldName, " +
+            "name=$name, " +
+            "type=$type, " +
+            "units=$units, " +
+            "numValues=$numValues, " +
+            "values=$values, " +
+            "rawValue=$rawValue, " +
+            "scale=$scale, " +
+            "offset=$offset, " +
+            "size=$size, " +
+            "isValid=$isValid" +
+            ")"
+
     companion object {
         @JvmField
         var forceShowInvalids: Boolean = !Fit.ENABLE_LEGACY_BEHAVIOUR

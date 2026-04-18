@@ -1212,4 +1212,13 @@ open class Mesg {
 
         return fields
     }
+
+    override fun toString() = "Mesg(" +
+            "name=$name, " +
+            "num=$num, " +
+            "localNum=$localNum, " +
+            "numFields=$numFields, " +
+            "fields=$fields, " +
+            "developerFields=$developerFields" +
+            ")"
 }
