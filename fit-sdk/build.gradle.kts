@@ -8,6 +8,8 @@ kotlin {
     jvm()
     jvmToolchain(21)
 
+    macosArm64()
+
     sourceSets {
         commonMain.dependencies {
         }

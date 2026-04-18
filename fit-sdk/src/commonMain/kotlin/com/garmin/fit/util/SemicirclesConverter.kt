@@ -8,6 +8,8 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit.util
 
+import kotlin.jvm.JvmStatic
+
 object SemicirclesConverter {
     val PI_RADIANS: Double = TODO("Could not convert double literal '0x80000000L' to Kotlin")
 
