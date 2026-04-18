@@ -17,7 +17,14 @@ import java.util.Collections
 import java.util.LinkedList
 
 open class Mesg {
-    open var name: String? = null
+    // Use a private backing field for constructors to initialize name
+    // without calling overridden setters
+    private var _name: String? = null
+    open var name: String?
+        get() = _name
+        set(value) {
+            _name = value
+        }
     var num: Int
     var localNum: Int = 0
         set(localNum) {
@@ -33,18 +40,15 @@ open class Mesg {
         }
 
     @JvmField
-    var fields: ArrayList<Field>
-    var developerFields: ArrayList<DeveloperField>
+    var fields: ArrayList<Field> = ArrayList()
+    var developerFields: ArrayList<DeveloperField> = ArrayList()
         internal set
-    var systemTimeOffset: Long
+    var systemTimeOffset: Long = 0
     var decoderMesgIndex: Int = 0
         private set
 
     constructor(mesg: Mesg) {
-        this.fields = ArrayList()
-        this.developerFields = ArrayList()
-
-        this.name = mesg.name
+        this._name = mesg.name
         this.num = mesg.num
         this.localNum = mesg.localNum
         this.systemTimeOffset = mesg.systemTimeOffset
@@ -64,12 +68,8 @@ open class Mesg {
     }
 
     constructor(name: String?, num: Int) {
-        this.name = name
+        this._name = name
         this.num = num
-        this.localNum = 0
-        this.fields = ArrayList()
-        this.developerFields = ArrayList()
-        this.systemTimeOffset = 0
     }
 
     /**
