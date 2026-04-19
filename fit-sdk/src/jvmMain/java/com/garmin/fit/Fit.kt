@@ -201,70 +201,64 @@ object Fit {
     //    invalid value is returned instead.
     const val ENABLE_LEGACY_BEHAVIOUR: Boolean = true
 
-    val baseTypeInvalidMap = HashMap<Int, Any>(20)
+    val baseTypeInvalidMap = mapOf(
+        BASE_TYPE_ENUM to ENUM_INVALID,
+        BASE_TYPE_SINT8 to SINT8_INVALID,
+        BASE_TYPE_UINT8 to UINT8_INVALID,
+        BASE_TYPE_SINT16 to SINT16_INVALID,
+        BASE_TYPE_UINT16 to UINT16_INVALID,
+        BASE_TYPE_SINT32 to SINT32_INVALID,
+        BASE_TYPE_UINT32 to UINT32_INVALID,
+        BASE_TYPE_STRING to STRING_INVALID,
+        BASE_TYPE_FLOAT32 to FLOAT32_INVALID,
+        BASE_TYPE_FLOAT64 to FLOAT64_INVALID,
+        BASE_TYPE_UINT8Z to UINT8Z_INVALID,
+        BASE_TYPE_UINT16Z to UINT16Z_INVALID,
+        BASE_TYPE_UINT32Z to UINT32Z_INVALID,
+        BASE_TYPE_BYTE to BYTE_INVALID,
+        BASE_TYPE_SINT64 to SINT64_INVALID,
+        BASE_TYPE_UINT64 to UINT64_INVALID,
+        BASE_TYPE_UINT64Z to UINT64Z_INVALID,
+    )
 
-    init {
-        baseTypeInvalidMap[BASE_TYPE_ENUM] = ENUM_INVALID
-        baseTypeInvalidMap[BASE_TYPE_SINT8] = SINT8_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT8] = UINT8_INVALID
-        baseTypeInvalidMap[BASE_TYPE_SINT16] = SINT16_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT16] = UINT16_INVALID
-        baseTypeInvalidMap[BASE_TYPE_SINT32] = SINT32_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT32] = UINT32_INVALID
-        baseTypeInvalidMap[BASE_TYPE_STRING] = STRING_INVALID
-        baseTypeInvalidMap[BASE_TYPE_FLOAT32] = FLOAT32_INVALID
-        baseTypeInvalidMap[BASE_TYPE_FLOAT64] = FLOAT64_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT8Z] = UINT8Z_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT16Z] = UINT16Z_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT32Z] = UINT32Z_INVALID
-        baseTypeInvalidMap[BASE_TYPE_BYTE] = BYTE_INVALID
-        baseTypeInvalidMap[BASE_TYPE_SINT64] = SINT64_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT64] = UINT64_INVALID
-        baseTypeInvalidMap[BASE_TYPE_UINT64Z] = UINT64Z_INVALID
-    }
+    val baseTypeMinMap = mapOf(
+        BASE_TYPE_ENUM to ENUM_MIN,
+        BASE_TYPE_SINT8 to SINT8_MIN,
+        BASE_TYPE_UINT8 to UINT8_MIN,
+        BASE_TYPE_SINT16 to SINT16_MIN,
+        BASE_TYPE_UINT16 to UINT16_MIN,
+        BASE_TYPE_SINT32 to SINT32_MIN,
+        BASE_TYPE_UINT32 to UINT32_MIN,
+        BASE_TYPE_FLOAT32 to FLOAT32_MIN,
+        BASE_TYPE_FLOAT64 to FLOAT64_MIN,
+        BASE_TYPE_UINT8Z to UINT8Z_MIN,
+        BASE_TYPE_UINT16Z to UINT16Z_MIN,
+        BASE_TYPE_UINT32Z to UINT32Z_MIN,
+        BASE_TYPE_BYTE to BYTE_MIN,
+        BASE_TYPE_SINT64 to SINT64_MIN,
+        BASE_TYPE_UINT64 to UINT64_MIN,
+        BASE_TYPE_UINT64Z to UINT64Z_MIN,
+    )
 
-    val baseTypeMinMap = HashMap<Int, Any>(20)
-
-    init {
-        baseTypeMinMap[BASE_TYPE_ENUM] = ENUM_MIN
-        baseTypeMinMap[BASE_TYPE_SINT8] = SINT8_MIN
-        baseTypeMinMap[BASE_TYPE_UINT8] = UINT8_MIN
-        baseTypeMinMap[BASE_TYPE_SINT16] = SINT16_MIN
-        baseTypeMinMap[BASE_TYPE_UINT16] = UINT16_MIN
-        baseTypeMinMap[BASE_TYPE_SINT32] = SINT32_MIN
-        baseTypeMinMap[BASE_TYPE_UINT32] = UINT32_MIN
-        baseTypeMinMap[BASE_TYPE_FLOAT32] = FLOAT32_MIN
-        baseTypeMinMap[BASE_TYPE_FLOAT64] = FLOAT64_MIN
-        baseTypeMinMap[BASE_TYPE_UINT8Z] = UINT8Z_MIN
-        baseTypeMinMap[BASE_TYPE_UINT16Z] = UINT16Z_MIN
-        baseTypeMinMap[BASE_TYPE_UINT32Z] = UINT32Z_MIN
-        baseTypeMinMap[BASE_TYPE_BYTE] = BYTE_MIN
-        baseTypeMinMap[BASE_TYPE_SINT64] = SINT64_MIN
-        baseTypeMinMap[BASE_TYPE_UINT64] = UINT64_MIN
-        baseTypeMinMap[BASE_TYPE_UINT64Z] = UINT64Z_MIN
-    }
-
-    val baseTypeMaxMap = HashMap<Int, Any>(20)
-
-    init {
-        baseTypeMaxMap[BASE_TYPE_ENUM] = ENUM_MAX
-        baseTypeMaxMap[BASE_TYPE_SINT8] = SINT8_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT8] = UINT8_MAX
-        baseTypeMaxMap[BASE_TYPE_SINT16] = SINT16_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT16] = UINT16_MAX
-        baseTypeMaxMap[BASE_TYPE_SINT32] = SINT32_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT32] = UINT32_MAX
-        //baseTypeMaxMap[BASE_TYPE_STRING] = STRING_MAX;
-        baseTypeMaxMap[BASE_TYPE_FLOAT32] = FLOAT32_MAX
-        baseTypeMaxMap[BASE_TYPE_FLOAT64] = FLOAT64_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT8Z] = UINT8Z_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT16Z] = UINT16Z_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT32Z] = UINT32Z_MAX
-        baseTypeMaxMap[BASE_TYPE_BYTE] = BYTE_MAX
-        baseTypeMaxMap[BASE_TYPE_SINT64] = SINT64_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT64] = UINT64_MAX
-        baseTypeMaxMap[BASE_TYPE_UINT64Z] = UINT64Z_MAX
-    }
+    val baseTypeMaxMap = mapOf(
+        BASE_TYPE_ENUM to ENUM_MAX,
+        BASE_TYPE_SINT8 to SINT8_MAX,
+        BASE_TYPE_UINT8 to UINT8_MAX,
+        BASE_TYPE_SINT16 to SINT16_MAX,
+        BASE_TYPE_UINT16 to UINT16_MAX,
+        BASE_TYPE_SINT32 to SINT32_MAX,
+        BASE_TYPE_UINT32 to UINT32_MAX,
+        // BASE_TYPE_STRING to STRING_MAX,
+        BASE_TYPE_FLOAT32 to FLOAT32_MAX,
+        BASE_TYPE_FLOAT64 to FLOAT64_MAX,
+        BASE_TYPE_UINT8Z to UINT8Z_MAX,
+        BASE_TYPE_UINT16Z to UINT16Z_MAX,
+        BASE_TYPE_UINT32Z to UINT32Z_MAX,
+        BASE_TYPE_BYTE to BYTE_MAX,
+        BASE_TYPE_SINT64 to SINT64_MAX,
+        BASE_TYPE_UINT64 to UINT64_MAX,
+        BASE_TYPE_UINT64Z to UINT64Z_MAX
+    )
 
     enum class ProtocolVersion(val major: Int, val minor: Int) {
         V1_0(1, 0),
