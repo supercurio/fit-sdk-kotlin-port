@@ -8,10 +8,10 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-import java.time.Instant
-import java.util.Date
+import com.garmin.fit.DateTime.Companion.OFFSET
 import kotlin.math.floor
 import kotlin.math.roundToLong
+import kotlin.time.Instant
 
 class DateTime : Comparable<DateTime> {
     var timestamp: Long
@@ -24,11 +24,6 @@ class DateTime : Comparable<DateTime> {
         this.fractionalTimestamp = 0.0
     }
 
-    constructor(date: Date) {
-        this.timestamp = (date.time - OFFSET) / 1000
-        this.fractionalTimestamp = ((date.time - OFFSET) % 1000) / 1000.0
-    }
-
     constructor(timestamp: DateTime) : this(
         timestamp.timestamp,
         timestamp.fractionalTimestamp
@@ -37,11 +32,6 @@ class DateTime : Comparable<DateTime> {
     constructor(timestamp: Long, fractional_timestamp: Double) {
         this.timestamp = timestamp + floor(fractional_timestamp).toLong()
         this.fractionalTimestamp = fractional_timestamp - floor(fractional_timestamp)
-    }
-
-    constructor(instant: Instant) {
-        this.timestamp = instant.epochSecond - (OFFSET / 1000)
-        this.fractionalTimestamp = (instant.toEpochMilli() - OFFSET) % 1000 / 1000.0
     }
 
     fun equals(dateTime: DateTime): Boolean {
@@ -53,22 +43,6 @@ class DateTime : Comparable<DateTime> {
             timestamp += offset
         }
     }
-
-    val date: Date
-        get() {
-            // Express fractional component in (nearest) ms
-            val fractional_ms = (this.fractionalTimestamp * 1000).roundToLong()
-
-            return Date((timestamp * 1000) + fractional_ms + OFFSET)
-        }
-
-    val instant: Instant?
-        get() {
-            // Express fractional component in (nearest) ms
-            val fractional_ms = (this.fractionalTimestamp * 1000).roundToLong()
-
-            return Instant.ofEpochMilli((timestamp * 1000) + fractional_ms + OFFSET)
-        }
 
     override fun toString(): String {
         return this.date.toString()
@@ -155,8 +129,18 @@ class DateTime : Comparable<DateTime> {
             return INVALID
         }
 
-        fun from(instant: Instant): DateTime {
-            return DateTime(instant)
-        }
     }
 }
+
+fun DateTime(instant: Instant) = DateTime(
+    timestamp = instant.epochSeconds - (OFFSET / 1000),
+    fractional_timestamp = (instant.toEpochMilliseconds() - OFFSET) % 1000 / 1000.0,
+)
+
+val DateTime.instantKt: Instant
+    get() {
+        // Express fractional component in (nearest) ms
+        val fractional_ms = (this.fractionalTimestamp * 1000).roundToLong()
+
+        return Instant.fromEpochMilliseconds((timestamp * 1000) + fractional_ms + OFFSET)
+    }
