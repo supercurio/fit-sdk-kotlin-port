@@ -11,7 +11,7 @@ package com.garmin.fit
 import com.garmin.fit.Profile.SubFields
 
 
-class ThreeDSensorCalibrationMesg : Mesg {
+class ThreeDSensorCalibrationMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.THREE_D_SENSOR_CALIBRATION))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HsaRespirationDataMesg : Mesg {
+class HsaRespirationDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_RESPIRATION_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

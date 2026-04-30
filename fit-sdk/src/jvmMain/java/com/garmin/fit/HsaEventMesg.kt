@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HsaEventMesg : Mesg {
+class HsaEventMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_EVENT))
 
     constructor(mesg: Mesg) : super(mesg)

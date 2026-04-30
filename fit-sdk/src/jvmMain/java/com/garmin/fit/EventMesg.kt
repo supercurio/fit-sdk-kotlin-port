@@ -11,7 +11,7 @@ package com.garmin.fit
 import com.garmin.fit.Profile.SubFields
 
 
-class EventMesg : Mesg, MesgWithEvent {
+class EventMesg : Mesg, MesgWithEvent, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.EVENT))
 
     constructor(mesg: Mesg) : super(mesg)

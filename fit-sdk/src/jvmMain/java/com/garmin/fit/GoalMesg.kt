@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class GoalMesg : Mesg {
+class GoalMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.GOAL))
 
     constructor(mesg: Mesg) : super(mesg)

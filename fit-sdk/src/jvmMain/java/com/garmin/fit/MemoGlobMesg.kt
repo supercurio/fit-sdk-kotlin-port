@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class MemoGlobMesg : Mesg {
+class MemoGlobMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.MEMO_GLOB))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class SegmentLeaderboardEntryMesg : Mesg {
+class SegmentLeaderboardEntryMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_LEADERBOARD_ENTRY))
 
     constructor(mesg: Mesg) : super(mesg)

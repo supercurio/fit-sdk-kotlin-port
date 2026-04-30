@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class StressLevelMesg : Mesg {
+class StressLevelMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.STRESS_LEVEL))
 
     constructor(mesg: Mesg) : super(mesg)

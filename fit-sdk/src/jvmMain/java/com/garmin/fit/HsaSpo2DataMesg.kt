@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HsaSpo2DataMesg : Mesg {
+class HsaSpo2DataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_SPO2_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

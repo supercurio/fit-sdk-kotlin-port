@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class AntChannelIdMesg : Mesg {
+class AntChannelIdMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.ANT_CHANNEL_ID))
 
     constructor(mesg: Mesg) : super(mesg)

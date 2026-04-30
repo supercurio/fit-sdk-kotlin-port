@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class CameraEventMesg : Mesg {
+class CameraEventMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.CAMERA_EVENT))
 
     constructor(mesg: Mesg) : super(mesg)

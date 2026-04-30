@@ -11,7 +11,7 @@ package com.garmin.fit
 import com.garmin.fit.Profile.SubFields
 
 
-class DiveSettingsMesg : Mesg {
+class DiveSettingsMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.DIVE_SETTINGS))
 
     constructor(mesg: Mesg) : super(mesg)

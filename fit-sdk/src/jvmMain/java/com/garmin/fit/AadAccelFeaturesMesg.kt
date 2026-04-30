@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class AadAccelFeaturesMesg : Mesg {
+class AadAccelFeaturesMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.AAD_ACCEL_FEATURES))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class BloodPressureMesg : Mesg {
+class BloodPressureMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.BLOOD_PRESSURE))
 
     constructor(mesg: Mesg) : super(mesg)

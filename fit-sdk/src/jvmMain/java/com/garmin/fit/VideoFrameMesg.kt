@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class VideoFrameMesg : Mesg {
+class VideoFrameMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.VIDEO_FRAME))
 
     constructor(mesg: Mesg) : super(mesg)

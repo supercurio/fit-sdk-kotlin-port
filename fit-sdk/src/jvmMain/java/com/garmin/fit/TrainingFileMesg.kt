@@ -11,7 +11,7 @@ package com.garmin.fit
 import com.garmin.fit.Profile.SubFields
 
 
-class TrainingFileMesg : Mesg {
+class TrainingFileMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.TRAINING_FILE))
 
     constructor(mesg: Mesg) : super(mesg)

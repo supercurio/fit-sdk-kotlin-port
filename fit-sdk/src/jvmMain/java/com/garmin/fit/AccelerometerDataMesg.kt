@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class AccelerometerDataMesg : Mesg {
+class AccelerometerDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.ACCELEROMETER_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

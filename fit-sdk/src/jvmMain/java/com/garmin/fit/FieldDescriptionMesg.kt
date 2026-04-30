@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class FieldDescriptionMesg : Mesg {
+class FieldDescriptionMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.FIELD_DESCRIPTION))
 
     constructor(mesg: Mesg) : super(mesg)

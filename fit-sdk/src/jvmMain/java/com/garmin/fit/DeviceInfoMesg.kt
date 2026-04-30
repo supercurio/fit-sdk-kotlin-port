@@ -11,7 +11,7 @@ package com.garmin.fit
 import com.garmin.fit.Profile.SubFields
 
 
-class DeviceInfoMesg : Mesg {
+class DeviceInfoMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVICE_INFO))
 
     constructor(mesg: Mesg) : super(mesg)

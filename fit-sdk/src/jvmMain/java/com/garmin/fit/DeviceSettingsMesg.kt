@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class DeviceSettingsMesg : Mesg {
+class DeviceSettingsMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVICE_SETTINGS))
 
     constructor(mesg: Mesg) : super(mesg)

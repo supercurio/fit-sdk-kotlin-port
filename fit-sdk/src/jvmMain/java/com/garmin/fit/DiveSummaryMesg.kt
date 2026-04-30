@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class DiveSummaryMesg : Mesg {
+class DiveSummaryMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.DIVE_SUMMARY))
 
     constructor(mesg: Mesg) : super(mesg)

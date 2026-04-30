@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class DiveAlarmMesg : Mesg {
+class DiveAlarmMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.DIVE_ALARM))
 
     constructor(mesg: Mesg) : super(mesg)

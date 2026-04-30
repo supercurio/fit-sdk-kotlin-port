@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class DeviceAuxBatteryInfoMesg : Mesg {
+class DeviceAuxBatteryInfoMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.DEVICE_AUX_BATTERY_INFO))
 
     constructor(mesg: Mesg) : super(mesg)

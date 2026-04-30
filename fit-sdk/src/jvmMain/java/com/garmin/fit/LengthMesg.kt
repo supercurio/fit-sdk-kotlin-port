@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class LengthMesg : Mesg, MesgWithEvent {
+class LengthMesg : Mesg, MesgWithEvent, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.LENGTH))
 
     constructor(mesg: Mesg) : super(mesg)

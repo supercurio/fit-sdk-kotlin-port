@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class SplitSummaryMesg : Mesg {
+class SplitSummaryMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.SPLIT_SUMMARY))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class SleepLevelMesg : Mesg {
+class SleepLevelMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.SLEEP_LEVEL))
 
     constructor(mesg: Mesg) : super(mesg)

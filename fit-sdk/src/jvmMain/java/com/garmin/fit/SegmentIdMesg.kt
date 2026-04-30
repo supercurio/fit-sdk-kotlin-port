@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class SegmentIdMesg : Mesg {
+class SegmentIdMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_ID))
 
     constructor(mesg: Mesg) : super(mesg)

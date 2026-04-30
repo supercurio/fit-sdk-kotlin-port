@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface BufferedRecordMesgListener {
+fun interface BufferedRecordMesgListener {
     fun onMesg(message: BufferedRecordMesg)
 }

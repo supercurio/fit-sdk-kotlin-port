@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class SleepDisruptionSeverityPeriodMesg : Mesg {
+class SleepDisruptionSeverityPeriodMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD))
 
     constructor(mesg: Mesg) : super(mesg)

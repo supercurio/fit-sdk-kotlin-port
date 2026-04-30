@@ -11,7 +11,7 @@ package com.garmin.fit
 import com.garmin.fit.Profile.SubFields
 
 
-class WatchfaceSettingsMesg : Mesg {
+class WatchfaceSettingsMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.WATCHFACE_SETTINGS))
 
     constructor(mesg: Mesg) : super(mesg)

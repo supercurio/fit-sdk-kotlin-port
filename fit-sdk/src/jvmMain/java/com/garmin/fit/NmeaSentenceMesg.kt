@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class NmeaSentenceMesg : Mesg {
+class NmeaSentenceMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.NMEA_SENTENCE))
 
     constructor(mesg: Mesg) : super(mesg)

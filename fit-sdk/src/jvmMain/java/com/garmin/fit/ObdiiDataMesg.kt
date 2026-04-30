@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class ObdiiDataMesg : Mesg {
+class ObdiiDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.OBDII_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HsaBodyBatteryDataMesg : Mesg {
+class HsaBodyBatteryDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_BODY_BATTERY_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

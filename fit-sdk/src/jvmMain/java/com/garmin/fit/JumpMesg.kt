@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class JumpMesg : Mesg {
+class JumpMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.JUMP))
 
     constructor(mesg: Mesg) : super(mesg)

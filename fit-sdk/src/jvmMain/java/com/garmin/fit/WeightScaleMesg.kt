@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class WeightScaleMesg : Mesg {
+class WeightScaleMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.WEIGHT_SCALE))
 
     constructor(mesg: Mesg) : super(mesg)

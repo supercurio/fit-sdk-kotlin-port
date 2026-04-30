@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class RespirationRateMesg : Mesg {
+class RespirationRateMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.RESPIRATION_RATE))
 
     constructor(mesg: Mesg) : super(mesg)

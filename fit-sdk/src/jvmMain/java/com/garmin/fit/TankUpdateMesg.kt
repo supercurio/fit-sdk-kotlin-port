@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class TankUpdateMesg : Mesg {
+class TankUpdateMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.TANK_UPDATE))
 
     constructor(mesg: Mesg) : super(mesg)

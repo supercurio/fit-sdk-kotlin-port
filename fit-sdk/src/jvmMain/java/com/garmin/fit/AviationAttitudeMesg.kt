@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class AviationAttitudeMesg : Mesg {
+class AviationAttitudeMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.AVIATION_ATTITUDE))
 
     constructor(mesg: Mesg) : super(mesg)

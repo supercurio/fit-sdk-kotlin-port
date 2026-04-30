@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class OhrSettingsMesg : Mesg {
+class OhrSettingsMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.OHR_SETTINGS))
 
     constructor(mesg: Mesg) : super(mesg)

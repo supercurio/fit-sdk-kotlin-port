@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class ChronoShotSessionMesg : Mesg {
+class ChronoShotSessionMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.CHRONO_SHOT_SESSION))
 
     constructor(mesg: Mesg) : super(mesg)

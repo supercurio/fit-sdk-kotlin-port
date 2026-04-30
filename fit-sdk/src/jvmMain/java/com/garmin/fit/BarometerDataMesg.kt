@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class BarometerDataMesg : Mesg {
+class BarometerDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.BAROMETER_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

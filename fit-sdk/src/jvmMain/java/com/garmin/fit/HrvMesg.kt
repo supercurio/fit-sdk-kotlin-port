@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HrvMesg : Mesg {
+class HrvMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HRV))
 
     constructor(mesg: Mesg) : super(mesg)

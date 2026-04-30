@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class WeatherConditionsMesg : Mesg {
+class WeatherConditionsMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.WEATHER_CONDITIONS))
 
     constructor(mesg: Mesg) : super(mesg)

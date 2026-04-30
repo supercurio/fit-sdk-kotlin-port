@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class MagnetometerDataMesg : Mesg {
+class MagnetometerDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.MAGNETOMETER_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

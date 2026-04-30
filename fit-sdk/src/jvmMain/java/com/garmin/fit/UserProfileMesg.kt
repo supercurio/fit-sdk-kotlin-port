@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class UserProfileMesg : Mesg {
+class UserProfileMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.USER_PROFILE))
 
     constructor(mesg: Mesg) : super(mesg)

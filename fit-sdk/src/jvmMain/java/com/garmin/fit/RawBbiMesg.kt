@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class RawBbiMesg : Mesg {
+class RawBbiMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.RAW_BBI))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class TankSummaryMesg : Mesg {
+class TankSummaryMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.TANK_SUMMARY))
 
     constructor(mesg: Mesg) : super(mesg)

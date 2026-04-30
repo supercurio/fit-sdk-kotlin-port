@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class TimestampCorrelationMesg : Mesg {
+class TimestampCorrelationMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.TIMESTAMP_CORRELATION))
 
     constructor(mesg: Mesg) : super(mesg)

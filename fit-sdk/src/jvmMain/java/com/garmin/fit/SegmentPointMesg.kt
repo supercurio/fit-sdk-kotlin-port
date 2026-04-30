@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class SegmentPointMesg : Mesg {
+class SegmentPointMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.SEGMENT_POINT))
 
     constructor(mesg: Mesg) : super(mesg)

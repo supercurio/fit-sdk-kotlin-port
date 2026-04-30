@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class GpsMetadataMesg : Mesg {
+class GpsMetadataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.GPS_METADATA))
 
     constructor(mesg: Mesg) : super(mesg)

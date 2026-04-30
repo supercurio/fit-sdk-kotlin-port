@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class AntTxMesg : Mesg {
+class AntTxMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.ANT_TX))
 
     constructor(mesg: Mesg) : super(mesg)

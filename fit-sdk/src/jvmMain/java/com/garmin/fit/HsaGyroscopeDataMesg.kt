@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HsaGyroscopeDataMesg : Mesg {
+class HsaGyroscopeDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_GYROSCOPE_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

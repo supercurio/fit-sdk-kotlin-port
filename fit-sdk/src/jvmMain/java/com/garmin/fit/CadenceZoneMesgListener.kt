@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface CadenceZoneMesgListener {
+fun interface CadenceZoneMesgListener {
     fun onMesg(mesg: CadenceZoneMesg)
 }

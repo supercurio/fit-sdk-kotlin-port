@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class HsaWristTemperatureDataMesg : Mesg {
+class HsaWristTemperatureDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.HSA_WRIST_TEMPERATURE_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

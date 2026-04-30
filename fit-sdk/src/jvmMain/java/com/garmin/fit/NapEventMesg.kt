@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class NapEventMesg : Mesg {
+class NapEventMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.NAP_EVENT))
 
     constructor(mesg: Mesg) : super(mesg)

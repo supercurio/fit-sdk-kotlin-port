@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class BeatIntervalsMesg : Mesg {
+class BeatIntervalsMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.BEAT_INTERVALS))
 
     constructor(mesg: Mesg) : super(mesg)

@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class MaxMetDataMesg : Mesg {
+class MaxMetDataMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.MAX_MET_DATA))
 
     constructor(mesg: Mesg) : super(mesg)

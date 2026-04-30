@@ -9,7 +9,7 @@
 package com.garmin.fit
 
 
-class CadenceZoneMesg : Mesg {
+class CadenceZoneMesg : Mesg, AllFitMesg {
     constructor() : super(Factory.createMesg(MesgNum.CADENCE_ZONE))
 
     constructor(mesg: Mesg) : super(mesg)
