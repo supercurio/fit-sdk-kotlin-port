@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface RawBbiMesgListener {
+fun interface RawBbiMesgListener {
     fun onMesg(mesg: RawBbiMesg)
 }

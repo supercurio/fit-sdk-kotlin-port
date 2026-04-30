@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface SplitSummaryMesgListener {
+fun interface SplitSummaryMesgListener {
     fun onMesg(mesg: SplitSummaryMesg)
 }

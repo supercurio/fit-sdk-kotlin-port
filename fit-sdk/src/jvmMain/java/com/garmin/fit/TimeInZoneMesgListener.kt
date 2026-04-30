@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface TimeInZoneMesgListener {
+fun interface TimeInZoneMesgListener {
     fun onMesg(mesg: TimeInZoneMesg)
 }

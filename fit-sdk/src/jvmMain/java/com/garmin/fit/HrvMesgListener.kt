@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface HrvMesgListener {
+fun interface HrvMesgListener {
     fun onMesg(mesg: HrvMesg)
 }

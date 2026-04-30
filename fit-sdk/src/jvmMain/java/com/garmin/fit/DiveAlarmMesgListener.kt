@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface DiveAlarmMesgListener {
+fun interface DiveAlarmMesgListener {
     fun onMesg(mesg: DiveAlarmMesg)
 }

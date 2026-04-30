@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface MagnetometerDataMesgListener {
+fun interface MagnetometerDataMesgListener {
     fun onMesg(mesg: MagnetometerDataMesg)
 }

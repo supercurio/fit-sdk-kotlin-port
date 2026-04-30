@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface StressLevelMesgListener {
+fun interface StressLevelMesgListener {
     fun onMesg(mesg: StressLevelMesg)
 }

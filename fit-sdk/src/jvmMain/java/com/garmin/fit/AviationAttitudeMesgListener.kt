@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface AviationAttitudeMesgListener {
+fun interface AviationAttitudeMesgListener {
     fun onMesg(mesg: AviationAttitudeMesg)
 }

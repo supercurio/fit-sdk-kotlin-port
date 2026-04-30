@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface BarometerDataMesgListener {
+fun interface BarometerDataMesgListener {
     fun onMesg(mesg: BarometerDataMesg)
 }

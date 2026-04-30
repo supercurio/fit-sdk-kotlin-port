@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface GyroscopeDataMesgListener {
+fun interface GyroscopeDataMesgListener {
     fun onMesg(mesg: GyroscopeDataMesg)
 }

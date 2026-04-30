@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface ObdiiDataMesgListener {
+fun interface ObdiiDataMesgListener {
     fun onMesg(mesg: ObdiiDataMesg)
 }

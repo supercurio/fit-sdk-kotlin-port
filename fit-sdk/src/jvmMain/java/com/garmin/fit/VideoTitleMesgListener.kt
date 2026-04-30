@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface VideoTitleMesgListener {
+fun interface VideoTitleMesgListener {
     fun onMesg(mesg: VideoTitleMesg)
 }

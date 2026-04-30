@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface AntChannelIdMesgListener {
+fun interface AntChannelIdMesgListener {
     fun onMesg(mesg: AntChannelIdMesg)
 }

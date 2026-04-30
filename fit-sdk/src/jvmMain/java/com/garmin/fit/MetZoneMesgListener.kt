@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface MetZoneMesgListener {
+fun interface MetZoneMesgListener {
     fun onMesg(mesg: MetZoneMesg)
 }

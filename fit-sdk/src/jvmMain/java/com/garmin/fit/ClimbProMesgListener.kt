@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface ClimbProMesgListener {
+fun interface ClimbProMesgListener {
     fun onMesg(mesg: ClimbProMesg)
 }

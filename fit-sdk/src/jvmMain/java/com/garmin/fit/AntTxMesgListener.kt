@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface AntTxMesgListener {
+fun interface AntTxMesgListener {
     fun onMesg(mesg: AntTxMesg)
 }

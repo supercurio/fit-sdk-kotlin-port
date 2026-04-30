@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface NmeaSentenceMesgListener {
+fun interface NmeaSentenceMesgListener {
     fun onMesg(mesg: NmeaSentenceMesg)
 }

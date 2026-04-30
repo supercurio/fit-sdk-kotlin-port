@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface RespirationRateMesgListener {
+fun interface RespirationRateMesgListener {
     fun onMesg(mesg: RespirationRateMesg)
 }

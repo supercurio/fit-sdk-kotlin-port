@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface HsaSpo2DataMesgListener {
+fun interface HsaSpo2DataMesgListener {
     fun onMesg(mesg: HsaSpo2DataMesg)
 }

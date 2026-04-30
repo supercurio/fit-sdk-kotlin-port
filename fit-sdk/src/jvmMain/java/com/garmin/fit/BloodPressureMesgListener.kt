@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface BloodPressureMesgListener {
+fun interface BloodPressureMesgListener {
     fun onMesg(mesg: BloodPressureMesg)
 }

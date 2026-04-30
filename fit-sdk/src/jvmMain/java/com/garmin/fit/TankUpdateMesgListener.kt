@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface TankUpdateMesgListener {
+fun interface TankUpdateMesgListener {
     fun onMesg(mesg: TankUpdateMesg)
 }

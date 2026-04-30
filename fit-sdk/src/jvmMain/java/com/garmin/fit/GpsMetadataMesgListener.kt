@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface GpsMetadataMesgListener {
+fun interface GpsMetadataMesgListener {
     fun onMesg(mesg: GpsMetadataMesg)
 }

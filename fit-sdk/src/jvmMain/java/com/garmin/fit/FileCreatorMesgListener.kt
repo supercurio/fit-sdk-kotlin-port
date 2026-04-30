@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface FileCreatorMesgListener {
+fun interface FileCreatorMesgListener {
     fun onMesg(mesg: FileCreatorMesg)
 }

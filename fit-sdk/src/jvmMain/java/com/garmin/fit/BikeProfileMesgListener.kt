@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface BikeProfileMesgListener {
+fun interface BikeProfileMesgListener {
     fun onMesg(mesg: BikeProfileMesg)
 }

@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface SpeedZoneMesgListener {
+fun interface SpeedZoneMesgListener {
     fun onMesg(mesg: SpeedZoneMesg)
 }

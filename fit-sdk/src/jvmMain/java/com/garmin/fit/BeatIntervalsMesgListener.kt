@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface BeatIntervalsMesgListener {
+fun interface BeatIntervalsMesgListener {
     fun onMesg(mesg: BeatIntervalsMesg)
 }

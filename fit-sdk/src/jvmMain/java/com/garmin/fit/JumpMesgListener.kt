@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface JumpMesgListener {
+fun interface JumpMesgListener {
     fun onMesg(mesg: JumpMesg)
 }

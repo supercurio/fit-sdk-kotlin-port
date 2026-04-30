@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface OhrSettingsMesgListener {
+fun interface OhrSettingsMesgListener {
     fun onMesg(mesg: OhrSettingsMesg)
 }

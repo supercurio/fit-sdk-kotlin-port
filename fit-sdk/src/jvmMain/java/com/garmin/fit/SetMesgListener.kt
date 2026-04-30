@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface SetMesgListener {
+fun interface SetMesgListener {
     fun onMesg(mesg: SetMesg)
 }

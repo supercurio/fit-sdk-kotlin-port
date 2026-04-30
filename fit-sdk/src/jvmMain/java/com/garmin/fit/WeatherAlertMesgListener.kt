@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface WeatherAlertMesgListener {
+fun interface WeatherAlertMesgListener {
     fun onMesg(mesg: WeatherAlertMesg)
 }

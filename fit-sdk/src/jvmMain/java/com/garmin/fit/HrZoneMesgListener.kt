@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface HrZoneMesgListener {
+fun interface HrZoneMesgListener {
     fun onMesg(mesg: HrZoneMesg)
 }

@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface DiveSummaryMesgListener {
+fun interface DiveSummaryMesgListener {
     fun onMesg(mesg: DiveSummaryMesg)
 }

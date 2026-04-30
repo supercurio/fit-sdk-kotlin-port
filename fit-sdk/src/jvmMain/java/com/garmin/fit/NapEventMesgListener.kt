@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface NapEventMesgListener {
+fun interface NapEventMesgListener {
     fun onMesg(mesg: NapEventMesg)
 }

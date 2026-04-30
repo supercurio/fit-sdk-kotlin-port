@@ -8,6 +8,6 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-interface MemoGlobMesgListener {
+fun interface MemoGlobMesgListener {
     fun onMesg(mesg: MemoGlobMesg)
 }
