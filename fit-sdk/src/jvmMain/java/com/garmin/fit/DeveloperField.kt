@@ -6,10 +6,12 @@
 // Profile Version = 21.200.0Release
 // Tag = production/release/21.200.0-0-g28b5705d
 /**////////////////////////////////////////////////////////////////////////////////////////// */
+@file:OptIn(ExperimentalUuidApi::class)
+
 package com.garmin.fit
 
-import java.nio.ByteBuffer
-import java.util.UUID
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 class DeveloperField : FieldBase {
     val fieldDefinition: DeveloperFieldDefinition
@@ -58,21 +60,10 @@ class DeveloperField : FieldBase {
     val appId: Array<Byte>?
         get() = fieldDefinition.appId
 
-    val appUUID: UUID
-        get() {
-            val appId = fieldDefinition.appId
-            val primativeId = ByteArray(appId!!.size)
-
-            for (i in appId.indices) {
-                primativeId[i] = appId[i]
-            }
-
-            val bb = ByteBuffer.wrap(primativeId)
-            val high = bb.getLong()
-            val low = bb.getLong()
-
-            return UUID(high, low)
-        }
+    val appUuid: Uuid?
+        get() = appId
+            ?.toByteArray()
+            ?.let { Uuid.fromByteArray(it) }
 
     override fun getSubField(subFieldName: String?): SubField? {
         // Developer fields do not support sub-fields

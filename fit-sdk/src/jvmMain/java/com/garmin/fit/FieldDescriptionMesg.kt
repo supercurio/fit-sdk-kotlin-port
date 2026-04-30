@@ -85,6 +85,15 @@ class FieldDescriptionMesg : Mesg, AllFitMesg {
     /**
      * Set field_name field
      *
+     * @param fieldName The new fieldName value to be set
+     */
+    fun setFieldName(fieldName: String?) {
+        setFieldValue(3, 0, fieldName, Fit.SUBFIELD_INDEX_MAIN_FIELD)
+    }
+
+    /**
+     * Set field_name field
+     *
      * @param index of field_name
      * @param fieldName The new fieldName value to be set
      */

@@ -6,8 +6,12 @@
 // Profile Version = 21.200.0Release
 // Tag = production/release/21.200.0-0-g28b5705d
 /**////////////////////////////////////////////////////////////////////////////////////////// */
+@file:OptIn(ExperimentalUuidApi::class)
+
 package com.garmin.fit
 
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 
 class DeveloperDataIdMesg : Mesg, AllFitMesg {
@@ -73,6 +77,14 @@ class DeveloperDataIdMesg : Mesg, AllFitMesg {
     fun setApplicationId(index: Int, applicationId: Byte?) {
         setFieldValue(1, index, applicationId, Fit.SUBFIELD_INDEX_MAIN_FIELD)
     }
+
+    fun setApplicationId(bytes: ByteArray) {
+        bytes.forEachIndexed { index, byte ->
+            setApplicationId(index, byte)
+        }
+    }
+
+    fun setApplicationId(uuid: Uuid) = setApplicationId(uuid.toByteArray())
 
     var manufacturerId: Int?
         /**
