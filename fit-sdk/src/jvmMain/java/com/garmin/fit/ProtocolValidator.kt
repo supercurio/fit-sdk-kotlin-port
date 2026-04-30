@@ -21,5 +21,5 @@ internal interface ProtocolValidator {
      * @param defn Definition
      * @return true if Definition is compatible false otherwise
      */
-    fun validateMesgDefn(defn: MesgDefinition): Boolean
+    fun validateMesgDefn(mesgDefinition: MesgDefinition): Boolean
 }

@@ -30,23 +30,23 @@ class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream) :
         csv.close()
     }
 
-    override fun onMesgDefinition(mesgDef: MesgDefinition) {
-        val fields: MutableCollection<FieldDefinition> = mesgDef.fields
-        val mesg = Factory.createMesg(mesgDef.num)
+    override fun onMesgDefinition(mesgDefinition: MesgDefinition) {
+        val fields: MutableCollection<FieldDefinition> = mesgDefinition.fields
+        val mesg = Factory.createMesg(mesgDefinition.num)
         if (hideUnknownData && mesg.name == "unknown") {
             return
         }
 
         csv.clear()
         csv.set("Type", "Definition")
-        csv.set("Local Number", mesgDef.localNum)
+        csv.set("Local Number", mesgDefinition.localNum)
 
         csv.set("Message", mesg.name)
 
         var headerNum = 0
 
         for (fieldDef in fields) {
-            val field = Factory.createField(mesgDef.num, fieldDef.num)
+            val field = Factory.createField(mesgDefinition.num, fieldDef.num)
             if (hideUnknownData && field.name == "unknown") {
                 numUnknownFields++
                 continue
@@ -63,7 +63,7 @@ class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream) :
             csv.set("Units $headerNum", "")
         }
 
-        for (fieldDef in mesgDef.getDeveloperFields()) {
+        for (fieldDef in mesgDefinition.getDeveloperFields()) {
             if (hideUnknownData && !fieldDef.isDefined) {
                 numUnknownFields++
                 continue
@@ -123,7 +123,7 @@ class MesgCSVWriter(byteArrayOutputStream: ByteArrayOutputStream) :
             csv.set("Value $headerNum", value)
             csv.set(
                 "Units $headerNum",
-                formatUnits(field.units, field.profileType?.name)
+                formatUnits(field.units, field.profileType.name)
             )
         }
 

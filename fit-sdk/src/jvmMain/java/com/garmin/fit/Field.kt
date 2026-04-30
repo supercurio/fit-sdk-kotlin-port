@@ -25,7 +25,7 @@ open class Field : FieldBase {
     var subFields: ArrayList<SubField>
         protected set
 
-    var profileType: Profile.Type?
+    var profileType: Profile.Type
         private set
     internal var isExpanded: Boolean
 
@@ -67,7 +67,7 @@ open class Field : FieldBase {
         offset: Double,
         units: String?,
         accumulated: Boolean,
-        profileType: Profile.Type?
+        profileType: Profile.Type
     ) {
         this.name = name
         this.num = num

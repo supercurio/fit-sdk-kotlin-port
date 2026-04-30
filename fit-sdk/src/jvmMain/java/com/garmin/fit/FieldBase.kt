@@ -8,6 +8,7 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
+import com.garmin.fit.util.addOffset
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.IOException
@@ -15,13 +16,13 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.io.UnsupportedEncodingException
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.nio.ByteBuffer
 import java.nio.charset.Charset
 import java.nio.charset.CodingErrorAction
 import java.nio.charset.StandardCharsets
 import java.util.Arrays
+import kotlin.math.round
+import kotlin.math.roundToInt
 import kotlin.math.roundToLong
 
 abstract class FieldBase {
@@ -54,8 +55,8 @@ abstract class FieldBase {
 
     abstract val units: String?
     abstract val type: Int
-    internal abstract val offset: Double
-    internal abstract val scale: Double
+    abstract val offset: Double
+    abstract val scale: Double
     protected abstract val fieldName: String?
     protected abstract fun getSubField(subFieldName: String?): SubField?
     protected abstract fun getSubField(subFieldIndex: Int): SubField?
@@ -69,6 +70,8 @@ abstract class FieldBase {
     fun getUnits(subFieldName: String?): String? = getUnitsInternal(getSubField(subFieldName))
     private fun getUnitsInternal(subField: SubField?): String? =
         if (subField == null) this.units else subField.units
+
+    internal val FieldBase.invalidValue get() = Fit.baseTypeInvalidMap[type]
 
     val size: Int
         get() {
@@ -206,6 +209,25 @@ abstract class FieldBase {
         return true
     }
 
+    fun isIntegerType(type: Int) = when (type) {
+        Fit.BASE_TYPE_ENUM, Fit.BASE_TYPE_BYTE, Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z,
+        Fit.BASE_TYPE_SINT16, Fit.BASE_TYPE_SINT8, Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z,
+        Fit.BASE_TYPE_SINT32, Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z,
+        Fit.BASE_TYPE_SINT64, Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> true
+
+        else -> false
+    }
+
+    fun isFloatType(type: Int) = when (type) {
+        Fit.BASE_TYPE_FLOAT32, Fit.BASE_TYPE_FLOAT64 -> true
+        else -> false
+    }
+
+    fun isUint64Type(type: Int) = when (type) {
+        Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> true
+        else -> false
+    }
+
     fun getBitsValue(offset: Int, bits: Int, signed: Boolean): Long? {
         var offset = offset
         var value: Long = 0
@@ -314,21 +336,43 @@ abstract class FieldBase {
         val type = getTypeInternal(subField)
         val value = values[fieldArrayIndex]
 
-        if (value is Number) {
+        val isIntegerType = isIntegerType(type)
+        val isFloatType = isFloatType(type)
+
+        if (value is Number || value is ULong) {
             if (Fit.baseTypeInvalidMap[type] == value) {
                 return Fit.baseTypeInvalidMap[type]
             }
 
-            if (scale != Fit.FIELD_DEFAULT_SCALE.toDouble() ||
-                offset != Fit.FIELD_DEFAULT_OFFSET.toDouble()
-            ) {
-                if (value is BigInteger) {
-                    return BigDecimal(value)
-                        .divide(BigDecimal.valueOf(scale))
-                        .subtract(BigDecimal.valueOf(offset))
-                }
+            val hasScale = scale != Fit.FIELD_DEFAULT_SCALE.toDouble()
+            val hasOffset = offset != Fit.FIELD_DEFAULT_OFFSET.toDouble()
 
-                return value.toDouble() / scale - offset
+            if (hasScale) {
+                when (value) {
+                    is Number -> return value.toDouble() / scale - offset
+                    is ULong -> return value.toDouble() / scale - offset
+                }
+            }
+
+            if (hasOffset) {
+                if (isIntegerType) {
+                    when (value) {
+                        // ULong or Long values might not fit in ULong or Long once the offset is
+                        // applied and would wrap around the extremities instead.
+                        // Therefore, they need to get converted to Double at the cost of loss
+                        // of precision in very high numbers
+                        is ULong -> return round(value.toDouble() - offset)
+                        is Long -> return round(value.toDouble() - offset)
+                        // Smaller numbers can always fit in a Long without loss of precision
+                        is Number -> return (value.toDouble() - offset).roundToLong()
+                    }
+                }
+                if (isFloatType) {
+                    when (value) {
+                        is Number -> return value.toDouble() - offset
+                        is ULong -> return value.toDouble() - offset
+                    }
+                }
             }
         }
 
@@ -356,7 +400,7 @@ abstract class FieldBase {
             if (subField == null) {
                 throw FitRuntimeException(
                     "com.garmin.fit.Field.setValue(): " +
-                            subFieldIndex + " is not a valid subfield index of " + this.name + "."
+                            "$subFieldIndex is not a valid subfield index of ${this.name}."
                 )
             }
         }
@@ -375,16 +419,38 @@ abstract class FieldBase {
         }
 
         return try {
-            val min = BigDecimal(Fit.baseTypeMinMap.get(type).toString())
-            val max = BigDecimal(Fit.baseTypeMaxMap.get(type).toString())
-            val `val` = BigDecimal(value.toString())
-            if (`val`.compareTo(min) < 0 || `val`.compareTo(max) > 0) {
-                Fit.baseTypeInvalidMap.get(type)
-            } else {
-                value
+            val min = Fit.baseTypeMinMap[type]
+            val max = Fit.baseTypeMaxMap[type]
+
+            val isInRange = when (value) {
+                // Range check ULong values without unnecessary conversion
+                is ULong -> {
+                    val range = min as ULong..max as ULong
+                    value in range
+                }
+
+                // Range check for Number, with Number or ULong min/max
+                is Number -> {
+                    val min = (min as? Number)?.toDouble() ?: min as ULong
+                    val max = (max as? Number)?.toDouble() ?: max as ULong
+
+                    when (min) {
+                        is Double if max is Double ->
+                            value.toDouble() in min..max
+
+                        is ULong if max is ULong ->
+                            value.toLong().toULong() in min..max
+
+                        else -> false
+                    }
+                }
+
+                else -> false
             }
+
+            if (isInRange) value else Fit.baseTypeInvalidMap[type]!!
         } catch (e: NumberFormatException) {
-            Fit.baseTypeInvalidMap.get(type)
+            Fit.baseTypeInvalidMap[type]
         }
     }
 
@@ -402,82 +468,86 @@ abstract class FieldBase {
             offset = subField.offset
         }
 
+        val isNumericValue = (value is Number || value is ULong)
+
+        // Convert Kotlin Unsigned value to signed Number that can hold the same value without
+        // overflow or loss of precision.
+        // That way, we only need to handle ULongs as unsigned values later
+        //
+        // Byte is also converted to Short since their min/max/invalid as expressed as Short
+        val value = when (value) {
+            is UByte -> value.toShort()
+            is UShort -> value.toInt()
+            is UInt -> value.toLong()
+            is ULong if !isUint64Type(type) -> value.toLong()
+            is Byte if type == Fit.BASE_TYPE_BYTE -> value.toUByte().toShort()
+            else -> value
+        }
+
         if (value == null) {
             values[fieldArrayIndex] = null
-        } else if ((value is Number) &&
-            ((scale != Fit.FIELD_DEFAULT_SCALE.toDouble()) ||
-                    (offset != Fit.FIELD_DEFAULT_OFFSET.toDouble()))
-        ) {
-            val rawValue = (value.toDouble() + offset) * scale
-            when (this.type) {
-                Fit.BASE_TYPE_ENUM, Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z, Fit.BASE_TYPE_SINT16 ->
-                    values[fieldArrayIndex] = rangeCorrect(this.type, rawValue.roundToLong())!!
+            return
+        }
 
-                Fit.BASE_TYPE_SINT8 -> values[fieldArrayIndex] =
-                    rangeCorrect(this.type, rawValue.roundToLong())!!
+        val hasOffset = offset != Fit.FIELD_DEFAULT_OFFSET.toDouble()
+        val hasScale = scale != Fit.FIELD_DEFAULT_SCALE.toDouble()
+        val isIntegerType = isIntegerType(type)
+        val isFloatType = isFloatType(type)
 
-                Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z, Fit.BASE_TYPE_SINT32 ->
-                    values[fieldArrayIndex] = rangeCorrect(this.type, rawValue.roundToLong())!!
+        when {
+            isNumericValue && hasScale && (isIntegerType || isFloatType) -> {
+                val double = (value as? Number)?.toDouble() ?: (value as ULong).toDouble()
+                val rawValue = (double + offset) * scale
+                val conditionallyRounded = if (isIntegerType) round(rawValue) else rawValue
+                values[fieldArrayIndex] = rangeCorrect(this.type, conditionallyRounded)
+            }
 
-                Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z -> values[fieldArrayIndex] =
-                    rangeCorrect(this.type, rawValue.roundToLong())!!
-
-                Fit.BASE_TYPE_FLOAT32 -> values[fieldArrayIndex] =
-                    rangeCorrect(this.type, rawValue)!!
-
-                Fit.BASE_TYPE_FLOAT64 -> values[fieldArrayIndex] =
-                    rangeCorrect(this.type, rawValue)!!
-
-                Fit.BASE_TYPE_STRING -> values[fieldArrayIndex] = rawValue.toString()
-                Fit.BASE_TYPE_SINT64, Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> {
-                    val bigDecimalRawValue =
-                        (value as BigDecimal)
-                            .add(BigDecimal.valueOf(offset))
-                            .multiply(BigDecimal.valueOf(scale))
-
-                    val bigIntegerValue = bigDecimalRawValue.toBigInteger()
-                    values[fieldArrayIndex] = rangeCorrect(this.type, bigIntegerValue)!!
+            isNumericValue && hasOffset && isIntegerType ->
+                values[fieldArrayIndex] = if (value is Number) {
+                    val long = value as? Long ?: value.toDouble().roundToLong()
+                    rangeCorrect(this.type, value = long + offset.roundToLong())
+                } else {
+                    val ulong = value as ULong
+                    rangeCorrect(this.type, value = ulong.addOffset(offset, invalidValue as ULong))
                 }
 
-                // Byte base types are only invalid if all bytes in an array are set to invalid.
-                Fit.BASE_TYPE_BYTE -> values[fieldArrayIndex] = rawValue.roundToLong()
-
-                else -> {}
+            isNumericValue && hasOffset && isFloatType -> {
+                val double = (value as? Number)?.toDouble() ?: (value as ULong).toDouble()
+                values[fieldArrayIndex] = rangeCorrect(this.type, double + offset)
             }
-        } else {
-            setValueUnscaled(fieldArrayIndex, value)
+
+            else -> setValueUnscaled(fieldArrayIndex, value)
         }
     }
 
     private fun setValueUnscaled(fieldArrayIndex: Int, value: Any) {
-        if ((value is String) && (value == "")) {
-            when (this.type) {
-                Fit.BASE_TYPE_ENUM,
-                Fit.BASE_TYPE_SINT8, Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z,
-                Fit.BASE_TYPE_SINT16, Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z,
-                Fit.BASE_TYPE_SINT32, Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z,
-                Fit.BASE_TYPE_FLOAT32, Fit.BASE_TYPE_FLOAT64,
-                Fit.BASE_TYPE_BYTE,
-                Fit.BASE_TYPE_SINT64, Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z ->
+        when (value) {
+            is String if value.isEmpty() -> when (this.type) {
+                Fit.BASE_TYPE_ENUM, Fit.BASE_TYPE_BYTE, Fit.BASE_TYPE_SINT8,
+                Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z, Fit.BASE_TYPE_SINT16,
+                Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z, Fit.BASE_TYPE_SINT32,
+                Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z, Fit.BASE_TYPE_SINT64,
+                Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z,
+                Fit.BASE_TYPE_FLOAT32, Fit.BASE_TYPE_FLOAT64 ->
                     values[fieldArrayIndex] = Fit.baseTypeInvalidMap[this.type]!!
 
-                Fit.BASE_TYPE_STRING -> values[fieldArrayIndex] = rangeCorrect(this.type, value)!!
+                Fit.BASE_TYPE_STRING -> values[fieldArrayIndex] = ""
+            }
 
-                else -> {}
-            }
-        } else if (value is String) {
-            val byteCount = value.toByteArray(StandardCharsets.UTF_8).size
-            if (byteCount > Fit.STRING_MAX_BYTE_COUNT) {
-                throw FitRuntimeException(
-                    String.format(
-                        "Invalid string size. Byte count can not be greater than %d bytes.",
-                        Fit.STRING_MAX_BYTE_COUNT
+            is String -> {
+                val byteCount = value.toByteArray(StandardCharsets.UTF_8).size
+                if (byteCount > Fit.STRING_MAX_BYTE_COUNT) {
+                    throw FitRuntimeException(
+                        String.format(
+                            "Invalid string size. Byte count can not be greater than %d bytes.",
+                            Fit.STRING_MAX_BYTE_COUNT
+                        )
                     )
-                )
+                }
+                values[fieldArrayIndex] = value
             }
-            values[fieldArrayIndex] = value
-        } else {
-            values[fieldArrayIndex] = rangeCorrect(this.type, value)!!
+
+            else -> values[fieldArrayIndex] = rangeCorrect(this.type, value)!!
         }
     }
 
@@ -486,45 +556,35 @@ abstract class FieldBase {
             addValue(Any())
         }
 
-        if (rawValue == null) {
-            values[fieldArrayIndex] = null
-        } else if (rawValue is Double) {
-            when (this.type) {
+        when (rawValue) {
+            null -> values[fieldArrayIndex] = null
+
+            is Double -> when (this.type) {
                 Fit.BASE_TYPE_ENUM,
                 Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z,
                 Fit.BASE_TYPE_SINT16, Fit.BASE_TYPE_BYTE -> values[fieldArrayIndex] =
-                    ((rawValue as Number).toDouble().roundToLong()).toShort()
+                    rawValue.roundToInt().toShort()
 
-                Fit.BASE_TYPE_SINT8 -> values[fieldArrayIndex] =
-                    ((rawValue as Number).toDouble().roundToLong()).toByte()
+                Fit.BASE_TYPE_SINT8 -> values[fieldArrayIndex] = rawValue.roundToInt().toByte()
 
                 Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z, Fit.BASE_TYPE_SINT32 ->
-                    values[fieldArrayIndex] =
-                        ((rawValue as Number).toDouble().roundToLong()).toInt()
+                    values[fieldArrayIndex] = rawValue.roundToInt()
 
                 Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z -> values[fieldArrayIndex] =
-                    (rawValue as Number).toDouble().roundToLong()
+                    rawValue.roundToLong()
 
                 Fit.BASE_TYPE_FLOAT32 -> values[fieldArrayIndex] = rawValue
                 Fit.BASE_TYPE_FLOAT64 -> values[fieldArrayIndex] = rawValue
-                Fit.BASE_TYPE_SINT64 -> values[fieldArrayIndex] =
-                    (rawValue as Number).toDouble().roundToLong()
+                Fit.BASE_TYPE_SINT64 -> values[fieldArrayIndex] = rawValue.roundToLong()
 
                 Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> values[fieldArrayIndex] =
-                    BigInteger.valueOf((rawValue as Number).toDouble().roundToLong())
+                    round(rawValue).toULong()
 
                 Fit.BASE_TYPE_STRING -> values[fieldArrayIndex] = (rawValue).toString()
-                else -> {}
             }
-        } else if (rawValue is BigDecimal) {
-            when (this.type) {
-                Fit.BASE_TYPE_SINT64, Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z ->
-                    values[fieldArrayIndex] = rawValue.toBigInteger()
 
-                else -> {}
-            }
-        } else {
-            setValueUnscaled(fieldArrayIndex, rawValue)
+            else -> setValueUnscaled(fieldArrayIndex, rawValue)
+
         }
     }
 
@@ -744,86 +804,6 @@ abstract class FieldBase {
         return (value as Number).toDouble()
     }
 
-    val bigIntegerValues: Array<BigInteger?>
-        get() = getBigIntegerValues(null as SubField?)
-
-    fun getBigIntegerValues(subfieldIndex: Int): Array<BigInteger?> =
-        getBigIntegerValues(getSubField(subfieldIndex))
-
-    fun getBigIntegerValues(subFieldName: String?): Array<BigInteger?> =
-        getBigIntegerValues(getSubField(subFieldName))
-
-    protected fun getBigIntegerValues(subfield: SubField?): Array<BigInteger?> {
-        val rv = arrayOfNulls<BigInteger>(this.numValues)
-
-        for (i in 0..<this.numValues) {
-            rv[i] = getBigIntegerValueInternal(i, subfield)
-        }
-
-        return rv
-    }
-
-    val bigIntegerValue: BigInteger?
-        get() = getBigIntegerValueInternal(0, null)
-
-    fun getBigIntegerValue(fieldArrayIndex: Int): BigInteger? =
-        getBigIntegerValueInternal(fieldArrayIndex, null)
-
-    fun getBigIntegerValue(fieldArrayIndex: Int, subFieldIndex: Int): BigInteger? =
-        getBigIntegerValueInternal(fieldArrayIndex, getSubField(subFieldIndex))
-
-    fun getBigIntegerValue(fieldArrayIndex: Int, subFieldName: String?): BigInteger? =
-        getBigIntegerValueInternal(fieldArrayIndex, getSubField(subFieldName))
-
-    protected fun getBigIntegerValueInternal(
-        fieldArrayIndex: Int,
-        subField: SubField?
-    ): BigInteger? {
-        val value = getValueInternal(fieldArrayIndex, subField) ?: return null
-
-        return value as BigInteger
-    }
-
-    val bigDecimalValues: Array<BigDecimal?>
-        get() = getBigDecimalValues(null as SubField?)
-
-    fun getBigDecimalValues(subfieldIndex: Int): Array<BigDecimal?> =
-        getBigDecimalValues(getSubField(subfieldIndex))
-
-    fun getBigDecimalValues(subFieldName: String?): Array<BigDecimal?> =
-        getBigDecimalValues(getSubField(subFieldName))
-
-    protected fun getBigDecimalValues(subfield: SubField?): Array<BigDecimal?> {
-        val rv = arrayOfNulls<BigDecimal>(this.numValues)
-
-        for (i in 0..<this.numValues) {
-            rv[i] = getBigDecimalValueInternal(i, subfield)
-        }
-
-        return rv
-    }
-
-    val bigDecimalValue: BigDecimal?
-        get() = getBigDecimalValueInternal(0, null)
-
-    fun getBigDecimalValue(fieldArrayIndex: Int): BigDecimal? =
-        getBigDecimalValueInternal(fieldArrayIndex, null)
-
-    fun getBigDecimalValue(fieldArrayIndex: Int, subFieldIndex: Int): BigDecimal? =
-        getBigDecimalValueInternal(fieldArrayIndex, getSubField(subFieldIndex))
-
-    fun getBigDecimalValue(fieldArrayIndex: Int, subFieldName: String?): BigDecimal? =
-        getBigDecimalValueInternal(fieldArrayIndex, getSubField(subFieldName))
-
-    protected fun getBigDecimalValueInternal(
-        fieldArrayIndex: Int,
-        subField: SubField?
-    ): BigDecimal? {
-        val value = getValueInternal(fieldArrayIndex, subField) ?: return null
-
-        return BigDecimal(value.toString())
-    }
-
     val stringValues: Array<String?>
         get() = getStringValues(null as SubField?)
 
@@ -897,22 +877,16 @@ abstract class FieldBase {
 
                 val type = this.type
                 val baseTypeSize = Fit.baseTypeSizes[type and Fit.BASE_TYPE_NUM_MASK]
-                val invalidValue = Fit.baseTypeInvalidMap[type]
 
                 while (bytesLeft > 0) {
                     var value: Any?
                     when (type) {
-                        Fit.BASE_TYPE_ENUM, Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z -> {
+                        Fit.BASE_TYPE_ENUM, Fit.BASE_TYPE_UINT8, Fit.BASE_TYPE_UINT8Z ->
                             value = (data.readByte().toInt() and 0xFF).toShort()
-                        }
 
-                        Fit.BASE_TYPE_SINT8 -> {
-                            value = data.readByte()
-                        }
+                        Fit.BASE_TYPE_SINT8 -> value = data.readByte()
 
-                        Fit.BASE_TYPE_SINT16 -> {
-                            value = data.readShort()
-                        }
+                        Fit.BASE_TYPE_SINT16 -> value = data.readShort()
 
                         Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z -> {
                             value = data.readByte().toInt() and 0xFF
@@ -920,9 +894,7 @@ abstract class FieldBase {
                             value = value or (data.readByte().toInt() and 0xFF)
                         }
 
-                        Fit.BASE_TYPE_SINT32 -> {
-                            value = data.readInt()
-                        }
+                        Fit.BASE_TYPE_SINT32 -> value = data.readInt()
 
                         Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z, Fit.BASE_TYPE_SINT64 -> {
                             value = (data.readByte().toInt() and 0xFF).toLong()
@@ -934,23 +906,14 @@ abstract class FieldBase {
                             }
                         }
 
-                        Fit.BASE_TYPE_FLOAT32 -> {
-                            value = data.readFloat()
-                        }
+                        Fit.BASE_TYPE_FLOAT32 -> value = data.readFloat()
 
-                        Fit.BASE_TYPE_FLOAT64 -> {
-                            value = data.readDouble()
-                        }
+                        Fit.BASE_TYPE_FLOAT64 -> value = data.readDouble()
 
-                        Fit.BASE_TYPE_BYTE -> {
-                            value = (data.readByte().toInt() and 0xFF).toShort()
-                        }
+                        Fit.BASE_TYPE_BYTE -> value = (data.readByte().toInt() and 0xFF).toShort()
 
-                        Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> {
-                            val bytes = ByteArray(baseTypeSize)
-                            data.read(bytes, 0, baseTypeSize)
-                            value = BigInteger(1, bytes)
-                        }
+                        Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> value =
+                            data.readLong().toULong()
 
                         else -> return false
                     }
@@ -1010,34 +973,11 @@ abstract class FieldBase {
                     Fit.BASE_TYPE_UINT32 -> data.writeInt(Fit.UINT32_INVALID.toInt())
                     Fit.BASE_TYPE_UINT32Z -> data.writeInt(Fit.UINT32Z_INVALID.toInt())
                     Fit.BASE_TYPE_SINT64 -> data.writeLong(Fit.SINT64_INVALID)
-                    Fit.BASE_TYPE_UINT64 -> {
-                        val uint64Size = Fit.baseTypeSizes[this.type and Fit.BASE_TYPE_NUM_MASK]
-                        var i = 0
-                        while (i < uint64Size) {
-                            data.writeByte(
-                                Fit.UINT64_INVALID.shiftRight(8 * (uint64Size - 1 - i)).toByte()
-                                    .toInt()
-                            )
-                            i++
-                        }
-                    }
-
-                    Fit.BASE_TYPE_UINT64Z -> {
-                        val uint64ZSize = Fit.baseTypeSizes[this.type and Fit.BASE_TYPE_NUM_MASK]
-                        var i = 0
-                        while (i < uint64ZSize) {
-                            data.writeByte(
-                                Fit.UINT64Z_INVALID.shiftRight(8 * (uint64ZSize - 1 - i)).toByte()
-                                    .toInt()
-                            )
-                            i++
-                        }
-                    }
-
+                    Fit.BASE_TYPE_UINT64 -> data.writeLong(Fit.UINT64_INVALID.toLong())
+                    Fit.BASE_TYPE_UINT64Z -> data.writeLong(Fit.UINT64Z_INVALID.toLong())
                     Fit.BASE_TYPE_STRING -> data.writeByte(0)
                     Fit.BASE_TYPE_FLOAT32 -> data.writeFloat(Fit.FLOAT32_INVALID)
                     Fit.BASE_TYPE_FLOAT64 -> data.writeDouble(Fit.FLOAT64_INVALID)
-                    else -> {}
                 }
             } else { // if (value != null)
                 when (this.type) {
@@ -1050,16 +990,15 @@ abstract class FieldBase {
                                 this.fieldName, value
                             )
                         }
+//                        println("Write byte for value=$value, data=${(value as Number).toDouble().roundToLong().toInt()}")
                         data.writeByte((value as Number).toDouble().roundToLong().toInt())
                     }
 
-                    Fit.BASE_TYPE_SINT16, Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z -> {
+                    Fit.BASE_TYPE_SINT16, Fit.BASE_TYPE_UINT16, Fit.BASE_TYPE_UINT16Z ->
                         data.writeShort((value as Number).toDouble().roundToLong().toInt())
-                    }
 
-                    Fit.BASE_TYPE_SINT32, Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z -> {
+                    Fit.BASE_TYPE_SINT32, Fit.BASE_TYPE_UINT32, Fit.BASE_TYPE_UINT32Z ->
                         data.writeInt((value as Number).toDouble().roundToLong().toInt())
-                    }
 
                     Fit.BASE_TYPE_STRING -> {
                         val stringWriter = OutputStreamWriter(out, "UTF-8")
@@ -1068,27 +1007,20 @@ abstract class FieldBase {
                         out.write(0)
                     }
 
-                    Fit.BASE_TYPE_FLOAT32 -> {
-                        data.writeFloat((value as Number).toFloat())
-                    }
+                    Fit.BASE_TYPE_FLOAT32 -> data.writeFloat((value as Number).toFloat())
+                    Fit.BASE_TYPE_FLOAT64 -> data.writeDouble((value as Number).toDouble())
+                    Fit.BASE_TYPE_SINT64 -> data.writeLong(
+                        value as? Long
+                            ?: (value as Number)
+                                .toDouble()
+                                .roundToLong()
+                    )
 
-                    Fit.BASE_TYPE_FLOAT64 -> {
-                        data.writeDouble((value as Number).toDouble())
+                    Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> when (value) {
+                        is Long -> data.writeLong(value)
+                        is ULong -> data.writeLong(value.toLong())
+                        is Number -> data.writeLong(round(value.toDouble()).toULong().toLong())
                     }
-
-                    Fit.BASE_TYPE_SINT64, Fit.BASE_TYPE_UINT64, Fit.BASE_TYPE_UINT64Z -> {
-                        val bigIntValue = BigDecimal(value.toString()).toBigInteger()
-                        val size = Fit.baseTypeSizes[this.type and Fit.BASE_TYPE_NUM_MASK]
-                        var i = 0
-                        while (i < size) {
-                            data.writeByte(
-                                bigIntValue.shiftRight(8 * (size - 1 - i)).toByte().toInt()
-                            )
-                            i++
-                        }
-                    }
-
-                    else -> {}
                 }
             } // if (value != null)
         } catch (e: IOException) {
@@ -1099,6 +1031,7 @@ abstract class FieldBase {
             "fieldName=$fieldName, " +
             "name=$name, " +
             "type=$type, " +
+            "typeName=${typeString(type)}, " +
             "units=$units, " +
             "numValues=$numValues, " +
             "values=$values, " +
@@ -1112,5 +1045,8 @@ abstract class FieldBase {
     companion object {
         @JvmField
         var forceShowInvalids: Boolean = !Fit.ENABLE_LEGACY_BEHAVIOUR
+
+        fun typeString(type: Int) = typeString(type.toShort())
+        fun typeString(type: Short) = FitBaseType.getStringFromValue(type)
     }
 }

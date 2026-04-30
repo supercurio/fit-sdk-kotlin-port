@@ -8,641 +8,285 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-import java.util.Collections
+import kotlinx.collections.immutable.toImmutableList
 
+@Suppress("PropertyName")
 class FitMessages {
-    internal val fileIdMesgs: MutableList<FileIdMesg> = ArrayList()
-    internal val fileCreatorMesgs: MutableList<FileCreatorMesg> = ArrayList()
-    internal val timestampCorrelationMesgs: MutableList<TimestampCorrelationMesg> = ArrayList()
-    internal val softwareMesgs: MutableList<SoftwareMesg> = ArrayList()
-    internal val slaveDeviceMesgs: MutableList<SlaveDeviceMesg> = ArrayList()
-    internal val capabilitiesMesgs: MutableList<CapabilitiesMesg> = ArrayList()
-    internal val fileCapabilitiesMesgs: MutableList<FileCapabilitiesMesg> = ArrayList()
-    internal val mesgCapabilitiesMesgs: MutableList<MesgCapabilitiesMesg> = ArrayList()
-    internal val fieldCapabilitiesMesgs: MutableList<FieldCapabilitiesMesg> = ArrayList()
-    internal val deviceSettingsMesgs: MutableList<DeviceSettingsMesg> = ArrayList()
-    internal val userProfileMesgs: MutableList<UserProfileMesg> = ArrayList()
-    internal val hrmProfileMesgs: MutableList<HrmProfileMesg> = ArrayList()
-    internal val sdmProfileMesgs: MutableList<SdmProfileMesg> = ArrayList()
-    internal val bikeProfileMesgs: MutableList<BikeProfileMesg> = ArrayList()
-    internal val connectivityMesgs: MutableList<ConnectivityMesg> = ArrayList()
-    internal val watchfaceSettingsMesgs: MutableList<WatchfaceSettingsMesg> = ArrayList()
-    internal val ohrSettingsMesgs: MutableList<OhrSettingsMesg> = ArrayList()
-    internal val timeInZoneMesgs: MutableList<TimeInZoneMesg> = ArrayList()
-    internal val zonesTargetMesgs: MutableList<ZonesTargetMesg> = ArrayList()
-    internal val sportMesgs: MutableList<SportMesg> = ArrayList()
-    internal val hrZoneMesgs: MutableList<HrZoneMesg> = ArrayList()
-    internal val speedZoneMesgs: MutableList<SpeedZoneMesg> = ArrayList()
-    internal val cadenceZoneMesgs: MutableList<CadenceZoneMesg> = ArrayList()
-    internal val powerZoneMesgs: MutableList<PowerZoneMesg> = ArrayList()
-    internal val metZoneMesgs: MutableList<MetZoneMesg> = ArrayList()
-    internal val trainingSettingsMesgs: MutableList<TrainingSettingsMesg> = ArrayList()
-    internal val diveSettingsMesgs: MutableList<DiveSettingsMesg> = ArrayList()
-    internal val diveAlarmMesgs: MutableList<DiveAlarmMesg> = ArrayList()
-    internal val diveApneaAlarmMesgs: MutableList<DiveApneaAlarmMesg> = ArrayList()
-    internal val diveGasMesgs: MutableList<DiveGasMesg> = ArrayList()
-    internal val goalMesgs: MutableList<GoalMesg> = ArrayList()
-    internal val activityMesgs: MutableList<ActivityMesg> = ArrayList()
-    internal val sessionMesgs: MutableList<SessionMesg> = ArrayList()
-    internal val lapMesgs: MutableList<LapMesg> = ArrayList()
-    internal val lengthMesgs: MutableList<LengthMesg> = ArrayList()
-    internal val recordMesgs: MutableList<RecordMesg> = ArrayList()
-    internal val eventMesgs: MutableList<EventMesg> = ArrayList()
-    internal val deviceInfoMesgs: MutableList<DeviceInfoMesg> = ArrayList()
-    internal val deviceAuxBatteryInfoMesgs: MutableList<DeviceAuxBatteryInfoMesg> = ArrayList()
-    internal val trainingFileMesgs: MutableList<TrainingFileMesg> = ArrayList()
-    internal val weatherConditionsMesgs: MutableList<WeatherConditionsMesg> = ArrayList()
-    internal val weatherAlertMesgs: MutableList<WeatherAlertMesg> = ArrayList()
-    internal val gpsMetadataMesgs: MutableList<GpsMetadataMesg> = ArrayList()
-    internal val cameraEventMesgs: MutableList<CameraEventMesg> = ArrayList()
-    internal val gyroscopeDataMesgs: MutableList<GyroscopeDataMesg> = ArrayList()
-    internal val accelerometerDataMesgs: MutableList<AccelerometerDataMesg> = ArrayList()
-    internal val magnetometerDataMesgs: MutableList<MagnetometerDataMesg> = ArrayList()
-    internal val barometerDataMesgs: MutableList<BarometerDataMesg> = ArrayList()
-    internal val threeDSensorCalibrationMesgs: MutableList<ThreeDSensorCalibrationMesg> =
-        ArrayList()
-    internal val oneDSensorCalibrationMesgs: MutableList<OneDSensorCalibrationMesg> = ArrayList()
-    internal val videoFrameMesgs: MutableList<VideoFrameMesg> = ArrayList()
-    internal val obdiiDataMesgs: MutableList<ObdiiDataMesg> = ArrayList()
-    internal val nmeaSentenceMesgs: MutableList<NmeaSentenceMesg> = ArrayList()
-    internal val aviationAttitudeMesgs: MutableList<AviationAttitudeMesg> = ArrayList()
-    internal val videoMesgs: MutableList<VideoMesg> = ArrayList()
-    internal val videoTitleMesgs: MutableList<VideoTitleMesg> = ArrayList()
-    internal val videoDescriptionMesgs: MutableList<VideoDescriptionMesg> = ArrayList()
-    internal val videoClipMesgs: MutableList<VideoClipMesg> = ArrayList()
-    internal val setMesgs: MutableList<SetMesg> = ArrayList()
-    internal val jumpMesgs: MutableList<JumpMesg> = ArrayList()
-    internal val splitMesgs: MutableList<SplitMesg> = ArrayList()
-    internal val splitSummaryMesgs: MutableList<SplitSummaryMesg> = ArrayList()
-    internal val climbProMesgs: MutableList<ClimbProMesg> = ArrayList()
-    internal val fieldDescriptionMesgs: MutableList<FieldDescriptionMesg> = ArrayList()
-    internal val developerDataIdMesgs: MutableList<DeveloperDataIdMesg> = ArrayList()
-    internal val courseMesgs: MutableList<CourseMesg> = ArrayList()
-    internal val coursePointMesgs: MutableList<CoursePointMesg> = ArrayList()
-    internal val segmentIdMesgs: MutableList<SegmentIdMesg> = ArrayList()
-    internal val segmentLeaderboardEntryMesgs: MutableList<SegmentLeaderboardEntryMesg> =
-        ArrayList()
-    internal val segmentPointMesgs: MutableList<SegmentPointMesg> = ArrayList()
-    internal val segmentLapMesgs: MutableList<SegmentLapMesg> = ArrayList()
-    internal val segmentFileMesgs: MutableList<SegmentFileMesg> = ArrayList()
-    internal val workoutMesgs: MutableList<WorkoutMesg> = ArrayList()
-    internal val workoutSessionMesgs: MutableList<WorkoutSessionMesg> = ArrayList()
-    internal val workoutStepMesgs: MutableList<WorkoutStepMesg> = ArrayList()
-    internal val exerciseTitleMesgs: MutableList<ExerciseTitleMesg> = ArrayList()
-    internal val scheduleMesgs: MutableList<ScheduleMesg> = ArrayList()
-    internal val totalsMesgs: MutableList<TotalsMesg> = ArrayList()
-    internal val weightScaleMesgs: MutableList<WeightScaleMesg> = ArrayList()
-    internal val bloodPressureMesgs: MutableList<BloodPressureMesg> = ArrayList()
-    internal val monitoringInfoMesgs: MutableList<MonitoringInfoMesg> = ArrayList()
-    internal val monitoringMesgs: MutableList<MonitoringMesg> = ArrayList()
-    internal val monitoringHrDataMesgs: MutableList<MonitoringHrDataMesg> = ArrayList()
-    internal val spo2DataMesgs: MutableList<Spo2DataMesg> = ArrayList()
-    internal val hrMesgs: MutableList<HrMesg> = ArrayList()
-    internal val stressLevelMesgs: MutableList<StressLevelMesg> = ArrayList()
-    internal val maxMetDataMesgs: MutableList<MaxMetDataMesg> = ArrayList()
-    internal val hsaBodyBatteryDataMesgs: MutableList<HsaBodyBatteryDataMesg> = ArrayList()
-    internal val hsaEventMesgs: MutableList<HsaEventMesg> = ArrayList()
-    internal val hsaAccelerometerDataMesgs: MutableList<HsaAccelerometerDataMesg> = ArrayList()
-    internal val hsaGyroscopeDataMesgs: MutableList<HsaGyroscopeDataMesg> = ArrayList()
-    internal val hsaStepDataMesgs: MutableList<HsaStepDataMesg> = ArrayList()
-    internal val hsaSpo2DataMesgs: MutableList<HsaSpo2DataMesg> = ArrayList()
-    internal val hsaStressDataMesgs: MutableList<HsaStressDataMesg> = ArrayList()
-    internal val hsaRespirationDataMesgs: MutableList<HsaRespirationDataMesg> = ArrayList()
-    internal val hsaHeartRateDataMesgs: MutableList<HsaHeartRateDataMesg> = ArrayList()
-    internal val hsaConfigurationDataMesgs: MutableList<HsaConfigurationDataMesg> = ArrayList()
-    internal val hsaWristTemperatureDataMesgs: MutableList<HsaWristTemperatureDataMesg> =
-        ArrayList()
-    internal val memoGlobMesgs: MutableList<MemoGlobMesg> = ArrayList()
-    internal val sleepLevelMesgs: MutableList<SleepLevelMesg> = ArrayList()
-    internal val antChannelIdMesgs: MutableList<AntChannelIdMesg> = ArrayList()
-    internal val antRxMesgs: MutableList<AntRxMesg> = ArrayList()
-    internal val antTxMesgs: MutableList<AntTxMesg> = ArrayList()
-    internal val exdScreenConfigurationMesgs: MutableList<ExdScreenConfigurationMesg> = ArrayList()
-    internal val exdDataFieldConfigurationMesgs: MutableList<ExdDataFieldConfigurationMesg> =
-        ArrayList()
-    internal val exdDataConceptConfigurationMesgs: MutableList<ExdDataConceptConfigurationMesg> =
-        ArrayList()
-    internal val diveSummaryMesgs: MutableList<DiveSummaryMesg> = ArrayList()
-    internal val aadAccelFeaturesMesgs: MutableList<AadAccelFeaturesMesg> = ArrayList()
-    internal val hrvMesgs: MutableList<HrvMesg> = ArrayList()
-    internal val beatIntervalsMesgs: MutableList<BeatIntervalsMesg> = ArrayList()
-    internal val hrvStatusSummaryMesgs: MutableList<HrvStatusSummaryMesg> = ArrayList()
-    internal val hrvValueMesgs: MutableList<HrvValueMesg> = ArrayList()
-    internal val rawBbiMesgs: MutableList<RawBbiMesg> = ArrayList()
-    internal val respirationRateMesgs: MutableList<RespirationRateMesg> = ArrayList()
-    internal val chronoShotSessionMesgs: MutableList<ChronoShotSessionMesg> = ArrayList()
-    internal val chronoShotDataMesgs: MutableList<ChronoShotDataMesg> = ArrayList()
-    internal val tankUpdateMesgs: MutableList<TankUpdateMesg> = ArrayList()
-    internal val tankSummaryMesgs: MutableList<TankSummaryMesg> = ArrayList()
-    internal val sleepAssessmentMesgs: MutableList<SleepAssessmentMesg> = ArrayList()
-    internal val sleepDisruptionSeverityPeriodMesgs: MutableList<SleepDisruptionSeverityPeriodMesg> =
-        ArrayList()
-    internal val sleepDisruptionOvernightSeverityMesgs: MutableList<SleepDisruptionOvernightSeverityMesg> =
-        ArrayList()
-    internal val napEventMesgs: MutableList<NapEventMesg> = ArrayList()
-    internal val skinTempOvernightMesgs: MutableList<SkinTempOvernightMesg> = ArrayList()
-    internal val padMesgs: MutableList<PadMesg> = ArrayList()
-
-    internal val developerFieldDescriptionMesgs: MutableList<DeveloperFieldDescription> =
-        ArrayList()
-
-    fun getFileIdMesgs(): MutableList<FileIdMesg> {
-        return Collections.unmodifiableList(fileIdMesgs)
-    }
-
-    fun getFileCreatorMesgs(): MutableList<FileCreatorMesg> {
-        return Collections.unmodifiableList(fileCreatorMesgs)
-    }
-
-    fun getTimestampCorrelationMesgs(): MutableList<TimestampCorrelationMesg> {
-        return Collections.unmodifiableList(timestampCorrelationMesgs)
-    }
-
-    fun getSoftwareMesgs(): MutableList<SoftwareMesg> {
-        return Collections.unmodifiableList(softwareMesgs)
-    }
-
-    fun getSlaveDeviceMesgs(): MutableList<SlaveDeviceMesg> {
-        return Collections.unmodifiableList(slaveDeviceMesgs)
-    }
-
-    fun getCapabilitiesMesgs(): MutableList<CapabilitiesMesg> {
-        return Collections.unmodifiableList(capabilitiesMesgs)
-    }
-
-    fun getFileCapabilitiesMesgs(): MutableList<FileCapabilitiesMesg> {
-        return Collections.unmodifiableList(fileCapabilitiesMesgs)
-    }
-
-    fun getMesgCapabilitiesMesgs(): MutableList<MesgCapabilitiesMesg> {
-        return Collections.unmodifiableList(mesgCapabilitiesMesgs)
-    }
-
-    fun getFieldCapabilitiesMesgs(): MutableList<FieldCapabilitiesMesg> {
-        return Collections.unmodifiableList(fieldCapabilitiesMesgs)
-    }
-
-    fun getDeviceSettingsMesgs(): MutableList<DeviceSettingsMesg> {
-        return Collections.unmodifiableList(deviceSettingsMesgs)
-    }
-
-    fun getUserProfileMesgs(): MutableList<UserProfileMesg> {
-        return Collections.unmodifiableList(userProfileMesgs)
-    }
-
-    fun getHrmProfileMesgs(): MutableList<HrmProfileMesg> {
-        return Collections.unmodifiableList(hrmProfileMesgs)
-    }
-
-    fun getSdmProfileMesgs(): MutableList<SdmProfileMesg> {
-        return Collections.unmodifiableList(sdmProfileMesgs)
-    }
-
-    fun getBikeProfileMesgs(): MutableList<BikeProfileMesg> {
-        return Collections.unmodifiableList(bikeProfileMesgs)
-    }
-
-    fun getConnectivityMesgs(): MutableList<ConnectivityMesg> {
-        return Collections.unmodifiableList(connectivityMesgs)
-    }
-
-    fun getWatchfaceSettingsMesgs(): MutableList<WatchfaceSettingsMesg> {
-        return Collections.unmodifiableList(watchfaceSettingsMesgs)
-    }
-
-    fun getOhrSettingsMesgs(): MutableList<OhrSettingsMesg> {
-        return Collections.unmodifiableList(ohrSettingsMesgs)
-    }
-
-    fun getTimeInZoneMesgs(): MutableList<TimeInZoneMesg> {
-        return Collections.unmodifiableList(timeInZoneMesgs)
-    }
-
-    fun getZonesTargetMesgs(): MutableList<ZonesTargetMesg> {
-        return Collections.unmodifiableList(zonesTargetMesgs)
-    }
-
-    fun getSportMesgs(): MutableList<SportMesg> {
-        return Collections.unmodifiableList(sportMesgs)
-    }
-
-    fun getHrZoneMesgs(): MutableList<HrZoneMesg> {
-        return Collections.unmodifiableList(hrZoneMesgs)
-    }
-
-    fun getSpeedZoneMesgs(): MutableList<SpeedZoneMesg> {
-        return Collections.unmodifiableList(speedZoneMesgs)
-    }
-
-    fun getCadenceZoneMesgs(): MutableList<CadenceZoneMesg> {
-        return Collections.unmodifiableList(cadenceZoneMesgs)
-    }
-
-    fun getPowerZoneMesgs(): MutableList<PowerZoneMesg> {
-        return Collections.unmodifiableList(powerZoneMesgs)
-    }
-
-    fun getMetZoneMesgs(): MutableList<MetZoneMesg> {
-        return Collections.unmodifiableList(metZoneMesgs)
-    }
-
-    fun getTrainingSettingsMesgs(): MutableList<TrainingSettingsMesg> {
-        return Collections.unmodifiableList(trainingSettingsMesgs)
-    }
-
-    fun getDiveSettingsMesgs(): MutableList<DiveSettingsMesg> {
-        return Collections.unmodifiableList(diveSettingsMesgs)
-    }
-
-    fun getDiveAlarmMesgs(): MutableList<DiveAlarmMesg> {
-        return Collections.unmodifiableList(diveAlarmMesgs)
-    }
-
-    fun getDiveApneaAlarmMesgs(): MutableList<DiveApneaAlarmMesg> {
-        return Collections.unmodifiableList(diveApneaAlarmMesgs)
-    }
-
-    fun getDiveGasMesgs(): MutableList<DiveGasMesg> {
-        return Collections.unmodifiableList(diveGasMesgs)
-    }
-
-    fun getGoalMesgs(): MutableList<GoalMesg> {
-        return Collections.unmodifiableList(goalMesgs)
-    }
-
-    fun getActivityMesgs(): MutableList<ActivityMesg> {
-        return Collections.unmodifiableList(activityMesgs)
-    }
-
-    fun getSessionMesgs(): MutableList<SessionMesg> {
-        return Collections.unmodifiableList(sessionMesgs)
-    }
-
-    fun getLapMesgs(): MutableList<LapMesg> {
-        return Collections.unmodifiableList(lapMesgs)
-    }
-
-    fun getLengthMesgs(): MutableList<LengthMesg> {
-        return Collections.unmodifiableList(lengthMesgs)
-    }
-
-    fun getRecordMesgs(): MutableList<RecordMesg> {
-        return Collections.unmodifiableList(recordMesgs)
-    }
-
-    fun getEventMesgs(): MutableList<EventMesg> {
-        return Collections.unmodifiableList(eventMesgs)
-    }
-
-    fun getDeviceInfoMesgs(): MutableList<DeviceInfoMesg> {
-        return Collections.unmodifiableList(deviceInfoMesgs)
-    }
-
-    fun getDeviceAuxBatteryInfoMesgs(): MutableList<DeviceAuxBatteryInfoMesg> {
-        return Collections.unmodifiableList(deviceAuxBatteryInfoMesgs)
-    }
-
-    fun getTrainingFileMesgs(): MutableList<TrainingFileMesg> {
-        return Collections.unmodifiableList(trainingFileMesgs)
-    }
-
-    fun getWeatherConditionsMesgs(): MutableList<WeatherConditionsMesg> {
-        return Collections.unmodifiableList(weatherConditionsMesgs)
-    }
-
-    fun getWeatherAlertMesgs(): MutableList<WeatherAlertMesg> {
-        return Collections.unmodifiableList(weatherAlertMesgs)
-    }
-
-    fun getGpsMetadataMesgs(): MutableList<GpsMetadataMesg> {
-        return Collections.unmodifiableList(gpsMetadataMesgs)
-    }
-
-    fun getCameraEventMesgs(): MutableList<CameraEventMesg> {
-        return Collections.unmodifiableList(cameraEventMesgs)
-    }
-
-    fun getGyroscopeDataMesgs(): MutableList<GyroscopeDataMesg> {
-        return Collections.unmodifiableList(gyroscopeDataMesgs)
-    }
-
-    fun getAccelerometerDataMesgs(): MutableList<AccelerometerDataMesg> {
-        return Collections.unmodifiableList(accelerometerDataMesgs)
-    }
-
-    fun getMagnetometerDataMesgs(): MutableList<MagnetometerDataMesg> {
-        return Collections.unmodifiableList(magnetometerDataMesgs)
-    }
-
-    fun getBarometerDataMesgs(): MutableList<BarometerDataMesg> {
-        return Collections.unmodifiableList(barometerDataMesgs)
-    }
-
-    fun getThreeDSensorCalibrationMesgs(): MutableList<ThreeDSensorCalibrationMesg> {
-        return Collections.unmodifiableList(threeDSensorCalibrationMesgs)
-    }
-
-    fun getOneDSensorCalibrationMesgs(): MutableList<OneDSensorCalibrationMesg> {
-        return Collections.unmodifiableList(oneDSensorCalibrationMesgs)
-    }
-
-    fun getVideoFrameMesgs(): MutableList<VideoFrameMesg> {
-        return Collections.unmodifiableList(videoFrameMesgs)
-    }
-
-    fun getObdiiDataMesgs(): MutableList<ObdiiDataMesg> {
-        return Collections.unmodifiableList(obdiiDataMesgs)
-    }
-
-    fun getNmeaSentenceMesgs(): MutableList<NmeaSentenceMesg> {
-        return Collections.unmodifiableList(nmeaSentenceMesgs)
-    }
-
-    fun getAviationAttitudeMesgs(): MutableList<AviationAttitudeMesg> {
-        return Collections.unmodifiableList(aviationAttitudeMesgs)
-    }
-
-    fun getVideoMesgs(): MutableList<VideoMesg> {
-        return Collections.unmodifiableList(videoMesgs)
-    }
-
-    fun getVideoTitleMesgs(): MutableList<VideoTitleMesg> {
-        return Collections.unmodifiableList(videoTitleMesgs)
-    }
-
-    fun getVideoDescriptionMesgs(): MutableList<VideoDescriptionMesg> {
-        return Collections.unmodifiableList(videoDescriptionMesgs)
-    }
-
-    fun getVideoClipMesgs(): MutableList<VideoClipMesg> {
-        return Collections.unmodifiableList(videoClipMesgs)
-    }
-
-    fun getSetMesgs(): MutableList<SetMesg> {
-        return Collections.unmodifiableList(setMesgs)
-    }
-
-    fun getJumpMesgs(): MutableList<JumpMesg> {
-        return Collections.unmodifiableList(jumpMesgs)
-    }
-
-    fun getSplitMesgs(): MutableList<SplitMesg> {
-        return Collections.unmodifiableList(splitMesgs)
-    }
-
-    fun getSplitSummaryMesgs(): MutableList<SplitSummaryMesg> {
-        return Collections.unmodifiableList(splitSummaryMesgs)
-    }
-
-    fun getClimbProMesgs(): MutableList<ClimbProMesg> {
-        return Collections.unmodifiableList(climbProMesgs)
-    }
-
-    fun getFieldDescriptionMesgs(): MutableList<FieldDescriptionMesg> {
-        return Collections.unmodifiableList(fieldDescriptionMesgs)
-    }
-
-    fun getDeveloperDataIdMesgs(): MutableList<DeveloperDataIdMesg> {
-        return Collections.unmodifiableList(developerDataIdMesgs)
-    }
-
-    fun getCourseMesgs(): MutableList<CourseMesg> {
-        return Collections.unmodifiableList(courseMesgs)
-    }
-
-    fun getCoursePointMesgs(): MutableList<CoursePointMesg> {
-        return Collections.unmodifiableList(coursePointMesgs)
-    }
-
-    fun getSegmentIdMesgs(): MutableList<SegmentIdMesg> {
-        return Collections.unmodifiableList(segmentIdMesgs)
-    }
-
-    fun getSegmentLeaderboardEntryMesgs(): MutableList<SegmentLeaderboardEntryMesg> {
-        return Collections.unmodifiableList(segmentLeaderboardEntryMesgs)
-    }
-
-    fun getSegmentPointMesgs(): MutableList<SegmentPointMesg> {
-        return Collections.unmodifiableList(segmentPointMesgs)
-    }
-
-    fun getSegmentLapMesgs(): MutableList<SegmentLapMesg> {
-        return Collections.unmodifiableList(segmentLapMesgs)
-    }
-
-    fun getSegmentFileMesgs(): MutableList<SegmentFileMesg> {
-        return Collections.unmodifiableList(segmentFileMesgs)
-    }
-
-    fun getWorkoutMesgs(): MutableList<WorkoutMesg> {
-        return Collections.unmodifiableList(workoutMesgs)
-    }
-
-    fun getWorkoutSessionMesgs(): MutableList<WorkoutSessionMesg> {
-        return Collections.unmodifiableList(workoutSessionMesgs)
-    }
-
-    fun getWorkoutStepMesgs(): MutableList<WorkoutStepMesg> {
-        return Collections.unmodifiableList(workoutStepMesgs)
-    }
-
-    fun getExerciseTitleMesgs(): MutableList<ExerciseTitleMesg> {
-        return Collections.unmodifiableList(exerciseTitleMesgs)
-    }
-
-    fun getScheduleMesgs(): MutableList<ScheduleMesg> {
-        return Collections.unmodifiableList(scheduleMesgs)
-    }
-
-    fun getTotalsMesgs(): MutableList<TotalsMesg> {
-        return Collections.unmodifiableList(totalsMesgs)
-    }
-
-    fun getWeightScaleMesgs(): MutableList<WeightScaleMesg> {
-        return Collections.unmodifiableList(weightScaleMesgs)
-    }
-
-    fun getBloodPressureMesgs(): MutableList<BloodPressureMesg> {
-        return Collections.unmodifiableList(bloodPressureMesgs)
-    }
-
-    fun getMonitoringInfoMesgs(): MutableList<MonitoringInfoMesg> {
-        return Collections.unmodifiableList(monitoringInfoMesgs)
-    }
-
-    fun getMonitoringMesgs(): MutableList<MonitoringMesg> {
-        return Collections.unmodifiableList(monitoringMesgs)
-    }
-
-    fun getMonitoringHrDataMesgs(): MutableList<MonitoringHrDataMesg> {
-        return Collections.unmodifiableList(monitoringHrDataMesgs)
-    }
-
-    fun getSpo2DataMesgs(): MutableList<Spo2DataMesg> {
-        return Collections.unmodifiableList(spo2DataMesgs)
-    }
-
-    fun getHrMesgs(): MutableList<HrMesg> {
-        return Collections.unmodifiableList(hrMesgs)
-    }
-
-    fun getStressLevelMesgs(): MutableList<StressLevelMesg> {
-        return Collections.unmodifiableList(stressLevelMesgs)
-    }
-
-    fun getMaxMetDataMesgs(): MutableList<MaxMetDataMesg> {
-        return Collections.unmodifiableList(maxMetDataMesgs)
-    }
-
-    fun getHsaBodyBatteryDataMesgs(): MutableList<HsaBodyBatteryDataMesg> {
-        return Collections.unmodifiableList(hsaBodyBatteryDataMesgs)
-    }
-
-    fun getHsaEventMesgs(): MutableList<HsaEventMesg> {
-        return Collections.unmodifiableList(hsaEventMesgs)
-    }
-
-    fun getHsaAccelerometerDataMesgs(): MutableList<HsaAccelerometerDataMesg> {
-        return Collections.unmodifiableList(hsaAccelerometerDataMesgs)
-    }
-
-    fun getHsaGyroscopeDataMesgs(): MutableList<HsaGyroscopeDataMesg> {
-        return Collections.unmodifiableList(hsaGyroscopeDataMesgs)
-    }
-
-    fun getHsaStepDataMesgs(): MutableList<HsaStepDataMesg> {
-        return Collections.unmodifiableList(hsaStepDataMesgs)
-    }
-
-    fun getHsaSpo2DataMesgs(): MutableList<HsaSpo2DataMesg> {
-        return Collections.unmodifiableList(hsaSpo2DataMesgs)
-    }
-
-    fun getHsaStressDataMesgs(): MutableList<HsaStressDataMesg> {
-        return Collections.unmodifiableList(hsaStressDataMesgs)
-    }
-
-    fun getHsaRespirationDataMesgs(): MutableList<HsaRespirationDataMesg> {
-        return Collections.unmodifiableList(hsaRespirationDataMesgs)
-    }
-
-    fun getHsaHeartRateDataMesgs(): MutableList<HsaHeartRateDataMesg> {
-        return Collections.unmodifiableList(hsaHeartRateDataMesgs)
-    }
-
-    fun getHsaConfigurationDataMesgs(): MutableList<HsaConfigurationDataMesg> {
-        return Collections.unmodifiableList(hsaConfigurationDataMesgs)
-    }
-
-    fun getHsaWristTemperatureDataMesgs(): MutableList<HsaWristTemperatureDataMesg> {
-        return Collections.unmodifiableList(hsaWristTemperatureDataMesgs)
-    }
-
-    fun getMemoGlobMesgs(): MutableList<MemoGlobMesg> {
-        return Collections.unmodifiableList(memoGlobMesgs)
-    }
-
-    fun getSleepLevelMesgs(): MutableList<SleepLevelMesg> {
-        return Collections.unmodifiableList(sleepLevelMesgs)
-    }
-
-    fun getAntChannelIdMesgs(): MutableList<AntChannelIdMesg> {
-        return Collections.unmodifiableList(antChannelIdMesgs)
-    }
-
-    fun getAntRxMesgs(): MutableList<AntRxMesg> {
-        return Collections.unmodifiableList(antRxMesgs)
-    }
-
-    fun getAntTxMesgs(): MutableList<AntTxMesg> {
-        return Collections.unmodifiableList(antTxMesgs)
-    }
-
-    fun getExdScreenConfigurationMesgs(): MutableList<ExdScreenConfigurationMesg> {
-        return Collections.unmodifiableList(exdScreenConfigurationMesgs)
-    }
-
-    fun getExdDataFieldConfigurationMesgs(): MutableList<ExdDataFieldConfigurationMesg> {
-        return Collections.unmodifiableList(exdDataFieldConfigurationMesgs)
-    }
-
-    fun getExdDataConceptConfigurationMesgs(): MutableList<ExdDataConceptConfigurationMesg> {
-        return Collections.unmodifiableList(exdDataConceptConfigurationMesgs)
-    }
-
-    fun getDiveSummaryMesgs(): MutableList<DiveSummaryMesg> {
-        return Collections.unmodifiableList(diveSummaryMesgs)
-    }
-
-    fun getAadAccelFeaturesMesgs(): MutableList<AadAccelFeaturesMesg> {
-        return Collections.unmodifiableList(aadAccelFeaturesMesgs)
-    }
-
-    fun getHrvMesgs(): MutableList<HrvMesg> {
-        return Collections.unmodifiableList(hrvMesgs)
-    }
-
-    fun getBeatIntervalsMesgs(): MutableList<BeatIntervalsMesg> {
-        return Collections.unmodifiableList(beatIntervalsMesgs)
-    }
-
-    fun getHrvStatusSummaryMesgs(): MutableList<HrvStatusSummaryMesg> {
-        return Collections.unmodifiableList(hrvStatusSummaryMesgs)
-    }
-
-    fun getHrvValueMesgs(): MutableList<HrvValueMesg> {
-        return Collections.unmodifiableList(hrvValueMesgs)
-    }
-
-    fun getRawBbiMesgs(): MutableList<RawBbiMesg> {
-        return Collections.unmodifiableList(rawBbiMesgs)
-    }
-
-    fun getRespirationRateMesgs(): MutableList<RespirationRateMesg> {
-        return Collections.unmodifiableList(respirationRateMesgs)
-    }
-
-    fun getChronoShotSessionMesgs(): MutableList<ChronoShotSessionMesg> {
-        return Collections.unmodifiableList(chronoShotSessionMesgs)
-    }
-
-    fun getChronoShotDataMesgs(): MutableList<ChronoShotDataMesg> {
-        return Collections.unmodifiableList(chronoShotDataMesgs)
-    }
-
-    fun getTankUpdateMesgs(): MutableList<TankUpdateMesg> {
-        return Collections.unmodifiableList(tankUpdateMesgs)
-    }
-
-    fun getTankSummaryMesgs(): MutableList<TankSummaryMesg> {
-        return Collections.unmodifiableList(tankSummaryMesgs)
-    }
-
-    fun getSleepAssessmentMesgs(): MutableList<SleepAssessmentMesg> {
-        return Collections.unmodifiableList(sleepAssessmentMesgs)
-    }
-
-    fun getSleepDisruptionSeverityPeriodMesgs(): MutableList<SleepDisruptionSeverityPeriodMesg> {
-        return Collections.unmodifiableList(sleepDisruptionSeverityPeriodMesgs)
-    }
-
-    fun getSleepDisruptionOvernightSeverityMesgs(): MutableList<SleepDisruptionOvernightSeverityMesg> {
-        return Collections.unmodifiableList(sleepDisruptionOvernightSeverityMesgs)
-    }
-
-    fun getNapEventMesgs(): MutableList<NapEventMesg> {
-        return Collections.unmodifiableList(napEventMesgs)
-    }
-
-    fun getSkinTempOvernightMesgs(): MutableList<SkinTempOvernightMesg> {
-        return Collections.unmodifiableList(skinTempOvernightMesgs)
-    }
-
-    fun getPadMesgs(): MutableList<PadMesg> {
-        return Collections.unmodifiableList(padMesgs)
-    }
-
-    fun getDeveloperFieldDescriptionMesgs(): MutableList<DeveloperFieldDescription> {
-        return Collections.unmodifiableList(developerFieldDescriptionMesgs)
-    }
+    internal val _fileIdMesgs = mutableListOf<FileIdMesg>()
+    internal val _fileCreatorMesgs = mutableListOf<FileCreatorMesg>()
+    internal val _timestampCorrelationMesgs = mutableListOf<TimestampCorrelationMesg>()
+    internal val _softwareMesgs = mutableListOf<SoftwareMesg>()
+    internal val _slaveDeviceMesgs = mutableListOf<SlaveDeviceMesg>()
+    internal val _capabilitiesMesgs = mutableListOf<CapabilitiesMesg>()
+    internal val _fileCapabilitiesMesgs = mutableListOf<FileCapabilitiesMesg>()
+    internal val _mesgCapabilitiesMesgs = mutableListOf<MesgCapabilitiesMesg>()
+    internal val _fieldCapabilitiesMesgs = mutableListOf<FieldCapabilitiesMesg>()
+    internal val _deviceSettingsMesgs = mutableListOf<DeviceSettingsMesg>()
+    internal val _userProfileMesgs = mutableListOf<UserProfileMesg>()
+    internal val _hrmProfileMesgs = mutableListOf<HrmProfileMesg>()
+    internal val _sdmProfileMesgs = mutableListOf<SdmProfileMesg>()
+    internal val _bikeProfileMesgs = mutableListOf<BikeProfileMesg>()
+    internal val _connectivityMesgs = mutableListOf<ConnectivityMesg>()
+    internal val _watchfaceSettingsMesgs = mutableListOf<WatchfaceSettingsMesg>()
+    internal val _ohrSettingsMesgs = mutableListOf<OhrSettingsMesg>()
+    internal val _timeInZoneMesgs = mutableListOf<TimeInZoneMesg>()
+    internal val _zonesTargetMesgs = mutableListOf<ZonesTargetMesg>()
+    internal val _sportMesgs = mutableListOf<SportMesg>()
+    internal val _hrZoneMesgs = mutableListOf<HrZoneMesg>()
+    internal val _speedZoneMesgs = mutableListOf<SpeedZoneMesg>()
+    internal val _cadenceZoneMesgs = mutableListOf<CadenceZoneMesg>()
+    internal val _powerZoneMesgs = mutableListOf<PowerZoneMesg>()
+    internal val _metZoneMesgs = mutableListOf<MetZoneMesg>()
+    internal val _trainingSettingsMesgs = mutableListOf<TrainingSettingsMesg>()
+    internal val _diveSettingsMesgs = mutableListOf<DiveSettingsMesg>()
+    internal val _diveAlarmMesgs = mutableListOf<DiveAlarmMesg>()
+    internal val _diveApneaAlarmMesgs = mutableListOf<DiveApneaAlarmMesg>()
+    internal val _diveGasMesgs = mutableListOf<DiveGasMesg>()
+    internal val _goalMesgs = mutableListOf<GoalMesg>()
+    internal val _activityMesgs = mutableListOf<ActivityMesg>()
+    internal val _sessionMesgs = mutableListOf<SessionMesg>()
+    internal val _lapMesgs = mutableListOf<LapMesg>()
+    internal val _lengthMesgs = mutableListOf<LengthMesg>()
+    internal val _recordMesgs = mutableListOf<RecordMesg>()
+    internal val _eventMesgs = mutableListOf<EventMesg>()
+    internal val _deviceInfoMesgs = mutableListOf<DeviceInfoMesg>()
+    internal val _deviceAuxBatteryInfoMesgs = mutableListOf<DeviceAuxBatteryInfoMesg>()
+    internal val _trainingFileMesgs = mutableListOf<TrainingFileMesg>()
+    internal val _weatherConditionsMesgs = mutableListOf<WeatherConditionsMesg>()
+    internal val _weatherAlertMesgs = mutableListOf<WeatherAlertMesg>()
+    internal val _gpsMetadataMesgs = mutableListOf<GpsMetadataMesg>()
+    internal val _cameraEventMesgs = mutableListOf<CameraEventMesg>()
+    internal val _gyroscopeDataMesgs = mutableListOf<GyroscopeDataMesg>()
+    internal val _accelerometerDataMesgs = mutableListOf<AccelerometerDataMesg>()
+    internal val _magnetometerDataMesgs = mutableListOf<MagnetometerDataMesg>()
+    internal val _barometerDataMesgs = mutableListOf<BarometerDataMesg>()
+    internal val _threeDSensorCalibrationMesgs = mutableListOf<ThreeDSensorCalibrationMesg>()
+    internal val _oneDSensorCalibrationMesgs = mutableListOf<OneDSensorCalibrationMesg>()
+    internal val _videoFrameMesgs = mutableListOf<VideoFrameMesg>()
+    internal val _obdiiDataMesgs = mutableListOf<ObdiiDataMesg>()
+    internal val _nmeaSentenceMesgs = mutableListOf<NmeaSentenceMesg>()
+    internal val _aviationAttitudeMesgs = mutableListOf<AviationAttitudeMesg>()
+    internal val _videoMesgs = mutableListOf<VideoMesg>()
+    internal val _videoTitleMesgs = mutableListOf<VideoTitleMesg>()
+    internal val _videoDescriptionMesgs = mutableListOf<VideoDescriptionMesg>()
+    internal val _videoClipMesgs = mutableListOf<VideoClipMesg>()
+    internal val _setMesgs = mutableListOf<SetMesg>()
+    internal val _jumpMesgs = mutableListOf<JumpMesg>()
+    internal val _splitMesgs = mutableListOf<SplitMesg>()
+    internal val _splitSummaryMesgs = mutableListOf<SplitSummaryMesg>()
+    internal val _climbProMesgs = mutableListOf<ClimbProMesg>()
+    internal val _fieldDescriptionMesgs = mutableListOf<FieldDescriptionMesg>()
+    internal val _developerDataIdMesgs = mutableListOf<DeveloperDataIdMesg>()
+    internal val _courseMesgs = mutableListOf<CourseMesg>()
+    internal val _coursePointMesgs = mutableListOf<CoursePointMesg>()
+    internal val _segmentIdMesgs = mutableListOf<SegmentIdMesg>()
+    internal val _segmentLeaderboardEntryMesgs = mutableListOf<SegmentLeaderboardEntryMesg>()
+    internal val _segmentPointMesgs = mutableListOf<SegmentPointMesg>()
+    internal val _segmentLapMesgs = mutableListOf<SegmentLapMesg>()
+    internal val _segmentFileMesgs = mutableListOf<SegmentFileMesg>()
+    internal val _workoutMesgs = mutableListOf<WorkoutMesg>()
+    internal val _workoutSessionMesgs = mutableListOf<WorkoutSessionMesg>()
+    internal val _workoutStepMesgs = mutableListOf<WorkoutStepMesg>()
+    internal val _exerciseTitleMesgs = mutableListOf<ExerciseTitleMesg>()
+    internal val _scheduleMesgs = mutableListOf<ScheduleMesg>()
+    internal val _totalsMesgs = mutableListOf<TotalsMesg>()
+    internal val _weightScaleMesgs = mutableListOf<WeightScaleMesg>()
+    internal val _bloodPressureMesgs = mutableListOf<BloodPressureMesg>()
+    internal val _monitoringInfoMesgs = mutableListOf<MonitoringInfoMesg>()
+    internal val _monitoringMesgs = mutableListOf<MonitoringMesg>()
+    internal val _monitoringHrDataMesgs = mutableListOf<MonitoringHrDataMesg>()
+    internal val _spo2DataMesgs = mutableListOf<Spo2DataMesg>()
+    internal val _hrMesgs = mutableListOf<HrMesg>()
+    internal val _stressLevelMesgs = mutableListOf<StressLevelMesg>()
+    internal val _maxMetDataMesgs = mutableListOf<MaxMetDataMesg>()
+    internal val _hsaBodyBatteryDataMesgs = mutableListOf<HsaBodyBatteryDataMesg>()
+    internal val _hsaEventMesgs = mutableListOf<HsaEventMesg>()
+    internal val _hsaAccelerometerDataMesgs = mutableListOf<HsaAccelerometerDataMesg>()
+    internal val _hsaGyroscopeDataMesgs = mutableListOf<HsaGyroscopeDataMesg>()
+    internal val _hsaStepDataMesgs = mutableListOf<HsaStepDataMesg>()
+    internal val _hsaSpo2DataMesgs = mutableListOf<HsaSpo2DataMesg>()
+    internal val _hsaStressDataMesgs = mutableListOf<HsaStressDataMesg>()
+    internal val _hsaRespirationDataMesgs = mutableListOf<HsaRespirationDataMesg>()
+    internal val _hsaHeartRateDataMesgs = mutableListOf<HsaHeartRateDataMesg>()
+    internal val _hsaConfigurationDataMesgs = mutableListOf<HsaConfigurationDataMesg>()
+    internal val _hsaWristTemperatureDataMesgs = mutableListOf<HsaWristTemperatureDataMesg>()
+    internal val _memoGlobMesgs = mutableListOf<MemoGlobMesg>()
+    internal val _sleepLevelMesgs = mutableListOf<SleepLevelMesg>()
+    internal val _antChannelIdMesgs = mutableListOf<AntChannelIdMesg>()
+    internal val _antRxMesgs = mutableListOf<AntRxMesg>()
+    internal val _antTxMesgs = mutableListOf<AntTxMesg>()
+    internal val _exdScreenConfigurationMesgs = mutableListOf<ExdScreenConfigurationMesg>()
+    internal val _exdDataFieldConfigurationMesgs = mutableListOf<ExdDataFieldConfigurationMesg>()
+    internal val _exdDataConceptConfigurationMesgs =
+        mutableListOf<ExdDataConceptConfigurationMesg>()
+    internal val _diveSummaryMesgs = mutableListOf<DiveSummaryMesg>()
+    internal val _aadAccelFeaturesMesgs = mutableListOf<AadAccelFeaturesMesg>()
+    internal val _hrvMesgs = mutableListOf<HrvMesg>()
+    internal val _beatIntervalsMesgs = mutableListOf<BeatIntervalsMesg>()
+    internal val _hrvStatusSummaryMesgs = mutableListOf<HrvStatusSummaryMesg>()
+    internal val _hrvValueMesgs = mutableListOf<HrvValueMesg>()
+    internal val _rawBbiMesgs = mutableListOf<RawBbiMesg>()
+    internal val _respirationRateMesgs = mutableListOf<RespirationRateMesg>()
+    internal val _chronoShotSessionMesgs = mutableListOf<ChronoShotSessionMesg>()
+    internal val _chronoShotDataMesgs = mutableListOf<ChronoShotDataMesg>()
+    internal val _tankUpdateMesgs = mutableListOf<TankUpdateMesg>()
+    internal val _tankSummaryMesgs = mutableListOf<TankSummaryMesg>()
+    internal val _sleepAssessmentMesgs = mutableListOf<SleepAssessmentMesg>()
+    internal val _sleepDisruptionSeverityPeriodMesgs =
+        mutableListOf<SleepDisruptionSeverityPeriodMesg>()
+    internal val _sleepDisruptionOvernightSeverityMesgs =
+        mutableListOf<SleepDisruptionOvernightSeverityMesg>()
+    internal val _napEventMesgs = mutableListOf<NapEventMesg>()
+    internal val _skinTempOvernightMesgs = mutableListOf<SkinTempOvernightMesg>()
+    internal val _padMesgs = mutableListOf<PadMesg>()
+    internal val _developerFieldDescriptionMesgs = mutableListOf<DeveloperFieldDescription>()
+
+
+    val fileIdMesgs: List<FileIdMesg> get() =_fileIdMesgs.toImmutableList()
+    val fileCreatorMesgs: List<FileCreatorMesg> get() =_fileCreatorMesgs.toImmutableList()
+    val timestampCorrelationMesgs: List<TimestampCorrelationMesg> =
+        _timestampCorrelationMesgs.toImmutableList()
+    val softwareMesgs: List<SoftwareMesg> get() =_softwareMesgs.toImmutableList()
+    val slaveDeviceMesgs: List<SlaveDeviceMesg> get() =_slaveDeviceMesgs.toImmutableList()
+    val capabilitiesMesgs: List<CapabilitiesMesg> get() =_capabilitiesMesgs.toImmutableList()
+    val fileCapabilitiesMesgs: List<FileCapabilitiesMesg> get() =_fileCapabilitiesMesgs.toImmutableList()
+    val mesgCapabilitiesMesgs: List<MesgCapabilitiesMesg> get() =_mesgCapabilitiesMesgs.toImmutableList()
+    val fieldCapabilitiesMesgs: List<FieldCapabilitiesMesg> =
+        _fieldCapabilitiesMesgs.toImmutableList()
+    val deviceSettingsMesgs: List<DeviceSettingsMesg> get() =_deviceSettingsMesgs.toImmutableList()
+    val userProfileMesgs: List<UserProfileMesg> get() =_userProfileMesgs.toImmutableList()
+    val hrmProfileMesgs: List<HrmProfileMesg> get() =_hrmProfileMesgs.toImmutableList()
+    val sdmProfileMesgs: List<SdmProfileMesg> get() =_sdmProfileMesgs.toImmutableList()
+    val bikeProfileMesgs: List<BikeProfileMesg> get() =_bikeProfileMesgs.toImmutableList()
+    val connectivityMesgs: List<ConnectivityMesg> get() =_connectivityMesgs.toImmutableList()
+    val watchfaceSettingsMesgs: List<WatchfaceSettingsMesg> =
+        _watchfaceSettingsMesgs.toImmutableList()
+    val ohrSettingsMesgs: List<OhrSettingsMesg> get() =_ohrSettingsMesgs.toImmutableList()
+    val timeInZoneMesgs: List<TimeInZoneMesg> get() =_timeInZoneMesgs.toImmutableList()
+    val zonesTargetMesgs: List<ZonesTargetMesg> get() =_zonesTargetMesgs.toImmutableList()
+    val sportMesgs: List<SportMesg> get() =_sportMesgs.toImmutableList()
+    val hrZoneMesgs: List<HrZoneMesg> get() =_hrZoneMesgs.toImmutableList()
+    val speedZoneMesgs: List<SpeedZoneMesg> get() =_speedZoneMesgs.toImmutableList()
+    val cadenceZoneMesgs: List<CadenceZoneMesg> get() =_cadenceZoneMesgs.toImmutableList()
+    val powerZoneMesgs: List<PowerZoneMesg> get() =_powerZoneMesgs.toImmutableList()
+    val metZoneMesgs: List<MetZoneMesg> get() =_metZoneMesgs.toImmutableList()
+    val trainingSettingsMesgs: List<TrainingSettingsMesg> get() =_trainingSettingsMesgs.toImmutableList()
+    val diveSettingsMesgs: List<DiveSettingsMesg> get() =_diveSettingsMesgs.toImmutableList()
+    val diveAlarmMesgs: List<DiveAlarmMesg> get() =_diveAlarmMesgs.toImmutableList()
+    val diveApneaAlarmMesgs: List<DiveApneaAlarmMesg> get() =_diveApneaAlarmMesgs.toImmutableList()
+    val diveGasMesgs: List<DiveGasMesg> get() =_diveGasMesgs.toImmutableList()
+    val goalMesgs: List<GoalMesg> get() =_goalMesgs.toImmutableList()
+    val activityMesgs: List<ActivityMesg> get() =_activityMesgs.toImmutableList()
+    val sessionMesgs: List<SessionMesg> get() =_sessionMesgs.toImmutableList()
+    val lapMesgs: List<LapMesg> get() =_lapMesgs.toImmutableList()
+    val lengthMesgs: List<LengthMesg> get() =_lengthMesgs.toImmutableList()
+    val recordMesgs: List<RecordMesg> get() =_recordMesgs.toImmutableList()
+    val eventMesgs: List<EventMesg> get() =_eventMesgs.toImmutableList()
+    val deviceInfoMesgs: List<DeviceInfoMesg> get() =_deviceInfoMesgs.toImmutableList()
+    val deviceAuxBatteryInfoMesgs: List<DeviceAuxBatteryInfoMesg> =
+        _deviceAuxBatteryInfoMesgs.toImmutableList()
+    val trainingFileMesgs: List<TrainingFileMesg> get() =_trainingFileMesgs.toImmutableList()
+    val weatherConditionsMesgs: List<WeatherConditionsMesg> =
+        _weatherConditionsMesgs.toImmutableList()
+    val weatherAlertMesgs: List<WeatherAlertMesg> get() =_weatherAlertMesgs.toImmutableList()
+    val gpsMetadataMesgs: List<GpsMetadataMesg> get() =_gpsMetadataMesgs.toImmutableList()
+    val cameraEventMesgs: List<CameraEventMesg> get() =_cameraEventMesgs.toImmutableList()
+    val gyroscopeDataMesgs: List<GyroscopeDataMesg> get() =_gyroscopeDataMesgs.toImmutableList()
+    val accelerometerDataMesgs: List<AccelerometerDataMesg> =
+        _accelerometerDataMesgs.toImmutableList()
+    val magnetometerDataMesgs: List<MagnetometerDataMesg> get() =_magnetometerDataMesgs.toImmutableList()
+    val barometerDataMesgs: List<BarometerDataMesg> get() =_barometerDataMesgs.toImmutableList()
+    val threeDSensorCalibrationMesgs: List<ThreeDSensorCalibrationMesg> =
+        _threeDSensorCalibrationMesgs.toImmutableList()
+    val oneDSensorCalibrationMesgs: List<OneDSensorCalibrationMesg> =
+        _oneDSensorCalibrationMesgs.toImmutableList()
+    val videoFrameMesgs: List<VideoFrameMesg> get() =_videoFrameMesgs.toImmutableList()
+    val obdiiDataMesgs: List<ObdiiDataMesg> get() =_obdiiDataMesgs.toImmutableList()
+    val nmeaSentenceMesgs: List<NmeaSentenceMesg> get() =_nmeaSentenceMesgs.toImmutableList()
+    val aviationAttitudeMesgs: List<AviationAttitudeMesg> get() =_aviationAttitudeMesgs.toImmutableList()
+    val videoMesgs: List<VideoMesg> get() =_videoMesgs.toImmutableList()
+    val videoTitleMesgs: List<VideoTitleMesg> get() =_videoTitleMesgs.toImmutableList()
+    val videoDescriptionMesgs: List<VideoDescriptionMesg> get() =_videoDescriptionMesgs.toImmutableList()
+    val videoClipMesgs: List<VideoClipMesg> get() =_videoClipMesgs.toImmutableList()
+    val setMesgs: List<SetMesg> get() =_setMesgs.toImmutableList()
+    val jumpMesgs: List<JumpMesg> get() =_jumpMesgs.toImmutableList()
+    val splitMesgs: List<SplitMesg> get() =_splitMesgs.toImmutableList()
+    val splitSummaryMesgs: List<SplitSummaryMesg> get() =_splitSummaryMesgs.toImmutableList()
+    val climbProMesgs: List<ClimbProMesg> get() =_climbProMesgs.toImmutableList()
+    val fieldDescriptionMesgs: List<FieldDescriptionMesg> get() =_fieldDescriptionMesgs.toImmutableList()
+    val developerDataIdMesgs: List<DeveloperDataIdMesg> get() =_developerDataIdMesgs.toImmutableList()
+    val courseMesgs: List<CourseMesg> get() =_courseMesgs.toImmutableList()
+    val coursePointMesgs: List<CoursePointMesg> get() =_coursePointMesgs.toImmutableList()
+    val segmentIdMesgs: List<SegmentIdMesg> get() =_segmentIdMesgs.toImmutableList()
+    val segmentLeaderboardEntryMesgs: List<SegmentLeaderboardEntryMesg> =
+        _segmentLeaderboardEntryMesgs.toImmutableList()
+    val segmentPointMesgs: List<SegmentPointMesg> get() =_segmentPointMesgs.toImmutableList()
+    val segmentLapMesgs: List<SegmentLapMesg> get() =_segmentLapMesgs.toImmutableList()
+    val segmentFileMesgs: List<SegmentFileMesg> get() =_segmentFileMesgs.toImmutableList()
+    val workoutMesgs: List<WorkoutMesg> get() =_workoutMesgs.toImmutableList()
+    val workoutSessionMesgs: List<WorkoutSessionMesg> get() =_workoutSessionMesgs.toImmutableList()
+    val workoutStepMesgs: List<WorkoutStepMesg> get() =_workoutStepMesgs.toImmutableList()
+    val exerciseTitleMesgs: List<ExerciseTitleMesg> get() =_exerciseTitleMesgs.toImmutableList()
+    val scheduleMesgs: List<ScheduleMesg> get() =_scheduleMesgs.toImmutableList()
+    val totalsMesgs: List<TotalsMesg> get() =_totalsMesgs.toImmutableList()
+    val weightScaleMesgs: List<WeightScaleMesg> get() =_weightScaleMesgs.toImmutableList()
+    val bloodPressureMesgs: List<BloodPressureMesg> get() =_bloodPressureMesgs.toImmutableList()
+    val monitoringInfoMesgs: List<MonitoringInfoMesg> get() =_monitoringInfoMesgs.toImmutableList()
+    val monitoringMesgs: List<MonitoringMesg> get() =_monitoringMesgs.toImmutableList()
+    val monitoringHrDataMesgs: List<MonitoringHrDataMesg> get() =_monitoringHrDataMesgs.toImmutableList()
+    val spo2DataMesgs: List<Spo2DataMesg> get() =_spo2DataMesgs.toImmutableList()
+    val hrMesgs: List<HrMesg> get() =_hrMesgs.toImmutableList()
+    val stressLevelMesgs: List<StressLevelMesg> get() =_stressLevelMesgs.toImmutableList()
+    val maxMetDataMesgs: List<MaxMetDataMesg> get() =_maxMetDataMesgs.toImmutableList()
+    val hsaBodyBatteryDataMesgs: List<HsaBodyBatteryDataMesg> =
+        _hsaBodyBatteryDataMesgs.toImmutableList()
+    val hsaEventMesgs: List<HsaEventMesg> get() =_hsaEventMesgs.toImmutableList()
+    val hsaAccelerometerDataMesgs: List<HsaAccelerometerDataMesg> =
+        _hsaAccelerometerDataMesgs.toImmutableList()
+    val hsaGyroscopeDataMesgs: List<HsaGyroscopeDataMesg> get() =_hsaGyroscopeDataMesgs.toImmutableList()
+    val hsaStepDataMesgs: List<HsaStepDataMesg> get() =_hsaStepDataMesgs.toImmutableList()
+    val hsaSpo2DataMesgs: List<HsaSpo2DataMesg> get() =_hsaSpo2DataMesgs.toImmutableList()
+    val hsaStressDataMesgs: List<HsaStressDataMesg> get() =_hsaStressDataMesgs.toImmutableList()
+    val hsaRespirationDataMesgs: List<HsaRespirationDataMesg> =
+        _hsaRespirationDataMesgs.toImmutableList()
+    val hsaHeartRateDataMesgs: List<HsaHeartRateDataMesg> get() =_hsaHeartRateDataMesgs.toImmutableList()
+    val hsaConfigurationDataMesgs: List<HsaConfigurationDataMesg> =
+        _hsaConfigurationDataMesgs.toImmutableList()
+    val hsaWristTemperatureDataMesgs: List<HsaWristTemperatureDataMesg> =
+        _hsaWristTemperatureDataMesgs.toImmutableList()
+    val memoGlobMesgs: List<MemoGlobMesg> get() =_memoGlobMesgs.toImmutableList()
+    val sleepLevelMesgs: List<SleepLevelMesg> get() =_sleepLevelMesgs.toImmutableList()
+    val antChannelIdMesgs: List<AntChannelIdMesg> get() =_antChannelIdMesgs.toImmutableList()
+    val antRxMesgs: List<AntRxMesg> get() =_antRxMesgs.toImmutableList()
+    val antTxMesgs: List<AntTxMesg> get() =_antTxMesgs.toImmutableList()
+    val exdScreenConfigurationMesgs: List<ExdScreenConfigurationMesg> =
+        _exdScreenConfigurationMesgs.toImmutableList()
+    val exdDataFieldConfigurationMesgs: List<ExdDataFieldConfigurationMesg> =
+        _exdDataFieldConfigurationMesgs.toImmutableList()
+    val exdDataConceptConfigurationMesgs: List<ExdDataConceptConfigurationMesg> =
+        _exdDataConceptConfigurationMesgs.toImmutableList()
+    val diveSummaryMesgs: List<DiveSummaryMesg> get() =_diveSummaryMesgs.toImmutableList()
+    val aadAccelFeaturesMesgs: List<AadAccelFeaturesMesg> get() =_aadAccelFeaturesMesgs.toImmutableList()
+    val hrvMesgs: List<HrvMesg> get() =_hrvMesgs.toImmutableList()
+    val beatIntervalsMesgs: List<BeatIntervalsMesg> get() =_beatIntervalsMesgs.toImmutableList()
+    val hrvStatusSummaryMesgs: List<HrvStatusSummaryMesg> get() =_hrvStatusSummaryMesgs.toImmutableList()
+    val hrvValueMesgs: List<HrvValueMesg> get() =_hrvValueMesgs.toImmutableList()
+    val rawBbiMesgs: List<RawBbiMesg> get() =_rawBbiMesgs.toImmutableList()
+    val respirationRateMesgs: List<RespirationRateMesg> get() =_respirationRateMesgs.toImmutableList()
+    val chronoShotSessionMesgs: List<ChronoShotSessionMesg> =
+        _chronoShotSessionMesgs.toImmutableList()
+    val chronoShotDataMesgs: List<ChronoShotDataMesg> get() =_chronoShotDataMesgs.toImmutableList()
+    val tankUpdateMesgs: List<TankUpdateMesg> get() =_tankUpdateMesgs.toImmutableList()
+    val tankSummaryMesgs: List<TankSummaryMesg> get() =_tankSummaryMesgs.toImmutableList()
+    val sleepAssessmentMesgs: List<SleepAssessmentMesg> get() =_sleepAssessmentMesgs.toImmutableList()
+    val sleepDisruptionSeverityPeriodMesgs: List<SleepDisruptionSeverityPeriodMesg> =
+        _sleepDisruptionSeverityPeriodMesgs.toImmutableList()
+    val sleepDisruptionOvernightSeverityMesgs: List<SleepDisruptionOvernightSeverityMesg> =
+        _sleepDisruptionOvernightSeverityMesgs.toImmutableList()
+    val napEventMesgs: List<NapEventMesg> get() =_napEventMesgs.toImmutableList()
+    val skinTempOvernightMesgs: List<SkinTempOvernightMesg> =
+        _skinTempOvernightMesgs.toImmutableList()
+    val padMesgs: List<PadMesg> get() =_padMesgs.toImmutableList()
+    val developerFieldDescriptionMesgs: List<DeveloperFieldDescription> =
+        _developerFieldDescriptionMesgs.toImmutableList()
 }

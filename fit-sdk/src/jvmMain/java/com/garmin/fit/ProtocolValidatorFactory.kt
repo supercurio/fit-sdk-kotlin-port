@@ -63,7 +63,7 @@ internal class V1Validator : ProtocolValidator {
 }
 
 internal class V2Validator : ProtocolValidator {
-    override fun validateMesgDefn(defn: MesgDefinition): Boolean {
+    override fun validateMesgDefn(mesgDefinition: MesgDefinition): Boolean {
         return true
     }
 

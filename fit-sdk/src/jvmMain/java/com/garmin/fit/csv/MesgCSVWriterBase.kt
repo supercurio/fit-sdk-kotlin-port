@@ -100,21 +100,12 @@ open class MesgCSVWriterBase(byteArrayOutputStream: ByteArrayOutputStream) {
                     val degrees =
                         SemicirclesConverter.semicirclesToDegrees(value.toString().toInt())
                     outStringBuilder.append(String.format("%.8f", degrees))
-                } else if (this.isDateTimeAsISO8601Enabled && profileType?.name.equals(
+                } else if (this.isDateTimeAsISO8601Enabled && profileType.name.equals(
                         "DATE_TIME",
                         ignoreCase = true
                     )
                 ) {
                     outStringBuilder.append(DateTimeConverter.fitTimestampToISO8601((value as Long?)!!))
-                } else if (this.isEnumsAsStringsEnabled &&
-                    (profileType?.ordinal ?: -1) > Profile.Type.BOOL.ordinal
-                ) {
-                    outStringBuilder.append(
-                        Profile.enumValueName(
-                            profileType,
-                            (value as Number).toLong()
-                        )
-                    )
                 } else {
                     outStringBuilder.append(value.toString())
                 }

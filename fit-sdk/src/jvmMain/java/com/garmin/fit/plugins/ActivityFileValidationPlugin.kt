@@ -43,87 +43,87 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         results.clear()
 
         // FileId Message Checks
-        results.add(checkFileIdMesgExists(fitMessages.getFileIdMesgs()))
+        results.add(checkFileIdMesgExists(fitMessages.fileIdMesgs))
 
-        if (fitMessages.getFileIdMesgs().isNotEmpty()) {
+        if (fitMessages.fileIdMesgs.isNotEmpty()) {
             results.add(checkFileIdMesgIsFirst(mesgs))
-            results.add(checkFileIdMesgType(fitMessages.getFileIdMesgs()[0]))
-            results.add(checkFileIdMesgManufacturerId(fitMessages.getFileIdMesgs()[0]))
-            results.add(checkFileIdMesgTimeCreated(fitMessages.getFileIdMesgs()[0]))
+            results.add(checkFileIdMesgType(fitMessages.fileIdMesgs[0]))
+            results.add(checkFileIdMesgManufacturerId(fitMessages.fileIdMesgs[0]))
+            results.add(checkFileIdMesgTimeCreated(fitMessages.fileIdMesgs[0]))
         }
 
         // Activity Message Checks
-        results.add(checkActivityMesgExists(fitMessages.getActivityMesgs()))
+        results.add(checkActivityMesgExists(fitMessages.activityMesgs))
 
-        if (fitMessages.getActivityMesgs().isNotEmpty()) {
-            results.add(checkActivityMesgTimestamp(fitMessages.getActivityMesgs()[0]))
-            results.add(checkActivityMesgLocalTimeStamp(fitMessages.getActivityMesgs()[0]))
+        if (fitMessages.activityMesgs.isNotEmpty()) {
+            results.add(checkActivityMesgTimestamp(fitMessages.activityMesgs[0]))
+            results.add(checkActivityMesgLocalTimeStamp(fitMessages.activityMesgs[0]))
             results.add(
                 checkActivityMesgTotalTimerTime(
-                    fitMessages.getActivityMesgs()[0],
-                    fitMessages.getSessionMesgs()
+                    fitMessages.activityMesgs[0],
+                    fitMessages.sessionMesgs
                 )
             )
             results.add(
                 checkActivityMesgSessionCount(
-                    fitMessages.getActivityMesgs()[0],
-                    fitMessages.getSessionMesgs().size
+                    fitMessages.activityMesgs[0],
+                    fitMessages.sessionMesgs.size
                 )
             )
         }
 
         // Session Message Checks
-        results.add(checkSessionMesgsExists(fitMessages.getSessionMesgs().size))
-        results.add(checkSessionMesgTimestamp(fitMessages.getSessionMesgs()))
-        results.add(checkSessionMesgStartTime(fitMessages.getSessionMesgs()))
-        results.add(checkSessionMesgTotalTimerTimeAndTotalElapsedTime(fitMessages.getSessionMesgs()))
+        results.add(checkSessionMesgsExists(fitMessages.sessionMesgs.size))
+        results.add(checkSessionMesgTimestamp(fitMessages.sessionMesgs))
+        results.add(checkSessionMesgStartTime(fitMessages.sessionMesgs))
+        results.add(checkSessionMesgTotalTimerTimeAndTotalElapsedTime(fitMessages.sessionMesgs))
         results.add(
             checkSessionMesgFirstLapIndexAndNumLapsAreSequentialAndAbut(
-                fitMessages.getSessionMesgs(),
-                fitMessages.getLapMesgs()
+                fitMessages.sessionMesgs,
+                fitMessages.lapMesgs
             )
         )
         results.add(
             checkSessionMesgTotalTimerTime(
-                fitMessages.getSessionMesgs(),
-                fitMessages.getLapMesgs()
+                fitMessages.sessionMesgs,
+                fitMessages.lapMesgs
             )
         )
         results.add(
             checkSessionMesgTotalElapsedTime(
-                fitMessages.getSessionMesgs(),
-                fitMessages.getLapMesgs()
+                fitMessages.sessionMesgs,
+                fitMessages.lapMesgs
             )
         )
-        results.add(checkSessionMesgSport(fitMessages.getSessionMesgs()))
-        results.add(checkSessionMesgSubSport(fitMessages.getSessionMesgs()))
-        results.add(checkSessionMesgsAreSequentialAndAbut(fitMessages.getSessionMesgs()))
-        results.add(checkSessionMesgValidMesgIndexes(fitMessages.getSessionMesgs()))
+        results.add(checkSessionMesgSport(fitMessages.sessionMesgs))
+        results.add(checkSessionMesgSubSport(fitMessages.sessionMesgs))
+        results.add(checkSessionMesgsAreSequentialAndAbut(fitMessages.sessionMesgs))
+        results.add(checkSessionMesgValidMesgIndexes(fitMessages.sessionMesgs))
 
         // Lap Message Checks
-        results.add(checkLapMesgsExists(fitMessages.getLapMesgs().size))
-        results.add(checkLapMesgValidMesgIndexes(fitMessages.getLapMesgs()))
+        results.add(checkLapMesgsExists(fitMessages.lapMesgs.size))
+        results.add(checkLapMesgValidMesgIndexes(fitMessages.lapMesgs))
         results.add(
             checkLapMesgValidStartTimeAndEndTime(
-                fitMessages.getSessionMesgs(),
-                fitMessages.getLapMesgs()
+                fitMessages.sessionMesgs,
+                fitMessages.lapMesgs
             )
         )
-        results.add(checkLapMesgsAreSequentialAndAbut(fitMessages.getLapMesgs()))
+        results.add(checkLapMesgsAreSequentialAndAbut(fitMessages.lapMesgs))
 
         //Record Message Checks
         results.add(
             checkRecordMesgTimestampsAgainstSessionMesgTimes(
-                fitMessages.getSessionMesgs(),
-                fitMessages.getRecordMesgs()
+                fitMessages.sessionMesgs,
+                fitMessages.recordMesgs
             )
         )
-        results.add(checkRecordMesgsAreChronological(fitMessages.getRecordMesgs()))
+        results.add(checkRecordMesgsAreChronological(fitMessages.recordMesgs))
 
         //Device Info Message Checks
-        results.add(checkDeviceInfoMesgValidTimestamp(fitMessages.getDeviceInfoMesgs()))
-        results.add(checkDeviceInfoMesgValidDeviceIndex(fitMessages.getDeviceInfoMesgs()))
-        results.add(checkDeviceInfoMesgValidManufacturerIdExists(fitMessages.getDeviceInfoMesgs()))
+        results.add(checkDeviceInfoMesgValidTimestamp(fitMessages.deviceInfoMesgs))
+        results.add(checkDeviceInfoMesgValidDeviceIndex(fitMessages.deviceInfoMesgs))
+        results.add(checkDeviceInfoMesgValidManufacturerIdExists(fitMessages.deviceInfoMesgs))
     }
 
     /**
@@ -139,7 +139,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return Collections.unmodifiableList<ActivityFileValidationResult?>(results)
     }
 
-    fun checkFileIdMesgExists(fileIdMesgs: MutableList<FileIdMesg>): ActivityFileValidationResult {
+    fun checkFileIdMesgExists(fileIdMesgs: List<FileIdMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "FileId Message Exists",
             ActivityFileValidationResult.Level.REQUIRED
@@ -225,7 +225,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkActivityMesgExists(activityMesgs: MutableList<ActivityMesg>): ActivityFileValidationResult {
+    fun checkActivityMesgExists(activityMesgs: List<ActivityMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Activity Message Exists",
             ActivityFileValidationResult.Level.REQUIRED
@@ -286,7 +286,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
 
     fun checkActivityMesgTotalTimerTime(
         activityMesg: ActivityMesg,
-        sessionMesgs: MutableList<SessionMesg>
+        sessionMesgs: List<SessionMesg>
     ): ActivityFileValidationResult {
         return checkValidFieldSums(
             activityMesg,
@@ -338,11 +338,11 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkSessionMesgTimestamp(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgTimestamp(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         return checkMesgValidTimestamp(sessionMesgs, "Session")
     }
 
-    fun checkSessionMesgStartTime(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgStartTime(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Session Message Start Time Is Valid",
             ActivityFileValidationResult.Level.REQUIRED
@@ -374,7 +374,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkSessionMesgTotalTimerTimeAndTotalElapsedTime(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgTotalTimerTimeAndTotalElapsedTime(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Session Message Total Timer Time and Total Elapsed Time are Valid",
             ActivityFileValidationResult.Level.REQUIRED
@@ -413,8 +413,8 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     fun checkSessionMesgFirstLapIndexAndNumLapsAreSequentialAndAbut(
-        sessionMesgs: MutableList<SessionMesg>,
-        lapMesgs: MutableList<LapMesg>
+        sessionMesgs: List<SessionMesg>,
+        lapMesgs: List<LapMesg>
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Session Message First Lap Index and Num Laps are Valid",
@@ -466,8 +466,8 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     fun checkSessionMesgTotalTimerTime(
-        sessionMesgs: MutableList<SessionMesg>,
-        lapMesgs: MutableList<LapMesg>
+        sessionMesgs: List<SessionMesg>,
+        lapMesgs: List<LapMesg>
     ): ActivityFileValidationResult {
         var result = ActivityFileValidationResult(
             "Session Message Total Timer Time Is Equal To Sum of Lap Messages Total Timer Time",
@@ -516,8 +516,8 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     fun checkSessionMesgTotalElapsedTime(
-        sessionMesgs: MutableList<SessionMesg>,
-        lapMesgs: MutableList<LapMesg>
+        sessionMesgs: List<SessionMesg>,
+        lapMesgs: List<LapMesg>
     ): ActivityFileValidationResult {
         var result = ActivityFileValidationResult(
             "Session Message Total Elapsed Time Is Equal To Sum of Lap Messages Total Elapsed Time",
@@ -565,7 +565,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkSessionMesgSport(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgSport(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Session Message Sport Exists",
             ActivityFileValidationResult.Level.REQUIRED
@@ -582,7 +582,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkSessionMesgSubSport(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgSubSport(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Session Message Sub Sport Exists",
             ActivityFileValidationResult.Level.OPTIONAL
@@ -600,15 +600,15 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkSessionMesgsAreSequentialAndAbut(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgsAreSequentialAndAbut(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         return checkMesgsAreSequentialAndAbut(sessionMesgs, "Session")
     }
 
-    fun checkSessionMesgValidMesgIndexes(sessionMesgs: MutableList<SessionMesg>): ActivityFileValidationResult {
+    fun checkSessionMesgValidMesgIndexes(sessionMesgs: List<SessionMesg>): ActivityFileValidationResult {
         return checkValidMesgIndexes(sessionMesgs, "Session")
     }
 
-    fun checkLapMesgValidMesgIndexes(lapMesgs: MutableList<LapMesg>): ActivityFileValidationResult {
+    fun checkLapMesgValidMesgIndexes(lapMesgs: List<LapMesg>): ActivityFileValidationResult {
         return checkValidMesgIndexes(lapMesgs, "Lap")
     }
 
@@ -627,8 +627,8 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     fun checkLapMesgValidStartTimeAndEndTime(
-        sessionMesgs: MutableList<SessionMesg>,
-        lapMesgs: MutableList<LapMesg>
+        sessionMesgs: List<SessionMesg>,
+        lapMesgs: List<LapMesg>
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Lap Message Start Time and Timestamp are Valid",
@@ -709,13 +709,13 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkLapMesgsAreSequentialAndAbut(lapMesgs: MutableList<LapMesg>): ActivityFileValidationResult {
+    fun checkLapMesgsAreSequentialAndAbut(lapMesgs: List<LapMesg>): ActivityFileValidationResult {
         return checkMesgsAreSequentialAndAbut(lapMesgs, "Lap")
     }
 
     fun checkRecordMesgTimestampsAgainstSessionMesgTimes(
-        sessionMesgs: MutableList<SessionMesg>,
-        recordMesgs: MutableList<RecordMesg>
+        sessionMesgs: List<SessionMesg>,
+        recordMesgs: List<RecordMesg>
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Record Message Timestamps Fall Within Session Message Times",
@@ -765,7 +765,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkRecordMesgsAreChronological(recordMesgs: MutableList<RecordMesg>): ActivityFileValidationResult {
+    fun checkRecordMesgsAreChronological(recordMesgs: List<RecordMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Record Messages Are in Chronological Ascending Order",
             ActivityFileValidationResult.Level.REQUIRED
@@ -801,11 +801,11 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkDeviceInfoMesgValidTimestamp(deviceInfoMesgs: MutableList<DeviceInfoMesg>): ActivityFileValidationResult {
+    fun checkDeviceInfoMesgValidTimestamp(deviceInfoMesgs: List<DeviceInfoMesg>): ActivityFileValidationResult {
         return checkMesgValidTimestamp(deviceInfoMesgs, "Device Info")
     }
 
-    fun checkDeviceInfoMesgValidDeviceIndex(deviceInfoMesgs: MutableList<DeviceInfoMesg>): ActivityFileValidationResult {
+    fun checkDeviceInfoMesgValidDeviceIndex(deviceInfoMesgs: List<DeviceInfoMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Device Info Message Device Index is Valid",
             ActivityFileValidationResult.Level.REQUIRED
@@ -841,7 +841,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun checkDeviceInfoMesgValidManufacturerIdExists(deviceInfoMesgs: MutableList<DeviceInfoMesg>): ActivityFileValidationResult {
+    fun checkDeviceInfoMesgValidManufacturerIdExists(deviceInfoMesgs: List<DeviceInfoMesg>): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "Device Info Message Manufacturer Id is Valid",
             ActivityFileValidationResult.Level.OPTIONAL
@@ -884,10 +884,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
             .anyMatch { l: MutableList<out Mesg>? -> l!!.isEmpty() }
     }
 
-    fun checkValidMesgIndexes(
-        mesgs: MutableList<out Mesg>,
-        mesgName: String?
-    ): ActivityFileValidationResult {
+    fun checkValidMesgIndexes(mesgs: List<Mesg>, mesgName: String?): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
             "$mesgName Message Valid Message Index",
             ActivityFileValidationResult.Level.REQUIRED
@@ -922,7 +919,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     fun checkMesgValidTimestamp(
-        mesgs: MutableList<out Mesg>,
+        mesgs: List<Mesg>,
         name: String?
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
@@ -951,7 +948,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
 
     fun checkValidFieldSums(
         mesg: Mesg,
-        mesgs: MutableList<out Mesg>,
+        mesgs: List<Mesg>,
         mesgName: String?,
         mesgListName: String?,
         fieldName: String?
@@ -998,7 +995,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
     }
 
     fun checkMesgsAreSequentialAndAbut(
-        mesgs: MutableList<out Mesg>,
+        mesgs: List<Mesg>,
         mesgName: String?
     ): ActivityFileValidationResult {
         val result = ActivityFileValidationResult(
@@ -1045,27 +1042,24 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return result
     }
 
-    fun anyMatchNull(mesgs: MutableList<out Mesg>, fieldName: String?): Boolean {
+    fun anyMatchNull(mesgs: List<Mesg>, fieldName: String?): Boolean {
         return mesgs.stream().anyMatch { mesg: Mesg -> mesg.getFieldValue(fieldName) == null }
     }
 
-    fun allMatchNull(mesgs: MutableList<out Mesg?>, fieldName: String?): Boolean {
+    fun allMatchNull(mesgs: List<Mesg?>, fieldName: String?): Boolean {
         return mesgs.stream().allMatch { mesg: Mesg? -> mesg!!.getFieldValue(fieldName) == null }
     }
 
     fun checkFieldValuesAreValid(
-        mesgs: MutableList<out Mesg>,
+        mesgs: List<Mesg>,
         fieldName: String?
     ): ActivityFileValidationResult.Status {
         if (mesgs.isEmpty()) {
             return ActivityFileValidationResult.Status.SKIPPED
         }
 
-        return if (anyMatchNull(
-                mesgs,
-                fieldName
-            )
-        ) ActivityFileValidationResult.Status.FAILED else ActivityFileValidationResult.Status.PASSED
+        return if (anyMatchNull(mesgs, fieldName))
+            ActivityFileValidationResult.Status.FAILED else ActivityFileValidationResult.Status.PASSED
     }
 
     fun checkSportValuesAreValid(mesgs: MutableList<out Mesg>): ActivityFileValidationResult.Status? {
@@ -1073,7 +1067,7 @@ class ActivityFileValidationPlugin : MesgBroadcastPlugin {
         return if (status == ActivityFileValidationResult.Status.FAILED) ActivityFileValidationResult.Status.WARNING else status
     }
 
-    fun checkSubSportValuesAreValid(mesgs: MutableList<out Mesg>): ActivityFileValidationResult.Status? {
+    fun checkSubSportValuesAreValid(mesgs: List<Mesg>): ActivityFileValidationResult.Status? {
         val status = checkFieldValuesAreValid(mesgs, "sub_sport")
         return if (status == ActivityFileValidationResult.Status.FAILED) ActivityFileValidationResult.Status.WARNING else status
     }

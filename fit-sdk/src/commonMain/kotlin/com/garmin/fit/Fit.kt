@@ -8,7 +8,7 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-import java.math.BigInteger
+import kotlin.jvm.JvmField
 
 object Fit {
     @JvmField
@@ -73,31 +73,26 @@ object Fit {
 
     const val ENUM_MAX: Short = 0xFF
     const val ENUM_MIN: Short = 0x00
-
     const val ENUM_INVALID: Short = 0xFF
     const val BASE_TYPE_ENUM: Int = 0x00
 
     const val SINT8_MAX: Byte = Byte.MAX_VALUE
     const val SINT8_MIN: Byte = Byte.MIN_VALUE
-
     const val SINT8_INVALID: Byte = 0x7F
     const val BASE_TYPE_SINT8: Int = 0x01
 
     const val UINT8_MAX: Short = 0xFF
     const val UINT8_MIN: Short = 0x00
-
     const val UINT8_INVALID: Short = 0xFF
     const val BASE_TYPE_UINT8: Int = 0x02
 
     const val SINT16_MAX: Short = Short.MAX_VALUE
     const val SINT16_MIN: Short = Short.MIN_VALUE
-
     const val SINT16_INVALID: Short = 0x7FFF
     const val BASE_TYPE_SINT16: Int = 0x83
 
     const val UINT16_MAX: Int = 0xFFFF
     const val UINT16_MIN: Int = 0
-
     const val UINT16_INVALID: Int = 0xFFFF
     const val BASE_TYPE_UINT16: Int = 0x84
 
@@ -130,19 +125,16 @@ object Fit {
 
     const val UINT8Z_MAX: Short = 0xFF
     const val UINT8Z_MIN: Short = 0x00
-
     const val UINT8Z_INVALID: Short = 0x00
     const val BASE_TYPE_UINT8Z: Int = 0x0A
 
     const val UINT16Z_MAX: Int = 0xFFFF
     const val UINT16Z_MIN: Int = 0
-
     const val UINT16Z_INVALID: Int = 0x0000
     const val BASE_TYPE_UINT16Z: Int = 0x8B
 
     const val UINT32Z_MAX: Long = 0xFFFFFFFF
     const val UINT32Z_MIN: Long = 0
-
     const val UINT32Z_INVALID: Long = 0x00000000
     const val BASE_TYPE_UINT32Z: Int = 0x8C
 
@@ -153,38 +145,26 @@ object Fit {
 
     const val SINT64_MAX: Long = Long.MAX_VALUE
     const val SINT64_MIN: Long = Long.MIN_VALUE
-
     const val SINT64_INVALID: Long = 0x7FFFFFFFFFFFFFFF
     const val BASE_TYPE_SINT64: Int = 0x8E
 
-    @JvmField
-    val UINT64_MAX: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
-
-    @JvmField
-    val UINT64_MIN: BigInteger = BigInteger("00000000000000000")
-
-    @JvmField
-    val UINT64_INVALID: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
+    const val UINT64_MAX: ULong = ULong.MAX_VALUE
+    const val UINT64_MIN: ULong = ULong.MIN_VALUE
+    const val UINT64_INVALID: ULong = ULong.MAX_VALUE
     const val BASE_TYPE_UINT64: Int = 0x8F
 
-    @JvmField
-    val UINT64Z_MAX: BigInteger = BigInteger("FFFFFFFFFFFFFFFF", 16)
-
-    @JvmField
-    val UINT64Z_MIN: BigInteger = BigInteger("0000000000000000")
-
-    @JvmField
-    val UINT64Z_INVALID: BigInteger = BigInteger("0000000000000000", 16)
+    const val UINT64Z_MAX: ULong = ULong.MAX_VALUE
+    const val UINT64Z_MIN: ULong = ULong.MIN_VALUE
+    const val UINT64Z_INVALID: ULong = ULong.MIN_VALUE
     const val BASE_TYPE_UINT64Z: Int = 0x90
+
     const val BASE_TYPES: Int = 17
 
     @JvmField
     val baseTypeSizes: IntArray = intArrayOf(1, 1, 1, 2, 2, 4, 4, 1, 4, 8, 1, 2, 4, 1, 8, 8, 8)
 
     const val UTF8_BOM_BYTE_1: Byte = 0xEF.toByte()
-
     const val UTF8_BOM_BYTE_2: Byte = 0xBB.toByte()
-
     const val UTF8_BOM_BYTE_3: Byte = 0xBF.toByte()
 
     @JvmField

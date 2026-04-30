@@ -15,7 +15,6 @@ import com.garmin.fit.FitDecoder
 import com.garmin.fit.FitRuntimeException
 import com.garmin.fit.MesgDefinitionListener
 import com.garmin.fit.MesgListener
-import com.garmin.fit.csv.CSVTool.Companion.printUsage
 import com.garmin.fit.plugins.ActivityFileValidationPlugin
 import com.garmin.fit.util.StreamHelpers.byteStreamFromFile
 import com.garmin.fit.util.StreamHelpers.writeByteStreamToFile
@@ -23,7 +22,6 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
-import java.util.Arrays
 import java.util.Locale
 
 class CSVTool {
@@ -581,7 +579,262 @@ class CSVTool {
         get() = Fit.debug
 
     companion object {
-        internal fun printUsage() {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            val csvTool = CSVTool()
+            csvTool.runningFromConsole = true
+            var arg = 0
+
+            var inputFileName: String? = null
+            var outputFileName: String? = null
+            var fitToCsv = false
+            var csvToFit = false
+
+            var nextArgumentDefinition = 0
+            var nextArgumentData = 0
+
+            System.out.printf(
+                "FIT CSV Tool - Protocol %d.%d Profile %d.%d %s\n\n",
+                Fit.PROTOCOL_VERSION_MAJOR,
+                Fit.PROTOCOL_VERSION_MINOR,
+                Fit.PROFILE_VERSION_MAJOR,
+                Fit.PROFILE_VERSION_MINOR,
+                Fit.PROFILE_TYPE
+            )
+
+            while (arg < args.size) {
+                if (args[arg] == "-b") {
+                    if ((args.size - arg) < 3) {
+                        printUsage()
+                        return
+                    }
+
+                    fitToCsv = true
+                    inputFileName = args[arg + 1]
+                    outputFileName = args[arg + 2]
+
+                    arg += 2
+                } else if (args[arg] == "-c") {
+                    if ((args.size - arg) < 3) {
+                        printUsage()
+                        return
+                    }
+
+                    csvToFit = true
+                    inputFileName = args[arg + 1]
+                    outputFileName = args[arg + 2]
+
+                    arg += 2
+                } else if (args[arg] == "-t") {
+                    csvTool.enableVerificationTests(true)
+                } else if (args[arg] == "-d") {
+                    csvTool.enableFitSdkDebugging(true)
+                    csvTool.enableVerificationTests(true)
+                } else if (args[arg] == "-i") {
+                    csvTool.enableCheckIntegrity(true)
+                } else if (args[arg] == "-ex") {
+                    csvTool.setExcludeMesgList(true)
+                } else if (args[arg] == "--defn") {
+                    nextArgumentDefinition = csvTool.DATA_OR_DEFINITION_SEARCH_COUNT
+                } else if (args[arg] == "--data") {
+                    nextArgumentData = csvTool.DATA_OR_DEFINITION_SEARCH_COUNT
+                    csvTool.enableGenerateDataFile(true)
+                } else if (args[arg].get(0) != '-') {
+                    if (nextArgumentDefinition > 0) {
+                        csvTool.setMesgDefinitionFilter(
+                            HashSet(
+                                listOf(
+                                    *args[arg].lowercase(
+                                        Locale.getDefault()
+                                    ).split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                                        .toTypedArray())))
+                    } else if (nextArgumentData > 0) {
+                        csvTool.dataMessagesFilter = HashSet(
+                            listOf(
+                                *args[arg].lowercase(Locale.getDefault())
+                                    .split(",".toRegex()).dropLastWhile { it.isEmpty() }
+                                    .toTypedArray()))
+                    } else {
+                        inputFileName = args[arg]
+                        if (inputFileName.endsWith(".fit")) {
+                            fitToCsv = true
+                            outputFileName =
+                                inputFileName.substring(0, inputFileName.length - 4) + ".csv"
+                        } else if (inputFileName.endsWith(".csv")) {
+                            csvToFit = true
+                            outputFileName =
+                                inputFileName.substring(0, inputFileName.length - 4) + ".fit"
+                        } else {
+                            println("Invalid file provided $inputFileName is not a .fit or .csv file")
+                            printUsage()
+                            return
+                        }
+                    }
+                } else if (args[arg] == "-s") {
+                    csvTool.enableShowInvalidValues(true)
+                } else if (args[arg] == "-se") {
+                    csvTool.enableShowInvalidValues(true)
+                    csvTool.enableShowInvalidsAsEmpty(true)
+                } else if (args[arg] == "-u") {
+                    csvTool.enableHideUnknownData(true)
+                } else if (args[arg] == "-x") {
+                    csvTool.enableBytesAsHex(true)
+                } else if (args[arg].startsWith("-p")) {
+                    if (args[arg].endsWith("1")) {
+                        csvTool.protocolVersion = Fit.ProtocolVersion.V1_0
+                    } else if (args[arg].endsWith("2")) {
+                        csvTool.protocolVersion = Fit.ProtocolVersion.V2_0
+                    } else {
+                        println("Unknown Protocol Version.")
+                    }
+                } else if (args[arg] == "-e") {
+                    csvTool.enableEnumsAsStrings(true)
+                } else if (args[arg] == "-re") {
+                    csvTool.enableRemoveExpandedFields(true)
+                } else if (args[arg] == "-deg") {
+                    csvTool.enableSemicirclesAsDegrees(true)
+                } else if (args[arg] == "-iso8601") {
+                    csvTool.enableDateTimeAsISO8601(true)
+                } else if (args[arg] == "-g") {
+                    csvTool.enablePreserveGaps(true)
+                }
+
+                if (nextArgumentDefinition > 0) {
+                    nextArgumentDefinition--
+                    if ((nextArgumentDefinition == 0) && (csvTool.mesgDefinitionsFilter.isEmpty())) {
+                        println("No mesg definitions defined for --defn option.  Use 'none' if no definitions are desired.")
+                        return
+                    }
+                }
+
+                if (nextArgumentData > 0) {
+                    nextArgumentData--
+                    if ((nextArgumentData == 0) && (csvTool.dataMessagesFilter.isEmpty())) {
+                        println("No data messages defined for --data option.")
+                        return
+                    }
+                }
+                arg++
+            }
+
+            if (inputFileName == null || inputFileName.isEmpty()) {
+                println("No input file was provided!")
+                printUsage()
+                return
+            }
+            val file = File(inputFileName)
+            if (!file.exists()) {
+                println("File does not exist: " + inputFileName)
+                return
+            }
+
+            if (fitToCsv) {
+                if (outputFileName!!.length >= 4 && outputFileName.substring(
+                        outputFileName.length - 4,
+                        outputFileName.length
+                    ).compareTo(".csv") == 0
+                ) {
+                    outputFileName = outputFileName.substring(0, outputFileName.length - 4)
+                }
+
+                System.out.printf(
+                    "Decoding FIT binary file %s to %s*.csv files.\n",
+                    inputFileName,
+                    outputFileName
+                )
+                try {
+                    val byteArrayInputStream = byteStreamFromFile(inputFileName)
+                    csvTool.convertFitToCsv(byteArrayInputStream!!)
+                } catch (e: OutOfMemoryError) {
+                    System.out.printf(
+                        "\n\nThere is insufficient memory available to process the file. Please increase the available memory by using the -Xmx<size> option when running the FIT CSV Tool.\ni.e. java -Xmx1G -jar FitCsvTool.jar %s\n",
+                        inputFileName
+                    )
+                } catch (e: Exception) {
+                    System.out.printf(
+                        "Error: A problem occurred while decoding the file. The decoded CSV file may be truncated %s*.csv files.\n",
+                        outputFileName
+                    )
+                }
+
+                try {
+                    val csvByteArrayOutputStream = csvTool.getByteArrayOutputStream()
+                    if (csvByteArrayOutputStream.toString() == "") {
+                        if (csvTool.dataMessagesFilter.size != 0 || csvTool.mesgDefinitionsFilter.size != 0) {
+                            println("Warning: No filtered messages or filtered message definitions found.")
+                        } else {
+                            println("Warning: No messages or message definitions found.")
+                        }
+                        return
+                    }
+
+                    writeByteStreamToFile(csvByteArrayOutputStream, outputFileName + ".csv", true)
+
+                    if (csvTool.isGenerateDataFileEnabled) {
+                        val dataCsvStream = csvTool.getDataWriterByteArrayOutputStream()
+                        writeByteStreamToFile(dataCsvStream, outputFileName + "_data.csv", false)
+                    }
+
+                    if (csvTool.isHideUnknownDataEnabled) {
+                        System.out.printf(
+                            "Hid %d unknown field(s) and %d unknown message(s).\n",
+                            csvTool.numUnknownFields,
+                            csvTool.numUnknownMesgs
+                        )
+                    }
+                } catch (e: Exception) {
+                    println("Error: A problem occurred while writing the output CSV files.")
+                }
+            } else if (csvToFit) {
+                if (outputFileName!!.length >= 4 && outputFileName.substring(
+                        outputFileName.length - 4,
+                        outputFileName.length
+                    ).compareTo(".fit") == 0
+                ) {
+                    outputFileName = outputFileName.substring(0, outputFileName.length - 4)
+                }
+
+                System.out.printf(
+                    "Encoding %s into FIT binary file %s.fit.\n",
+                    inputFileName,
+                    outputFileName
+                )
+                try {
+                    byteStreamFromFile(inputFileName)?.let { stream ->
+//                val repeats = 10
+//                val elapsed = measureTime {
+//                    repeat(repeats) {
+//                        csvTool.convertCsvToFit(stream)
+//                        stream.reset()
+//                    }
+//                }
+//                println("elapsed=${elapsed / repeats}")
+
+                        csvTool.convertCsvToFit(stream)
+                    }
+
+                } catch (e: Exception) {
+                    System.out.printf(
+                        "Error: A problem occurred while encoding the file. The encoded FIT file %s.fit may be a truncated.\n",
+                        outputFileName
+                    )
+                    if (e.message != null) {
+                        println(e.message)
+                    }
+                }
+
+                try {
+                    val fitByteArrayOutputStream = csvTool.getByteArrayOutputStream()
+                    writeByteStreamToFile(fitByteArrayOutputStream, outputFileName + ".fit", false)
+                } catch (e: Exception) {
+                    println("Error: A problem occurred while writing the output FIT file.")
+                }
+            } else {
+                printUsage()
+            }
+        }
+
+        private fun printUsage() {
             println("Usage: java -jar FitCSVTool.jar <options> <file>")
             println("      -b <FIT FILE> <CSV FILE>  FIT binary to CSV.")
             println("      -c <CSV FILE> <FIT FILE>  CSV to FIT binary.")
@@ -622,247 +875,3 @@ class CSVTool {
     }
 }
 
-fun main(args: Array<String>) {
-    val csvTool = CSVTool()
-    csvTool.runningFromConsole = true
-    var arg = 0
-
-    var inputFileName: String? = null
-    var outputFileName: String? = null
-    var fitToCsv = false
-    var csvToFit = false
-
-    var nextArgumentDefinition = 0
-    var nextArgumentData = 0
-
-    System.out.printf(
-        "FIT CSV Tool - Protocol %d.%d Profile %d.%d %s\n\n",
-        Fit.PROTOCOL_VERSION_MAJOR,
-        Fit.PROTOCOL_VERSION_MINOR,
-        Fit.PROFILE_VERSION_MAJOR,
-        Fit.PROFILE_VERSION_MINOR,
-        Fit.PROFILE_TYPE
-    )
-
-    while (arg < args.size) {
-        if (args[arg] == "-b") {
-            if ((args.size - arg) < 3) {
-                printUsage()
-                return
-            }
-
-            fitToCsv = true
-            inputFileName = args[arg + 1]
-            outputFileName = args[arg + 2]
-
-            arg += 2
-        } else if (args[arg] == "-c") {
-            if ((args.size - arg) < 3) {
-                printUsage()
-                return
-            }
-
-            csvToFit = true
-            inputFileName = args[arg + 1]
-            outputFileName = args[arg + 2]
-
-            arg += 2
-        } else if (args[arg] == "-t") {
-            csvTool.enableVerificationTests(true)
-        } else if (args[arg] == "-d") {
-            csvTool.enableFitSdkDebugging(true)
-            csvTool.enableVerificationTests(true)
-        } else if (args[arg] == "-i") {
-            csvTool.enableCheckIntegrity(true)
-        } else if (args[arg] == "-ex") {
-            csvTool.setExcludeMesgList(true)
-        } else if (args[arg] == "--defn") {
-            nextArgumentDefinition = csvTool.DATA_OR_DEFINITION_SEARCH_COUNT
-        } else if (args[arg] == "--data") {
-            nextArgumentData = csvTool.DATA_OR_DEFINITION_SEARCH_COUNT
-            csvTool.enableGenerateDataFile(true)
-        } else if (args[arg].get(0) != '-') {
-            if (nextArgumentDefinition > 0) {
-                csvTool.setMesgDefinitionFilter(
-                    HashSet(
-                        listOf(
-                            *args[arg].lowercase(
-                                Locale.getDefault()
-                            ).split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                                .toTypedArray())))
-            } else if (nextArgumentData > 0) {
-                csvTool.dataMessagesFilter = HashSet(
-                    listOf(
-                        *args[arg].lowercase(Locale.getDefault())
-                            .split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                            .toTypedArray()))
-            } else {
-                inputFileName = args[arg]
-                if (inputFileName.endsWith(".fit")) {
-                    fitToCsv = true
-                    outputFileName =
-                        inputFileName.substring(0, inputFileName.length - 4) + ".csv"
-                } else if (inputFileName.endsWith(".csv")) {
-                    csvToFit = true
-                    outputFileName =
-                        inputFileName.substring(0, inputFileName.length - 4) + ".fit"
-                } else {
-                    println("Invalid file provided $inputFileName is not a .fit or .csv file")
-                    printUsage()
-                    return
-                }
-            }
-        } else if (args[arg] == "-s") {
-            csvTool.enableShowInvalidValues(true)
-        } else if (args[arg] == "-se") {
-            csvTool.enableShowInvalidValues(true)
-            csvTool.enableShowInvalidsAsEmpty(true)
-        } else if (args[arg] == "-u") {
-            csvTool.enableHideUnknownData(true)
-        } else if (args[arg] == "-x") {
-            csvTool.enableBytesAsHex(true)
-        } else if (args[arg].startsWith("-p")) {
-            if (args[arg].endsWith("1")) {
-                csvTool.protocolVersion = Fit.ProtocolVersion.V1_0
-            } else if (args[arg].endsWith("2")) {
-                csvTool.protocolVersion = Fit.ProtocolVersion.V2_0
-            } else {
-                println("Unknown Protocol Version.")
-            }
-        } else if (args[arg] == "-e") {
-            csvTool.enableEnumsAsStrings(true)
-        } else if (args[arg] == "-re") {
-            csvTool.enableRemoveExpandedFields(true)
-        } else if (args[arg] == "-deg") {
-            csvTool.enableSemicirclesAsDegrees(true)
-        } else if (args[arg] == "-iso8601") {
-            csvTool.enableDateTimeAsISO8601(true)
-        } else if (args[arg] == "-g") {
-            csvTool.enablePreserveGaps(true)
-        }
-
-        if (nextArgumentDefinition > 0) {
-            nextArgumentDefinition--
-            if ((nextArgumentDefinition == 0) && (csvTool.mesgDefinitionsFilter.isEmpty())) {
-                println("No mesg definitions defined for --defn option.  Use 'none' if no definitions are desired.")
-                return
-            }
-        }
-
-        if (nextArgumentData > 0) {
-            nextArgumentData--
-            if ((nextArgumentData == 0) && (csvTool.dataMessagesFilter.isEmpty())) {
-                println("No data messages defined for --data option.")
-                return
-            }
-        }
-        arg++
-    }
-
-    if (inputFileName == null || inputFileName.isEmpty()) {
-        println("No input file was provided!")
-        printUsage()
-        return
-    }
-    val file = File(inputFileName)
-    if (!file.exists()) {
-        println("File does not exist: " + inputFileName)
-        return
-    }
-
-    if (fitToCsv) {
-        if (outputFileName!!.length >= 4 && outputFileName.substring(
-                outputFileName.length - 4,
-                outputFileName.length
-            ).compareTo(".csv") == 0
-        ) {
-            outputFileName = outputFileName.substring(0, outputFileName.length - 4)
-        }
-
-        System.out.printf(
-            "Decoding FIT binary file %s to %s*.csv files.\n",
-            inputFileName,
-            outputFileName
-        )
-        try {
-            val byteArrayInputStream = byteStreamFromFile(inputFileName)
-            csvTool.convertFitToCsv(byteArrayInputStream!!)
-        } catch (e: OutOfMemoryError) {
-            System.out.printf(
-                "\n\nThere is insufficient memory available to process the file. Please increase the available memory by using the -Xmx<size> option when running the FIT CSV Tool.\ni.e. java -Xmx1G -jar FitCsvTool.jar %s\n",
-                inputFileName
-            )
-        } catch (e: Exception) {
-            System.out.printf(
-                "Error: A problem occurred while decoding the file. The decoded CSV file may be truncated %s*.csv files.\n",
-                outputFileName
-            )
-        }
-
-        try {
-            val csvByteArrayOutputStream = csvTool.getByteArrayOutputStream()
-            if (csvByteArrayOutputStream.toString() == "") {
-                if (csvTool.dataMessagesFilter.size != 0 || csvTool.mesgDefinitionsFilter.size != 0) {
-                    println("Warning: No filtered messages or filtered message definitions found.")
-                } else {
-                    println("Warning: No messages or message definitions found.")
-                }
-                return
-            }
-
-            writeByteStreamToFile(csvByteArrayOutputStream, outputFileName + ".csv", true)
-
-            if (csvTool.isGenerateDataFileEnabled) {
-                val dataCsvStream = csvTool.getDataWriterByteArrayOutputStream()
-                writeByteStreamToFile(dataCsvStream, outputFileName + "_data.csv", false)
-            }
-
-            if (csvTool.isHideUnknownDataEnabled) {
-                System.out.printf(
-                    "Hid %d unknown field(s) and %d unknown message(s).\n",
-                    csvTool.numUnknownFields,
-                    csvTool.numUnknownMesgs
-                )
-            }
-        } catch (e: Exception) {
-            println("Error: A problem occurred while writing the output CSV files.")
-        }
-    } else if (csvToFit) {
-        if (outputFileName!!.length >= 4 && outputFileName.substring(
-                outputFileName.length - 4,
-                outputFileName.length
-            ).compareTo(".fit") == 0
-        ) {
-            outputFileName = outputFileName.substring(0, outputFileName.length - 4)
-        }
-
-        System.out.printf(
-            "Encoding %s into FIT binary file %s.fit.\n",
-            inputFileName,
-            outputFileName
-        )
-        try {
-            byteStreamFromFile(inputFileName)?.let {
-                csvTool.convertCsvToFit(it)
-            }
-
-        } catch (e: Exception) {
-            System.out.printf(
-                "Error: A problem occurred while encoding the file. The encoded FIT file %s.fit may be a truncated.\n",
-                outputFileName
-            )
-            if (e.message != null) {
-                println(e.message)
-            }
-        }
-
-        try {
-            val fitByteArrayOutputStream = csvTool.getByteArrayOutputStream()
-            writeByteStreamToFile(fitByteArrayOutputStream, outputFileName + ".fit", false)
-        } catch (e: Exception) {
-            println("Error: A problem occurred while writing the output FIT file.")
-        }
-    } else {
-        printUsage()
-    }
-}

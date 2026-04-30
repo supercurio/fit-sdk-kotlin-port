@@ -45,7 +45,7 @@ class DateTime : Comparable<DateTime> {
     }
 
     override fun toString(): String {
-        return this.date.toString()
+        return this.instantKt.toString()
     }
 
     fun add(dateTime: DateTime) {

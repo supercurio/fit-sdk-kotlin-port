@@ -74,8 +74,8 @@ object FitDecoderExample {
     }
 
     private fun printMessageSummary(fitMessages: FitMessages) {
-        if (!fitMessages.getFileIdMesgs().isEmpty()) {
-            println("FileId Messages: " + fitMessages.getFileIdMesgs().size)
+        if (!fitMessages.fileIdMesgs.isEmpty()) {
+            println("FileId Messages: " + fitMessages.fileIdMesgs.size)
         }
     }
 }

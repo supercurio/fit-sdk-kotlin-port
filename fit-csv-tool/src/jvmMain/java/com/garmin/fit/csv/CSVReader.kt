@@ -19,7 +19,6 @@ import com.garmin.fit.FieldDefinition
 import com.garmin.fit.FieldDefinitionBase
 import com.garmin.fit.FieldDescriptionMesg
 import com.garmin.fit.Fit
-import com.garmin.fit.Mesg
 import com.garmin.fit.MesgDefinition
 import com.garmin.fit.MesgDefinitionListener
 import com.garmin.fit.MesgListener
@@ -31,8 +30,6 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.nio.charset.Charset
 import java.util.LinkedList
 import java.util.regex.Matcher
@@ -289,33 +286,26 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
                         var setRawValue = false
 
                         when (field.type) {
-                            Fit.BASE_TYPE_ENUM -> if (value.toShort() == Fit.ENUM_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_ENUM ->
+                                if (value.toShort() == Fit.ENUM_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_SINT8 -> if (value.toByte() == Fit.SINT8_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_SINT8 ->
+                                if (value.toByte() == Fit.SINT8_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_UINT8 -> if (value.toShort() == Fit.UINT8_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_UINT8 ->
+                                if (value.toShort() == Fit.UINT8_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_UINT8Z -> if (value.toShort() == Fit.UINT8Z_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_UINT8Z ->
+                                if (value.toShort() == Fit.UINT8Z_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_SINT16 -> if (value.toShort() == Fit.SINT16_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_SINT16 ->
+                                if (value.toShort() == Fit.SINT16_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_UINT16 -> if (value.toInt() == Fit.UINT16_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_UINT16 ->
+                                if (value.toInt() == Fit.UINT16_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_UINT16Z -> if (value.toInt() == Fit.UINT16Z_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_UINT16Z ->
+                                if (value.toInt() == Fit.UINT16Z_INVALID) setRawValue = true
 
                             Fit.BASE_TYPE_SINT32 -> {
                                 if (nativeField.units == "semicircles" && isDoubleValue(value)) {
@@ -330,72 +320,47 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
                             }
 
                             Fit.BASE_TYPE_UINT32 -> {
-                                if (nativeField.profileType!!.name.equals(
-                                        "DATE_TIME",
-                                        ignoreCase = true
-                                    )
-                                ) {
-                                    value = parseDateTime(value)
-                                }
+                                if (nativeField
+                                        .profileType
+                                        .name.equals("DATE_TIME", ignoreCase = true)
+                                ) value = parseDateTime(value)
 
-                                if (value.toLong() == Fit.UINT32_INVALID) {
-                                    setRawValue = true
-                                }
+                                if (value.toLong() == Fit.UINT32_INVALID) setRawValue = true
                             }
 
-                            Fit.BASE_TYPE_UINT32Z -> if (value.toLong() == Fit.UINT32Z_INVALID) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_UINT32Z ->
+                                if (value.toLong() == Fit.UINT32Z_INVALID) setRawValue = true
 
-                            Fit.BASE_TYPE_FLOAT32 -> if (value.toFloat()
-                                    .equals(Fit.FLOAT32_INVALID)
-                            ) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_FLOAT32 ->
+                                if (value.toFloat().equals(Fit.FLOAT32_INVALID)) setRawValue = true
 
-                            Fit.BASE_TYPE_FLOAT64 -> if (value.toDouble()
-                                    .equals(Fit.FLOAT64_INVALID)
-                            ) {
-                                setRawValue = true
-                            }
+                            Fit.BASE_TYPE_FLOAT64 ->
+                                if (value.toDouble().equals(Fit.FLOAT64_INVALID)) setRawValue = true
 
                             Fit.BASE_TYPE_BYTE -> {
-                                if (isHexValue(value)) {
-                                    value = Integer.decode(value).toString()
-                                }
+                                if (isHexValue(value)) value = Integer.decode(value).toString()
 
-                                if (value.toShort() == Fit.BYTE_INVALID) {
-                                    setRawValue = true
-                                }
+                                if (value.toShort() == Fit.BYTE_INVALID) setRawValue = true
                             }
 
                             Fit.BASE_TYPE_SINT64 -> {
-                                if (value.toLong() == Fit.SINT64_INVALID) {
-                                    setRawValue = true
-                                }
-                                numericValue = BigDecimal(value)
+                                if (value.toLong() == Fit.SINT64_INVALID) setRawValue = true
+                                numericValue = value.toLong()
                             }
 
                             Fit.BASE_TYPE_UINT64 -> {
-                                if (BigInteger(value) == Fit.UINT64_INVALID) {
-                                    setRawValue = true
-                                }
-                                numericValue = BigDecimal(value)
+                                if (value.toULong() == Fit.UINT64_INVALID) setRawValue = true
+                                numericValue = value.toULong()
                             }
 
                             Fit.BASE_TYPE_UINT64Z -> {
-                                if (BigInteger(value) == Fit.UINT64Z_INVALID) {
-                                    setRawValue = true
-                                }
-                                numericValue = BigDecimal(value)
+                                if (value.toULong() == Fit.UINT64Z_INVALID) setRawValue = true
+                                numericValue = value.toULong()
                             }
-
-                            else -> {}
                         }
 
-                        if (numericValue == null) {
-                            numericValue = value.toDouble()
-                        }
+                        if (numericValue == null) numericValue = value.toDouble()
+
 
                         if (setRawValue) {
                             field.setRawValue(numValues, numericValue)
@@ -403,8 +368,16 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
                             field.setValue(numValues, numericValue, fieldOrSubFieldName)
                         }
                     } catch (e: NumberFormatException) {
-                        if (field.type == Fit.BASE_TYPE_SINT64 || field.type == Fit.BASE_TYPE_UINT64 || field.type == Fit.BASE_TYPE_UINT64Z) {
-                            field.setValue(numValues, BigDecimal(value), fieldOrSubFieldName)
+                        if (field.type == Fit.BASE_TYPE_SINT64) {
+                            field.setValue(numValues, value.toLong(), fieldOrSubFieldName)
+                        } else if (field.type == Fit.BASE_TYPE_UINT64 || field.type == Fit.BASE_TYPE_UINT64Z) {
+                            if (field.scale != Fit.FIELD_DEFAULT_SCALE.toDouble() ||
+                                field.offset != Fit.FIELD_DEFAULT_SCALE.toDouble()
+                            ) {
+                                field.setValue(numValues, value.toDouble(), fieldOrSubFieldName)
+                            } else {
+                                field.setValue(numValues, value.toULong(), fieldOrSubFieldName)
+                            }
                         } else {
                             field.setValue(numValues, value.toDouble(), fieldOrSubFieldName)
                         }

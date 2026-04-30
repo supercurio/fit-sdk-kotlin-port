@@ -10,9 +10,6 @@ package com.garmin.fit
 
 import java.io.ByteArrayInputStream
 import java.io.InputStream
-import java.math.BigDecimal
-import java.math.BigInteger
-import java.math.RoundingMode
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
@@ -365,29 +362,6 @@ abstract class DecoderBase(bytes: ByteArray) : MesgSource {
 
         protected fun is64BitType(type: Int): Boolean {
             return type == Fit.BASE_TYPE_SINT64 || type == Fit.BASE_TYPE_UINT64 || type == Fit.BASE_TYPE_UINT64Z
-        }
-
-        protected fun applyScaleOffset64(
-            bitsValue: Long, fieldType: Int,
-            componentScale: Double, componentOffset: Double,
-            fieldScale: Double, fieldOffset: Double
-        ): Any {
-            // Recover the true unsigned value when getBitsValue has sign-extended a bit-pattern >= 2^63.
-            val isUnsigned =
-                (fieldType == Fit.BASE_TYPE_UINT64 || fieldType == Fit.BASE_TYPE_UINT64Z)
-
-            var bd = if (isUnsigned && bitsValue < 0)
-                BigDecimal(BigInteger.valueOf(bitsValue).add(BigInteger.ONE.shiftLeft(64)))
-            else
-                BigDecimal(bitsValue)
-
-            bd = bd.divide(BigDecimal.valueOf(componentScale), 20, RoundingMode.HALF_UP)
-                .subtract(BigDecimal.valueOf(componentOffset))
-                .add(BigDecimal.valueOf(fieldOffset))
-                .multiply(BigDecimal.valueOf(fieldScale))
-
-            bd = bd.setScale(0, RoundingMode.HALF_UP)
-            return if (isUnsigned) bd.toBigInteger() else bd.toLong()
         }
     }
 }

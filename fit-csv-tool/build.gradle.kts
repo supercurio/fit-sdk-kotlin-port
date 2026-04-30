@@ -16,7 +16,7 @@ kotlin {
 tasks.named<Jar>("jvmJar") {
     archiveFileName.set("FitCSVTool.jar")
     manifest {
-        attributes["Main-Class"] = "com.garmin.fit.csv.CSVToolKt"
+        attributes["Main-Class"] = "com.garmin.fit.csv.CSVTool"
     }
 
     from(configurations.named("jvmRuntimeClasspath").map { configuration ->

@@ -27,7 +27,6 @@ import com.garmin.fit.UserProfileMesg
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.function.Consumer
 
 object DecoderExample {
     @JvmStatic
@@ -78,18 +77,12 @@ object DecoderExample {
 
             val fitMessages = fitListener.fitMessages
 
-            fitMessages.getFileIdMesgs()
-                .forEach(Consumer { obj: FileIdMesg? -> ::printFileIdMesg })
-            fitMessages.getUserProfileMesgs()
-                .forEach(Consumer { obj: UserProfileMesg? -> ::printUserProfileMesg })
-            fitMessages.getDeviceInfoMesgs()
-                .forEach(Consumer { obj: DeviceInfoMesg? -> ::printDeviceInfoMesg })
-            fitMessages.getMonitoringMesgs()
-                .forEach(Consumer { obj: MonitoringMesg? -> ::printMonitoringMesg })
-            fitMessages.getRecordMesgs()
-                .forEach(Consumer { obj: RecordMesg? -> ::printRecordMesg })
-            fitMessages.getDeveloperFieldDescriptionMesgs()
-                .forEach(Consumer { obj: DeveloperFieldDescription? -> ::printDeveloperFieldDescriptionMesg })
+            fitMessages.fileIdMesgs.forEach(::printFileIdMesg)
+            fitMessages.userProfileMesgs.forEach(::printUserProfileMesg)
+            fitMessages.deviceInfoMesgs.forEach(::printDeviceInfoMesg)
+            fitMessages.monitoringMesgs.forEach(::printMonitoringMesg)
+            fitMessages.recordMesgs.forEach(::printRecordMesg)
+            fitMessages.developerFieldDescriptionMesgs.forEach(::printDeveloperFieldDescriptionMesg)
 
             println("Decoded FIT file " + args[0] + ".")
         } catch (e: Exception) {
@@ -279,7 +272,7 @@ object DecoderExample {
             // TODO - Implement custom RecordMesg handling
         }
 
-        override fun onMesgDefinition(mesgDefn: MesgDefinition) {
+        override fun onMesgDefinition(mesgDefinition: MesgDefinition) {
             // TODO - Implement custom MesgDefinition handling
         }
     }

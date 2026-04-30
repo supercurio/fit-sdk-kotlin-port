@@ -28,28 +28,26 @@ object FitBaseType {
     const val UINT64Z: Short = 144
     const val INVALID: Short = Fit.UINT8_INVALID
 
-    private val stringMap = mutableMapOf<Short, String>()
-
-    init {
-        stringMap[ENUM] = "ENUM"
-        stringMap[SINT8] = "SINT8"
-        stringMap[UINT8] = "UINT8"
-        stringMap[SINT16] = "SINT16"
-        stringMap[UINT16] = "UINT16"
-        stringMap[SINT32] = "SINT32"
-        stringMap[UINT32] = "UINT32"
-        stringMap[STRING] = "STRING"
-        stringMap[FLOAT32] = "FLOAT32"
-        stringMap[FLOAT64] = "FLOAT64"
-        stringMap[UINT8Z] = "UINT8Z"
-        stringMap[UINT16Z] = "UINT16Z"
-        stringMap[UINT32Z] = "UINT32Z"
-        stringMap[BYTE] = "BYTE"
-        stringMap[SINT64] = "SINT64"
-        stringMap[UINT64] = "UINT64"
-        stringMap[UINT64Z] = "UINT64Z"
-    }
-
+    private val stringMap = mapOf(
+        ENUM to "ENUM",
+        SINT8 to "SINT8",
+        UINT8 to "UINT8",
+        SINT16 to "SINT16",
+        UINT16 to "UINT16",
+        SINT32 to "SINT32",
+        UINT32 to "UINT32",
+        STRING to "STRING",
+        FLOAT32 to "FLOAT32",
+        FLOAT64 to "FLOAT64",
+        UINT8Z to "UINT8Z",
+        UINT16Z to "UINT16Z",
+        UINT32Z to "UINT32Z",
+        BYTE to "BYTE",
+        SINT64 to "SINT64",
+        UINT64 to "UINT64",
+        UINT64Z to "UINT64Z",
+        INVALID to "INVALID"
+    )
 
     /**
      * Retrieves the String Representation of the Value

@@ -2734,9 +2734,9 @@ open class MesgBroadcaster @JvmOverloads constructor(private val decode: Decode 
         }
     }
 
-    override fun onMesgDefinition(mesgDefn: MesgDefinition) {
+    override fun onMesgDefinition(mesgDefinition: MesgDefinition) {
         for (mesgDefinitionListener in mesgDefinitionListeners) {
-            mesgDefinitionListener.onMesgDefinition(mesgDefn)
+            mesgDefinitionListener.onMesgDefinition(mesgDefinition)
         }
     }
 }

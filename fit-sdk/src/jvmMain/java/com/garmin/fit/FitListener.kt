@@ -13,271 +13,214 @@ class FitListener : MesgListener, DeveloperFieldDescriptionListener {
 
     override fun onMesg(mesg: Mesg) {
         when (mesg.num) {
-            MesgNum.FILE_ID -> fitMessages.fileIdMesgs.add(FileIdMesg(mesg))
-            MesgNum.FILE_CREATOR -> fitMessages.fileCreatorMesgs.add(FileCreatorMesg(mesg))
-            MesgNum.TIMESTAMP_CORRELATION -> fitMessages.timestampCorrelationMesgs.add(
-                TimestampCorrelationMesg(mesg)
-            )
+            MesgNum.FILE_ID -> fitMessages._fileIdMesgs.add(FileIdMesg(mesg))
+            MesgNum.FILE_CREATOR -> fitMessages._fileCreatorMesgs.add(FileCreatorMesg(mesg))
+            MesgNum.TIMESTAMP_CORRELATION ->
+                fitMessages._timestampCorrelationMesgs.add(TimestampCorrelationMesg(mesg))
 
-            MesgNum.SOFTWARE -> fitMessages.softwareMesgs.add(SoftwareMesg(mesg))
-            MesgNum.SLAVE_DEVICE -> fitMessages.slaveDeviceMesgs.add(SlaveDeviceMesg(mesg))
-            MesgNum.CAPABILITIES -> fitMessages.capabilitiesMesgs.add(CapabilitiesMesg(mesg))
-            MesgNum.FILE_CAPABILITIES -> fitMessages.fileCapabilitiesMesgs.add(
-                FileCapabilitiesMesg(
-                    mesg
-                )
-            )
+            MesgNum.SOFTWARE -> fitMessages._softwareMesgs.add(SoftwareMesg(mesg))
+            MesgNum.SLAVE_DEVICE -> fitMessages._slaveDeviceMesgs.add(SlaveDeviceMesg(mesg))
+            MesgNum.CAPABILITIES -> fitMessages._capabilitiesMesgs.add(CapabilitiesMesg(mesg))
+            MesgNum.FILE_CAPABILITIES ->
+                fitMessages._fileCapabilitiesMesgs.add(FileCapabilitiesMesg(mesg))
 
-            MesgNum.MESG_CAPABILITIES -> fitMessages.mesgCapabilitiesMesgs.add(
-                MesgCapabilitiesMesg(
-                    mesg
-                )
-            )
+            MesgNum.MESG_CAPABILITIES ->
+                fitMessages._mesgCapabilitiesMesgs.add(MesgCapabilitiesMesg(mesg))
 
-            MesgNum.FIELD_CAPABILITIES -> fitMessages.fieldCapabilitiesMesgs.add(
-                FieldCapabilitiesMesg(mesg)
-            )
+            MesgNum.FIELD_CAPABILITIES ->
+                fitMessages._fieldCapabilitiesMesgs.add(FieldCapabilitiesMesg(mesg))
 
-            MesgNum.DEVICE_SETTINGS -> fitMessages.deviceSettingsMesgs.add(DeviceSettingsMesg(mesg))
-            MesgNum.USER_PROFILE -> fitMessages.userProfileMesgs.add(UserProfileMesg(mesg))
-            MesgNum.HRM_PROFILE -> fitMessages.hrmProfileMesgs.add(HrmProfileMesg(mesg))
-            MesgNum.SDM_PROFILE -> fitMessages.sdmProfileMesgs.add(SdmProfileMesg(mesg))
-            MesgNum.BIKE_PROFILE -> fitMessages.bikeProfileMesgs.add(BikeProfileMesg(mesg))
-            MesgNum.CONNECTIVITY -> fitMessages.connectivityMesgs.add(ConnectivityMesg(mesg))
-            MesgNum.WATCHFACE_SETTINGS -> fitMessages.watchfaceSettingsMesgs.add(
-                WatchfaceSettingsMesg(mesg)
-            )
+            MesgNum.DEVICE_SETTINGS -> fitMessages._deviceSettingsMesgs.add(DeviceSettingsMesg(mesg))
+            MesgNum.USER_PROFILE -> fitMessages._userProfileMesgs.add(UserProfileMesg(mesg))
+            MesgNum.HRM_PROFILE -> fitMessages._hrmProfileMesgs.add(HrmProfileMesg(mesg))
+            MesgNum.SDM_PROFILE -> fitMessages._sdmProfileMesgs.add(SdmProfileMesg(mesg))
+            MesgNum.BIKE_PROFILE -> fitMessages._bikeProfileMesgs.add(BikeProfileMesg(mesg))
+            MesgNum.CONNECTIVITY -> fitMessages._connectivityMesgs.add(ConnectivityMesg(mesg))
+            MesgNum.WATCHFACE_SETTINGS ->
+                fitMessages._watchfaceSettingsMesgs.add(WatchfaceSettingsMesg(mesg))
 
-            MesgNum.OHR_SETTINGS -> fitMessages.ohrSettingsMesgs.add(OhrSettingsMesg(mesg))
-            MesgNum.TIME_IN_ZONE -> fitMessages.timeInZoneMesgs.add(TimeInZoneMesg(mesg))
-            MesgNum.ZONES_TARGET -> fitMessages.zonesTargetMesgs.add(ZonesTargetMesg(mesg))
-            MesgNum.SPORT -> fitMessages.sportMesgs.add(SportMesg(mesg))
-            MesgNum.HR_ZONE -> fitMessages.hrZoneMesgs.add(HrZoneMesg(mesg))
-            MesgNum.SPEED_ZONE -> fitMessages.speedZoneMesgs.add(SpeedZoneMesg(mesg))
-            MesgNum.CADENCE_ZONE -> fitMessages.cadenceZoneMesgs.add(CadenceZoneMesg(mesg))
-            MesgNum.POWER_ZONE -> fitMessages.powerZoneMesgs.add(PowerZoneMesg(mesg))
-            MesgNum.MET_ZONE -> fitMessages.metZoneMesgs.add(MetZoneMesg(mesg))
-            MesgNum.TRAINING_SETTINGS -> fitMessages.trainingSettingsMesgs.add(
-                TrainingSettingsMesg(
-                    mesg
-                )
-            )
+            MesgNum.OHR_SETTINGS -> fitMessages._ohrSettingsMesgs.add(OhrSettingsMesg(mesg))
+            MesgNum.TIME_IN_ZONE -> fitMessages._timeInZoneMesgs.add(TimeInZoneMesg(mesg))
+            MesgNum.ZONES_TARGET -> fitMessages._zonesTargetMesgs.add(ZonesTargetMesg(mesg))
+            MesgNum.SPORT -> fitMessages._sportMesgs.add(SportMesg(mesg))
+            MesgNum.HR_ZONE -> fitMessages._hrZoneMesgs.add(HrZoneMesg(mesg))
+            MesgNum.SPEED_ZONE -> fitMessages._speedZoneMesgs.add(SpeedZoneMesg(mesg))
+            MesgNum.CADENCE_ZONE -> fitMessages._cadenceZoneMesgs.add(CadenceZoneMesg(mesg))
+            MesgNum.POWER_ZONE -> fitMessages._powerZoneMesgs.add(PowerZoneMesg(mesg))
+            MesgNum.MET_ZONE -> fitMessages._metZoneMesgs.add(MetZoneMesg(mesg))
+            MesgNum.TRAINING_SETTINGS ->
+                fitMessages._trainingSettingsMesgs.add(TrainingSettingsMesg(mesg))
 
-            MesgNum.DIVE_SETTINGS -> fitMessages.diveSettingsMesgs.add(DiveSettingsMesg(mesg))
-            MesgNum.DIVE_ALARM -> fitMessages.diveAlarmMesgs.add(DiveAlarmMesg(mesg))
-            MesgNum.DIVE_APNEA_ALARM -> fitMessages.diveApneaAlarmMesgs.add(DiveApneaAlarmMesg(mesg))
-            MesgNum.DIVE_GAS -> fitMessages.diveGasMesgs.add(DiveGasMesg(mesg))
-            MesgNum.GOAL -> fitMessages.goalMesgs.add(GoalMesg(mesg))
-            MesgNum.ACTIVITY -> fitMessages.activityMesgs.add(ActivityMesg(mesg))
-            MesgNum.SESSION -> fitMessages.sessionMesgs.add(SessionMesg(mesg))
-            MesgNum.LAP -> fitMessages.lapMesgs.add(LapMesg(mesg))
-            MesgNum.LENGTH -> fitMessages.lengthMesgs.add(LengthMesg(mesg))
-            MesgNum.RECORD -> fitMessages.recordMesgs.add(RecordMesg(mesg))
-            MesgNum.EVENT -> fitMessages.eventMesgs.add(EventMesg(mesg))
-            MesgNum.DEVICE_INFO -> fitMessages.deviceInfoMesgs.add(DeviceInfoMesg(mesg))
-            MesgNum.DEVICE_AUX_BATTERY_INFO -> fitMessages.deviceAuxBatteryInfoMesgs.add(
-                DeviceAuxBatteryInfoMesg(mesg)
-            )
+            MesgNum.DIVE_SETTINGS -> fitMessages._diveSettingsMesgs.add(DiveSettingsMesg(mesg))
+            MesgNum.DIVE_ALARM -> fitMessages._diveAlarmMesgs.add(DiveAlarmMesg(mesg))
+            MesgNum.DIVE_APNEA_ALARM -> fitMessages._diveApneaAlarmMesgs.add(DiveApneaAlarmMesg(mesg))
+            MesgNum.DIVE_GAS -> fitMessages._diveGasMesgs.add(DiveGasMesg(mesg))
+            MesgNum.GOAL -> fitMessages._goalMesgs.add(GoalMesg(mesg))
+            MesgNum.ACTIVITY -> fitMessages._activityMesgs.add(ActivityMesg(mesg))
+            MesgNum.SESSION -> fitMessages._sessionMesgs.add(SessionMesg(mesg))
+            MesgNum.LAP -> fitMessages._lapMesgs.add(LapMesg(mesg))
+            MesgNum.LENGTH -> fitMessages._lengthMesgs.add(LengthMesg(mesg))
+            MesgNum.RECORD -> fitMessages._recordMesgs.add(RecordMesg(mesg))
+            MesgNum.EVENT -> fitMessages._eventMesgs.add(EventMesg(mesg))
+            MesgNum.DEVICE_INFO -> fitMessages._deviceInfoMesgs.add(DeviceInfoMesg(mesg))
+            MesgNum.DEVICE_AUX_BATTERY_INFO ->
+                fitMessages._deviceAuxBatteryInfoMesgs.add(DeviceAuxBatteryInfoMesg(mesg))
 
-            MesgNum.TRAINING_FILE -> fitMessages.trainingFileMesgs.add(TrainingFileMesg(mesg))
-            MesgNum.WEATHER_CONDITIONS -> fitMessages.weatherConditionsMesgs.add(
-                WeatherConditionsMesg(mesg)
-            )
+            MesgNum.TRAINING_FILE -> fitMessages._trainingFileMesgs.add(TrainingFileMesg(mesg))
+            MesgNum.WEATHER_CONDITIONS ->
+                fitMessages._weatherConditionsMesgs.add(WeatherConditionsMesg(mesg))
 
-            MesgNum.WEATHER_ALERT -> fitMessages.weatherAlertMesgs.add(WeatherAlertMesg(mesg))
-            MesgNum.GPS_METADATA -> fitMessages.gpsMetadataMesgs.add(GpsMetadataMesg(mesg))
-            MesgNum.CAMERA_EVENT -> fitMessages.cameraEventMesgs.add(CameraEventMesg(mesg))
-            MesgNum.GYROSCOPE_DATA -> fitMessages.gyroscopeDataMesgs.add(GyroscopeDataMesg(mesg))
-            MesgNum.ACCELEROMETER_DATA -> fitMessages.accelerometerDataMesgs.add(
-                AccelerometerDataMesg(mesg)
-            )
+            MesgNum.WEATHER_ALERT -> fitMessages._weatherAlertMesgs.add(WeatherAlertMesg(mesg))
+            MesgNum.GPS_METADATA -> fitMessages._gpsMetadataMesgs.add(GpsMetadataMesg(mesg))
+            MesgNum.CAMERA_EVENT -> fitMessages._cameraEventMesgs.add(CameraEventMesg(mesg))
+            MesgNum.GYROSCOPE_DATA -> fitMessages._gyroscopeDataMesgs.add(GyroscopeDataMesg(mesg))
+            MesgNum.ACCELEROMETER_DATA ->
+                fitMessages._accelerometerDataMesgs.add(AccelerometerDataMesg(mesg))
 
-            MesgNum.MAGNETOMETER_DATA -> fitMessages.magnetometerDataMesgs.add(
-                MagnetometerDataMesg(
-                    mesg
-                )
-            )
+            MesgNum.MAGNETOMETER_DATA ->
+                fitMessages._magnetometerDataMesgs.add(MagnetometerDataMesg(mesg))
 
-            MesgNum.BAROMETER_DATA -> fitMessages.barometerDataMesgs.add(BarometerDataMesg(mesg))
-            MesgNum.THREE_D_SENSOR_CALIBRATION -> fitMessages.threeDSensorCalibrationMesgs.add(
-                ThreeDSensorCalibrationMesg(mesg)
-            )
+            MesgNum.BAROMETER_DATA -> fitMessages._barometerDataMesgs.add(BarometerDataMesg(mesg))
+            MesgNum.THREE_D_SENSOR_CALIBRATION ->
+                fitMessages._threeDSensorCalibrationMesgs.add(ThreeDSensorCalibrationMesg(mesg))
 
-            MesgNum.ONE_D_SENSOR_CALIBRATION -> fitMessages.oneDSensorCalibrationMesgs.add(
-                OneDSensorCalibrationMesg(mesg)
-            )
+            MesgNum.ONE_D_SENSOR_CALIBRATION ->
+                fitMessages._oneDSensorCalibrationMesgs.add(OneDSensorCalibrationMesg(mesg))
 
-            MesgNum.VIDEO_FRAME -> fitMessages.videoFrameMesgs.add(VideoFrameMesg(mesg))
-            MesgNum.OBDII_DATA -> fitMessages.obdiiDataMesgs.add(ObdiiDataMesg(mesg))
-            MesgNum.NMEA_SENTENCE -> fitMessages.nmeaSentenceMesgs.add(NmeaSentenceMesg(mesg))
-            MesgNum.AVIATION_ATTITUDE -> fitMessages.aviationAttitudeMesgs.add(
-                AviationAttitudeMesg(
-                    mesg
-                )
-            )
+            MesgNum.VIDEO_FRAME -> fitMessages._videoFrameMesgs.add(VideoFrameMesg(mesg))
+            MesgNum.OBDII_DATA -> fitMessages._obdiiDataMesgs.add(ObdiiDataMesg(mesg))
+            MesgNum.NMEA_SENTENCE -> fitMessages._nmeaSentenceMesgs.add(NmeaSentenceMesg(mesg))
+            MesgNum.AVIATION_ATTITUDE ->
+                fitMessages._aviationAttitudeMesgs.add(AviationAttitudeMesg(mesg))
 
-            MesgNum.VIDEO -> fitMessages.videoMesgs.add(VideoMesg(mesg))
-            MesgNum.VIDEO_TITLE -> fitMessages.videoTitleMesgs.add(VideoTitleMesg(mesg))
-            MesgNum.VIDEO_DESCRIPTION -> fitMessages.videoDescriptionMesgs.add(
-                VideoDescriptionMesg(
-                    mesg
-                )
-            )
+            MesgNum.VIDEO -> fitMessages._videoMesgs.add(VideoMesg(mesg))
+            MesgNum.VIDEO_TITLE -> fitMessages._videoTitleMesgs.add(VideoTitleMesg(mesg))
+            MesgNum.VIDEO_DESCRIPTION ->
+                fitMessages._videoDescriptionMesgs.add(VideoDescriptionMesg(mesg))
 
-            MesgNum.VIDEO_CLIP -> fitMessages.videoClipMesgs.add(VideoClipMesg(mesg))
-            MesgNum.SET -> fitMessages.setMesgs.add(SetMesg(mesg))
-            MesgNum.JUMP -> fitMessages.jumpMesgs.add(JumpMesg(mesg))
-            MesgNum.SPLIT -> fitMessages.splitMesgs.add(SplitMesg(mesg))
-            MesgNum.SPLIT_SUMMARY -> fitMessages.splitSummaryMesgs.add(SplitSummaryMesg(mesg))
-            MesgNum.CLIMB_PRO -> fitMessages.climbProMesgs.add(ClimbProMesg(mesg))
-            MesgNum.FIELD_DESCRIPTION -> fitMessages.fieldDescriptionMesgs.add(
-                FieldDescriptionMesg(
-                    mesg
-                )
-            )
+            MesgNum.VIDEO_CLIP -> fitMessages._videoClipMesgs.add(VideoClipMesg(mesg))
+            MesgNum.SET -> fitMessages._setMesgs.add(SetMesg(mesg))
+            MesgNum.JUMP -> fitMessages._jumpMesgs.add(JumpMesg(mesg))
+            MesgNum.SPLIT -> fitMessages._splitMesgs.add(SplitMesg(mesg))
+            MesgNum.SPLIT_SUMMARY -> fitMessages._splitSummaryMesgs.add(SplitSummaryMesg(mesg))
+            MesgNum.CLIMB_PRO -> fitMessages._climbProMesgs.add(ClimbProMesg(mesg))
+            MesgNum.FIELD_DESCRIPTION ->
+                fitMessages._fieldDescriptionMesgs.add(FieldDescriptionMesg(mesg))
 
-            MesgNum.DEVELOPER_DATA_ID -> fitMessages.developerDataIdMesgs.add(
-                DeveloperDataIdMesg(
-                    mesg
-                )
-            )
+            MesgNum.DEVELOPER_DATA_ID ->
+                fitMessages._developerDataIdMesgs.add(DeveloperDataIdMesg(mesg))
 
-            MesgNum.COURSE -> fitMessages.courseMesgs.add(CourseMesg(mesg))
-            MesgNum.COURSE_POINT -> fitMessages.coursePointMesgs.add(CoursePointMesg(mesg))
-            MesgNum.SEGMENT_ID -> fitMessages.segmentIdMesgs.add(SegmentIdMesg(mesg))
-            MesgNum.SEGMENT_LEADERBOARD_ENTRY -> fitMessages.segmentLeaderboardEntryMesgs.add(
-                SegmentLeaderboardEntryMesg(mesg)
-            )
+            MesgNum.COURSE -> fitMessages._courseMesgs.add(CourseMesg(mesg))
+            MesgNum.COURSE_POINT -> fitMessages._coursePointMesgs.add(CoursePointMesg(mesg))
+            MesgNum.SEGMENT_ID -> fitMessages._segmentIdMesgs.add(SegmentIdMesg(mesg))
+            MesgNum.SEGMENT_LEADERBOARD_ENTRY ->
+                fitMessages._segmentLeaderboardEntryMesgs.add(SegmentLeaderboardEntryMesg(mesg))
 
-            MesgNum.SEGMENT_POINT -> fitMessages.segmentPointMesgs.add(SegmentPointMesg(mesg))
-            MesgNum.SEGMENT_LAP -> fitMessages.segmentLapMesgs.add(SegmentLapMesg(mesg))
-            MesgNum.SEGMENT_FILE -> fitMessages.segmentFileMesgs.add(SegmentFileMesg(mesg))
-            MesgNum.WORKOUT -> fitMessages.workoutMesgs.add(WorkoutMesg(mesg))
-            MesgNum.WORKOUT_SESSION -> fitMessages.workoutSessionMesgs.add(WorkoutSessionMesg(mesg))
-            MesgNum.WORKOUT_STEP -> fitMessages.workoutStepMesgs.add(WorkoutStepMesg(mesg))
-            MesgNum.EXERCISE_TITLE -> fitMessages.exerciseTitleMesgs.add(ExerciseTitleMesg(mesg))
-            MesgNum.SCHEDULE -> fitMessages.scheduleMesgs.add(ScheduleMesg(mesg))
-            MesgNum.TOTALS -> fitMessages.totalsMesgs.add(TotalsMesg(mesg))
-            MesgNum.WEIGHT_SCALE -> fitMessages.weightScaleMesgs.add(WeightScaleMesg(mesg))
-            MesgNum.BLOOD_PRESSURE -> fitMessages.bloodPressureMesgs.add(BloodPressureMesg(mesg))
-            MesgNum.MONITORING_INFO -> fitMessages.monitoringInfoMesgs.add(MonitoringInfoMesg(mesg))
-            MesgNum.MONITORING -> fitMessages.monitoringMesgs.add(MonitoringMesg(mesg))
-            MesgNum.MONITORING_HR_DATA -> fitMessages.monitoringHrDataMesgs.add(
-                MonitoringHrDataMesg(
-                    mesg
-                )
-            )
+            MesgNum.SEGMENT_POINT -> fitMessages._segmentPointMesgs.add(SegmentPointMesg(mesg))
+            MesgNum.SEGMENT_LAP -> fitMessages._segmentLapMesgs.add(SegmentLapMesg(mesg))
+            MesgNum.SEGMENT_FILE -> fitMessages._segmentFileMesgs.add(SegmentFileMesg(mesg))
+            MesgNum.WORKOUT -> fitMessages._workoutMesgs.add(WorkoutMesg(mesg))
+            MesgNum.WORKOUT_SESSION -> fitMessages._workoutSessionMesgs.add(WorkoutSessionMesg(mesg))
+            MesgNum.WORKOUT_STEP -> fitMessages._workoutStepMesgs.add(WorkoutStepMesg(mesg))
+            MesgNum.EXERCISE_TITLE -> fitMessages._exerciseTitleMesgs.add(ExerciseTitleMesg(mesg))
+            MesgNum.SCHEDULE -> fitMessages._scheduleMesgs.add(ScheduleMesg(mesg))
+            MesgNum.TOTALS -> fitMessages._totalsMesgs.add(TotalsMesg(mesg))
+            MesgNum.WEIGHT_SCALE -> fitMessages._weightScaleMesgs.add(WeightScaleMesg(mesg))
+            MesgNum.BLOOD_PRESSURE -> fitMessages._bloodPressureMesgs.add(BloodPressureMesg(mesg))
+            MesgNum.MONITORING_INFO -> fitMessages._monitoringInfoMesgs.add(MonitoringInfoMesg(mesg))
+            MesgNum.MONITORING -> fitMessages._monitoringMesgs.add(MonitoringMesg(mesg))
+            MesgNum.MONITORING_HR_DATA ->
+                fitMessages._monitoringHrDataMesgs.add(MonitoringHrDataMesg(mesg))
 
-            MesgNum.SPO2_DATA -> fitMessages.spo2DataMesgs.add(Spo2DataMesg(mesg))
-            MesgNum.HR -> fitMessages.hrMesgs.add(HrMesg(mesg))
-            MesgNum.STRESS_LEVEL -> fitMessages.stressLevelMesgs.add(StressLevelMesg(mesg))
-            MesgNum.MAX_MET_DATA -> fitMessages.maxMetDataMesgs.add(MaxMetDataMesg(mesg))
-            MesgNum.HSA_BODY_BATTERY_DATA -> fitMessages.hsaBodyBatteryDataMesgs.add(
-                HsaBodyBatteryDataMesg(mesg)
-            )
+            MesgNum.SPO2_DATA -> fitMessages._spo2DataMesgs.add(Spo2DataMesg(mesg))
+            MesgNum.HR -> fitMessages._hrMesgs.add(HrMesg(mesg))
+            MesgNum.STRESS_LEVEL -> fitMessages._stressLevelMesgs.add(StressLevelMesg(mesg))
+            MesgNum.MAX_MET_DATA -> fitMessages._maxMetDataMesgs.add(MaxMetDataMesg(mesg))
+            MesgNum.HSA_BODY_BATTERY_DATA ->
+                fitMessages._hsaBodyBatteryDataMesgs.add(HsaBodyBatteryDataMesg(mesg))
 
-            MesgNum.HSA_EVENT -> fitMessages.hsaEventMesgs.add(HsaEventMesg(mesg))
-            MesgNum.HSA_ACCELEROMETER_DATA -> fitMessages.hsaAccelerometerDataMesgs.add(
-                HsaAccelerometerDataMesg(mesg)
-            )
+            MesgNum.HSA_EVENT -> fitMessages._hsaEventMesgs.add(HsaEventMesg(mesg))
+            MesgNum.HSA_ACCELEROMETER_DATA ->
+                fitMessages._hsaAccelerometerDataMesgs.add(HsaAccelerometerDataMesg(mesg))
 
-            MesgNum.HSA_GYROSCOPE_DATA -> fitMessages.hsaGyroscopeDataMesgs.add(
-                HsaGyroscopeDataMesg(
-                    mesg
-                )
-            )
+            MesgNum.HSA_GYROSCOPE_DATA ->
+                fitMessages._hsaGyroscopeDataMesgs.add(HsaGyroscopeDataMesg(mesg))
 
-            MesgNum.HSA_STEP_DATA -> fitMessages.hsaStepDataMesgs.add(HsaStepDataMesg(mesg))
-            MesgNum.HSA_SPO2_DATA -> fitMessages.hsaSpo2DataMesgs.add(HsaSpo2DataMesg(mesg))
-            MesgNum.HSA_STRESS_DATA -> fitMessages.hsaStressDataMesgs.add(HsaStressDataMesg(mesg))
-            MesgNum.HSA_RESPIRATION_DATA -> fitMessages.hsaRespirationDataMesgs.add(
-                HsaRespirationDataMesg(mesg)
-            )
+            MesgNum.HSA_STEP_DATA -> fitMessages._hsaStepDataMesgs.add(HsaStepDataMesg(mesg))
+            MesgNum.HSA_SPO2_DATA -> fitMessages._hsaSpo2DataMesgs.add(HsaSpo2DataMesg(mesg))
+            MesgNum.HSA_STRESS_DATA -> fitMessages._hsaStressDataMesgs.add(HsaStressDataMesg(mesg))
+            MesgNum.HSA_RESPIRATION_DATA ->
+                fitMessages._hsaRespirationDataMesgs.add(HsaRespirationDataMesg(mesg))
 
-            MesgNum.HSA_HEART_RATE_DATA -> fitMessages.hsaHeartRateDataMesgs.add(
-                HsaHeartRateDataMesg(mesg)
-            )
+            MesgNum.HSA_HEART_RATE_DATA ->
+                fitMessages._hsaHeartRateDataMesgs.add(HsaHeartRateDataMesg(mesg))
 
-            MesgNum.HSA_CONFIGURATION_DATA -> fitMessages.hsaConfigurationDataMesgs.add(
-                HsaConfigurationDataMesg(mesg)
-            )
+            MesgNum.HSA_CONFIGURATION_DATA ->
+                fitMessages._hsaConfigurationDataMesgs.add(HsaConfigurationDataMesg(mesg))
 
-            MesgNum.HSA_WRIST_TEMPERATURE_DATA -> fitMessages.hsaWristTemperatureDataMesgs.add(
-                HsaWristTemperatureDataMesg(mesg)
-            )
+            MesgNum.HSA_WRIST_TEMPERATURE_DATA ->
+                fitMessages._hsaWristTemperatureDataMesgs.add(HsaWristTemperatureDataMesg(mesg))
 
-            MesgNum.MEMO_GLOB -> fitMessages.memoGlobMesgs.add(MemoGlobMesg(mesg))
-            MesgNum.SLEEP_LEVEL -> fitMessages.sleepLevelMesgs.add(SleepLevelMesg(mesg))
-            MesgNum.ANT_CHANNEL_ID -> fitMessages.antChannelIdMesgs.add(AntChannelIdMesg(mesg))
-            MesgNum.ANT_RX -> fitMessages.antRxMesgs.add(AntRxMesg(mesg))
-            MesgNum.ANT_TX -> fitMessages.antTxMesgs.add(AntTxMesg(mesg))
-            MesgNum.EXD_SCREEN_CONFIGURATION -> fitMessages.exdScreenConfigurationMesgs.add(
+            MesgNum.MEMO_GLOB -> fitMessages._memoGlobMesgs.add(MemoGlobMesg(mesg))
+            MesgNum.SLEEP_LEVEL -> fitMessages._sleepLevelMesgs.add(SleepLevelMesg(mesg))
+            MesgNum.ANT_CHANNEL_ID -> fitMessages._antChannelIdMesgs.add(AntChannelIdMesg(mesg))
+            MesgNum.ANT_RX -> fitMessages._antRxMesgs.add(AntRxMesg(mesg))
+            MesgNum.ANT_TX -> fitMessages._antTxMesgs.add(AntTxMesg(mesg))
+            MesgNum.EXD_SCREEN_CONFIGURATION -> fitMessages._exdScreenConfigurationMesgs.add(
                 ExdScreenConfigurationMesg(mesg)
             )
 
-            MesgNum.EXD_DATA_FIELD_CONFIGURATION -> fitMessages.exdDataFieldConfigurationMesgs.add(
+            MesgNum.EXD_DATA_FIELD_CONFIGURATION -> fitMessages._exdDataFieldConfigurationMesgs.add(
                 ExdDataFieldConfigurationMesg(mesg)
             )
 
-            MesgNum.EXD_DATA_CONCEPT_CONFIGURATION -> fitMessages.exdDataConceptConfigurationMesgs.add(
+            MesgNum.EXD_DATA_CONCEPT_CONFIGURATION -> fitMessages._exdDataConceptConfigurationMesgs.add(
                 ExdDataConceptConfigurationMesg(mesg)
             )
 
-            MesgNum.DIVE_SUMMARY -> fitMessages.diveSummaryMesgs.add(DiveSummaryMesg(mesg))
-            MesgNum.AAD_ACCEL_FEATURES -> fitMessages.aadAccelFeaturesMesgs.add(
-                AadAccelFeaturesMesg(
-                    mesg
+            MesgNum.DIVE_SUMMARY -> fitMessages._diveSummaryMesgs.add(DiveSummaryMesg(mesg))
+            MesgNum.AAD_ACCEL_FEATURES ->
+                fitMessages._aadAccelFeaturesMesgs.add(AadAccelFeaturesMesg(mesg))
+
+            MesgNum.HRV -> fitMessages._hrvMesgs.add(HrvMesg(mesg))
+            MesgNum.BEAT_INTERVALS -> fitMessages._beatIntervalsMesgs.add(BeatIntervalsMesg(mesg))
+            MesgNum.HRV_STATUS_SUMMARY ->
+                fitMessages._hrvStatusSummaryMesgs.add(HrvStatusSummaryMesg(mesg))
+
+            MesgNum.HRV_VALUE -> fitMessages._hrvValueMesgs.add(HrvValueMesg(mesg))
+            MesgNum.RAW_BBI -> fitMessages._rawBbiMesgs.add(RawBbiMesg(mesg))
+            MesgNum.RESPIRATION_RATE ->
+                fitMessages._respirationRateMesgs.add(RespirationRateMesg(mesg))
+
+            MesgNum.CHRONO_SHOT_SESSION ->
+                fitMessages._chronoShotSessionMesgs.add(ChronoShotSessionMesg(mesg))
+
+            MesgNum.CHRONO_SHOT_DATA -> fitMessages._chronoShotDataMesgs.add(ChronoShotDataMesg(mesg))
+            MesgNum.TANK_UPDATE -> fitMessages._tankUpdateMesgs.add(TankUpdateMesg(mesg))
+            MesgNum.TANK_SUMMARY -> fitMessages._tankSummaryMesgs.add(TankSummaryMesg(mesg))
+            MesgNum.SLEEP_ASSESSMENT ->
+                fitMessages._sleepAssessmentMesgs.add(SleepAssessmentMesg(mesg))
+
+            MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD ->
+                fitMessages._sleepDisruptionSeverityPeriodMesgs.add(
+                    SleepDisruptionSeverityPeriodMesg(mesg)
                 )
-            )
 
-            MesgNum.HRV -> fitMessages.hrvMesgs.add(HrvMesg(mesg))
-            MesgNum.BEAT_INTERVALS -> fitMessages.beatIntervalsMesgs.add(BeatIntervalsMesg(mesg))
-            MesgNum.HRV_STATUS_SUMMARY -> fitMessages.hrvStatusSummaryMesgs.add(
-                HrvStatusSummaryMesg(
-                    mesg
+            MesgNum.SLEEP_DISRUPTION_OVERNIGHT_SEVERITY ->
+                fitMessages._sleepDisruptionOvernightSeverityMesgs.add(
+                    SleepDisruptionOvernightSeverityMesg(mesg)
                 )
-            )
 
-            MesgNum.HRV_VALUE -> fitMessages.hrvValueMesgs.add(HrvValueMesg(mesg))
-            MesgNum.RAW_BBI -> fitMessages.rawBbiMesgs.add(RawBbiMesg(mesg))
-            MesgNum.RESPIRATION_RATE -> fitMessages.respirationRateMesgs.add(
-                RespirationRateMesg(
-                    mesg
-                )
-            )
+            MesgNum.NAP_EVENT -> fitMessages._napEventMesgs.add(NapEventMesg(mesg))
+            MesgNum.SKIN_TEMP_OVERNIGHT ->
+                fitMessages._skinTempOvernightMesgs.add(SkinTempOvernightMesg(mesg))
 
-            MesgNum.CHRONO_SHOT_SESSION -> fitMessages.chronoShotSessionMesgs.add(
-                ChronoShotSessionMesg(mesg)
-            )
-
-            MesgNum.CHRONO_SHOT_DATA -> fitMessages.chronoShotDataMesgs.add(ChronoShotDataMesg(mesg))
-            MesgNum.TANK_UPDATE -> fitMessages.tankUpdateMesgs.add(TankUpdateMesg(mesg))
-            MesgNum.TANK_SUMMARY -> fitMessages.tankSummaryMesgs.add(TankSummaryMesg(mesg))
-            MesgNum.SLEEP_ASSESSMENT -> fitMessages.sleepAssessmentMesgs.add(
-                SleepAssessmentMesg(
-                    mesg
-                )
-            )
-
-            MesgNum.SLEEP_DISRUPTION_SEVERITY_PERIOD -> fitMessages.sleepDisruptionSeverityPeriodMesgs.add(
-                SleepDisruptionSeverityPeriodMesg(mesg)
-            )
-
-            MesgNum.SLEEP_DISRUPTION_OVERNIGHT_SEVERITY -> fitMessages.sleepDisruptionOvernightSeverityMesgs.add(
-                SleepDisruptionOvernightSeverityMesg(mesg)
-            )
-
-            MesgNum.NAP_EVENT -> fitMessages.napEventMesgs.add(NapEventMesg(mesg))
-            MesgNum.SKIN_TEMP_OVERNIGHT -> fitMessages.skinTempOvernightMesgs.add(
-                SkinTempOvernightMesg(mesg)
-            )
-
-            MesgNum.PAD -> fitMessages.padMesgs.add(PadMesg(mesg))
+            MesgNum.PAD -> fitMessages._padMesgs.add(PadMesg(mesg))
             else -> {}
         }
     }
 
     override fun onDescription(desc: DeveloperFieldDescription) {
-        fitMessages.developerFieldDescriptionMesgs.add(desc)
+        fitMessages._developerFieldDescriptionMesgs.add(desc)
     }
 }
