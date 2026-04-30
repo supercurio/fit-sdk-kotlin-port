@@ -73,4 +73,10 @@ class FieldDefinition : FieldDefinitionBase {
 
         return hashCode
     }
+
+    override fun toString() = "FieldDefinition(" +
+            "num=$num, " +
+            "size=$size, " +
+            "type=$type" +
+            ")"
 }

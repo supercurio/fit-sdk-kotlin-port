@@ -162,4 +162,19 @@ class DeveloperFieldDefinition : FieldDefinitionBase {
     fun setDeveloperDataIdMesg(developerDataIdMesg: DeveloperDataIdMesg?) {
         this.developerDataIdMesg = developerDataIdMesg
     }
+
+    override fun toString() = "DeveloperFieldDefinition(" +
+            "num=$num, " +
+            "size=$size, " +
+            "type=$type, " +
+            "appVersion=$appVersion, " +
+            "appId=${appId?.toByteArray()?.toHexString()}, " +
+            "developerDataIndex=$developerDataIndex, " +
+            "isDefined=$isDefined, " +
+            "fieldName=$fieldName, " +
+            "scale=$scale, " +
+            "offset=$offset, " +
+            "units=$units" +
+            ")"
+
 }

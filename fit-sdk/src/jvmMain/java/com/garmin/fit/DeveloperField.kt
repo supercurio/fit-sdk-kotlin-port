@@ -91,4 +91,22 @@ class DeveloperField : FieldBase {
          * @return The Field Number of the Overridden Field, [Fit.UINT8_INVALID] otherwise.
          */
         get() = fieldDefinition.nativeOverride
+
+    override fun toString() = "DeveloperField(" +
+            "fieldName=$fieldName, " +
+            "num=$num, " +
+            "units=$units, " +
+            "type=$type, " +
+            "typeName=${typeString(type)}, " +
+            "offset=$offset, " +
+            "scale=$scale, " +
+            "rawValue=$rawValue, " +
+            "rawValueType=${rawValue?.let { it::class.simpleName }}, " +
+            "developerDataIndex=$developerDataIndex, " +
+            "appVersion=$appVersion, " +
+            "appId=${appId?.toByteArray()?.toHexString()}, " +
+            "appUUID=$appUUID, " +
+            "nativeOverride=$nativeOverride, " +
+            "nativeOverrideName=${typeString(nativeOverride)}" +
+            ")"
 }

@@ -204,4 +204,12 @@ class MesgDefinition {
     fun getDeveloperFields(): Iterable<DeveloperFieldDefinition> {
         return developerFields
     }
+
+    override fun toString() = "MesgDefinition(" +
+            "num=$num, " +
+            "localNum=$localNum, " +
+            "arch=$arch, " +
+            "fields=$fields, " +
+            "developerFields=$developerFields" +
+            ")"
 }
