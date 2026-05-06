@@ -26,15 +26,13 @@ import com.garmin.fit.MesgSource
 import com.garmin.fit.RecordMesg
 import com.garmin.fit.SessionMesg
 import com.garmin.fit.Sport
-import com.garmin.fit.SportMesg
 import com.garmin.fit.SubSport
 import java.time.ZonedDateTime
-import java.util.function.Consumer
 
 class ActivityRepairFilter : BufferedMesgListener, MesgSource {
     private val fitListener = FitListener()
-    private val mesgListeners = ArrayList<MesgListener?>()
-    private val filteredRecordMesgs = ArrayList<Mesg?>()
+    private val mesgListeners = mutableListOf<MesgListener>()
+    private val filteredRecordMesgs = mutableListOf<Mesg>()
     private val serialNumber: Long = 123456789
     private var previousMesg: RecordMesg? = null
     private var continueFilteringRecordMesgs = true
@@ -70,9 +68,7 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
     /**
      * @return true if the file can be repaired; false if it cannot.
      */
-    fun canRepairFile(): Boolean {
-        return filteredRecordMesgs.size != 0
-    }
+    fun canRepairFile() = filteredRecordMesgs.isNotEmpty()
 
     /**
      * Call once all Mesgs from the MesgSource have been received. This method then repairs the Activity file and
@@ -92,7 +88,7 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
 
         val fileIdMesg = createFileIdMesg(startTime!!)
 
-        val deviceInfoMesg = createDeviceIdMesg(fitMessages.getDeviceInfoMesgs(), startTime)
+        val deviceInfoMesg = createDeviceIdMesg(fitMessages.deviceInfoMesgs, startTime)
 
         val lapMesg = createLapMesg(start, end)
 
@@ -102,8 +98,8 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
 
         flushMesg(fileIdMesg)
         flushMesg(deviceInfoMesg)
-        flushMesgs(fitMessages.getDeveloperDataIdMesgs())
-        flushMesgs(fitMessages.getFieldDescriptionMesgs())
+        flushMesgs(fitMessages.developerDataIdMesgs)
+        flushMesgs(fitMessages.fieldDescriptionMesgs)
         flushMesgs(filteredRecordMesgs)
         flushMesg(lapMesg)
         flushMesg(sessionMesg)
@@ -131,7 +127,7 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
             return
         }
 
-        val recordMesgs = fitListener.fitMessages.getRecordMesgs()
+        val recordMesgs = fitListener.fitMessages.recordMesgs
         val currentMesg = recordMesgs[recordMesgs.size - 1]
 
         if (!hasValidTimestamp(currentMesg)) {
@@ -158,13 +154,10 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
     }
 
     private fun createFileIdMesg(timeCreated: DateTime): FileIdMesg {
-        var fileIdMesg = fileIdMesgFromFile
-
-        if (fileIdMesg == null) {
-            fileIdMesg = FileIdMesg()
-            fileIdMesg.type = File.ACTIVITY
-            fileIdMesg.product = 0
-            fileIdMesg.serialNumber = serialNumber
+        val fileIdMesg = fileIdMesgFromFile ?: FileIdMesg().also {
+            it.type = File.ACTIVITY
+            it.product = 0
+            it.serialNumber = serialNumber
         }
 
         if (fileIdMesg.manufacturer == null) {
@@ -177,7 +170,7 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
     }
 
     private fun createDeviceIdMesg(
-        deviceInfoMesgs: MutableList<DeviceInfoMesg>,
+        deviceInfoMesgs: List<DeviceInfoMesg>,
         startTime: DateTime
     ): DeviceInfoMesg {
         var deviceInfoMesg = deviceInfoMesgs.stream()
@@ -236,22 +229,20 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
         sessionMesg.firstLapIndex = 0
         sessionMesg.numLaps = 1
 
-        val sportMesg = fitMessages.getSportMesgs().stream()
-            .filter { mesg: SportMesg? -> mesg!!.sport != null }
-            .filter { mesg: SportMesg? -> mesg!!.subSport != null }
-            .findFirst()
-            .orElse(null)
+        val sportMesg = fitMessages
+            .sportMesgs
+            .firstOrNull { it.sport != null && it.subSport != null }
+
         if (sportMesg != null) {
             sessionMesg.sport = sportMesg.sport
             sessionMesg.subSport = sportMesg.subSport
             return sessionMesg
         }
 
-        val lapMesg = fitMessages.getLapMesgs().stream()
-            .filter { mesg: LapMesg? -> mesg!!.sport != null }
-            .filter { mesg: LapMesg? -> mesg!!.subSport != null }
-            .findFirst()
-            .orElse(null)
+        val lapMesg = fitMessages
+            .lapMesgs
+            .firstOrNull { it.sport != null && it.subSport != null }
+
         if (lapMesg != null) {
             sessionMesg.sport = lapMesg.sport
             sessionMesg.subSport = lapMesg.subSport
@@ -268,7 +259,7 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
         activityMesg.timestamp = end.timestamp
         activityMesg.numSessions = 1
 
-        val timezoneOffset = ZonedDateTime.now().getOffset().getTotalSeconds()
+        val timezoneOffset = ZonedDateTime.now().offset.totalSeconds
 
         activityMesg.localTimestamp = end.timestamp!!.timestamp + timezoneOffset
         activityMesg.totalTimerTime =
@@ -281,21 +272,15 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
         return timestamp != null && timestamp >= DateTime.MIN
     }
 
-    private fun isSequential(previousRecordMesg: RecordMesg, recordMesg: RecordMesg): Boolean {
-        return (previousRecordMesg.timestamp!!.timestamp <= recordMesg.timestamp!!.timestamp)
-    }
+    private fun isSequential(previousRecordMesg: RecordMesg, recordMesg: RecordMesg) =
+        previousRecordMesg.timestamp!!.timestamp <= recordMesg.timestamp!!.timestamp
 
     private fun isReasonableSpan(previousRecordMesg: RecordMesg, recordMesg: RecordMesg): Boolean {
         val TWO_DAYS_IN_SECONDS = 172800
         return (recordMesg.timestamp!!.timestamp < previousRecordMesg.timestamp!!.timestamp + TWO_DAYS_IN_SECONDS)
     }
 
-    private fun flushMesg(mesg: Mesg) {
-        mesgListeners.forEach(Consumer { mesgListener: MesgListener? -> mesgListener!!.onMesg(mesg) })
-    }
-
-    private fun flushMesgs(mesgs: MutableList<out Mesg?>) {
-        mesgs.forEach { mesg: Mesg? -> flushMesg(mesg!!) }
-    }
+    private fun flushMesg(mesg: Mesg) = mesgListeners.forEach { it.onMesg(mesg) }
+    private fun flushMesgs(mesgs: List<Mesg>) = mesgs.forEach(::flushMesg)
 }
 

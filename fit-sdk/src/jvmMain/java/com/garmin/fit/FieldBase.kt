@@ -20,7 +20,6 @@ import java.nio.ByteBuffer
 import java.nio.charset.Charset
 import java.nio.charset.CodingErrorAction
 import java.nio.charset.StandardCharsets
-import java.util.Arrays
 import kotlin.math.round
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
@@ -862,12 +861,12 @@ abstract class FieldBase {
                     val utf8Decoder = Charset.forName("UTF-8").newDecoder()
                     utf8Decoder.onMalformedInput(CodingErrorAction.IGNORE)
                     utf8Decoder.onUnmappableCharacter(CodingErrorAction.IGNORE)
-                    val decoded = utf8Decoder.decode(byteBuffer)
-                    val strings: Array<String?> =
-                        decoded.toString().split("\u0000".toRegex()).dropLastWhile { it.isEmpty() }
-                            .toTypedArray()
-                    Arrays.stream<String?>(strings)
-                        .forEach { string: String? -> values.add(string!!) }
+
+                    utf8Decoder.decode(byteBuffer)
+                        .toString()
+                        .split("\u0000".toRegex())
+                        .dropLastWhile { it.isEmpty() }
+                        .forEach { values.add(it) }
                 } catch (e: IOException) {
                     return true
                 }

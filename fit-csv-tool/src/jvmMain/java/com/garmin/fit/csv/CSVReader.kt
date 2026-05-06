@@ -31,7 +31,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
-import java.util.LinkedList
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -45,8 +44,8 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
     private var fieldCol = -1
     private var lineNum = 1
 
-    private val fieldDescriptionMesgs = LinkedList<FieldDescriptionMesg>()
-    private val developerDataIdMesgs = HashMap<Short, DeveloperDataIdMesg>()
+    private val fieldDescriptionMesgs = mutableListOf<FieldDescriptionMesg>()
+    private val developerDataIdMesgs = mutableMapOf<Short, DeveloperDataIdMesg>()
 
     fun readCSV(
         inputStream: InputStream,
@@ -401,16 +400,8 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
             // Save the Developer Data Id Message
             developerDataIdMesgs[developerIndex] = devId
 
-            val it = fieldDescriptionMesgs.iterator()
-
             // Remove fields associated with the old developer assigned to the index of the new dev
-            while (it.hasNext()) {
-                val next = it.next()
-
-                if (next.developerDataIndex == developerIndex) {
-                    it.remove()
-                }
-            }
+            fieldDescriptionMesgs.removeAll { it.developerDataIndex == developerIndex }
         }
 
         mesgListener?.onMesg(mesg)

@@ -8,11 +8,10 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
+import kotlinx.collections.immutable.toImmutableList
 import java.io.DataOutputStream
 import java.io.IOException
 import java.io.OutputStream
-import java.util.Collections
-import java.util.LinkedList
 
 open class Mesg {
     // Use a private backing field for constructors to initialize name
@@ -979,9 +978,7 @@ open class Mesg {
         }
     }
 
-    fun getFields(): MutableCollection<Field?> {
-        return Collections.unmodifiableCollection<Field?>(fields)
-    }
+    fun getFields(): List<Field> = fields.toImmutableList()
 
     fun setFields(mesg: Mesg) {
         if (mesg.num != num) {
@@ -1025,22 +1022,13 @@ open class Mesg {
      * @return [Iterable] of [FieldBase]s that are equivalent to the
      * field number provided
      */
-    fun getOverrideField(fieldNum: Short): Iterable<FieldBase?> {
-        val fields = LinkedList<FieldBase?>()
+    fun getOverrideField(fieldNum: Short): Iterable<FieldBase> = buildList {
+        getField(fieldNum.toInt())
+            ?.let { add(it) }
 
-        val nativeField = getField(fieldNum.toInt())
-
-        if (null != nativeField) {
-            fields.add(nativeField)
-        }
-
-        for (devField in developerFields) {
-            if (devField.nativeOverride == fieldNum) {
-                fields.add(devField)
-            }
-        }
-
-        return fields
+        developerFields
+            .filter { it.nativeOverride == fieldNum }
+            .forEach { add(it) }
     }
 
     override fun toString() = "Mesg(" +
