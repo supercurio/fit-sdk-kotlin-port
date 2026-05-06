@@ -13,6 +13,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             implementation(libs.kotlinx.collections.immutable)
+            implementation(libs.kotlinx.datetime)
         }
 
         commonTest.dependencies {

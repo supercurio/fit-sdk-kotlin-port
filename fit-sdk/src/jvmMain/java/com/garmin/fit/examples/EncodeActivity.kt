@@ -33,12 +33,14 @@ import com.garmin.fit.SessionMesg
 import com.garmin.fit.Sport
 import com.garmin.fit.SubSport
 import com.garmin.fit.SwimStroke
-import java.util.Date
-import java.util.Random
-import java.util.TimeZone
+import com.garmin.fit.instantKt
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.offsetAt
 import kotlin.math.abs
 import kotlin.math.roundToLong
 import kotlin.math.sin
+import kotlin.random.Random
+import kotlin.time.Clock
 
 object EncodeActivity {
     @JvmStatic
@@ -60,7 +62,7 @@ object EncodeActivity {
         val messages = mutableListOf<Mesg>()
 
         // The starting timestamp for the activity
-        val startTime = DateTime(Date())
+        val startTime = DateTime(Clock.System.now())
 
         // Timer Events are a BEST PRACTICE for FIT ACTIVITY files
         val eventMesg = EventMesg()
@@ -175,8 +177,8 @@ object EncodeActivity {
         val activityMesg = ActivityMesg()
         activityMesg.timestamp = timestamp
         activityMesg.numSessions = 1
-        val timeZone = TimeZone.getTimeZone("America/Denver")
-        val timezoneOffset = ((timeZone.rawOffset + timeZone.dstSavings) / 1000).toLong()
+        val timeZone = TimeZone.of("America/Denver")
+        val timezoneOffset = timeZone.offsetAt(timestamp.instantKt).totalSeconds
         activityMesg.localTimestamp = timestamp.timestamp + timezoneOffset
         activityMesg.totalTimerTime = (timestamp.timestamp - startTime.timestamp).toFloat()
         messages.add(activityMesg)
@@ -189,7 +191,7 @@ object EncodeActivity {
         val messages = mutableListOf<Mesg>()
 
         // The starting timestamp for the activity
-        val startTime = DateTime(Date())
+        val startTime = DateTime(Clock.System.now())
 
         // Timer Events are a BEST PRACTICE for FIT ACTIVITY files
         val eventMesgStart = EventMesg()
@@ -355,8 +357,8 @@ object EncodeActivity {
         val activityMesg = ActivityMesg()
         activityMesg.timestamp = timestamp
         activityMesg.numSessions = 1
-        val timeZone = TimeZone.getTimeZone("America/Denver")
-        val timezoneOffset = ((timeZone.rawOffset + timeZone.dstSavings) / 1000).toLong()
+        val timeZone = TimeZone.of("America/Denver")
+        val timezoneOffset = timeZone.offsetAt(timestamp.instantKt).totalSeconds
         activityMesg.localTimestamp = timestamp.timestamp + timezoneOffset
         activityMesg.totalTimerTime = sessionTotalElapsedTime.toFloat()
 
@@ -373,8 +375,7 @@ object EncodeActivity {
         val productId: Short = 0
         val softwareVersion = 1.0f
 
-        val random = Random()
-        val serialNumber = random.nextInt()
+        val serialNumber = Random.nextInt()
 
         // Every FIT file MUST contain a File ID message
         val fileIdMesg = FileIdMesg()
