@@ -9,16 +9,16 @@
 package com.garmin.fit
 
 
-enum class AutolapTrigger(var value: Short) {
-    TIME(0.toShort()),
-    DISTANCE(1.toShort()),
-    POSITION_START(2.toShort()),
-    POSITION_LAP(3.toShort()),
-    POSITION_WAYPOINT(4.toShort()),
-    POSITION_MARKED(5.toShort()),
-    OFF(6.toShort()),
-    AUTO_SELECT(13.toShort()),
-    INVALID(255.toShort());
+enum class AutolapTrigger(val value: Short) {
+    TIME(0),
+    DISTANCE(1),
+    POSITION_START(2),
+    POSITION_LAP(3),
+    POSITION_WAYPOINT(4),
+    POSITION_MARKED(5),
+    OFF(6),
+    AUTO_SELECT(13),
+    INVALID(255);
 
 
     companion object {

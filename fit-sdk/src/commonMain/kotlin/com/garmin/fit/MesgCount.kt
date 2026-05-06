@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class MesgCount(var value: Short) {
-    NUM_PER_FILE(0.toShort()),
-    MAX_PER_FILE(1.toShort()),
-    MAX_PER_FILE_TYPE(2.toShort()),
-    INVALID(255.toShort());
+enum class MesgCount(val value: Short) {
+    NUM_PER_FILE(0),
+    MAX_PER_FILE(1),
+    MAX_PER_FILE_TYPE(2),
+    INVALID(255);
 
 
     companion object {

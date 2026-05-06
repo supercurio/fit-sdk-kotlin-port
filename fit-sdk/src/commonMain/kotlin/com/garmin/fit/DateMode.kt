@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class DateMode(var value: Short) {
-    DAY_MONTH(0.toShort()),
-    MONTH_DAY(1.toShort()),
-    INVALID(255.toShort());
+enum class DateMode(val value: Short) {
+    DAY_MONTH(0),
+    MONTH_DAY(1),
+    INVALID(255);
 
 
     companion object {

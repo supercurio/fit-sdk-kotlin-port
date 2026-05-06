@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class GoalSource(var value: Short) {
-    AUTO(0.toShort()),
-    COMMUNITY(1.toShort()),
-    USER(2.toShort()),
-    INVALID(255.toShort());
+enum class GoalSource(val value: Short) {
+    AUTO(0),
+    COMMUNITY(1),
+    USER(2),
+    INVALID(255);
 
 
     companion object {

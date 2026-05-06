@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class Spo2MeasurementType(var value: Short) {
-    OFF_WRIST(0.toShort()),
-    SPOT_CHECK(1.toShort()),
-    CONTINUOUS_CHECK(2.toShort()),
-    PERIODIC(3.toShort()),
-    INVALID(255.toShort());
+enum class Spo2MeasurementType(val value: Short) {
+    OFF_WRIST(0),
+    SPOT_CHECK(1),
+    CONTINUOUS_CHECK(2),
+    PERIODIC(3),
+    INVALID(255);
 
 
     companion object {

@@ -9,14 +9,14 @@
 package com.garmin.fit
 
 
-enum class SourceType(var value: Short) {
-    ANT(0.toShort()),
-    ANTPLUS(1.toShort()),
-    BLUETOOTH(2.toShort()),
-    BLUETOOTH_LOW_ENERGY(3.toShort()),
-    WIFI(4.toShort()),
-    LOCAL(5.toShort()),
-    INVALID(255.toShort());
+enum class SourceType(val value: Short) {
+    ANT(0),
+    ANTPLUS(1),
+    BLUETOOTH(2),
+    BLUETOOTH_LOW_ENERGY(3),
+    WIFI(4),
+    LOCAL(5),
+    INVALID(255);
 
 
     companion object {

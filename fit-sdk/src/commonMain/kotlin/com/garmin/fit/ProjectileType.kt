@@ -9,14 +9,14 @@
 package com.garmin.fit
 
 
-enum class ProjectileType(var value: Short) {
-    ARROW(0.toShort()),
-    RIFLE_CARTRIDGE(1.toShort()),
-    PISTOL_CARTRIDGE(2.toShort()),
-    SHOTSHELL(3.toShort()),
-    AIR_RIFLE_PELLET(4.toShort()),
-    OTHER(5.toShort()),
-    INVALID(255.toShort());
+enum class ProjectileType(val value: Short) {
+    ARROW(0),
+    RIFLE_CARTRIDGE(1),
+    PISTOL_CARTRIDGE(2),
+    SHOTSHELL(3),
+    AIR_RIFLE_PELLET(4),
+    OTHER(5),
+    INVALID(255);
 
 
     companion object {

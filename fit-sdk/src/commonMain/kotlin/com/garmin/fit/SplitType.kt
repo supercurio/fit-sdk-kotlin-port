@@ -9,29 +9,29 @@
 package com.garmin.fit
 
 
-enum class SplitType(var value: Short) {
-    ASCENT_SPLIT(1.toShort()),
-    DESCENT_SPLIT(2.toShort()),
-    INTERVAL_ACTIVE(3.toShort()),
-    INTERVAL_REST(4.toShort()),
-    INTERVAL_WARMUP(5.toShort()),
-    INTERVAL_COOLDOWN(6.toShort()),
-    INTERVAL_RECOVERY(7.toShort()),
-    INTERVAL_OTHER(8.toShort()),
-    CLIMB_ACTIVE(9.toShort()),
-    CLIMB_REST(10.toShort()),
-    SURF_ACTIVE(11.toShort()),
-    RUN_ACTIVE(12.toShort()),
-    RUN_REST(13.toShort()),
-    WORKOUT_ROUND(14.toShort()),
-    RWD_RUN(17.toShort()),
-    RWD_WALK(18.toShort()),
-    WINDSURF_ACTIVE(21.toShort()),
-    RWD_STAND(22.toShort()),
-    TRANSITION(23.toShort()),
-    SKI_LIFT_SPLIT(28.toShort()),
-    SKI_RUN_SPLIT(29.toShort()),
-    INVALID(255.toShort());
+enum class SplitType(val value: Short) {
+    ASCENT_SPLIT(1),
+    DESCENT_SPLIT(2),
+    INTERVAL_ACTIVE(3),
+    INTERVAL_REST(4),
+    INTERVAL_WARMUP(5),
+    INTERVAL_COOLDOWN(6),
+    INTERVAL_RECOVERY(7),
+    INTERVAL_OTHER(8),
+    CLIMB_ACTIVE(9),
+    CLIMB_REST(10),
+    SURF_ACTIVE(11),
+    RUN_ACTIVE(12),
+    RUN_REST(13),
+    WORKOUT_ROUND(14),
+    RWD_RUN(17),
+    RWD_WALK(18),
+    WINDSURF_ACTIVE(21),
+    RWD_STAND(22),
+    TRANSITION(23),
+    SKI_LIFT_SPLIT(28),
+    SKI_RUN_SPLIT(29),
+    INVALID(255);
 
 
     companion object {

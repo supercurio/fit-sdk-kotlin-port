@@ -9,21 +9,21 @@
 package com.garmin.fit
 
 
-enum class CameraEventType(var value: Short) {
-    VIDEO_START(0.toShort()),
-    VIDEO_SPLIT(1.toShort()),
-    VIDEO_END(2.toShort()),
-    PHOTO_TAKEN(3.toShort()),
-    VIDEO_SECOND_STREAM_START(4.toShort()),
-    VIDEO_SECOND_STREAM_SPLIT(5.toShort()),
-    VIDEO_SECOND_STREAM_END(6.toShort()),
-    VIDEO_SPLIT_START(7.toShort()),
-    VIDEO_SECOND_STREAM_SPLIT_START(8.toShort()),
-    VIDEO_PAUSE(11.toShort()),
-    VIDEO_SECOND_STREAM_PAUSE(12.toShort()),
-    VIDEO_RESUME(13.toShort()),
-    VIDEO_SECOND_STREAM_RESUME(14.toShort()),
-    INVALID(255.toShort());
+enum class CameraEventType(val value: Short) {
+    VIDEO_START(0),
+    VIDEO_SPLIT(1),
+    VIDEO_END(2),
+    PHOTO_TAKEN(3),
+    VIDEO_SECOND_STREAM_START(4),
+    VIDEO_SECOND_STREAM_SPLIT(5),
+    VIDEO_SECOND_STREAM_END(6),
+    VIDEO_SPLIT_START(7),
+    VIDEO_SECOND_STREAM_SPLIT_START(8),
+    VIDEO_PAUSE(11),
+    VIDEO_SECOND_STREAM_PAUSE(12),
+    VIDEO_RESUME(13),
+    VIDEO_SECOND_STREAM_RESUME(14),
+    INVALID(255);
 
 
     companion object {

@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class DiveAlarmType(var value: Short) {
-    DEPTH(0.toShort()),
-    TIME(1.toShort()),
-    SPEED(2.toShort()),
-    INVALID(255.toShort());
+enum class DiveAlarmType(val value: Short) {
+    DEPTH(0),
+    TIME(1),
+    SPEED(2),
+    INVALID(255);
 
 
     companion object {

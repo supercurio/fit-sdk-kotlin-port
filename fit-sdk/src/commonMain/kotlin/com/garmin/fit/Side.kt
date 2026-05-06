@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class Side(var value: Short) {
-    RIGHT(0.toShort()),
-    LEFT(1.toShort()),
-    INVALID(255.toShort());
+enum class Side(val value: Short) {
+    RIGHT(0),
+    LEFT(1),
+    INVALID(255);
 
 
     companion object {

@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class Tone(var value: Short) {
-    OFF(0.toShort()),
-    TONE(1.toShort()),
-    VIBRATE(2.toShort()),
-    TONE_AND_VIBRATE(3.toShort()),
-    INVALID(255.toShort());
+enum class Tone(val value: Short) {
+    OFF(0),
+    TONE(1),
+    VIBRATE(2),
+    TONE_AND_VIBRATE(3),
+    INVALID(255);
 
 
     companion object {

@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class Autoscroll(var value: Short) {
-    NONE(0.toShort()),
-    SLOW(1.toShort()),
-    MEDIUM(2.toShort()),
-    FAST(3.toShort()),
-    INVALID(255.toShort());
+enum class Autoscroll(val value: Short) {
+    NONE(0),
+    SLOW(1),
+    MEDIUM(2),
+    FAST(3),
+    INVALID(255);
 
 
     companion object {

@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class FitnessEquipmentState(var value: Short) {
-    READY(0.toShort()),
-    IN_USE(1.toShort()),
-    PAUSED(2.toShort()),
-    UNKNOWN(3.toShort()),
-    INVALID(255.toShort());
+enum class FitnessEquipmentState(val value: Short) {
+    READY(0),
+    IN_USE(1),
+    PAUSED(2),
+    UNKNOWN(3),
+    INVALID(255);
 
 
     companion object {

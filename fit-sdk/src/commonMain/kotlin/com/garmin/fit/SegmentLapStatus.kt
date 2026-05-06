@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class SegmentLapStatus(var value: Short) {
-    END(0.toShort()),
-    FAIL(1.toShort()),
-    INVALID(255.toShort());
+enum class SegmentLapStatus(val value: Short) {
+    END(0),
+    FAIL(1),
+    INVALID(255);
 
 
     companion object {

@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class Activity(var value: Short) {
-    MANUAL(0.toShort()),
-    AUTO_MULTI_SPORT(1.toShort()),
-    INVALID(255.toShort());
+enum class Activity(val value: Short) {
+    MANUAL(0),
+    AUTO_MULTI_SPORT(1),
+    INVALID(255);
 
 
     companion object {

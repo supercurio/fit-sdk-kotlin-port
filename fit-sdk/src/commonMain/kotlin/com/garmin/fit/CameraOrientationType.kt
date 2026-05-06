@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class CameraOrientationType(var value: Short) {
-    CAMERA_ORIENTATION_0(0.toShort()),
-    CAMERA_ORIENTATION_90(1.toShort()),
-    CAMERA_ORIENTATION_180(2.toShort()),
-    CAMERA_ORIENTATION_270(3.toShort()),
-    INVALID(255.toShort());
+enum class CameraOrientationType(val value: Short) {
+    CAMERA_ORIENTATION_0(0),
+    CAMERA_ORIENTATION_90(1),
+    CAMERA_ORIENTATION_180(2),
+    CAMERA_ORIENTATION_270(3),
+    INVALID(255);
 
 
     companion object {

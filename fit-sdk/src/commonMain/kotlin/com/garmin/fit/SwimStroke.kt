@@ -9,17 +9,17 @@
 package com.garmin.fit
 
 
-enum class SwimStroke(var value: Short) {
-    FREESTYLE(0.toShort()),
-    BACKSTROKE(1.toShort()),
-    BREASTSTROKE(2.toShort()),
-    BUTTERFLY(3.toShort()),
-    DRILL(4.toShort()),
-    MIXED(5.toShort()),
-    IM(6.toShort()),
-    IM_BY_ROUND(7.toShort()),
-    RIMO(8.toShort()),
-    INVALID(255.toShort());
+enum class SwimStroke(val value: Short) {
+    FREESTYLE(0),
+    BACKSTROKE(1),
+    BREASTSTROKE(2),
+    BUTTERFLY(3),
+    DRILL(4),
+    MIXED(5),
+    IM(6),
+    IM_BY_ROUND(7),
+    RIMO(8),
+    INVALID(255);
 
 
     companion object {

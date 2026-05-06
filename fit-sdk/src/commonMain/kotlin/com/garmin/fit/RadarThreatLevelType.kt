@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class RadarThreatLevelType(var value: Short) {
-    THREAT_UNKNOWN(0.toShort()),
-    THREAT_NONE(1.toShort()),
-    THREAT_APPROACHING(2.toShort()),
-    THREAT_APPROACHING_FAST(3.toShort()),
-    INVALID(255.toShort());
+enum class RadarThreatLevelType(val value: Short) {
+    THREAT_UNKNOWN(0),
+    THREAT_NONE(1),
+    THREAT_APPROACHING(2),
+    THREAT_APPROACHING_FAST(3),
+    INVALID(255);
 
 
     companion object {

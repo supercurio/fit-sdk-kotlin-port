@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class Schedule(var value: Short) {
-    WORKOUT(0.toShort()),
-    COURSE(1.toShort()),
-    INVALID(255.toShort());
+enum class Schedule(val value: Short) {
+    WORKOUT(0),
+    COURSE(1),
+    INVALID(255);
 
 
     companion object {

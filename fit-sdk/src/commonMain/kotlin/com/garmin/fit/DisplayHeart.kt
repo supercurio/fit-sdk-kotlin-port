@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class DisplayHeart(var value: Short) {
-    BPM(0.toShort()),
-    MAX(1.toShort()),
-    RESERVE(2.toShort()),
-    INVALID(255.toShort());
+enum class DisplayHeart(val value: Short) {
+    BPM(0),
+    MAX(1),
+    RESERVE(2),
+    INVALID(255);
 
 
     companion object {

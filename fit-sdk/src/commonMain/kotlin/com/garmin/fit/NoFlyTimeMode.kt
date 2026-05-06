@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class NoFlyTimeMode(var value: Short) {
-    STANDARD(0.toShort()),
-    FLAT_24_HOURS(1.toShort()),
-    INVALID(255.toShort());
+enum class NoFlyTimeMode(val value: Short) {
+    STANDARD(0),
+    FLAT_24_HOURS(1),
+    INVALID(255);
 
 
     companion object {

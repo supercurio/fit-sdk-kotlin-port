@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class WaterType(var value: Short) {
-    FRESH(0.toShort()),
-    SALT(1.toShort()),
-    EN13319(2.toShort()),
-    CUSTOM(3.toShort()),
-    INVALID(255.toShort());
+enum class WaterType(val value: Short) {
+    FRESH(0),
+    SALT(1),
+    EN13319(2),
+    CUSTOM(3),
+    INVALID(255);
 
 
     companion object {

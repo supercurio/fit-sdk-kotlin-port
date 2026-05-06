@@ -9,14 +9,14 @@
 package com.garmin.fit
 
 
-enum class WorkoutEquipment(var value: Short) {
-    NONE(0.toShort()),
-    SWIM_FINS(1.toShort()),
-    SWIM_KICKBOARD(2.toShort()),
-    SWIM_PADDLES(3.toShort()),
-    SWIM_PULL_BUOY(4.toShort()),
-    SWIM_SNORKEL(5.toShort()),
-    INVALID(255.toShort());
+enum class WorkoutEquipment(val value: Short) {
+    NONE(0),
+    SWIM_FINS(1),
+    SWIM_KICKBOARD(2),
+    SWIM_PADDLES(3),
+    SWIM_PULL_BUOY(4),
+    SWIM_SNORKEL(5),
+    INVALID(255);
 
 
     companion object {

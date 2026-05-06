@@ -9,13 +9,13 @@
 package com.garmin.fit
 
 
-enum class DisplayOrientation(var value: Short) {
-    AUTO(0.toShort()),
-    PORTRAIT(1.toShort()),
-    LANDSCAPE(2.toShort()),
-    PORTRAIT_FLIPPED(3.toShort()),
-    LANDSCAPE_FLIPPED(4.toShort()),
-    INVALID(255.toShort());
+enum class DisplayOrientation(val value: Short) {
+    AUTO(0),
+    PORTRAIT(1),
+    LANDSCAPE(2),
+    PORTRAIT_FLIPPED(3),
+    LANDSCAPE_FLIPPED(4),
+    INVALID(255);
 
 
     companion object {

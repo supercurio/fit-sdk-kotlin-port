@@ -9,14 +9,14 @@
 package com.garmin.fit
 
 
-enum class GoalRecurrence(var value: Short) {
-    OFF(0.toShort()),
-    DAILY(1.toShort()),
-    WEEKLY(2.toShort()),
-    MONTHLY(3.toShort()),
-    YEARLY(4.toShort()),
-    CUSTOM(5.toShort()),
-    INVALID(255.toShort());
+enum class GoalRecurrence(val value: Short) {
+    OFF(0),
+    DAILY(1),
+    WEEKLY(2),
+    MONTHLY(3),
+    YEARLY(4),
+    CUSTOM(5),
+    INVALID(255);
 
 
     companion object {

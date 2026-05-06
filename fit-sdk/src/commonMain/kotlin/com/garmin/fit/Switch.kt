@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class Switch(var value: Short) {
-    OFF(0.toShort()),
-    ON(1.toShort()),
-    AUTO(2.toShort()),
-    INVALID(255.toShort());
+enum class Switch(val value: Short) {
+    OFF(0),
+    ON(1),
+    AUTO(2),
+    INVALID(255);
 
 
     companion object {

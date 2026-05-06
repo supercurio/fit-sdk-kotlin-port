@@ -9,17 +9,17 @@
 package com.garmin.fit
 
 
-enum class ActivityType(var value: Short) {
-    GENERIC(0.toShort()),
-    RUNNING(1.toShort()),
-    CYCLING(2.toShort()),
-    TRANSITION(3.toShort()),
-    FITNESS_EQUIPMENT(4.toShort()),
-    SWIMMING(5.toShort()),
-    WALKING(6.toShort()),
-    SEDENTARY(8.toShort()),
-    ALL(254.toShort()),
-    INVALID(255.toShort());
+enum class ActivityType(val value: Short) {
+    GENERIC(0),
+    RUNNING(1),
+    CYCLING(2),
+    TRANSITION(3),
+    FITNESS_EQUIPMENT(4),
+    SWIMMING(5),
+    WALKING(6),
+    SEDENTARY(8),
+    ALL(254),
+    INVALID(255);
 
 
     companion object {

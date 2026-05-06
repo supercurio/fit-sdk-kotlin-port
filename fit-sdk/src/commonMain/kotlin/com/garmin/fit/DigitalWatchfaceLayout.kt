@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class DigitalWatchfaceLayout(var value: Short) {
-    TRADITIONAL(0.toShort()),
-    MODERN(1.toShort()),
-    BOLD(2.toShort()),
-    INVALID(255.toShort());
+enum class DigitalWatchfaceLayout(val value: Short) {
+    TRADITIONAL(0),
+    MODERN(1),
+    BOLD(2),
+    INVALID(255);
 
 
     companion object {

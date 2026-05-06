@@ -9,19 +9,19 @@
 package com.garmin.fit
 
 
-enum class ExdDisplayType(var value: Short) {
-    NUMERICAL(0.toShort()),
-    SIMPLE(1.toShort()),
-    GRAPH(2.toShort()),
-    BAR(3.toShort()),
-    CIRCLE_GRAPH(4.toShort()),
-    VIRTUAL_PARTNER(5.toShort()),
-    BALANCE(6.toShort()),
-    STRING_LIST(7.toShort()),
-    STRING(8.toShort()),
-    SIMPLE_DYNAMIC_ICON(9.toShort()),
-    GAUGE(10.toShort()),
-    INVALID(255.toShort());
+enum class ExdDisplayType(val value: Short) {
+    NUMERICAL(0),
+    SIMPLE(1),
+    GRAPH(2),
+    BAR(3),
+    CIRCLE_GRAPH(4),
+    VIRTUAL_PARTNER(5),
+    BALANCE(6),
+    STRING_LIST(7),
+    STRING(8),
+    SIMPLE_DYNAMIC_ICON(9),
+    GAUGE(10),
+    INVALID(255);
 
 
     companion object {

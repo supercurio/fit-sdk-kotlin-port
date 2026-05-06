@@ -8,10 +8,10 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-enum class Bool(var value: Short) {
-    FALSE(0.toShort()),
-    TRUE(1.toShort()),
-    INVALID(255.toShort());
+enum class Bool(val value: Short) {
+    FALSE(0),
+    TRUE(1),
+    INVALID(255);
 
     companion object {
         fun getByValue(value: Short): Bool {

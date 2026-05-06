@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class MaxMetCategory(var value: Short) {
-    GENERIC(0.toShort()),
-    CYCLING(1.toShort()),
-    INVALID(255.toShort());
+enum class MaxMetCategory(val value: Short) {
+    GENERIC(0),
+    CYCLING(1),
+    INVALID(255);
 
 
     companion object {

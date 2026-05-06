@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class PowerPhaseType(var value: Short) {
-    POWER_PHASE_START_ANGLE(0.toShort()),
-    POWER_PHASE_END_ANGLE(1.toShort()),
-    POWER_PHASE_ARC_LENGTH(2.toShort()),
-    POWER_PHASE_CENTER(3.toShort()),
-    INVALID(255.toShort());
+enum class PowerPhaseType(val value: Short) {
+    POWER_PHASE_START_ANGLE(0),
+    POWER_PHASE_END_ANGLE(1),
+    POWER_PHASE_ARC_LENGTH(2),
+    POWER_PHASE_CENTER(3),
+    INVALID(255);
 
 
     companion object {

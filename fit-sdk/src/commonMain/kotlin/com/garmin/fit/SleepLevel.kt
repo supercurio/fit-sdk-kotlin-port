@@ -9,13 +9,13 @@
 package com.garmin.fit
 
 
-enum class SleepLevel(var value: Short) {
-    UNMEASURABLE(0.toShort()),
-    AWAKE(1.toShort()),
-    LIGHT(2.toShort()),
-    DEEP(3.toShort()),
-    REM(4.toShort()),
-    INVALID(255.toShort());
+enum class SleepLevel(val value: Short) {
+    UNMEASURABLE(0),
+    AWAKE(1),
+    LIGHT(2),
+    DEEP(3),
+    REM(4),
+    INVALID(255);
 
 
     companion object {

@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class NapSource(var value: Short) {
-    AUTOMATIC(0.toShort()),
-    MANUAL_DEVICE(1.toShort()),
-    MANUAL_GC(2.toShort()),
-    INVALID(255.toShort());
+enum class NapSource(val value: Short) {
+    AUTOMATIC(0),
+    MANUAL_DEVICE(1),
+    MANUAL_GC(2),
+    INVALID(255);
 
 
     companion object {

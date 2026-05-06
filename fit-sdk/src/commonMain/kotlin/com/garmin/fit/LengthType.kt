@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class LengthType(var value: Short) {
-    IDLE(0.toShort()),
-    ACTIVE(1.toShort()),
-    INVALID(255.toShort());
+enum class LengthType(val value: Short) {
+    IDLE(0),
+    ACTIVE(1),
+    INVALID(255);
 
 
     companion object {

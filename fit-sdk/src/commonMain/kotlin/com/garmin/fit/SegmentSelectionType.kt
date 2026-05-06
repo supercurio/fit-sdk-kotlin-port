@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class SegmentSelectionType(var value: Short) {
-    STARRED(0.toShort()),
-    SUGGESTED(1.toShort()),
-    INVALID(255.toShort());
+enum class SegmentSelectionType(val value: Short) {
+    STARRED(0),
+    SUGGESTED(1),
+    INVALID(255);
 
 
     companion object {

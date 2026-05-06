@@ -9,28 +9,28 @@
 package com.garmin.fit
 
 
-enum class File(var value: Short) {
-    DEVICE(1.toShort()),
-    SETTINGS(2.toShort()),
-    SPORT(3.toShort()),
-    ACTIVITY(4.toShort()),
-    WORKOUT(5.toShort()),
-    COURSE(6.toShort()),
-    SCHEDULES(7.toShort()),
-    WEIGHT(9.toShort()),
-    TOTALS(10.toShort()),
-    GOALS(11.toShort()),
-    BLOOD_PRESSURE(14.toShort()),
-    MONITORING_A(15.toShort()),
-    ACTIVITY_SUMMARY(20.toShort()),
-    MONITORING_DAILY(28.toShort()),
-    MONITORING_B(32.toShort()),
-    SEGMENT(34.toShort()),
-    SEGMENT_LIST(35.toShort()),
-    EXD_CONFIGURATION(40.toShort()),
-    MFG_RANGE_MIN(0xF7.toShort()),
-    MFG_RANGE_MAX(0xFE.toShort()),
-    INVALID(255.toShort());
+enum class File(val value: Short) {
+    DEVICE(1),
+    SETTINGS(2),
+    SPORT(3),
+    ACTIVITY(4),
+    WORKOUT(5),
+    COURSE(6),
+    SCHEDULES(7),
+    WEIGHT(9),
+    TOTALS(10),
+    GOALS(11),
+    BLOOD_PRESSURE(14),
+    MONITORING_A(15),
+    ACTIVITY_SUMMARY(20),
+    MONITORING_DAILY(28),
+    MONITORING_B(32),
+    SEGMENT(34),
+    SEGMENT_LIST(35),
+    EXD_CONFIGURATION(40),
+    MFG_RANGE_MIN(0xF7),
+    MFG_RANGE_MAX(0xFE),
+    INVALID(255);
 
 
     companion object {

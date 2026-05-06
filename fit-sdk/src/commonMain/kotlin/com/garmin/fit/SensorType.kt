@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class SensorType(var value: Short) {
-    ACCELEROMETER(0.toShort()),
-    GYROSCOPE(1.toShort()),
-    COMPASS(2.toShort()),
-    BAROMETER(3.toShort()),
-    INVALID(255.toShort());
+enum class SensorType(val value: Short) {
+    ACCELEROMETER(0),
+    GYROSCOPE(1),
+    COMPASS(2),
+    BAROMETER(3),
+    INVALID(255);
 
 
     companion object {

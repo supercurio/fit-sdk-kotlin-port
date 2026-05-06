@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class DiveBacklightMode(var value: Short) {
-    AT_DEPTH(0.toShort()),
-    ALWAYS_ON(1.toShort()),
-    INVALID(255.toShort());
+enum class DiveBacklightMode(val value: Short) {
+    AT_DEPTH(0),
+    ALWAYS_ON(1),
+    INVALID(255);
 
 
     companion object {

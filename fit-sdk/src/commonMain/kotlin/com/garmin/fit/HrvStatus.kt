@@ -9,13 +9,13 @@
 package com.garmin.fit
 
 
-enum class HrvStatus(var value: Short) {
-    NONE(0.toShort()),
-    POOR(1.toShort()),
-    LOW(2.toShort()),
-    UNBALANCED(3.toShort()),
-    BALANCED(4.toShort()),
-    INVALID(255.toShort());
+enum class HrvStatus(val value: Short) {
+    NONE(0),
+    POOR(1),
+    LOW(2),
+    UNBALANCED(3),
+    BALANCED(4),
+    INVALID(255);
 
 
     companion object {

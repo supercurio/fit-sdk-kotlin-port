@@ -9,17 +9,17 @@
 package com.garmin.fit
 
 
-enum class LapTrigger(var value: Short) {
-    MANUAL(0.toShort()),
-    TIME(1.toShort()),
-    DISTANCE(2.toShort()),
-    POSITION_START(3.toShort()),
-    POSITION_LAP(4.toShort()),
-    POSITION_WAYPOINT(5.toShort()),
-    POSITION_MARKED(6.toShort()),
-    SESSION_END(7.toShort()),
-    FITNESS_EQUIPMENT(8.toShort()),
-    INVALID(255.toShort());
+enum class LapTrigger(val value: Short) {
+    MANUAL(0),
+    TIME(1),
+    DISTANCE(2),
+    POSITION_START(3),
+    POSITION_LAP(4),
+    POSITION_WAYPOINT(5),
+    POSITION_MARKED(6),
+    SESSION_END(7),
+    FITNESS_EQUIPMENT(8),
+    INVALID(255);
 
 
     companion object {

@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class SegmentDeleteStatus(var value: Short) {
-    DO_NOT_DELETE(0.toShort()),
-    DELETE_ONE(1.toShort()),
-    DELETE_ALL(2.toShort()),
-    INVALID(255.toShort());
+enum class SegmentDeleteStatus(val value: Short) {
+    DO_NOT_DELETE(0),
+    DELETE_ONE(1),
+    DELETE_ALL(2),
+    INVALID(255);
 
 
     companion object {

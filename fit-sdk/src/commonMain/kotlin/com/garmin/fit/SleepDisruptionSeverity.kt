@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class SleepDisruptionSeverity(var value: Short) {
-    NONE(0.toShort()),
-    LOW(1.toShort()),
-    MEDIUM(2.toShort()),
-    HIGH(3.toShort()),
-    INVALID(255.toShort());
+enum class SleepDisruptionSeverity(val value: Short) {
+    NONE(0),
+    LOW(1),
+    MEDIUM(2),
+    HIGH(3),
+    INVALID(255);
 
 
     companion object {

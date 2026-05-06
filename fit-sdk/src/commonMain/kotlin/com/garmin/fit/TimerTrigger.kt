@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class TimerTrigger(var value: Short) {
-    MANUAL(0.toShort()),
-    AUTO(1.toShort()),
-    FITNESS_EQUIPMENT(2.toShort()),
-    INVALID(255.toShort());
+enum class TimerTrigger(val value: Short) {
+    MANUAL(0),
+    AUTO(1),
+    FITNESS_EQUIPMENT(2),
+    INVALID(255);
 
 
     companion object {

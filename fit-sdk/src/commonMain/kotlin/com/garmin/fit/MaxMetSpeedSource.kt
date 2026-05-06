@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class MaxMetSpeedSource(var value: Short) {
-    ONBOARD_GPS(0.toShort()),
-    CONNECTED_GPS(1.toShort()),
-    CADENCE(2.toShort()),
-    INVALID(255.toShort());
+enum class MaxMetSpeedSource(val value: Short) {
+    ONBOARD_GPS(0),
+    CONNECTED_GPS(1),
+    CADENCE(2),
+    INVALID(255);
 
 
     companion object {

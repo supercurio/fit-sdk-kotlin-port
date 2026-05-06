@@ -9,9 +9,9 @@
 package com.garmin.fit
 
 
-enum class TissueModelType(var value: Short) {
-    ZHL_16C(0.toShort()),
-    INVALID(255.toShort());
+enum class TissueModelType(val value: Short) {
+    ZHL_16C(0),
+    INVALID(255);
 
 
     companion object {

@@ -9,15 +9,15 @@
 package com.garmin.fit
 
 
-enum class DayOfWeek(var value: Short) {
-    SUNDAY(0.toShort()),
-    MONDAY(1.toShort()),
-    TUESDAY(2.toShort()),
-    WEDNESDAY(3.toShort()),
-    THURSDAY(4.toShort()),
-    FRIDAY(5.toShort()),
-    SATURDAY(6.toShort()),
-    INVALID(255.toShort());
+enum class DayOfWeek(val value: Short) {
+    SUNDAY(0),
+    MONDAY(1),
+    TUESDAY(2),
+    WEDNESDAY(3),
+    THURSDAY(4),
+    FRIDAY(5),
+    SATURDAY(6),
+    INVALID(255);
 
 
     companion object {

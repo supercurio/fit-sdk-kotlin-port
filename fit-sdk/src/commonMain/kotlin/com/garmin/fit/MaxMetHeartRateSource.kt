@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class MaxMetHeartRateSource(var value: Short) {
-    WHR(0.toShort()),
-    HRM(1.toShort()),
-    INVALID(255.toShort());
+enum class MaxMetHeartRateSource(val value: Short) {
+    WHR(0),
+    HRM(1),
+    INVALID(255);
 
 
     companion object {

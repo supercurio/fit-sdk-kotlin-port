@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class GasConsumptionRateType(var value: Short) {
-    PRESSURE_SAC(0.toShort()),
-    VOLUME_SAC(1.toShort()),
-    RMV(2.toShort()),
-    INVALID(255.toShort());
+enum class GasConsumptionRateType(val value: Short) {
+    PRESSURE_SAC(0),
+    VOLUME_SAC(1),
+    RMV(2),
+    INVALID(255);
 
 
     companion object {

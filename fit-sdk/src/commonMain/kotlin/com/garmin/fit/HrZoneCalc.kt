@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class HrZoneCalc(var value: Short) {
-    CUSTOM(0.toShort()),
-    PERCENT_MAX_HR(1.toShort()),
-    PERCENT_HRR(2.toShort()),
-    PERCENT_LTHR(3.toShort()),
-    INVALID(255.toShort());
+enum class HrZoneCalc(val value: Short) {
+    CUSTOM(0),
+    PERCENT_MAX_HR(1),
+    PERCENT_HRR(2),
+    PERCENT_LTHR(3),
+    INVALID(255);
 
 
     companion object {

@@ -9,23 +9,23 @@
 package com.garmin.fit
 
 
-enum class SegmentLeaderboardType(var value: Short) {
-    OVERALL(0.toShort()),
-    PERSONAL_BEST(1.toShort()),
-    CONNECTIONS(2.toShort()),
-    GROUP(3.toShort()),
-    CHALLENGER(4.toShort()),
-    KOM(5.toShort()),
-    QOM(6.toShort()),
-    PR(7.toShort()),
-    GOAL(8.toShort()),
-    CARROT(9.toShort()),
-    CLUB_LEADER(10.toShort()),
-    RIVAL(11.toShort()),
-    LAST(12.toShort()),
-    RECENT_BEST(13.toShort()),
-    COURSE_RECORD(14.toShort()),
-    INVALID(255.toShort());
+enum class SegmentLeaderboardType(val value: Short) {
+    OVERALL(0),
+    PERSONAL_BEST(1),
+    CONNECTIONS(2),
+    GROUP(3),
+    CHALLENGER(4),
+    KOM(5),
+    QOM(6),
+    PR(7),
+    GOAL(8),
+    CARROT(9),
+    CLUB_LEADER(10),
+    RIVAL(11),
+    LAST(12),
+    RECENT_BEST(13),
+    COURSE_RECORD(14),
+    INVALID(255);
 
 
     companion object {

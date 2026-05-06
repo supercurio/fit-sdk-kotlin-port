@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class ActivityLevel(var value: Short) {
-    LOW(0.toShort()),
-    MEDIUM(1.toShort()),
-    HIGH(2.toShort()),
-    INVALID(255.toShort());
+enum class ActivityLevel(val value: Short) {
+    LOW(0),
+    MEDIUM(1),
+    HIGH(2),
+    INVALID(255);
 
 
     companion object {

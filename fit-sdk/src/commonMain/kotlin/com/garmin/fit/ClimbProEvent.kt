@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class ClimbProEvent(var value: Short) {
-    APPROACH(0.toShort()),
-    START(1.toShort()),
-    COMPLETE(2.toShort()),
-    INVALID(255.toShort());
+enum class ClimbProEvent(val value: Short) {
+    APPROACH(0),
+    START(1),
+    COMPLETE(2),
+    INVALID(255);
 
 
     companion object {

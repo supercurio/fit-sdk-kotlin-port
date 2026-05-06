@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class WeatherReport(var value: Short) {
-    CURRENT(0.toShort()),
-    FORECAST(1.toShort()),
-    HOURLY_FORECAST(1.toShort()),
-    DAILY_FORECAST(2.toShort()),
-    INVALID(255.toShort());
+enum class WeatherReport(val value: Short) {
+    CURRENT(0),
+    FORECAST(1),
+    HOURLY_FORECAST(1),
+    DAILY_FORECAST(2),
+    INVALID(255);
 
 
     companion object {

@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class CcrSetpointSwitchMode(var value: Short) {
-    MANUAL(0.toShort()),
-    AUTOMATIC(1.toShort()),
-    INVALID(255.toShort());
+enum class CcrSetpointSwitchMode(val value: Short) {
+    MANUAL(0),
+    AUTOMATIC(1),
+    INVALID(255);
 
 
     companion object {

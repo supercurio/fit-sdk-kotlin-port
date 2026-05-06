@@ -9,14 +9,14 @@
 package com.garmin.fit
 
 
-enum class StrokeType(var value: Short) {
-    NO_EVENT(0.toShort()),
-    OTHER(1.toShort()),
-    SERVE(2.toShort()),
-    FOREHAND(3.toShort()),
-    BACKHAND(4.toShort()),
-    SMASH(5.toShort()),
-    INVALID(255.toShort());
+enum class StrokeType(val value: Short) {
+    NO_EVENT(0),
+    OTHER(1),
+    SERVE(2),
+    FOREHAND(3),
+    BACKHAND(4),
+    SMASH(5),
+    INVALID(255);
 
 
     companion object {

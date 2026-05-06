@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class AttitudeStage(var value: Short) {
-    FAILED(0.toShort()),
-    ALIGNING(1.toShort()),
-    DEGRADED(2.toShort()),
-    VALID(3.toShort()),
-    INVALID(255.toShort());
+enum class AttitudeStage(val value: Short) {
+    FAILED(0),
+    ALIGNING(1),
+    DEGRADED(2),
+    VALID(3),
+    INVALID(255);
 
 
     companion object {

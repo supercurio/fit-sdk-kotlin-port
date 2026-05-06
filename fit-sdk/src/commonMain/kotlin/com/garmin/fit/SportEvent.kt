@@ -9,17 +9,17 @@
 package com.garmin.fit
 
 
-enum class SportEvent(var value: Short) {
-    UNCATEGORIZED(0.toShort()),
-    GEOCACHING(1.toShort()),
-    FITNESS(2.toShort()),
-    RECREATION(3.toShort()),
-    RACE(4.toShort()),
-    SPECIAL_EVENT(5.toShort()),
-    TRAINING(6.toShort()),
-    TRANSPORTATION(7.toShort()),
-    TOURING(8.toShort()),
-    INVALID(255.toShort());
+enum class SportEvent(val value: Short) {
+    UNCATEGORIZED(0),
+    GEOCACHING(1),
+    FITNESS(2),
+    RECREATION(3),
+    RACE(4),
+    SPECIAL_EVENT(5),
+    TRAINING(6),
+    TRANSPORTATION(7),
+    TOURING(8),
+    INVALID(255);
 
 
     companion object {

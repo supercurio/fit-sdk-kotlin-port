@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class AnalogWatchfaceLayout(var value: Short) {
-    MINIMAL(0.toShort()),
-    TRADITIONAL(1.toShort()),
-    MODERN(2.toShort()),
-    INVALID(255.toShort());
+enum class AnalogWatchfaceLayout(val value: Short) {
+    MINIMAL(0),
+    TRADITIONAL(1),
+    MODERN(2),
+    INVALID(255);
 
 
     companion object {

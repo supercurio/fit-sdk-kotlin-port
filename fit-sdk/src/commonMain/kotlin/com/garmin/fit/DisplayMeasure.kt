@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class DisplayMeasure(var value: Short) {
-    METRIC(0.toShort()),
-    STATUTE(1.toShort()),
-    NAUTICAL(2.toShort()),
-    INVALID(255.toShort());
+enum class DisplayMeasure(val value: Short) {
+    METRIC(0),
+    STATUTE(1),
+    NAUTICAL(2),
+    INVALID(255);
 
 
     companion object {

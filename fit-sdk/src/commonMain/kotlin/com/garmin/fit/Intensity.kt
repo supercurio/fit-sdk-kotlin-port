@@ -9,15 +9,15 @@
 package com.garmin.fit
 
 
-enum class Intensity(var value: Short) {
-    ACTIVE(0.toShort()),
-    REST(1.toShort()),
-    WARMUP(2.toShort()),
-    COOLDOWN(3.toShort()),
-    RECOVERY(4.toShort()),
-    INTERVAL(5.toShort()),
-    OTHER(6.toShort()),
-    INVALID(255.toShort());
+enum class Intensity(val value: Short) {
+    ACTIVE(0),
+    REST(1),
+    WARMUP(2),
+    COOLDOWN(3),
+    RECOVERY(4),
+    INTERVAL(5),
+    OTHER(6),
+    INVALID(255);
 
 
     companion object {

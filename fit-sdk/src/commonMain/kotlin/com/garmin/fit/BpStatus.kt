@@ -9,13 +9,13 @@
 package com.garmin.fit
 
 
-enum class BpStatus(var value: Short) {
-    NO_ERROR(0.toShort()),
-    ERROR_INCOMPLETE_DATA(1.toShort()),
-    ERROR_NO_MEASUREMENT(2.toShort()),
-    ERROR_DATA_OUT_OF_RANGE(3.toShort()),
-    ERROR_IRREGULAR_HEART_RATE(4.toShort()),
-    INVALID(255.toShort());
+enum class BpStatus(val value: Short) {
+    NO_ERROR(0),
+    ERROR_INCOMPLETE_DATA(1),
+    ERROR_NO_MEASUREMENT(2),
+    ERROR_DATA_OUT_OF_RANGE(3),
+    ERROR_IRREGULAR_HEART_RATE(4),
+    INVALID(255);
 
 
     companion object {

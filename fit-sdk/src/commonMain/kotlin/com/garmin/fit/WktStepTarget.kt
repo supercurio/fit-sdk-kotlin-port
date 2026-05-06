@@ -9,22 +9,22 @@
 package com.garmin.fit
 
 
-enum class WktStepTarget(var value: Short) {
-    SPEED(0.toShort()),
-    HEART_RATE(1.toShort()),
-    OPEN(2.toShort()),
-    CADENCE(3.toShort()),
-    POWER(4.toShort()),
-    GRADE(5.toShort()),
-    RESISTANCE(6.toShort()),
-    POWER_3S(7.toShort()),
-    POWER_10S(8.toShort()),
-    POWER_30S(9.toShort()),
-    POWER_LAP(10.toShort()),
-    SWIM_STROKE(11.toShort()),
-    SPEED_LAP(12.toShort()),
-    HEART_RATE_LAP(13.toShort()),
-    INVALID(255.toShort());
+enum class WktStepTarget(val value: Short) {
+    SPEED(0),
+    HEART_RATE(1),
+    OPEN(2),
+    CADENCE(3),
+    POWER(4),
+    GRADE(5),
+    RESISTANCE(6),
+    POWER_3S(7),
+    POWER_10S(8),
+    POWER_30S(9),
+    POWER_LAP(10),
+    SWIM_STROKE(11),
+    SPEED_LAP(12),
+    HEART_RATE_LAP(13),
+    INVALID(255);
 
 
     companion object {

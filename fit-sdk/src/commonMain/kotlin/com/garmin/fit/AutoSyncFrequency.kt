@@ -9,13 +9,13 @@
 package com.garmin.fit
 
 
-enum class AutoSyncFrequency(var value: Short) {
-    NEVER(0.toShort()),
-    OCCASIONALLY(1.toShort()),
-    FREQUENT(2.toShort()),
-    ONCE_A_DAY(3.toShort()),
-    REMOTE(4.toShort()),
-    INVALID(255.toShort());
+enum class AutoSyncFrequency(val value: Short) {
+    NEVER(0),
+    OCCASIONALLY(1),
+    FREQUENT(2),
+    ONCE_A_DAY(3),
+    REMOTE(4),
+    INVALID(255);
 
 
     companion object {

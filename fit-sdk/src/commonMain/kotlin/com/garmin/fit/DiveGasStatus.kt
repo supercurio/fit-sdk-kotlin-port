@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class DiveGasStatus(var value: Short) {
-    DISABLED(0.toShort()),
-    ENABLED(1.toShort()),
-    BACKUP_ONLY(2.toShort()),
-    INVALID(255.toShort());
+enum class DiveGasStatus(val value: Short) {
+    DISABLED(0),
+    ENABLED(1),
+    BACKUP_ONLY(2),
+    INVALID(255);
 
 
     companion object {

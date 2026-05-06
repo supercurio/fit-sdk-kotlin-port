@@ -9,11 +9,11 @@
 package com.garmin.fit
 
 
-enum class TapSensitivity(var value: Short) {
-    HIGH(0.toShort()),
-    MEDIUM(1.toShort()),
-    LOW(2.toShort()),
-    INVALID(255.toShort());
+enum class TapSensitivity(val value: Short) {
+    HIGH(0),
+    MEDIUM(1),
+    LOW(2),
+    INVALID(255);
 
 
     companion object {

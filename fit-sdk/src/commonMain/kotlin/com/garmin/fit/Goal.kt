@@ -9,15 +9,15 @@
 package com.garmin.fit
 
 
-enum class Goal(var value: Short) {
-    TIME(0.toShort()),
-    DISTANCE(1.toShort()),
-    CALORIES(2.toShort()),
-    FREQUENCY(3.toShort()),
-    STEPS(4.toShort()),
-    ASCENT(5.toShort()),
-    ACTIVE_MINUTES(6.toShort()),
-    INVALID(255.toShort());
+enum class Goal(val value: Short) {
+    TIME(0),
+    DISTANCE(1),
+    CALORIES(2),
+    FREQUENCY(3),
+    STEPS(4),
+    ASCENT(5),
+    ACTIVE_MINUTES(6),
+    INVALID(255);
 
 
     companion object {

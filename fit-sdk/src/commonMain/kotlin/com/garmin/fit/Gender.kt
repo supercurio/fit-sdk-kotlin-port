@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class Gender(var value: Short) {
-    FEMALE(0.toShort()),
-    MALE(1.toShort()),
-    INVALID(255.toShort());
+enum class Gender(val value: Short) {
+    FEMALE(0),
+    MALE(1),
+    INVALID(255);
 
 
     companion object {

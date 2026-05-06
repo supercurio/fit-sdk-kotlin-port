@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class RiderPositionType(var value: Short) {
-    SEATED(0.toShort()),
-    STANDING(1.toShort()),
-    TRANSITION_TO_SEATED(2.toShort()),
-    TRANSITION_TO_STANDING(3.toShort()),
-    INVALID(255.toShort());
+enum class RiderPositionType(val value: Short) {
+    SEATED(0),
+    STANDING(1),
+    TRANSITION_TO_SEATED(2),
+    TRANSITION_TO_STANDING(3),
+    INVALID(255);
 
 
     companion object {

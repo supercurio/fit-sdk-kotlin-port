@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class SessionTrigger(var value: Short) {
-    ACTIVITY_END(0.toShort()),
-    MANUAL(1.toShort()),
-    AUTO_MULTI_SPORT(2.toShort()),
-    FITNESS_EQUIPMENT(3.toShort()),
-    INVALID(255.toShort());
+enum class SessionTrigger(val value: Short) {
+    ACTIVITY_END(0),
+    MANUAL(1),
+    AUTO_MULTI_SPORT(2),
+    FITNESS_EQUIPMENT(3),
+    INVALID(255);
 
 
     companion object {

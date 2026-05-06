@@ -9,18 +9,18 @@
 package com.garmin.fit
 
 
-enum class EventType(var value: Short) {
-    START(0.toShort()),
-    STOP(1.toShort()),
-    CONSECUTIVE_DEPRECIATED(2.toShort()),
-    MARKER(3.toShort()),
-    STOP_ALL(4.toShort()),
-    BEGIN_DEPRECIATED(5.toShort()),
-    END_DEPRECIATED(6.toShort()),
-    END_ALL_DEPRECIATED(7.toShort()),
-    STOP_DISABLE(8.toShort()),
-    STOP_DISABLE_ALL(9.toShort()),
-    INVALID(255.toShort());
+enum class EventType(val value: Short) {
+    START(0),
+    STOP(1),
+    CONSECUTIVE_DEPRECIATED(2),
+    MARKER(3),
+    STOP_ALL(4),
+    BEGIN_DEPRECIATED(5),
+    END_DEPRECIATED(6),
+    END_ALL_DEPRECIATED(7),
+    STOP_DISABLE(8),
+    STOP_DISABLE_ALL(9),
+    INVALID(255);
 
 
     companion object {

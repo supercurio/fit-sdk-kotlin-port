@@ -9,17 +9,17 @@
 package com.garmin.fit
 
 
-enum class ExdLayout(var value: Short) {
-    FULL_SCREEN(0.toShort()),
-    HALF_VERTICAL(1.toShort()),
-    HALF_HORIZONTAL(2.toShort()),
-    HALF_VERTICAL_RIGHT_SPLIT(3.toShort()),
-    HALF_HORIZONTAL_BOTTOM_SPLIT(4.toShort()),
-    FULL_QUARTER_SPLIT(5.toShort()),
-    HALF_VERTICAL_LEFT_SPLIT(6.toShort()),
-    HALF_HORIZONTAL_TOP_SPLIT(7.toShort()),
-    DYNAMIC(8.toShort()),
-    INVALID(255.toShort());
+enum class ExdLayout(val value: Short) {
+    FULL_SCREEN(0),
+    HALF_VERTICAL(1),
+    HALF_HORIZONTAL(2),
+    HALF_VERTICAL_RIGHT_SPLIT(3),
+    HALF_HORIZONTAL_BOTTOM_SPLIT(4),
+    FULL_QUARTER_SPLIT(5),
+    HALF_VERTICAL_LEFT_SPLIT(6),
+    HALF_HORIZONTAL_TOP_SPLIT(7),
+    DYNAMIC(8),
+    INVALID(255);
 
 
     companion object {

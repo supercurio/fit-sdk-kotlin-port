@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class AntNetwork(var value: Short) {
-    PUBLIC(0.toShort()),
-    ANTPLUS(1.toShort()),
-    ANTFS(2.toShort()),
-    PRIVATE(3.toShort()),
-    INVALID(255.toShort());
+enum class AntNetwork(val value: Short) {
+    PUBLIC(0),
+    ANTPLUS(1),
+    ANTFS(2),
+    PRIVATE(3),
+    INVALID(255);
 
 
     companion object {

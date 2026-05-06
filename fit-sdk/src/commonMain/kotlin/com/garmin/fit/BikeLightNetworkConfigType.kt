@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class BikeLightNetworkConfigType(var value: Short) {
-    AUTO(0.toShort()),
-    INDIVIDUAL(4.toShort()),
-    HIGH_VISIBILITY(5.toShort()),
-    TRAIL(6.toShort()),
-    INVALID(255.toShort());
+enum class BikeLightNetworkConfigType(val value: Short) {
+    AUTO(0),
+    INDIVIDUAL(4),
+    HIGH_VISIBILITY(5),
+    TRAIL(6),
+    INVALID(255);
 
 
     companion object {

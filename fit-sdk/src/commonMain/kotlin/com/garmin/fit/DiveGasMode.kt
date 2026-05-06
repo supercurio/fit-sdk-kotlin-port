@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class DiveGasMode(var value: Short) {
-    OPEN_CIRCUIT(0.toShort()),
-    CLOSED_CIRCUIT_DILUENT(1.toShort()),
-    INVALID(255.toShort());
+enum class DiveGasMode(val value: Short) {
+    OPEN_CIRCUIT(0),
+    CLOSED_CIRCUIT_DILUENT(1),
+    INVALID(255);
 
 
     companion object {

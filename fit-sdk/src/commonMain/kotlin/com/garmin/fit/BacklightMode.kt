@@ -9,15 +9,15 @@
 package com.garmin.fit
 
 
-enum class BacklightMode(var value: Short) {
-    OFF(0.toShort()),
-    MANUAL(1.toShort()),
-    KEY_AND_MESSAGES(2.toShort()),
-    AUTO_BRIGHTNESS(3.toShort()),
-    SMART_NOTIFICATIONS(4.toShort()),
-    KEY_AND_MESSAGES_NIGHT(5.toShort()),
-    KEY_AND_MESSAGES_AND_SMART_NOTIFICATIONS(6.toShort()),
-    INVALID(255.toShort());
+enum class BacklightMode(val value: Short) {
+    OFF(0),
+    MANUAL(1),
+    KEY_AND_MESSAGES(2),
+    AUTO_BRIGHTNESS(3),
+    SMART_NOTIFICATIONS(4),
+    KEY_AND_MESSAGES_NIGHT(5),
+    KEY_AND_MESSAGES_AND_SMART_NOTIFICATIONS(6),
+    INVALID(255);
 
 
     companion object {

@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class HrType(var value: Short) {
-    NORMAL(0.toShort()),
-    IRREGULAR(1.toShort()),
-    INVALID(255.toShort());
+enum class HrType(val value: Short) {
+    NORMAL(0),
+    IRREGULAR(1),
+    INVALID(255);
 
 
     companion object {

@@ -9,13 +9,13 @@
 package com.garmin.fit
 
 
-enum class WeatherSeverity(var value: Short) {
-    UNKNOWN(0.toShort()),
-    WARNING(1.toShort()),
-    WATCH(2.toShort()),
-    ADVISORY(3.toShort()),
-    STATEMENT(4.toShort()),
-    INVALID(255.toShort());
+enum class WeatherSeverity(val value: Short) {
+    UNKNOWN(0),
+    WARNING(1),
+    WATCH(2),
+    ADVISORY(3),
+    STATEMENT(4),
+    INVALID(255);
 
 
     companion object {

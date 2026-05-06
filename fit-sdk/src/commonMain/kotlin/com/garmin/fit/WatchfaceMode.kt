@@ -9,12 +9,12 @@
 package com.garmin.fit
 
 
-enum class WatchfaceMode(var value: Short) {
-    DIGITAL(0.toShort()),
-    ANALOG(1.toShort()),
-    CONNECT_IQ(2.toShort()),
-    DISABLED(3.toShort()),
-    INVALID(255.toShort());
+enum class WatchfaceMode(val value: Short) {
+    DIGITAL(0),
+    ANALOG(1),
+    CONNECT_IQ(2),
+    DISABLED(3),
+    INVALID(255);
 
 
     companion object {

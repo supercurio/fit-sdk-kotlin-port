@@ -9,10 +9,10 @@
 package com.garmin.fit
 
 
-enum class PwrZoneCalc(var value: Short) {
-    CUSTOM(0.toShort()),
-    PERCENT_FTP(1.toShort()),
-    INVALID(255.toShort());
+enum class PwrZoneCalc(val value: Short) {
+    CUSTOM(0),
+    PERCENT_FTP(1),
+    INVALID(255);
 
 
     companion object {
