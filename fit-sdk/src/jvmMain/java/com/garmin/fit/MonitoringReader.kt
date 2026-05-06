@@ -8,7 +8,7 @@
 /**////////////////////////////////////////////////////////////////////////////////////////// */
 package com.garmin.fit
 
-import java.util.TreeMap
+import kotlinx.collections.immutable.toImmutableMap
 
 class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMesgListener,
     DeviceSettingsMesgListener, FileIdMesgListener {
@@ -24,7 +24,7 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
         var cyclesToDistanceStartDist: Float = 0f
     }
 
-    private val accumulatedFieldNames = arrayOf<String?>(
+    private val accumulatedFieldNames = listOf(
         CYCLES_STRING,
         DISTANCE_STRING,
         ACTIVE_CAL_STRING,
@@ -32,27 +32,27 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
         ACTIVE_TIME_STRING
     )
 
-    private val instantaneousFieldNames = arrayOf<String?>(
+    private val instantaneousFieldNames = listOf(
         INTENSITY_STRING,
         HR_STRING,
         TEMPERATURE_STRING
     )
 
-    private val summedInstantaneousFieldNames = arrayOf<String?>(
+    private val summedInstantaneousFieldNames = listOf(
         ASCENT_STRING,
         DESCENT_STRING,
         MOD_ACTIVITY_MIN_STRING,
         VIG_ACTIVITY_MIN_STRING
     )
 
-    private val listeners: ArrayList<MonitoringMesgListener>
+    private val listeners = mutableListOf<MonitoringMesgListener>()
     private val interval: Int
     private var outputDailyTotals: Boolean
     private var infoMesg: MonitoringInfoMesg? = null
     private var lastAccumMesg: MonitoringMesg? = null
     private var lastSummedInstMesg: MonitoringMesg? = null
-    private val intervalMesgs: TreeMap<ActivityType?, ArrayList<MonitoringMesg>>
-    private val lastMesgs: TreeMap<ActivityType?, MonitoringMesg>
+    private val intervalMesgs = mutableMapOf<ActivityType, MutableList<MonitoringMesg>>()
+    private val lastMesgs = mutableMapOf<ActivityType, MonitoringMesg>()
     private var startTimestamp: Long = 0
     private var endTimestamp: Long = 0
     private var lastTimestamp: Long = 0
@@ -63,9 +63,9 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
     // timestamp fields.
     private var systemToUtcTimestampOffset: Long
     private var systemToLocalTimestampOffset: Long
-    private val summedInstantaneousFields: HashSet<String?>
-    private val extractStates: TreeMap<ActivityType?, ExtractState?>
-    private val includedFields: java.util.HashMap<String?, Boolean?>
+    private val summedInstantaneousFields = mutableSetOf<String>()
+    private val extractStates = mutableMapOf<ActivityType, ExtractState>()
+    private val includedFields = mutableMapOf<String, Boolean>()
 
     /**
      * @param interval
@@ -74,49 +74,32 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
      */
     init {
         if ((interval < 0) || (interval > DAILY_INTERVAL)) throw FitRuntimeException(
-            interval
-                .toString() + "s is invalid.  Output interval duration must be between 1s and 86400s (1 day)."
+            "${interval}s is invalid.  Output interval duration must be between 1s and 86400s (1 day)."
         )
 
-        listeners = ArrayList<MonitoringMesgListener>()
         this.interval = interval
         outputDailyTotals = false
-        intervalMesgs = TreeMap<ActivityType?, ArrayList<MonitoringMesg>>()
-        lastMesgs = TreeMap<ActivityType?, MonitoringMesg>()
         localTimeOffset = 0
         systemToUtcTimestampOffset = 0
         systemToLocalTimestampOffset = 0
-        extractStates = TreeMap<ActivityType?, ExtractState?>()
-        includedFields = java.util.HashMap<String?, Boolean?>()
-        summedInstantaneousFields = HashSet<String?>()
-        for (i in summedInstantaneousFieldNames.indices) {
-            summedInstantaneousFields.add(summedInstantaneousFieldNames[i])
-        }
 
-        includedFields[CYCLES_STRING] = true
-        includedFields[DISTANCE_STRING] = true
-        includedFields[ACTIVE_CAL_STRING] = true
-        includedFields[CALORIE_STRING] = true
-        includedFields[ACTIVE_TIME_STRING] = true
-        includedFields[INTENSITY_STRING] = true
-        includedFields[HR_STRING] = true
-        includedFields[TEMPERATURE_STRING] = true
-        includedFields[ASCENT_STRING] = true
-        includedFields[DESCENT_STRING] = true
-        includedFields[MOD_ACTIVITY_MIN_STRING] = true
-        includedFields[VIG_ACTIVITY_MIN_STRING] = true
+        summedInstantaneousFields.addAll(summedInstantaneousFieldNames)
+
+        val allFields =
+            accumulatedFieldNames + instantaneousFieldNames + summedInstantaneousFieldNames
+        allFields.forEach { includedFields[it] = true }
     }
 
-    fun setFieldIncluded(field: String?, state: Boolean) {
+    fun setFieldIncluded(field: String, state: Boolean) {
         includedFields[field] = state
     }
 
-    val fieldStates: HashMap<String?, Boolean?>
-        get() = java.util.HashMap<String?, Boolean?>(includedFields)
+    val fieldStates: Map<String, Boolean>
+        get() = includedFields.toImmutableMap()
 
     fun excludeAllFields() {
-        for (entry in includedFields.entries) {
-            includedFields[entry.key] = false
+        includedFields.keys.forEach { key ->
+            includedFields[key] = false
         }
     }
 
@@ -173,8 +156,8 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
      * @param mesgListener
      * Listener for output monitoring data messages
      */
-    fun addListener(mesgListener: MonitoringMesgListener?) {
-        listeners.add(mesgListener!!)
+    fun addListener(mesgListener: MonitoringMesgListener) {
+        listeners.add(mesgListener)
     }
 
     /**
@@ -192,11 +175,9 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
     }
 
     private fun broadcastInterval(broadcastCompleteIntervalsOnly: Boolean): Boolean {
-        var activityTypeIterator = intervalMesgs.keys
-            .iterator()
-        val broadcastMesgs = TreeMap<ActivityType?, MonitoringMesg>()
+        var activityTypeIterator = intervalMesgs.keys.sorted().iterator()
+        val broadcastMesgs = mutableMapOf<ActivityType, MonitoringMesg>()
         var allActivityBroadcastMesg: MonitoringMesg? = null
-        val allActivityTotals: MonitoringMesg?
 
         if (endTimestamp == lastTimestamp) return false // Already broadcast all pending data.
 
@@ -219,8 +200,8 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
         if (endTimestamp > lastTimestamp) endTimestamp = lastTimestamp
 
         while (activityTypeIterator.hasNext()) {
-            val activityType = activityTypeIterator.next()!!
-            val mesgList: ArrayList<MonitoringMesg> = intervalMesgs[activityType]!!
+            val activityType = activityTypeIterator.next()
+            val mesgList = intervalMesgs[activityType]!!
             val mesg = computeInterval(activityType, mesgList)
 
             if (mesg != null) {
@@ -249,15 +230,16 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
             var mesg = broadcastMesgs.values.iterator().next()
 
             // Compute totals for all activity.
-            allActivityTotals = MonitoringMesg()
-            allActivityTotals.timestamp = mesg.timestamp
-            allActivityTotals.localTimestamp = mesg.localTimestamp
-            allActivityTotals.activityType = ActivityType.ALL
-            allActivityTotals.duration = mesg.duration
-            activityTypeIterator = broadcastMesgs.keys.iterator()
+            val allActivityTotals = MonitoringMesg().also {
+                it.timestamp = mesg.timestamp
+                it.localTimestamp = mesg.localTimestamp
+                it.activityType = ActivityType.ALL
+                it.duration = mesg.duration
+            }
+            activityTypeIterator = broadcastMesgs.keys.sorted().iterator()
 
             while (activityTypeIterator.hasNext()) {
-                val activityType: ActivityType? = activityTypeIterator.next()
+                val activityType: ActivityType = activityTypeIterator.next()
                 mesg = broadcastMesgs[activityType]!!
 
                 if (mesg.activityType != ActivityType.ALL) {
@@ -317,9 +299,9 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
             }
 
             // Broadcast messages to listeners.
-            activityTypeIterator = broadcastMesgs.keys.iterator()
+            activityTypeIterator = broadcastMesgs.keys.sorted().iterator()
             while (activityTypeIterator.hasNext()) {
-                val activityType: ActivityType? = activityTypeIterator.next()
+                val activityType: ActivityType = activityTypeIterator.next()
 
                 for (listener in listeners) {
                     listener.onMesg(broadcastMesgs[activityType]!!)
@@ -350,18 +332,16 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
      * The message containing cycle conversion factors
      */
     override fun onMesg(mesg: MonitoringInfoMesg) {
-        val utcTimestamp: DateTime
-        val localTimestamp: LocalDateTime?
 
         infoMesg = mesg.also {
-            utcTimestamp = it.timestamp!!
+            val utcTimestamp = it.timestamp!!
             mesgTimestamp = utcTimestamp.timestamp
             utcTimestamp.convertSystemTimeToUTC(systemToUtcTimestampOffset)
             it.timestamp = utcTimestamp
             lastTimestamp = utcTimestamp.timestamp
 
             if (it.localTimestamp != null) {
-                localTimestamp = LocalDateTime(it.localTimestamp!!)
+                val localTimestamp = LocalDateTime(it.localTimestamp!!)
                 localTimestamp.convertSystemTimeToLocal(systemToLocalTimestampOffset)
                 localTimeOffset = localTimestamp.timestamp - lastTimestamp
             } else {
@@ -381,7 +361,7 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
      */
     override fun onMesg(mesg: MonitoringMesg) {
         var lastMesg: MonitoringMesg?
-        var intervalMesgList: ArrayList<MonitoringMesg>?
+        var intervalMesgList: MutableList<MonitoringMesg>?
         var intervalMesg: MonitoringMesg?
 
         if (infoMesg == null) return  // Can't process monitoring data messages without info
@@ -411,23 +391,22 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
             lastMesg = lastMesgs[nextMesg.activityType]
 
             if (lastMesg == null) {
-                intervalMesgList = ArrayList()
-                intervalMesg = MonitoringMesg()
-                intervalMesg.activityType = nextMesg.activityType
-                intervalMesg.timestamp =
-                    DateTime(nextMesg.timestamp!!.timestamp - nextMesg.activeTime!!.toLong())
-
+                intervalMesgList = mutableListOf()
+                intervalMesg = MonitoringMesg().also {
+                    it.activityType = nextMesg.activityType
+                    it.timestamp =
+                        DateTime(nextMesg.timestamp!!.timestamp - nextMesg.activeTime!!.toLong())
+                }
                 intervalMesgList.add(intervalMesg)
-                intervalMesgs[intervalMesg.activityType] = intervalMesgList
+                intervalMesgs[intervalMesg.activityType!!] = intervalMesgList
             }
 
             for (otherActivityTypelastMesg in lastMesgs.values) {
-                if (otherActivityTypelastMesg.activityType != nextMesg
-                        .activityType
-                ) {
-                    val startMesg = MonitoringMesg()
-                    startMesg.timestamp = nextMesg.timestamp
-                    startMesg.activityType = otherActivityTypelastMesg.activityType
+                if (otherActivityTypelastMesg.activityType != nextMesg.activityType) {
+                    val startMesg = MonitoringMesg().also {
+                        it.timestamp = nextMesg.timestamp
+                        it.activityType = otherActivityTypelastMesg.activityType
+                    }
 
                     for (fieldName in accumulatedFieldNames) {
                         if (otherActivityTypelastMesg.getField(fieldName) != null) {
@@ -445,7 +424,7 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
         lastMesg = lastMesgs[nextMesg.activityType]
         if (lastMesg == null) {
             lastMesg = MonitoringMesg()
-            lastMesgs[nextMesg.activityType] = lastMesg
+            lastMesgs[nextMesg.activityType!!] = lastMesg
         }
         setFieldsFromMesg(lastMesg, nextMesg)
 
@@ -455,8 +434,8 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
         intervalMesg = null
 
         if (intervalMesgList == null) {
-            intervalMesgList = ArrayList()
-            intervalMesgs[nextMesg.activityType] = intervalMesgList
+            intervalMesgList = mutableListOf()
+            intervalMesgs[nextMesg.activityType!!] = intervalMesgList
         }
 
         if (intervalMesgList.isNotEmpty()) intervalMesg =
@@ -745,10 +724,10 @@ class MonitoringReader(interval: Int) : MonitoringInfoMesgListener, MonitoringMe
      */
     private fun computeInterval(
         activityType: ActivityType,
-        intervalMesgs: ArrayList<MonitoringMesg>
+        intervalMesgs: MutableList<MonitoringMesg>
     ): MonitoringMesg? {
         val intervalMesg = MonitoringMesg()
-        val fields: ArrayList<ReaderField> = ArrayList<ReaderField>()
+        val fields = mutableListOf<ReaderField>()
         var intervalHasData = false
         var mesgInInterval = false
 
