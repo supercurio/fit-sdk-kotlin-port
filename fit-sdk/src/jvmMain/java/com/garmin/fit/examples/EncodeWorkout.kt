@@ -22,8 +22,8 @@ import com.garmin.fit.WktStepTarget
 import com.garmin.fit.WorkoutEquipment
 import com.garmin.fit.WorkoutMesg
 import com.garmin.fit.WorkoutStepMesg
-import java.util.Date
-import java.util.Random
+import kotlin.random.Random
+import kotlin.time.Clock
 
 object EncodeWorkout {
     @JvmStatic
@@ -344,15 +344,14 @@ object EncodeWorkout {
         val filetype = File.WORKOUT
         val manufacturerId = Manufacturer.DEVELOPMENT.toShort()
         val productId: Short = 0
-        val random = Random()
-        val serialNumber = random.nextInt()
+        val serialNumber = Random.nextInt()
 
         // Every FIT file MUST contain a File ID message
         val fileIdMesg = FileIdMesg()
         fileIdMesg.type = filetype
         fileIdMesg.manufacturer = manufacturerId.toInt()
         fileIdMesg.product = productId.toInt()
-        fileIdMesg.timeCreated = DateTime(Date())
+        fileIdMesg.timeCreated = DateTime(Clock.System.now())
         fileIdMesg.serialNumber = serialNumber.toLong()
 
         // Create the output stream
