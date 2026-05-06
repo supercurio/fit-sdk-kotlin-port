@@ -6,10 +6,12 @@
 // Profile Version = 21.200.0Release
 // Tag = production/release/21.200.0-0-g28b5705d
 /**////////////////////////////////////////////////////////////////////////////////////////// */
+@file:OptIn(ExperimentalUuidApi::class)
+
 package com.garmin.fit
 
-import java.nio.ByteBuffer
-import java.util.UUID
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
 
 /**
  * Description of a Developer Field
@@ -20,7 +22,7 @@ class DeveloperFieldDescription
  * @param developerId Developer Id Message for the field. Can't be `null`
  * @param fieldDescription Field Description Message for the field. Can't be `null`
  */ internal constructor(
-    private val developerId: DeveloperDataIdMesg,
+    internal val developerId: DeveloperDataIdMesg,
     private val fieldDescription: FieldDescriptionMesg
 ) {
     val applicationVersion: Long
@@ -34,9 +36,9 @@ class DeveloperFieldDescription
             return applicationVer
         }
 
-    val applicationId: UUID?
+    val applicationUuid: Uuid?
         /**
-         * Retrieves the Application Id of the generating Field
+         * Retrieves the Application Id of the generating Field as Kotlin Uuid
          * @return Application Id or `null` if there is no valid Application Id for the description
          */
         get() {
@@ -45,17 +47,7 @@ class DeveloperFieldDescription
                 return null
             }
 
-            val primitiveId = ByteArray(appId.size)
-
-            for (i in appId.indices) {
-                primitiveId[i] = appId[i]
-            }
-
-            val bb = ByteBuffer.wrap(primitiveId)
-            val high = bb.getLong()
-            val low = bb.getLong()
-
-            return UUID(high, low)
+            return Uuid.fromByteArray(appId.toByteArray())
         }
 
     val fieldDefinitionNumber: Short

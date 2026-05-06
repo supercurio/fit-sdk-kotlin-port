@@ -24,6 +24,7 @@ import com.garmin.fit.MonitoringMesg
 import com.garmin.fit.RecordMesg
 import com.garmin.fit.RecordMesgListener
 import com.garmin.fit.UserProfileMesg
+import com.garmin.fit.applicationId
 import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.Paths
