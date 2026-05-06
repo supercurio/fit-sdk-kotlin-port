@@ -7,6 +7,9 @@ kotlin {
     jvmToolchain(21)
 
     sourceSets {
+        commonMain.dependencies {
+            implementation(libs.kotlinx.datetime)
+        }
         jvmMain.dependencies {
             implementation(project(":fit"))
         }

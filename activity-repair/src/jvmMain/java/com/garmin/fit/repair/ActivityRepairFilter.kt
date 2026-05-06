@@ -27,7 +27,9 @@ import com.garmin.fit.RecordMesg
 import com.garmin.fit.SessionMesg
 import com.garmin.fit.Sport
 import com.garmin.fit.SubSport
-import java.time.ZonedDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.offsetAt
+import kotlin.time.Clock
 
 class ActivityRepairFilter : BufferedMesgListener, MesgSource {
     private val fitListener = FitListener()
@@ -173,22 +175,17 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
         deviceInfoMesgs: List<DeviceInfoMesg>,
         startTime: DateTime
     ): DeviceInfoMesg {
-        var deviceInfoMesg = deviceInfoMesgs.stream()
-            .filter { mesg: DeviceInfoMesg? -> mesg!!.deviceIndex != null }
-            .filter { mesg: DeviceInfoMesg? -> mesg!!.deviceIndex == DeviceIndex.CREATOR }
-            .findFirst()
-            .orElse(null)
-
-        if (deviceInfoMesg == null) {
-            deviceInfoMesg = DeviceInfoMesg()
-            deviceInfoMesg.deviceIndex = DeviceIndex.CREATOR
-            deviceInfoMesg.manufacturer = Manufacturer.DEVELOPMENT
-            deviceInfoMesg.product = 0
-            deviceInfoMesg.productName = "File Activity Repair" // Max 20 Chars
-            deviceInfoMesg.serialNumber = serialNumber
-            deviceInfoMesg.softwareVersion = 1.0f
-            deviceInfoMesg.timestamp = DateTime(startTime)
-        }
+        val deviceInfoMesg = deviceInfoMesgs
+            .firstOrNull { it.deviceIndex == DeviceIndex.CREATOR }
+            ?: DeviceInfoMesg().also {
+                it.deviceIndex = DeviceIndex.CREATOR
+                it.manufacturer = Manufacturer.DEVELOPMENT
+                it.product = 0
+                it.productName = "File Activity Repair" // Max 20 Chars
+                it.serialNumber = serialNumber
+                it.softwareVersion = 1.0f
+                it.timestamp = DateTime(startTime)
+            }
 
         if (deviceInfoMesg.timestamp == null) {
             deviceInfoMesg.timestamp = DateTime(startTime)
@@ -198,13 +195,15 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
     }
 
     private fun createLapMesg(start: RecordMesg, end: RecordMesg): LapMesg {
-        val lapMesg = LapMesg()
-        lapMesg.messageIndex = 0
-        lapMesg.startTime = start.timestamp
-        lapMesg.timestamp = end.timestamp
-        lapMesg.totalElapsedTime =
-            (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
-        lapMesg.totalTimerTime = (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
+        val lapMesg = LapMesg().also {
+            it.messageIndex = 0
+            it.startTime = start.timestamp
+            it.timestamp = end.timestamp
+            it.totalElapsedTime =
+                (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
+            it.totalTimerTime =
+                (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
+        }
 
         if (end.distance != null) {
             lapMesg.totalDistance = end.distance
@@ -218,16 +217,17 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
         end: RecordMesg,
         fitMessages: FitMessages
     ): SessionMesg {
-        val sessionMesg = SessionMesg()
-        sessionMesg.messageIndex = 0
-        sessionMesg.startTime = start.timestamp
-        sessionMesg.timestamp = end.timestamp
-        sessionMesg.totalElapsedTime =
-            (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
-        sessionMesg.totalTimerTime =
-            (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
-        sessionMesg.firstLapIndex = 0
-        sessionMesg.numLaps = 1
+        val sessionMesg = SessionMesg().also {
+            it.messageIndex = 0
+            it.startTime = start.timestamp
+            it.timestamp = end.timestamp
+            it.totalElapsedTime =
+                (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
+            it.totalTimerTime =
+                (end.timestamp!!.timestamp - start.timestamp!!.timestamp).toFloat()
+            it.firstLapIndex = 0
+            it.numLaps = 1
+        }
 
         val sportMesg = fitMessages
             .sportMesgs
@@ -259,7 +259,8 @@ class ActivityRepairFilter : BufferedMesgListener, MesgSource {
         activityMesg.timestamp = end.timestamp
         activityMesg.numSessions = 1
 
-        val timezoneOffset = ZonedDateTime.now().offset.totalSeconds
+        val now = Clock.System.now()
+        val timezoneOffset = TimeZone.currentSystemDefault().offsetAt(now).totalSeconds
 
         activityMesg.localTimestamp = end.timestamp!!.timestamp + timezoneOffset
         activityMesg.totalTimerTime =
