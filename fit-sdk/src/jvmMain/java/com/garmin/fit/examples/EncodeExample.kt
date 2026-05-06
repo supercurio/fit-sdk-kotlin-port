@@ -22,8 +22,9 @@ import com.garmin.fit.MonitoringMesg
 import com.garmin.fit.RecordMesg
 import com.garmin.fit.UserProfileMesg
 import java.io.File
-import java.util.Calendar
-import java.util.Random
+import kotlin.random.Random
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.hours
 
 /**
  * Example demonstrating how to encode FIT files.
@@ -190,8 +191,7 @@ object EncodeExample {
         println("Encode Example Monitoring FIT File")
 
         // Dates to be used to generate some sample data
-        val systemStartTime = Calendar.getInstance()
-        val systemCurrentTime = Calendar.getInstance()
+        var systemCurrentTime = Clock.System.now()
 
         val encode: FileEncoder?
 
@@ -204,7 +204,7 @@ object EncodeExample {
 
         val fileIdMesg =
             FileIdMesg() // Every FIT file MUST contain a 'File ID' message as the first message
-        fileIdMesg.timeCreated = DateTime(systemStartTime.getTime())
+        fileIdMesg.timeCreated = DateTime(Clock.System.now())
         fileIdMesg.type = com.garmin.fit.File.MONITORING_B
         fileIdMesg.manufacturer = Manufacturer.DEVELOPMENT
         fileIdMesg.product = 1
@@ -214,7 +214,7 @@ object EncodeExample {
         encode.write(fileIdMesg) // Encode the FileIDMesg
 
         val deviceInfoMesg = DeviceInfoMesg()
-        deviceInfoMesg.timestamp = DateTime(systemCurrentTime.getTime())
+        deviceInfoMesg.timestamp = DateTime(systemCurrentTime)
         deviceInfoMesg.batteryStatus = BatteryStatus.GOOD
 
         encode.write(deviceInfoMesg) // Encode the DeviceInfoMesg
@@ -227,25 +227,24 @@ object EncodeExample {
         monitoringMesg.localNum = 1
 
         monitoringMesg.timestamp =
-            (DateTime(systemCurrentTime.getTime())) // Initialise Timestamp to current time
+            (DateTime(systemCurrentTime)) // Initialise Timestamp to current time
         monitoringMesg.cycles = 0f //Initialise Cycles to 0
 
-        val numberOfCycles = Random() // Random number of cycles for example data
         for (i in 0..3) { // Each of these loops represent a quarter of a day
 
             for (j in 0..5) { // Each of these loops represent 1 hour
-                monitoringMesg.timestamp = DateTime(systemCurrentTime.getTime())
+                monitoringMesg.timestamp = DateTime(systemCurrentTime)
                 monitoringMesg.activityType =
                     ActivityType.WALKING // Setting this to WALKING will cause Cycles to be interpreted as steps
                 monitoringMesg.cycles =
-                    monitoringMesg.cycles!! + (numberOfCycles.nextFloat() * 1000) // Cycles are accumulated (i.e. must be increasing)
+                    monitoringMesg.cycles!! + (Random.nextFloat() * 1000) // Cycles are accumulated (i.e. must be increasing)
 
                 encode.write(monitoringMesg) // Encode the MonitoringMesg
 
-                systemCurrentTime.add(Calendar.HOUR, 1) // Add an hour to our contrived timestamp
+                systemCurrentTime += 1.hours  // Add an hour to our contrived timestamp
             }
 
-            deviceInfoMesg.timestamp = DateTime(systemCurrentTime.getTime())
+            deviceInfoMesg.timestamp = DateTime(systemCurrentTime)
             deviceInfoMesg.batteryStatus = BatteryStatus.GOOD
 
             encode.write(deviceInfoMesg) // Encode the DeviceInfoMesg
