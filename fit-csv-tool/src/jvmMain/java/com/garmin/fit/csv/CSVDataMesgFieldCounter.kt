@@ -12,11 +12,10 @@ import com.garmin.fit.BufferedMesgListener
 import com.garmin.fit.Mesg
 import com.garmin.fit.MesgListener
 import com.garmin.fit.MesgSource
-import java.util.function.Consumer
 
 class CSVDataMesgFieldCounter : BufferedMesgListener, MesgSource {
-    private val mesgListeners = ArrayList<MesgListener>()
-    private val mesgs = ArrayList<Mesg>()
+    private val mesgListeners = mutableSetOf<MesgListener>()
+    private val mesgs = mutableListOf<Mesg>()
     internal var maxNumFields: Int = 0
 
     override fun onMesg(mesg: Mesg) {
@@ -27,21 +26,14 @@ class CSVDataMesgFieldCounter : BufferedMesgListener, MesgSource {
         }
     }
 
-    override fun flushMesgs() {
-        flushMesgs(mesgs)
-    }
+    override fun flushMesgs() = flushMesgs(mesgs)
 
     override fun addListener(mesgListener: MesgListener) {
-        if (!mesgListeners.contains(mesgListener)) {
-            mesgListeners.add(mesgListener)
-        }
+        mesgListeners.add(mesgListener)
     }
 
-    private fun flushMesg(mesg: Mesg) {
-        mesgListeners.forEach(Consumer { mesgListener: MesgListener -> mesgListener.onMesg(mesg) })
-    }
+    private fun flushMesg(mesg: Mesg) = mesgListeners.forEach { it.onMesg(mesg) }
 
-    private fun flushMesgs(mesgs: MutableList<out Mesg>) {
-        mesgs.forEach { mesg: Mesg -> flushMesg(mesg) }
-    }
+    private fun flushMesgs(mesgs: List<Mesg>) = mesgs.forEach(::flushMesg)
+
 }
