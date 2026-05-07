@@ -14,7 +14,6 @@ import com.garmin.fit.Fit
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
-import java.util.Locale
 
 class ActivityRepairTool {
     private var inputFilePath: String? = null
@@ -109,7 +108,7 @@ fun main(args: Array<String>) {
         println("Input file does not exist: " + args[0])
         return
     }
-    if (!file.getName().lowercase(Locale.getDefault()).endsWith(".fit")) {
+    if (!file.name.lowercase().endsWith(".fit")) {
         println("Input file is not a .fit file: " + args[0])
         return
     }
