@@ -1,6 +1,8 @@
 package com.garmin.fit.util
 
-import java.time.Instant
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Instant
+
 
 object DateTimeConverter {
     const val FIT_EPOCH_MS: Long = 631065600000L
@@ -11,14 +13,12 @@ object DateTimeConverter {
      * @param timestamp a FIT timestamp
      * @return a ISO-8601 formatted time string
      */
-    fun fitTimestampToISO8601(timestamp: Long): String {
-        val instant = Instant.ofEpochMilli(timestamp * 1000 + FIT_EPOCH_MS)
-
-        return instant.toString()
-    }
+    fun fitTimestampToISO8601(timestamp: Long) = Instant
+        .fromEpochMilliseconds(timestamp * 1000 + FIT_EPOCH_MS)
+        .toString()
 
     /**
-     * Parses a formatted java.time string in UTC and converts it to a FIT timestamp string.
+     * Parses a formatted ISO-8601 formatted time string in UTC and converts it to a FIT timestamp string.
      *
      * @param dateTime a formatted time string in UTC
      * @return a FIT timestamp string
@@ -26,9 +26,9 @@ object DateTimeConverter {
     @JvmStatic
     fun parseDateTime(dateTime: String): String {
         try {
-            val instant = Instant.parse(dateTime).minusMillis(FIT_EPOCH_MS)
-            return instant.epochSecond.toString()
-        } catch (e: Exception) {
+            val instant = Instant.parse(dateTime) - FIT_EPOCH_MS.milliseconds
+            return instant.epochSeconds.toString()
+        } catch (_: Exception) {
             //no op
         }
 
