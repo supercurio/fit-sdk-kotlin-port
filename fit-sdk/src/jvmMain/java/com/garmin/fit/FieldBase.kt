@@ -16,10 +16,6 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.io.OutputStreamWriter
 import java.io.UnsupportedEncodingException
-import java.nio.ByteBuffer
-import java.nio.charset.Charset
-import java.nio.charset.CodingErrorAction
-import java.nio.charset.StandardCharsets
 import kotlin.math.round
 import kotlin.math.roundToInt
 import kotlin.math.roundToLong
@@ -88,7 +84,7 @@ abstract class FieldBase {
                 Fit.BASE_TYPE_STRING ->
                     for (value in values) {
                         try {
-                            size += value.toString().toByteArray(charset("UTF-8")).size + 1
+                            size += value.toString().toByteArray().size + 1
                         } catch (ignored: UnsupportedEncodingException) {
                         }
                     }
@@ -534,7 +530,7 @@ abstract class FieldBase {
             }
 
             is String -> {
-                val byteCount = value.toByteArray(StandardCharsets.UTF_8).size
+                val byteCount = value.toByteArray().size
                 if (byteCount > Fit.STRING_MAX_BYTE_COUNT) {
                     throw FitRuntimeException(
                         String.format(
@@ -856,18 +852,13 @@ abstract class FieldBase {
                 try {
                     val bytes = ByteArray(size)
                     inputStream.read(bytes, 0, size)
-                    val byteBuffer = ByteBuffer.wrap(bytes)
 
-                    val utf8Decoder = Charset.forName("UTF-8").newDecoder()
-                    utf8Decoder.onMalformedInput(CodingErrorAction.IGNORE)
-                    utf8Decoder.onUnmappableCharacter(CodingErrorAction.IGNORE)
-
-                    utf8Decoder.decode(byteBuffer)
-                        .toString()
-                        .split("\u0000".toRegex())
+                    bytes.decodeToString()
+                        .replace("\uFFFD", "")
+                        .split('\u0000')
                         .dropLastWhile { it.isEmpty() }
                         .forEach { values.add(it) }
-                } catch (e: IOException) {
+                } catch (_: IOException) {
                     return true
                 }
             } else {
