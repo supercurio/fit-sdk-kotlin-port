@@ -29,8 +29,6 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.io.UnsupportedEncodingException
-import java.nio.charset.Charset
 
 class CSVReader @JvmOverloads internal constructor(private val protocolVersion: Fit.ProtocolVersion? = Fit.ProtocolVersion.V1_0) {
     private var unknownMesgCount = 0
@@ -57,7 +55,7 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
 
             line = reader.readLine()
             // Strips the UTF-8 BOM if it exists
-            line = stripUTF8Bom(line)
+            line = line.removePrefix(Fit.UTF8_BOM.toString())
 
             if (!readHeader(line)) {
                 return false
@@ -143,22 +141,6 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
         }
 
         return list
-    }
-
-    private fun stripUTF8Bom(input: String): String {
-        var input = input
-        val beforeStrip = input.toByteArray(Charset.forName("UTF-8"))
-        if (beforeStrip[0] == Fit.UTF8_BOM_BYTE_1 && beforeStrip[1] == Fit.UTF8_BOM_BYTE_2 && beforeStrip[2] == Fit.UTF8_BOM_BYTE_3) {
-            val afterStrip = ByteArray(beforeStrip.size - Fit.UTF8_NUM_BOM_BYTES)
-            System.arraycopy(beforeStrip, Fit.UTF8_NUM_BOM_BYTES, afterStrip, 0, afterStrip.size)
-
-            try {
-                input = String(afterStrip, charset("UTF-8"))
-            } catch (e: UnsupportedEncodingException) {
-            }
-        }
-
-        return input
     }
 
     fun isDoubleValue(value: String): Boolean = doublePattern.matches(value)
