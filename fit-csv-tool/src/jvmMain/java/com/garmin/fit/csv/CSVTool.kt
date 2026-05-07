@@ -22,11 +22,10 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
-import java.util.Locale
 
 class CSVTool {
     var runningFromConsole: Boolean = false
-    internal val DATA_OR_DEFINITION_SEARCH_COUNT = 2
+    private val DATA_OR_DEFINITION_SEARCH_COUNT = 2
     private var byteArrayOutputStream: PrefixableByteArrayOutputStream? = null
     private var dataWriterByteArrayOutputStream: PrefixableByteArrayOutputStream? = null
     private var dataMesgWriter: MesgDataCSVWriter? = null
@@ -642,18 +641,17 @@ class CSVTool {
                 } else if (args[arg].get(0) != '-') {
                     if (nextArgumentDefinition > 0) {
                         csvTool.setMesgDefinitionFilter(
-                            HashSet(
-                                listOf(
-                                    *args[arg].lowercase(
-                                        Locale.getDefault()
-                                    ).split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                                        .toTypedArray())))
+                            args[arg].lowercase()
+                                .split(",")
+                                .filter { it.isNotEmpty() }
+                                .toHashSet()
+                        )
                     } else if (nextArgumentData > 0) {
-                        csvTool.dataMessagesFilter = HashSet(
-                            listOf(
-                                *args[arg].lowercase(Locale.getDefault())
-                                    .split(",".toRegex()).dropLastWhile { it.isEmpty() }
-                                    .toTypedArray()))
+                        csvTool.dataMessagesFilter =
+                            args[arg].lowercase()
+                                .split(",")
+                                .filter { it.isNotEmpty() }
+                                .toHashSet()
                     } else {
                         inputFileName = args[arg]
                         if (inputFileName.endsWith(".fit")) {
@@ -801,15 +799,6 @@ class CSVTool {
                 )
                 try {
                     byteStreamFromFile(inputFileName)?.let { stream ->
-//                val repeats = 10
-//                val elapsed = measureTime {
-//                    repeat(repeats) {
-//                        csvTool.convertCsvToFit(stream)
-//                        stream.reset()
-//                    }
-//                }
-//                println("elapsed=${elapsed / repeats}")
-
                         csvTool.convertCsvToFit(stream)
                     }
 

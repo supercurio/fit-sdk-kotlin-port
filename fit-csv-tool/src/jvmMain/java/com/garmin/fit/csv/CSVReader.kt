@@ -31,8 +31,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.UnsupportedEncodingException
 import java.nio.charset.Charset
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 class CSVReader @JvmOverloads internal constructor(private val protocolVersion: Fit.ProtocolVersion? = Fit.ProtocolVersion.V1_0) {
     private var unknownMesgCount = 0
@@ -105,14 +103,8 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
     }
 
     private fun readCells(line: String) = buildList {
-        val m = csvPattern.matcher(line)
-
-        while (m.find()) {
-            var match: String? = m.group()
-
-            if (match == null) {
-                break
-            }
+        csvPattern.findAll(line).forEach { matchResult ->
+            var match = matchResult.value
 
             if (match.endsWith(",")) { // trim trailing ,
                 match = match.substring(0, match.length - 1)
@@ -122,11 +114,7 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
                 match = match.substring(1, match.length - 1)
             }
 
-            if (match.isEmpty()) {
-                match = null
-            }
-
-            add(match)
+            add(match.ifEmpty { null })
         }
     }
 
@@ -173,18 +161,12 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
         return input
     }
 
-    fun isDoubleValue(value: String): Boolean {
-        val m: Matcher = doublePattern.matcher(value)
-        return m.find()
-    }
+    fun isDoubleValue(value: String): Boolean = doublePattern.matches(value)
 
-    fun isHexValue(value: String): Boolean {
-        val m: Matcher = hexPattern.matcher(value)
-        return m.find()
-    }
+    fun isHexValue(value: String): Boolean = hexPattern.matches(value)
 
     private fun readHeader(line: String): Boolean {
-        if (!line.startsWith(minimumCsvHeader)) {
+        if (!line.startsWith(MINIMUM_CSV_HEADER)) {
             System.err.printf("CSVReader.read(): Invalid CSV header - CSV header must start with \"Type,Local Number,Message,Field 1\".\n")
             return false
         }
@@ -514,13 +496,11 @@ class CSVReader @JvmOverloads internal constructor(private val protocolVersion: 
     }
 
     companion object {
-        private val csvPattern: Pattern = Pattern.compile("\"([^\"]+?)\",?|([^,]+),?|,")
+        private val csvPattern = Regex("\"([^\"]+?)\",?|([^,]+),?|,")
+        private val doublePattern = Regex("^([0-9]+)?\\.[0-9]+$")
+        private val hexPattern = Regex("""^(0[xX]){1}[a-fA-F0-9]{2}$""")
 
-        private val doublePattern: Pattern = Pattern.compile("^([0-9]+)?\\.[0-9]+$")
-
-        private val hexPattern: Pattern = Pattern.compile("^(0[xX]){1}[a-fA-F0-9]{2}$")
-
-        private const val minimumCsvHeader = "Type,Local Number,Message,Field 1"
+        private const val MINIMUM_CSV_HEADER = "Type,Local Number,Message,Field 1"
 
         fun read(
             inputStream: InputStream,
