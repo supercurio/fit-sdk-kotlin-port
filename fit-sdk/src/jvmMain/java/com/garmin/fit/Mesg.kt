@@ -508,7 +508,7 @@ open class Mesg {
         val subField = field.getSubField(subfieldIndex)
 
         return if ((subField == null) || (subField.canMesgSupport(this))) {
-            field.getShortValues(subfieldIndex).filterNotNull().toTypedArray()
+            field.getShortValues(subfieldIndex)
         } else {
             null
         }

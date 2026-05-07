@@ -251,7 +251,7 @@ object DecoderExample {
             if (field is Field) {
                 println("      native: " + field.value)
             } else {
-                println("      override: " + field!!.value)
+                println("      override: " + field.value)
             }
         }
     }
